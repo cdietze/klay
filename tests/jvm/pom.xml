@@ -53,16 +53,43 @@
                 </executions>
             </plugin>
 
-            <!-- Allow to run via `mvn exec:java` -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <configuration>
-                    <mainClass>${mainClass}</mainClass>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>jvm</id>
+            <build>
+                <plugins>
+                    <!-- allows testing of jvm backend via: `mvn test -Pjvm` -->
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <phase>test</phase>
+                                <configuration>
+                                    <target>
+                                        <!-- these shenanigans are needed to pass -XstartOnFirstThread on Mac OS
+                                             but not on other OSes where they would cause the JVM to fail, yay -->
+                                        <condition property="jvmarg" value="-XstartOnFirstThread" else="-Dfoo=bar">
+                                            <os family="mac"/>
+                                        </condition>
+                                        <java fork="true" classname="${mainClass}" classpathref="maven.test.classpath">
+                                            <jvmarg value="${jvmarg}"/>
+                                            <arg value="${scaleFactor}"/>
+                                        </java>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
