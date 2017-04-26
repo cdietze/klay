@@ -2,12 +2,12 @@ package klay.jvm
 
 import klay.core.GL20
 import klay.core.Graphics
+import org.lwjgl.opengl.GL11
 
 class JvmGraphics : Graphics {
-    override val gl: GL20
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-
-    override fun sayHello() {
-        println("Hi from JvmGraphics")
+    override val gl = object : GL20() {
+        override fun glClearColor(red: Float, green: Float, blue: Float, alpha: Float) {
+            GL11.glClearColor(red, green, blue, alpha)
+        }
     }
 }
