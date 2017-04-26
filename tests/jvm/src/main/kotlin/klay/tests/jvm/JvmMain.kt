@@ -8,9 +8,9 @@ object JvmMain {
     @JvmStatic
     fun main(args: Array<String>) {
         println("Hello Kotlin on JVM!")
-        val game = Game()
         val plat = JvmPlatform()
-
-        plat.run(game)
+        val game = Game(plat)
+        plat.start()
+        game.sayHello()
     }
 }

@@ -1,11 +1,11 @@
 package klay.jvm
 
-import klay.core.Game
+import klay.core.Platform
 
-class JvmPlatform {
+class JvmPlatform : Platform {
+    override val graphics = JvmGraphics()
 
-    fun run(game: Game) {
-        println("Running game on JvmPlatform!")
-        game.run()
+    fun start() {
+        println("Starting game on JvmPlatform!")
     }
 }
