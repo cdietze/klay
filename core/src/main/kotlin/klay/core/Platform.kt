@@ -1,5 +1,9 @@
 package klay.core
 
-interface Platform {
-    val graphics: Graphics
+import klay.core.react.Signal
+
+abstract class Platform {
+    abstract val graphics: Graphics
+
+    val frameSignal: Signal<Platform> = Signal.create()
 }
