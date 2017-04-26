@@ -9,8 +9,7 @@ object JvmMain {
     fun main(args: Array<String>) {
         println("Hello Kotlin on JVM!")
         val plat = JvmPlatform()
-        val game = Game(plat)
-        plat.start()
-        game.sayHello()
+        Game(plat)
+        plat.run()
     }
 }

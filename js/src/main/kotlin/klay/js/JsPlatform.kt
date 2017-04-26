@@ -17,7 +17,7 @@ class JsPlatform : Platform() {
     val height = 300
 
     init {
-        println("Running game on JsPlatform!")
+        println("Initializing JsPlatform")
 
         val root: HTMLDivElement = document.getElementById("klay-root") as HTMLDivElement? ?: document.body!!.appendChild(document.createElement("div")) as HTMLDivElement
 
@@ -38,9 +38,6 @@ class JsPlatform : Platform() {
             }
         }
 
-        override fun sayHello() {
-            println("Hi from JS Graphics")
-        }
     }
 
     fun run() {
