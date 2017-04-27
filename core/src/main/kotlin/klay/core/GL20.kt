@@ -1,6 +1,6 @@
 package klay.core
 
-import java.nio.*
+import klay.core.buffers.*
 
 /**
  * Interface and values for OpenGL ES 2.0, based on the official JOGL GL2ES2 interface.
