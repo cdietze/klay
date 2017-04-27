@@ -124,8 +124,9 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
     fun checkError(op: String): Boolean {
         var reported = 0
         if (checkErrors) {
-            var error: Int
-            while ((error = glGetError()) != GL_NO_ERROR) {
+            while (true) {
+                val error = glGetError()
+                if (error == GL_NO_ERROR) break
                 reported += 1
                 System.err.println(op + ": glError " + error)
             }
