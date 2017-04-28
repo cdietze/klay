@@ -128,7 +128,7 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
                 val error = glGetError()
                 if (error == GL_NO_ERROR) break
                 reported += 1
-                System.err.println(op + ": glError " + error)
+                println(op + ": glError " + error)
             }
         }
         return reported > 0
