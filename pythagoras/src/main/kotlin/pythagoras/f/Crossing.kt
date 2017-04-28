@@ -113,17 +113,15 @@ internal object Crossing {
      * *
      * @return new roots count
      */
-    protected fun fixRoots(res: FloatArray, rc: Int): Int {
+    private fun fixRoots(res: FloatArray, rc: Int): Int {
         var tc = 0
         for (i in 0..rc - 1) {
-            out@ run {
-                for (j in i + 1..rc - 1) {
-                    if (isZero(res[i] - res[j])) {
-                        break@out
-                    }
+            for (j in i + 1..rc - 1) {
+                if (isZero(res[i] - res[j])) {
+                    break
                 }
-                res[tc++] = res[i]
             }
+            res[tc++] = res[i]
         }
         return tc
     }
@@ -136,10 +134,10 @@ internal object Crossing {
         internal var ay: Float = 0.toFloat()
         internal var bx: Float = 0.toFloat()
         internal var by: Float = 0.toFloat()
-        internal var Ax: Float = 0.toFloat()
-        internal var Ay: Float = 0.toFloat()
-        internal var Bx: Float = 0.toFloat()
-        internal var By: Float = 0.toFloat()
+        internal var _Ax: Float = 0.toFloat()
+        internal var _Ay: Float = 0.toFloat()
+        internal var _Bx: Float = 0.toFloat()
+        internal var _By: Float = 0.toFloat()
 
         init {
             ax = x2 - x1
@@ -147,11 +145,11 @@ internal object Crossing {
             bx = cx - x1
             by = cy - y1
 
-            Bx = bx + bx // Bx = 2f * bx
-            Ax = ax - Bx // Ax = ax - 2f * bx
+            _Bx = bx + bx // Bx = 2f * bx
+            _Ax = ax - _Bx // Ax = ax - 2f * bx
 
-            By = by + by // By = 2f * by
-            Ay = ay - By // Ay = ay - 2f * by
+            _By = by + by // By = 2f * by
+            _Ay = ay - _By // Ay = ay - 2f * by
         }
 
         fun cross(res: FloatArray, rc: Int, py1: Float, py2: Float): Int {
@@ -179,10 +177,10 @@ internal object Crossing {
                     continue
                 }
                 // CURVE-INSIDE
-                val ry = t * (t * Ay + By)
+                val ry = t * (t * _Ay + _By)
                 // ry = t * t * Ay + t * By
                 if (ry > py2) {
-                    val rxt = t * Ax + bx
+                    val rxt = t * _Ax + bx
                     // rxt = 2f * t * Ax + Bx = 2f * t * Ax + 2f * bx
                     if (rxt > -DELTA && rxt < DELTA) {
                         continue
@@ -195,17 +193,17 @@ internal object Crossing {
         }
 
         fun solvePoint(res: FloatArray, px: Float): Int {
-            val eqn = floatArrayOf(-px, Bx, Ax)
+            val eqn = floatArrayOf(-px, _Bx, _Ax)
             return solveQuad(eqn, res)
         }
 
         fun solveExtreme(res: FloatArray): Int {
             var rc = 0
-            if (Ax != 0f) {
-                res[rc++] = -Bx / (Ax + Ax)
+            if (_Ax != 0f) {
+                res[rc++] = -_Bx / (_Ax + _Ax)
             }
-            if (Ay != 0f) {
-                res[rc++] = -By / (Ay + Ay)
+            if (_Ay != 0f) {
+                res[rc++] = -_By / (_Ay + _Ay)
             }
             return rc
         }
@@ -217,11 +215,11 @@ internal object Crossing {
             for (i in 0..rc - 1) {
                 val t = res[i]
                 if (t > -DELTA && t < 1 + DELTA) {
-                    val rx = t * (t * Ax + Bx)
+                    val rx = t * (t * _Ax + _Bx)
                     if (minX <= rx && rx <= maxX) {
                         bound[bc++] = t
                         bound[bc++] = rx
-                        bound[bc++] = t * (t * Ay + By)
+                        bound[bc++] = t * (t * _Ay + _By)
                         bound[bc++] = id.toFloat()
                         if (changeId) {
                             id++
@@ -242,12 +240,12 @@ internal object Crossing {
         internal var by: Float = 0.toFloat()
         internal var cx: Float = 0.toFloat()
         internal var cy: Float = 0.toFloat()
-        internal var Ax: Float = 0.toFloat()
-        internal var Ay: Float = 0.toFloat()
-        internal var Bx: Float = 0.toFloat()
-        internal var By: Float = 0.toFloat()
-        internal var Cx: Float = 0.toFloat()
-        internal var Cy: Float = 0.toFloat()
+        internal var _Ax: Float = 0.toFloat()
+        internal var _Ay: Float = 0.toFloat()
+        internal var _Bx: Float = 0.toFloat()
+        internal var _By: Float = 0.toFloat()
+        internal var _Cx: Float = 0.toFloat()
+        internal var _Cy: Float = 0.toFloat()
         internal var Ax3: Float = 0.toFloat()
         internal var Bx2: Float = 0.toFloat()
 
@@ -259,16 +257,16 @@ internal object Crossing {
             cx = cx2 - x1
             cy = cy2 - y1
 
-            Cx = bx + bx + bx // Cx = 3f * bx
-            Bx = cx + cx + cx - Cx - Cx // Bx = 3f * cx - 6f * bx
-            Ax = ax - Bx - Cx // Ax = ax - 3f * cx + 3f * bx
+            _Cx = bx + bx + bx // Cx = 3f * bx
+            _Bx = cx + cx + cx - _Cx - _Cx // Bx = 3f * cx - 6f * bx
+            _Ax = ax - _Bx - _Cx // Ax = ax - 3f * cx + 3f * bx
 
-            Cy = by + by + by // Cy = 3f * by
-            By = cy + cy + cy - Cy - Cy // By = 3f * cy - 6f * by
-            Ay = ay - By - Cy // Ay = ay - 3f * cy + 3f * by
+            _Cy = by + by + by // Cy = 3f * by
+            _By = cy + cy + cy - _Cy - _Cy // By = 3f * cy - 6f * by
+            _Ay = ay - _By - _Cy // Ay = ay - 3f * cy + 3f * by
 
-            Ax3 = Ax + Ax + Ax
-            Bx2 = Bx + Bx
+            Ax3 = _Ax + _Ax + _Ax
+            Bx2 = _Bx + _Bx
         }
 
         fun cross(res: FloatArray, rc: Int, py1: Float, py2: Float): Int {
@@ -295,10 +293,10 @@ internal object Crossing {
                     continue
                 }
                 // CURVE-INSIDE
-                val ry = t * (t * (t * Ay + By) + Cy)
+                val ry = t * (t * (t * _Ay + _By) + _Cy)
                 // ry = t * t * t * Ay + t * t * By + t * Cy
                 if (ry > py2) {
-                    var rxt = t * (t * Ax3 + Bx2) + Cx
+                    var rxt = t * (t * Ax3 + Bx2) + _Cx
                     // rxt = 3f * t * t * Ax + 2f * t * Bx + Cx
                     if (rxt > -DELTA && rxt < DELTA) {
                         rxt = t * (Ax3 + Ax3) + Bx2
@@ -317,17 +315,17 @@ internal object Crossing {
         }
 
         fun solvePoint(res: FloatArray, px: Float): Int {
-            val eqn = floatArrayOf(-px, Cx, Bx, Ax)
+            val eqn = floatArrayOf(-px, _Cx, _Bx, _Ax)
             return solveCubic(eqn, res)
         }
 
         fun solveExtremeX(res: FloatArray): Int {
-            val eqn = floatArrayOf(Cx, Bx2, Ax3)
+            val eqn = floatArrayOf(_Cx, Bx2, Ax3)
             return solveQuad(eqn, res)
         }
 
         fun solveExtremeY(res: FloatArray): Int {
-            val eqn = floatArrayOf(Cy, By + By, Ay + Ay + Ay)
+            val eqn = floatArrayOf(_Cy, _By + _By, _Ay + _Ay + _Ay)
             return solveQuad(eqn, res)
         }
 
@@ -338,11 +336,11 @@ internal object Crossing {
             for (i in 0..rc - 1) {
                 val t = res[i]
                 if (t > -DELTA && t < 1 + DELTA) {
-                    val rx = t * (t * (t * Ax + Bx) + Cx)
+                    val rx = t * (t * (t * _Ax + _Bx) + _Cx)
                     if (minX <= rx && rx <= maxX) {
                         bound[bc++] = t
                         bound[bc++] = rx
-                        bound[bc++] = t * (t * (t * Ay + By) + Cy)
+                        bound[bc++] = t * (t * (t * _Ay + _By) + _Cy)
                         bound[bc++] = id.toFloat()
                         if (changeId) {
                             id++
@@ -470,13 +468,28 @@ internal object Crossing {
                     cy = coords[1]
                     my = cy
                 }
-                PathIterator.SEG_LINETO -> cross += crossLine(cx, cy, cx = coords[0], cy = coords[1], x, y)
-                PathIterator.SEG_QUADTO -> cross += crossQuad(cx, cy, coords[0], coords[1], cx = coords[2], cy = coords[3], x,
-                        y)
-                PathIterator.SEG_CUBICTO -> cross += crossCubic(cx, cy, coords[0], coords[1], coords[2], coords[3],
-                        cx = coords[4], cy = coords[5], x, y)
-                PathIterator.SEG_CLOSE -> if (cy != my || cx != mx) {
-                    cross += crossLine(cx, cy, cx = mx, cy = my, x, y)
+                PathIterator.SEG_LINETO -> {
+                    cross += crossLine(cx, cy, coords[0], coords[1], x, y)
+                    cx = coords[0]
+                    cy = coords[1]
+                }
+
+                PathIterator.SEG_QUADTO -> {
+                    cross += crossQuad(cx, cy, coords[0], coords[1], coords[2], coords[3], x, y)
+                    cx = coords[2]
+                    cy = coords[3]
+                }
+                PathIterator.SEG_CUBICTO -> {
+                    cross += crossCubic(cx, cy, coords[0], coords[1], coords[2], coords[3], coords[4], coords[5], x, y)
+                    cx = coords[4]
+                    cy = coords[5]
+                }
+                PathIterator.SEG_CLOSE -> {
+                    if (cy != my || cx != mx) {
+                        cross += crossLine(cx, cy, mx, my, x, y)
+                        cx = mx
+                        cy = my
+                    }
                 }
             }
 
@@ -755,11 +768,21 @@ internal object Crossing {
                     cy = coords[1]
                     my = cy
                 }
-                PathIterator.SEG_LINETO -> count = intersectLine(cx, cy, cx = coords[0], cy = coords[1], rx1, ry1, rx2, ry2)
-                PathIterator.SEG_QUADTO -> count = intersectQuad(cx, cy, coords[0], coords[1], cx = coords[2], cy = coords[3],
-                        rx1, ry1, rx2, ry2)
-                PathIterator.SEG_CUBICTO -> count = intersectCubic(cx, cy, coords[0], coords[1], coords[2], coords[3],
-                        cx = coords[4], cy = coords[5], rx1, ry1, rx2, ry2)
+                PathIterator.SEG_LINETO -> {
+                    count = intersectLine(cx, cy, coords[0], coords[1], rx1, ry1, rx2, ry2)
+                    cx = coords[0]
+                    cy = coords[1]
+                }
+                PathIterator.SEG_QUADTO -> {
+                    count = intersectQuad(cx, cy, coords[0], coords[1], coords[2], coords[3], rx1, ry1, rx2, ry2)
+                    cx = coords[2]
+                    cy = coords[3]
+                }
+                PathIterator.SEG_CUBICTO -> {
+                    count = intersectCubic(cx, cy, coords[0], coords[1], coords[2], coords[3], coords[4], coords[5], rx1, ry1, rx2, ry2)
+                    cx = coords[4]
+                    cy = coords[5]
+                }
                 PathIterator.SEG_CLOSE -> {
                     if (cy != my || cx != mx) {
                         count = intersectLine(cx, cy, mx, my, rx1, ry1, rx2, ry2)
@@ -813,7 +836,7 @@ internal object Crossing {
     /**
      * Sorts a bound array.
      */
-    protected fun sortBound(bound: FloatArray, bc: Int) {
+    private fun sortBound(bound: FloatArray, bc: Int) {
         var i = 0
         while (i < bc - 4) {
             var k = i
@@ -845,7 +868,7 @@ internal object Crossing {
     /**
      * Returns whether bounds intersect a rectangle or not.
      */
-    protected fun crossBound(bound: FloatArray, bc: Int, py1: Float, py2: Float): Int {
+    private fun crossBound(bound: FloatArray, bc: Int, py1: Float, py2: Float): Int {
         // LEFT/RIGHT
         if (bc == 0) {
             return 0
@@ -895,8 +918,8 @@ internal object Crossing {
     }
 
     /** Allowable tolerance for bounds comparison  */
-    protected val DELTA = 1E-5f
+    private val DELTA = 1E-5f
 
     /** If roots have distance less then `ROOT_DELTA` they are double  */
-    protected val ROOT_DELTA = 1E-10f
+    private val ROOT_DELTA = 1E-10f
 }
