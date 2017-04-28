@@ -16,6 +16,12 @@ internal class IntersectPoint {
         this.endIndex2 = endIndex2
         this.x = x
         this.y = y
+        this.rule1 = 0
+        this.ruleIndex1 = 0
+        this.param1 = 0f
+        this.rule2 = 0
+        this.ruleIndex2 = 0
+        this.param2 = 0f
     }
 
     constructor(begIndex1: Int, endIndex1: Int, rule1: Int, ruleIndex1: Int,

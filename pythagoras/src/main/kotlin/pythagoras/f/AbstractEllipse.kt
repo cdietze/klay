@@ -4,7 +4,7 @@
 
 package pythagoras.f
 
-import java.util.NoSuchElementException
+import java.util.*
 
 /**
  * Provides most of the implementation of [IEllipse], obtaining the framing rectangle from
@@ -49,7 +49,7 @@ abstract class AbstractEllipse : RectangularShape(), IEllipse {
     }
 
     override // from interface IShape
-    fun pathIterator(at: Transform): PathIterator {
+    fun pathIterator(at: Transform?): PathIterator {
         return Iterator(this, at)
     }
 

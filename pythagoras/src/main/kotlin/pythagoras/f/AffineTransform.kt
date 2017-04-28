@@ -16,14 +16,17 @@ import pythagoras.util.NoninvertibleTransformException
 class AffineTransform : AbstractTransform {
 
     /** The scale, rotation and shear components of this transform.  */
-    var m00: Float = 0.toFloat()
+    var m00: Float = 1.toFloat()
     var m01: Float = 0.toFloat()
     var m10: Float = 0.toFloat()
-    var m11: Float = 0.toFloat()
+    var m11: Float = 1.toFloat()
 
     /** The translation components of this transform.  */
     var tx: Float = 0.toFloat()
     var ty: Float = 0.toFloat()
+
+    /** Creates an affine transform configured with the identity transform. */
+    constructor()
 
     /** Creates an affine transform from the supplied scale, rotation and translation.  */
     constructor(scale: Float, angle: Float, tx: Float, ty: Float) : this(scale, scale, angle, tx, ty) {}
@@ -32,6 +35,7 @@ class AffineTransform : AbstractTransform {
     constructor(scaleX: Float, scaleY: Float, angle: Float, tx: Float, ty: Float) {
         val sina = FloatMath.sin(angle)
         val cosa = FloatMath.cos(angle)
+
         this.m00 = cosa * scaleX
         this.m01 = sina * scaleY
         this.m10 = -sina * scaleX
@@ -41,7 +45,7 @@ class AffineTransform : AbstractTransform {
     }
 
     /** Creates an affine transform with the specified transform matrix.  */
-    @JvmOverloads constructor(m00: Float = 1f, m01: Float = 0f, m10: Float = 0f, m11: Float = 1f, tx: Float = 0f, ty: Float = 0f) {
+    constructor(m00: Float, m01: Float, m10: Float, m11: Float, tx: Float, ty: Float) {
         this.m00 = m00
         this.m01 = m01
         this.m10 = m10

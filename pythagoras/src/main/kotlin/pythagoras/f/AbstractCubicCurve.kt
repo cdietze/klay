@@ -4,7 +4,7 @@
 
 package pythagoras.f
 
-import java.util.NoSuchElementException
+import java.util.*
 
 /**
  * Provides most of the implementation of [ICubicCurve], obtaining only the start, end and
@@ -115,12 +115,12 @@ abstract class AbstractCubicCurve : ICubicCurve {
     }
 
     override // from interface IShape
-    fun pathIterator(t: Transform): PathIterator {
+    fun pathIterator(t: Transform?): PathIterator {
         return Iterator(this, t)
     }
 
     override // from interface IShape
-    fun pathIterator(at: Transform, flatness: Float): PathIterator {
+    fun pathIterator(at: Transform?, flatness: Float): PathIterator {
         return FlatteningPathIterator(pathIterator(at), flatness)
     }
 

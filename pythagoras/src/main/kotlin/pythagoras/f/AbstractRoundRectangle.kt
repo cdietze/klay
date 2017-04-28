@@ -90,7 +90,7 @@ abstract class AbstractRoundRectangle : RectangularShape(), IRoundRectangle {
     }
 
     override // from interface IShape
-    fun pathIterator(at: Transform): PathIterator {
+    fun pathIterator(at: Transform?): PathIterator {
         return Iterator(this, at)
     }
 

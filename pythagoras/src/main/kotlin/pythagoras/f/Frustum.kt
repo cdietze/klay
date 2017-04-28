@@ -14,23 +14,26 @@ class Frustum {
         NONE, INTERSECTS, CONTAINS
     }
 
+    /** The vertices of the frustum.  */
+    protected var _vertices: Array<Vector3> = Array(8, { _ -> Vector3()} )
+
+    /** The planes of the frustum (as derived from the vertices). The plane normals point out of
+     * the frustum.  */
+    protected var _planes: Array<Plane> = Array(6, { _ -> Plane()})
+
+    /** The frustum's bounding box (as derived from the vertices).  */
+    protected var _bounds = Box()
+
     /**
      * Creates an empty (invalid) frustum.
      */
     init {
-        // initialize the vertices and planes of the frustum
-        for (ii in 0..7) {
-            _vertices[ii] = Vector3()
-        }
-        for (ii in 0..5) {
-            _planes[ii] = Plane()
-        }
     }
 
     /**
      * Returns a reference to the frustum's array of vertices.
      */
-    fun vertices(): Array<IVector3> {
+    fun vertices(): Array<out IVector3> {
         return _vertices
     }
 
@@ -249,16 +252,6 @@ class Frustum {
         _planes[5].fromPoints(_vertices[4], _vertices[5], _vertices[1]) // bottom
         _bounds.fromPoints(*_vertices)
     }
-
-    /** The vertices of the frustum.  */
-    protected var _vertices = arrayOfNulls<Vector3>(8)
-
-    /** The planes of the frustum (as derived from the vertices). The plane normals point out of
-     * the frustum.  */
-    protected var _planes = arrayOfNulls<Plane>(6)
-
-    /** The frustum's bounding box (as derived from the vertices).  */
-    protected var _bounds = Box()
 
     companion object {
 

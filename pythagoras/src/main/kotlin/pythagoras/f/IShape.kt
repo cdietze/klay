@@ -53,5 +53,5 @@ interface IShape {
      * *        distance the lines are allowed to deviate from the approximated curve, thus a higher
      * *        flatness value generally allows for a path with fewer segments.
      */
-    fun pathIterator(at: Transform, flatness: Float): PathIterator
+    fun pathIterator(at: Transform?, flatness: Float): PathIterator
 }

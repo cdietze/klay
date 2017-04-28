@@ -12,10 +12,7 @@ object Transforms {
      * Creates and returns a new shape that is the supplied shape transformed by this transform's
      * matrix.
      */
-    fun createTransformedShape(t: Transform, src: IShape?): IShape? {
-        if (src == null) {
-            return null
-        }
+    fun createTransformedShape(t: Transform, src: IShape): IShape {
         if (src is Path) {
             return src.createTransformedShape(t)
         }
