@@ -4,7 +4,7 @@
 
 package pythagoras.d
 
-import java.util.NoSuchElementException
+import java.util.*
 
 /**
  * Provides most of the implementation of [IArc], obtaining only the frame and other metrics
@@ -270,28 +270,27 @@ abstract class AbstractArc : RectangularShape(), IArc {
                 arcCount = 0
                 lineCount = 0
                 index = 1
-                return
-            }
-
-            if (Math.abs(extent) >= 360f) {
-                arcCount = 4
-                k = 4f / 3f * (Math.sqrt(2.0) - 1f)
-                step = Math.PI / 2f
-                if (extent < 0f) {
-                    step = -step
-                    k = -k
-                }
             } else {
-                arcCount = MathUtil.iceil(Math.abs(extent) / 90f)
-                step = Math.toRadians(extent / arcCount)
-                k = 4f / 3f * (1f - Math.cos(step / 2f)) / Math.sin(step / 2f)
-            }
+                if (Math.abs(extent) >= 360f) {
+                    arcCount = 4
+                    k = 4f / 3f * (Math.sqrt(2.0) - 1f)
+                    step = Math.PI / 2f
+                    if (extent < 0f) {
+                        step = -step
+                        k = -k
+                    }
+                } else {
+                    arcCount = MathUtil.iceil(Math.abs(extent) / 90f)
+                    step = Math.toRadians(extent / arcCount)
+                    k = 4f / 3f * (1f - Math.cos(step / 2f)) / Math.sin(step / 2f)
+                }
 
-            lineCount = 0
-            if (type == IArc.CHORD) {
-                lineCount++
-            } else if (type == IArc.PIE) {
-                lineCount += 2
+                lineCount = 0
+                if (type == IArc.CHORD) {
+                    lineCount++
+                } else if (type == IArc.PIE) {
+                    lineCount += 2
+                }
             }
         }
 

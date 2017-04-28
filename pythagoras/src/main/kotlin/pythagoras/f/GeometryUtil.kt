@@ -95,7 +95,8 @@ object GeometryUtil {
         eqn[1] = 2f * dy * (qx2 - qx1) - 2f * dx * (qy2 - qy1)
         eqn[2] = dy * (qx1 - 2 * qx2 + qx3) - dx * (qy1 - 2 * qy2 + qy3)
 
-        if ((count = Crossing.solveQuad(eqn, t)) == 0) {
+        count = Crossing.solveQuad(eqn, t)
+        if (count == 0) {
             return 0
         }
 
@@ -141,7 +142,8 @@ object GeometryUtil {
         eqn[2] = (3 * cy1 - 6 * cy2 + 3 * cy3) * dx - (3 * cx1 - 6 * cx2 + 3 * cx3) * dy
         eqn[3] = (-3 * cy1 + 3 * cy2 - 3 * cy3 + cy4) * dx + (3 * cx1 - 3 * cx2 + 3 * cx3 - cx4) * dy
 
-        if ((count = Crossing.solveCubic(eqn, t)) == 0) {
+        count = Crossing.solveCubic(eqn, t)
+        if (count == 0) {
             return 0
         }
 

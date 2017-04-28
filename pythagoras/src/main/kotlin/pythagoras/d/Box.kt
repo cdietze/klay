@@ -484,7 +484,7 @@ class Box : IBox, Serializable {
                 iz >= _minExtent.z && iz <= _maxExtent.z)
             t
         else
-            java.lang.Float.MAX_VALUE
+            java.lang.Double.MAX_VALUE
     }
 
     /**
@@ -505,7 +505,7 @@ class Box : IBox, Serializable {
                 iz >= _minExtent.z && iz <= _maxExtent.z)
             t
         else
-            java.lang.Float.MAX_VALUE
+            java.lang.Double.MAX_VALUE
     }
 
     /**
@@ -526,7 +526,7 @@ class Box : IBox, Serializable {
                 iy >= _minExtent.y && iy <= _maxExtent.y)
             t
         else
-            java.lang.Float.MAX_VALUE
+            java.lang.Double.MAX_VALUE
     }
 
     /** The box's minimum extent.  */
