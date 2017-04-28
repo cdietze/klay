@@ -286,7 +286,6 @@ interface Transform {
      */
     fun inverseTransform(v: IVector, into: Vector): Vector
 
-    @Deprecated("")
     @Deprecated("Use {@link #copy}. ")
     fun clone(): Transform
 
