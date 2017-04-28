@@ -212,7 +212,7 @@ class Ray2 : IRay2 {
     }
 
     override // from IRay2
-    fun getNearestPoint(point: IVector, result: Vector?): Vector {
+    fun getNearestPoint(point: IVector, result: Vector): Vector {
         var result = result
         if (result == null) {
             result = Vector()
@@ -233,10 +233,10 @@ class Ray2 : IRay2 {
     protected fun getIntersection(pt: IVector): Double {
         if (Math.abs(direction.x) > Math.abs(direction.y)) {
             val t = (pt.x() - origin.x) / direction.x
-            return if (t >= 0f && origin.y + t * direction.y == pt.y()) t else java.lang.Float.MAX_VALUE
+            return if (t >= 0f && origin.y + t * direction.y == pt.y()) t else java.lang.Double.MAX_VALUE
         } else {
             val t = (pt.y() - origin.y) / direction.y
-            return if (t >= 0f && origin.x + t * direction.x == pt.x()) t else java.lang.Float.MAX_VALUE
+            return if (t >= 0f && origin.x + t * direction.x == pt.x()) t else java.lang.Double.MAX_VALUE
         }
     }
 }

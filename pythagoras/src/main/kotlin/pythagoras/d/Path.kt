@@ -224,7 +224,7 @@ class Path : IShape, Cloneable {
     }
 
     override // from interface IShape
-    fun pathIterator(t: Transform): PathIterator {
+    fun pathIterator(t: Transform?): PathIterator {
         return Iterator(this, t)
     }
 

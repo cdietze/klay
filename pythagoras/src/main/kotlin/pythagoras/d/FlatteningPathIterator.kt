@@ -9,7 +9,7 @@ import java.util.NoSuchElementException
 /**
  * A path iterator that flattens curves.
  */
-internal class FlatteningPathIterator @JvmOverloads constructor(
+class FlatteningPathIterator @JvmOverloads constructor(
         /** The source PathIterator  */
         private val p: PathIterator?,
         /** The flatness of new path  */

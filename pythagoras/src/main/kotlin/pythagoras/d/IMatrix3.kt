@@ -11,7 +11,7 @@ import java.nio.DoubleBuffer
 /**
  * Provides read-only access to a [Matrix3].
  */
-internal interface IMatrix3 {
+interface IMatrix3 {
     /** Returns column 0, row 0 of the matrix.  */
     fun m00(): Double
 
