@@ -105,12 +105,12 @@ abstract class AbstractQuadCurve : IQuadCurve {
     }
 
     override // from interface IShape
-    fun pathIterator(t: Transform): PathIterator {
+    fun pathIterator(t: Transform?): PathIterator {
         return Iterator(this, t)
     }
 
     override // from interface IShape
-    fun pathIterator(t: Transform, flatness: Float): PathIterator {
+    fun pathIterator(t: Transform?, flatness: Float): PathIterator {
         return FlatteningPathIterator(pathIterator(t), flatness)
     }
 

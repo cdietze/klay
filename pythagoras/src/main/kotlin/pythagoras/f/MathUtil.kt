@@ -231,10 +231,6 @@ open class MathUtil {
             return buf.toString()
         }
 
-        protected var TO_STRING_DECIMAL_PLACES = 3
+        private var TO_STRING_DECIMAL_PLACES = 3
     }
 }
-/**
- * Formats the supplied value, truncated to the currently configured number of decimal places.
- * The value is also always preceded by a sign (e.g. +1.0 or -0.5).
- */

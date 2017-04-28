@@ -168,7 +168,7 @@ abstract class RectangularShape : IRectangularShape {
     }
 
     override // from interface IShape
-    fun pathIterator(t: Transform, flatness: Float): PathIterator {
+    fun pathIterator(t: Transform?, flatness: Float): PathIterator {
         return FlatteningPathIterator(pathIterator(t), flatness)
     }
 }

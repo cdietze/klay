@@ -189,7 +189,7 @@ abstract class AbstractArc : RectangularShape(), IArc {
     }
 
     override // from interface IShape
-    fun pathIterator(at: Transform): PathIterator {
+    fun pathIterator(at: Transform?): PathIterator {
         return Iterator(this, at)
     }
 

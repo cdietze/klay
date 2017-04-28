@@ -5,17 +5,48 @@
 package pythagoras.f
 
 import java.util.NoSuchElementException
+import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 /**
  * A path iterator that flattens curves.
  */
 internal class FlatteningPathIterator @JvmOverloads constructor(
         /** The source PathIterator  */
-        private val p: PathIterator?,
+        private val p: PathIterator,
         /** The flatness of new path  */
         private val flatness: Float,
         /** The curve subdivision limit  */
         private val bufLimit: Int = FlatteningPathIterator.BUFFER_LIMIT) : PathIterator {
+
+    /** The type of current segment to be flat  */
+    private var bufType: Int = 0
+
+    /** The current points buffer size  */
+    private var bufSize: Int = 0
+
+    /** The inner cursor position in points buffer  */
+    private var bufIndex: Int = 0
+
+    /** The current subdivision count  */
+    private var bufSubdiv: Int = 0
+
+    /** The points buffer  */
+    private var buf: FloatArray
+
+    /** The indicator of empty points buffer  */
+    private var bufEmpty = true
+
+    /** The square of flatness  */
+    private val flatness2: Float
+
+    /** The x coordinate of previous path segment  */
+    private var px: Float = 0.toFloat()
+
+    /** The y coordinate of previous path segment  */
+    private var py: Float = 0.toFloat()
+
+    /** The tamporary buffer for getting points from PathIterator  */
+    private val coords = FloatArray(6)
 
     init {
         if (flatness < 0) {
@@ -173,36 +204,6 @@ internal class FlatteningPathIterator @JvmOverloads constructor(
             }
         }
     }
-
-    /** The type of current segment to be flat  */
-    private var bufType: Int = 0
-
-    /** The current points buffer size  */
-    private var bufSize: Int = 0
-
-    /** The inner cursor position in points buffer  */
-    private var bufIndex: Int = 0
-
-    /** The current subdivision count  */
-    private var bufSubdiv: Int = 0
-
-    /** The points buffer  */
-    private var buf: FloatArray? = null
-
-    /** The indicator of empty points buffer  */
-    private var bufEmpty = true
-
-    /** The square of flatness  */
-    private val flatness2: Float
-
-    /** The x coordinate of previous path segment  */
-    private var px: Float = 0.toFloat()
-
-    /** The y coordinate of previous path segment  */
-    private var py: Float = 0.toFloat()
-
-    /** The tamporary buffer for getting points from PathIterator  */
-    private val coords = FloatArray(6)
 
     companion object {
 

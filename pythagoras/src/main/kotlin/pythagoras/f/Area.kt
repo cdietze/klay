@@ -5,8 +5,7 @@
 package pythagoras.f
 
 import pythagoras.util.Platform
-
-import java.util.NoSuchElementException
+import java.util.*
 
 /**
  * Stores and manipulates an enclosed area of 2D space.
@@ -257,7 +256,7 @@ class Area : IShape, Cloneable {
     }
 
     override // from interface IShape
-    fun pathIterator(t: Transform, flatness: Float): PathIterator {
+    fun pathIterator(t: Transform?, flatness: Float): PathIterator {
         return FlatteningPathIterator(pathIterator(t), flatness)
     }
 
@@ -885,7 +884,7 @@ class Area : IShape, Cloneable {
             }
         }
 
-        return if (nextIsectPoint != null) nextIsectPoint else firstIsectPoint
+        return if (nextIsectPoint != null) nextIsectPoint else firstIsectPoint!!
     }
 
     private fun prevIntersectPoint(iPoints: Array<IntersectPoint>,
@@ -917,7 +916,7 @@ class Area : IShape, Cloneable {
             }
         }
 
-        return if (predIsectPoint != null) predIsectPoint else firstIsectPoint
+        return if (predIsectPoint != null) predIsectPoint else firstIsectPoint!!
     }
 
     private fun includeCoordsAndRules(
@@ -982,7 +981,7 @@ class Area : IShape, Cloneable {
                     resultRules[resultRulesPos] = PathIterator.SEG_QUADTO
                     resultOffsets[resultRulesPos++] = resultCoordPos + 4
                     var coefs = floatArrayOf(coords[index - 2], coords[index - 1], coords[index], coords[index + 1], coords[index + 2], coords[index + 3])
-                    isLeft = CrossingHelper.compare(
+                    var isLeft = CrossingHelper.compare(
                             coords[index - 2], coords[index - 1], point.x(), point.y()) > 0
 
                     if (!additional && (operation == 0 || operation == 2)) {
@@ -1003,8 +1002,8 @@ class Area : IShape, Cloneable {
                 PathIterator.SEG_CUBICTO -> {
                     resultRules[resultRulesPos] = PathIterator.SEG_CUBICTO
                     resultOffsets[resultRulesPos++] = resultCoordPos + 6
-                    coefs = floatArrayOf(coords[index - 2], coords[index - 1], coords[index], coords[index + 1], coords[index + 2], coords[index + 3], coords[index + 4], coords[index + 5])
-                    isLeft = CrossingHelper.compare(
+                    var coefs = floatArrayOf(coords[index - 2], coords[index - 1], coords[index], coords[index + 1], coords[index + 2], coords[index + 3], coords[index + 4], coords[index + 5])
+                    var isLeft = CrossingHelper.compare(
                             coords[index - 2], coords[index - 1], point.x(), point.y()) > 0
                     GeometryUtil.subCubic(coefs, point.param(isCurrentArea), !isLeft)
 
