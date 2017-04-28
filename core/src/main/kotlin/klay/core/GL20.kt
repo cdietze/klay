@@ -267,7 +267,7 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
         bufs.intBuffer.get(params, offset, length)
     }
 
-    fun glGetProgramBinary(program: Int, bufsize: Int, length: IntArray, lengthOffset: Int, binaryformat: IntArray, binaryformatOffset: Int, binary: Buffer) {
+    fun glGetProgramBinary(program: Int, bufsize: Int, length: IntArray, lengthOffset: Int, binaryformat: IntArray, binaryformatOffset: Int, binary: ByteBuffer) {
         val lengthLength = bufsize - lengthOffset
         bufs.resizeIntBuffer(lengthLength)
 
@@ -482,11 +482,11 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
 
     abstract fun glCompressedTexImage2D(target: Int, level: Int, internalformat: Int, width: Int, height: Int, border: Int, imageSize: Int, data: Buffer)
     abstract fun glCompressedTexImage2D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int)
-    abstract fun glCompressedTexImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Buffer)
+    abstract fun glCompressedTexImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: ByteBuffer)
     abstract fun glCompressedTexImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int)
     abstract fun glCompressedTexSubImage2D(target: Int, level: Int, xoffset: Int, yoffset: Int, width: Int, height: Int, format: Int, imageSize: Int, data: Buffer)
     abstract fun glCompressedTexSubImage2D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int)
-    abstract fun glCompressedTexSubImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int, arg10: Buffer)
+    abstract fun glCompressedTexSubImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int, arg10: ByteBuffer)
     abstract fun glCompressedTexSubImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int, arg10: Int)
 
     abstract fun glCopyTexImage2D(target: Int, level: Int, internalformat: Int, x: Int, y: Int, width: Int, height: Int, border: Int)
@@ -544,7 +544,7 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
     abstract fun glGetFramebufferAttachmentParameteriv(target: Int, attachment: Int, pname: Int, params: IntBuffer)
     abstract fun glGetInteger(pname: Int): Int
     abstract fun glGetIntegerv(pname: Int, params: IntBuffer)
-    abstract fun glGetProgramBinary(arg0: Int, arg1: Int, arg2: IntBuffer, arg3: IntBuffer, arg4: Buffer)
+    abstract fun glGetProgramBinary(arg0: Int, arg1: Int, arg2: IntBuffer, arg3: IntBuffer, arg4: ByteBuffer)
     abstract fun glGetProgramInfoLog(program: Int, bufsize: Int, length: IntBuffer, infolog: ByteBuffer)
     abstract fun glGetProgramInfoLog(program: Int): String
     abstract fun glGetProgramiv(program: Int, pname: Int, params: IntBuffer)
@@ -581,7 +581,7 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
     abstract fun glMapBuffer(arg0: Int, arg1: Int): ByteBuffer
     abstract fun glPixelStorei(pname: Int, param: Int)
     abstract fun glPolygonOffset(factor: Float, units: Float)
-    abstract fun glProgramBinary(arg0: Int, arg1: Int, arg2: Buffer, arg3: Int)
+    abstract fun glProgramBinary(arg0: Int, arg1: Int, arg2: ByteBuffer, arg3: Int)
     abstract fun glReadPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, pixels: Buffer)
     abstract fun glReadPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, pixelsBufferOffset: Int)
     abstract fun glReleaseShaderCompiler()
@@ -612,7 +612,7 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
     abstract fun glTexParameteriv(target: Int, pname: Int, params: IntBuffer)
     abstract fun glTexSubImage2D(target: Int, level: Int, xoffset: Int, yoffset: Int, width: Int, height: Int, format: Int, type: Int, pixels: Buffer)
     abstract fun glTexSubImage2D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int)
-    abstract fun glTexSubImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int, arg10: Buffer)
+    abstract fun glTexSubImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int, arg10: ByteBuffer)
     abstract fun glTexSubImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int, arg10: Int)
 
     abstract fun glUniform1f(location: Int, x: Float)
