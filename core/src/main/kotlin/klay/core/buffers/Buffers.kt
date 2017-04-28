@@ -1,50 +1,47 @@
 package klay.core.buffers
 
-abstract class Buffer {
-    abstract fun limit(): Int
-    abstract fun position(): Int
+interface Buffer {
+    fun rewind()
+    fun limit(): Int
+    fun limit(length: Int)
+    fun position(): Int
+    fun position(i: Int)
+    fun capacity(): Int
 }
 
-abstract class ByteBuffer : Buffer() {
-    abstract fun put(source: ByteArray, offset: Int, length: Int)
-    abstract fun rewind()
-    abstract fun capacity(): Int
-    abstract fun position(i: Int)
-    abstract fun limit(length: Int)
-    abstract fun asShortBuffer(): ShortBuffer
-    abstract fun asIntBuffer(): IntBuffer
-    abstract fun asFloatBuffer(): FloatBuffer
-    abstract fun get(params: ByteArray, offset: Int, length: Int)
+interface ByteBuffer : Buffer {
+    fun get(dst: ByteArray, offset: Int, length: Int)
+    fun put(src: ByteArray, offset: Int, length: Int)
+    fun asShortBuffer(): ShortBuffer
+    fun asIntBuffer(): IntBuffer
+    fun asFloatBuffer(): FloatBuffer
+    fun asDoubleBuffer(): DoubleBuffer
 }
 
-abstract class ShortBuffer : Buffer() {
-    abstract fun get(i: Int): Short
-    abstract fun put(s: Short)
-    abstract fun put(src: ShortArray, offset: Int, length: Int)
-    abstract fun rewind()
-    abstract fun position(i: Int)
-    abstract fun capacity(): Int
-    abstract fun limit(length: Int)
+interface ShortBuffer : Buffer {
+    fun get(i: Int): Short
+    fun get(dst: ShortArray, offset: Int, length: Int)
+    fun put(n: Short)
+    fun put(src: ShortArray, offset: Int, length: Int)
 }
 
-abstract class IntBuffer : Buffer() {
-    abstract fun get(i: Int): Int
-    abstract fun get(dst: IntArray, offset: Int, length: Int)
-    abstract fun put(n: Int)
-    abstract fun put(src: IntArray, offset: Int, length: Int)
-    abstract fun rewind()
-    abstract fun position(i: Int)
-    abstract fun capacity(): Int
-    abstract fun limit(length: Int)
+interface IntBuffer : Buffer {
+    fun get(i: Int): Int
+    fun get(dst: IntArray, offset: Int, length: Int)
+    fun put(n: Int)
+    fun put(src: IntArray, offset: Int, length: Int)
 }
 
-abstract class FloatBuffer : Buffer() {
-    abstract fun get(i: Int): Float
-    abstract fun get(dst: FloatArray, offset: Int, length: Int)
-    abstract fun put(n: Float)
-    abstract fun put(src: FloatArray, offset: Int, length: Int)
-    abstract fun rewind()
-    abstract fun position(i: Int)
-    abstract fun capacity(): Int
-    abstract fun limit(length: Int)
+interface FloatBuffer : Buffer {
+    fun get(i: Int): Float
+    fun get(dst: FloatArray, offset: Int, length: Int)
+    fun put(n: Float)
+    fun put(src: FloatArray, offset: Int, length: Int)
+}
+
+interface DoubleBuffer : Buffer {
+    fun get(i: Int): Double
+    fun get(dst: DoubleArray, offset: Int, length: Int)
+    fun put(n: Double)
+    fun put(src: DoubleArray, offset: Int, length: Int)
 }
