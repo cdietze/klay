@@ -86,7 +86,7 @@ abstract class AbstractVector : IVector {
     override // from interface IVector
     fun angleBetween(other: IVector): Double {
         val cos = dot(other) / (length() * other.length())
-        return if (cos >= 1f) 0f else Math.acos(cos)
+        return if (cos >= 1f) 0.0 else Math.acos(cos)
     }
 
     override // from interface IVector
