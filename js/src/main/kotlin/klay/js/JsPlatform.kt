@@ -32,12 +32,14 @@ class JsPlatform : Platform() {
     }
 
     override val graphics: Graphics = object : Graphics {
-        override val gl = object : GL20() {
-            override fun glClearColor(red: Float, green: Float, blue: Float, alpha: Float) {
-                webGL.clearColor(red, green, blue, alpha)
-            }
-        }
 
+        override val gl: GL20 get() = TODO("not implemented")
+//        override val gl = TODO()
+//                object : GL20() {
+//            override fun glClearColor(red: Float, green: Float, blue: Float, alpha: Float) {
+//                webGL.clearColor(red, green, blue, alpha)
+//            }
+//        }
     }
 
     fun run() {
