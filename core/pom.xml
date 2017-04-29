@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>de.cdietze.klay</groupId>
-            <artifactId>klay-core</artifactId>
+            <artifactId>pythagoras</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
