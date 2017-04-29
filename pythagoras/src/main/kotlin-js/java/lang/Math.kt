@@ -1,9 +1,6 @@
 package java.lang
 
-import javaemul.internal.InternalPreconditions.checkCriticalArithmetic
-
-import jsinterop.annotations.JsPackage
-import jsinterop.annotations.JsType
+import kotlin.js.Math as JsMath
 
 /**
  * Math utility methods and constants.
@@ -32,11 +29,11 @@ object Math {
     private val PI_UNDER_180 = 180.0 / PI
 
     fun abs(x: Double): Double {
-        return NativeMath.abs(x)
+        return JsMath.abs(x)
     }
 
     fun abs(x: Float): Float {
-        return NativeMath.abs(x.toDouble()).toFloat()
+        return JsMath.abs(x.toDouble()).toFloat()
     }
 
     fun abs(x: Int): Int {
@@ -48,11 +45,11 @@ object Math {
     }
 
     fun acos(x: Double): Double {
-        return NativeMath.acos(x)
+        return JsMath.acos(x)
     }
 
     fun asin(x: Double): Double {
-        return NativeMath.asin(x)
+        return JsMath.asin(x)
     }
 
     fun addExact(x: Int, y: Int): Int {
@@ -69,23 +66,23 @@ object Math {
     }
 
     fun atan(x: Double): Double {
-        return NativeMath.atan(x)
+        return JsMath.atan(x)
     }
 
     fun atan2(y: Double, x: Double): Double {
-        return NativeMath.atan2(y, x)
+        return JsMath.atan2(y, x)
     }
 
     fun cbrt(x: Double): Double {
-        return if (x == 0.0 || !java.lang.Double.isFinite(x)) x else NativeMath.pow(x, 1.0 / 3.0)
+        return if (x == 0.0 || !x.isFinite()) x else JsMath.pow(x, 1.0 / 3.0)
     }
 
     fun ceil(x: Double): Double {
-        return NativeMath.ceil(x)
+        return JsMath.ceil(x).toDouble()
     }
 
     fun copySign(magnitude: Double, sign: Double): Double {
-        return if (isNegative(sign)) -NativeMath.abs(magnitude) else NativeMath.abs(magnitude)
+        return if (isNegative(sign)) -JsMath.abs(magnitude) else JsMath.abs(magnitude)
     }
 
     private fun isNegative(d: Double): Boolean {
@@ -97,33 +94,33 @@ object Math {
     }
 
     fun cos(x: Double): Double {
-        return NativeMath.cos(x)
+        return JsMath.cos(x)
     }
 
     fun cosh(x: Double): Double {
-        return (NativeMath.exp(x) + NativeMath.exp(-x)) / 2
+        return (JsMath.exp(x) + JsMath.exp(-x)) / 2
     }
 
     fun decrementExact(x: Int): Int {
-        checkCriticalArithmetic(x != Integer.MIN_VALUE)
+        checkCriticalArithmetic(x != Int.MIN_VALUE)
         return x - 1
     }
 
     fun decrementExact(x: Long): Long {
-        checkCriticalArithmetic(x != java.lang.Long.MIN_VALUE)
+        checkCriticalArithmetic(x != Long.MIN_VALUE)
         return x - 1
     }
 
     fun exp(x: Double): Double {
-        return NativeMath.exp(x)
+        return JsMath.exp(x)
     }
 
     fun expm1(d: Double): Double {
-        return if (d == 0.0) d else NativeMath.exp(d) - 1
+        return if (d == 0.0) d else JsMath.exp(d) - 1
     }
 
     fun floor(x: Double): Double {
-        return NativeMath.floor(x)
+        return JsMath.floor(x).toDouble()
     }
 
     fun floorDiv(dividend: Int, divisor: Int): Int {
@@ -133,7 +130,7 @@ object Math {
     }
 
     fun floorDiv(dividend: Long, divisor: Long): Long {
-        checkCriticalArithmetic(divisor != 0)
+        checkCriticalArithmetic(divisor != 0L)
         // round down division if the signs are different and modulo not zero
         return if (dividend xor divisor >= 0) dividend / divisor else (dividend + 1) / divisor - 1
     }
@@ -144,45 +141,45 @@ object Math {
     }
 
     fun floorMod(dividend: Long, divisor: Long): Long {
-        checkCriticalArithmetic(divisor != 0)
+        checkCriticalArithmetic(divisor != 0L)
         return (dividend % divisor + divisor) % divisor
     }
 
     fun hypot(x: Double, y: Double): Double {
-        return if (java.lang.Double.isInfinite(x) || java.lang.Double.isInfinite(y))
-            java.lang.Double.POSITIVE_INFINITY
+        return if (x.isInfinite() || y.isInfinite())
+            Double.POSITIVE_INFINITY
         else
-            NativeMath.sqrt(x * x + y * y)
+            JsMath.sqrt(x * x + y * y)
     }
 
     fun incrementExact(x: Int): Int {
-        checkCriticalArithmetic(x != Integer.MAX_VALUE)
+        checkCriticalArithmetic(x != Int.MAX_VALUE)
         return x + 1
     }
 
     fun incrementExact(x: Long): Long {
-        checkCriticalArithmetic(x != java.lang.Long.MAX_VALUE)
+        checkCriticalArithmetic(x != Long.MAX_VALUE)
         return x + 1
     }
 
     fun log(x: Double): Double {
-        return NativeMath.log(x)
+        return JsMath.log(x)
     }
 
     fun log10(x: Double): Double {
-        return NativeMath.log(x) * NativeMath.LOG10E
+        return JsMath.log(x) * LOG10E
     }
 
     fun log1p(x: Double): Double {
-        return if (x == 0.0) x else NativeMath.log(x + 1)
+        return if (x == 0.0) x else JsMath.log(x + 1)
     }
 
     fun max(x: Double, y: Double): Double {
-        return NativeMath.max(x, y)
+        return JsMath.max(x, y)
     }
 
     fun max(x: Float, y: Float): Float {
-        return NativeMath.max(x.toDouble(), y.toDouble()).toFloat()
+        return JsMath.max(x.toDouble(), y.toDouble()).toFloat()
     }
 
     fun max(x: Int, y: Int): Int {
@@ -194,11 +191,11 @@ object Math {
     }
 
     fun min(x: Double, y: Double): Double {
-        return NativeMath.min(x, y)
+        return JsMath.min(x, y)
     }
 
     fun min(x: Float, y: Float): Float {
-        return NativeMath.min(x.toDouble(), y.toDouble()).toFloat()
+        return JsMath.min(x.toDouble(), y.toDouble()).toFloat()
     }
 
     fun min(x: Int, y: Int): Int {
@@ -216,10 +213,10 @@ object Math {
     }
 
     fun multiplyExact(x: Long, y: Long): Long {
-        if (y == -1) {
+        if (y == -1L) {
             return negateExact(x)
         }
-        if (y == 0) {
+        if (y == 0L) {
             return 0
         }
         val r = x * y
@@ -228,45 +225,44 @@ object Math {
     }
 
     fun negateExact(x: Int): Int {
-        checkCriticalArithmetic(x != Integer.MIN_VALUE)
+        checkCriticalArithmetic(x != Int.MIN_VALUE)
         return -x
     }
 
     fun negateExact(x: Long): Long {
-        checkCriticalArithmetic(x != java.lang.Long.MIN_VALUE)
+        checkCriticalArithmetic(x != Long.MIN_VALUE)
         return -x
     }
 
     fun pow(x: Double, exp: Double): Double {
-        return NativeMath.pow(x, exp)
+        return JsMath.pow(x, exp)
     }
 
     fun random(): Double {
-        return NativeMath.random()
+        return JsMath.random()
     }
 
     fun rint(x: Double): Double {
-        var x = x
         // Floating point has a mantissa with an accuracy of 52 bits so
         // any number bigger than 2^52 is effectively a finite integer value.
         // This case also filters out NaN and infinite values.
-        if (NativeMath.abs(x) < (1L shl 52).toDouble()) {
+        if (JsMath.abs(x) < (1L shl 52).toDouble()) {
             val mod2 = x % 2
             if (mod2 == -1.5 || mod2 == 0.5) {
-                x = NativeMath.floor(x)
+                return JsMath.floor(x).toDouble()
             } else {
-                x = NativeMath.round(x)
+                return JsMath.round(x).toDouble()
             }
         }
         return x
     }
 
     fun round(x: Double): Long {
-        return NativeMath.round(x).toLong()
+        return JsMath.round(x).toLong()
     }
 
     fun round(x: Float): Int {
-        return NativeMath.round(x.toDouble()).toInt()
+        return JsMath.round(x.toDouble()).toInt()
     }
 
     fun subtractExact(x: Int, y: Int): Int {
@@ -285,7 +281,7 @@ object Math {
 
     fun scalb(d: Double, scaleFactor: Int): Double {
         if (scaleFactor >= 31 || scaleFactor <= -31) {
-            return d * NativeMath.pow(2.0, scaleFactor.toDouble())
+            return d * JsMath.pow(2.0, scaleFactor.toDouble())
         } else if (scaleFactor > 0) {
             return d * (1 shl scaleFactor)
         } else if (scaleFactor == 0) {
@@ -300,7 +296,7 @@ object Math {
     }
 
     fun signum(d: Double): Double {
-        if (d == 0.0 || java.lang.Double.isNaN(d)) {
+        if (d == 0.0 || d.isNaN()) {
             return d
         } else {
             return (if (d < 0) -1 else 1).toDouble()
@@ -312,28 +308,28 @@ object Math {
     }
 
     fun sin(x: Double): Double {
-        return NativeMath.sin(x)
+        return JsMath.sin(x)
     }
 
     fun sinh(x: Double): Double {
-        return if (x == 0.0) x else (NativeMath.exp(x) - NativeMath.exp(-x)) / 2
+        return if (x == 0.0) x else (JsMath.exp(x) - JsMath.exp(-x)) / 2
     }
 
     fun sqrt(x: Double): Double {
-        return NativeMath.sqrt(x)
+        return JsMath.sqrt(x)
     }
 
     fun tan(x: Double): Double {
-        return NativeMath.tan(x)
+        return JsMath.tan(x)
     }
 
     fun tanh(x: Double): Double {
         if (x == 0.0) {
             return x
-        } else if (java.lang.Double.isInfinite(x)) {
+        } else if (x.isInfinite()) {
             return signum(x)
         } else {
-            val e2x = NativeMath.exp(2 * x)
+            val e2x = JsMath.exp(2 * x)
             return (e2x - 1) / (e2x + 1)
         }
     }
@@ -353,29 +349,13 @@ object Math {
     }
 
     private fun isSafeIntegerRange(value: Double): Boolean {
-        return Integer.MIN_VALUE <= value && value <= Integer.MAX_VALUE
-    }
-
-    @JsType(isNative = true, name = "Math", namespace = JsPackage.GLOBAL)
-    private object NativeMath {
-        var LOG10E: Double = 0.toDouble()
-        external fun abs(x: Double): Double
-        external fun acos(x: Double): Double
-        external fun asin(x: Double): Double
-        external fun atan(x: Double): Double
-        external fun atan2(y: Double, x: Double): Double
-        external fun ceil(x: Double): Double
-        external fun cos(x: Double): Double
-        external fun exp(x: Double): Double
-        external fun floor(x: Double): Double
-        external fun log(x: Double): Double
-        external fun max(x: Double, y: Double): Double
-        external fun min(x: Double, y: Double): Double
-        external fun pow(x: Double, exp: Double): Double
-        external fun random(): Double
-        external fun round(x: Double): Double
-        external fun sin(x: Double): Double
-        external fun sqrt(x: Double): Double
-        external fun tan(x: Double): Double
+        return Int.MIN_VALUE <= value && value <= Int.MAX_VALUE
     }
 }
+
+private fun checkCriticalArithmetic(expression: Boolean) {
+    require(expression, { -> "ArithmeticException" })
+}
+
+// Missing in the kotlin mappings, so we define it ourself
+private val LOG10E: Double = 0.4342944819032518
