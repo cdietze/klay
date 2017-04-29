@@ -9,9 +9,9 @@ import pythagoras.f.*
  * @return a reference to the buffer, for chaining.
  */
 fun IMatrix3.get(buf: FloatBuffer): FloatBuffer {
-    buf.put(m00()).put(m01()).put(m02())
-    buf.put(m10()).put(m11()).put(m12())
-    buf.put(m20()).put(m21()).put(m22())
+    buf.put(m00).put(m01).put(m02)
+    buf.put(m10).put(m11).put(m12)
+    buf.put(m20).put(m21).put(m22)
     return buf
 }
 
@@ -21,10 +21,10 @@ fun IMatrix3.get(buf: FloatBuffer): FloatBuffer {
  * @return a reference to the buffer, for chaining.
  */
 fun IMatrix4.get(buf: FloatBuffer): FloatBuffer {
-    buf.put(m00()).put(m01()).put(m02()).put(m03())
-    buf.put(m10()).put(m11()).put(m12()).put(m13())
-    buf.put(m20()).put(m21()).put(m22()).put(m23())
-    buf.put(m30()).put(m31()).put(m32()).put(m33())
+    buf.put(m00).put(m01).put(m02).put(m03)
+    buf.put(m10).put(m11).put(m12).put(m13)
+    buf.put(m20).put(m21).put(m22).put(m23)
+    buf.put(m30).put(m31).put(m32).put(m33)
     return buf
 }
 
@@ -63,14 +63,14 @@ fun Matrix4.set(buf: FloatBuffer): Matrix4 {
 
  * @return a reference to the buffer, for chaining.
  */
-fun IVector3.get(buf: FloatBuffer): FloatBuffer = buf.put(x()).put(y()).put(z())
+fun IVector3.get(buf: FloatBuffer): FloatBuffer = buf.put(x).put(y).put(z)
 
 /**
  * Populates the supplied buffer with the contents of this vector.
 
  * @return a reference to the buffer, for chaining.
  */
-fun IVector4.get(buf: FloatBuffer): FloatBuffer = buf.put(x()).put(y()).put(z()).put(w())
+fun IVector4.get(buf: FloatBuffer): FloatBuffer = buf.put(x).put(y).put(z).put(w)
 
 /**
  * Creates a vector from a float buffer.
@@ -87,4 +87,4 @@ fun Vector4.set(buf: FloatBuffer): Vector4 = set(buf.get(), buf.get(), buf.get()
 /**
  * Stores the contents of this plane into the specified buffer.
  */
-fun IPlane.get(buf: FloatBuffer): FloatBuffer = buf.put(normal().x()).put(normal().y()).put(normal().z()).put(constant())
+fun IPlane.get(buf: FloatBuffer): FloatBuffer = buf.put(normal.x).put(normal.y).put(normal.z).put(constant)
