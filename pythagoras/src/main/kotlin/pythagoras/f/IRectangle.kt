@@ -7,7 +7,7 @@ package pythagoras.f
 /**
  * Provides read-only access to a [Rectangle].
  */
-interface IRectangle : IRectangularShape, Cloneable {
+interface IRectangle : IRectangularShape {
 
     /** Returns a copy of this rectangle's upper-left corner.  */
     fun location(): Point
@@ -52,7 +52,7 @@ interface IRectangle : IRectangularShape, Cloneable {
     fun outcode(point: XY): Int
 
     /** Returns a mutable copy of this rectangle.  */
-    public override fun clone(): Rectangle
+    fun clone(): Rectangle
 
     companion object {
         /** The bitmask that indicates that a point lies to the left of this rectangle. See

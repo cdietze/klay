@@ -4,18 +4,16 @@
 
 package pythagoras.f
 
-import java.io.Serializable
-
 /**
  * Represents a point on a plane.
  */
-class Point : AbstractPoint, Serializable {
+class Point : AbstractPoint {
 
     /** The x-coordinate of the point.  */
-    var x: Float = 0.toFloat()
+    override var x: Float = 0.toFloat()
 
     /** The y-coordinate of the point.  */
-    var y: Float = 0.toFloat()
+    override var y: Float = 0.toFloat()
 
     /**
      * Constructs a point at (0, 0).
@@ -33,14 +31,14 @@ class Point : AbstractPoint, Serializable {
      * Constructs a point with coordinates equal to the supplied point.
      */
     constructor(p: XY) {
-        set(p.x(), p.y())
+        set(p.x, p.y)
     }
 
     /** Sets the coordinates of this point to be equal to those of the supplied point.
      * @return a reference to this this, for chaining.
      */
     fun set(p: XY): Point {
-        return set(p.x(), p.y())
+        return set(p.x, p.y)
     }
 
     /** Sets the coordinates of this point to the supplied values.
@@ -78,16 +76,6 @@ class Point : AbstractPoint, Serializable {
      */
     fun subtractLocal(x: Float, y: Float): Point {
         return subtract(x, y, this)
-    }
-
-    override // from XY
-    fun x(): Float {
-        return x
-    }
-
-    override // from XY
-    fun y(): Float {
-        return y
     }
 
     companion object {

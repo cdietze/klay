@@ -9,14 +9,16 @@ package pythagoras.f
  */
 abstract class AbstractTransform : Transform {
     override // from Transform
-    fun scale(): Vector {
-        return Vector(scaleX(), scaleY())
-    }
+    val scale: Vector
+        get() {
+            return Vector(scaleX, scaleY)
+        }
 
     override // from Transform
-    fun translation(): Vector {
-        return Vector(tx(), ty())
-    }
+    val translation: Vector
+        get() {
+            return Vector(tx, ty)
+        }
 
     override // from Transform
     fun setUniformScale(scale: Float): Transform {

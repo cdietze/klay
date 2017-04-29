@@ -5,19 +5,17 @@
 package pythagoras.f
 
 import pythagoras.util.Platform
-
-import java.io.Serializable
-import java.nio.FloatBuffer
+import java.lang.Math
 
 /**
  * A three element vector.
  */
-class Vector3 : IVector3, Serializable {
+class Vector3 : IVector3 {
 
     /** The components of the vector.  */
-    var x: Float = 0.toFloat()
-    var y: Float = 0.toFloat()
-    var z: Float = 0.toFloat()
+    override var x: Float = 0.toFloat()
+    override var y: Float = 0.toFloat()
+    override var z: Float = 0.toFloat()
 
     /**
      * Creates a vector from three components.
@@ -152,7 +150,7 @@ class Vector3 : IVector3, Serializable {
      * @return a reference to this vector, for chaining.
      */
     fun set(other: IVector3): Vector3 {
-        return set(other.x(), other.y(), other.z())
+        return set(other.x, other.y, other.z)
     }
 
     /**
@@ -176,24 +174,9 @@ class Vector3 : IVector3, Serializable {
         return this
     }
 
-    override // from IVector3
-    fun x(): Float {
-        return x
-    }
-
-    override // from IVector3
-    fun y(): Float {
-        return y
-    }
-
-    override // from IVector3
-    fun z(): Float {
-        return z
-    }
-
     override // from interface IVector3
     fun dot(other: IVector3): Float {
-        return x * other.x() + y * other.y() + z * other.z()
+        return x * other.x + y * other.y + z * other.z
     }
 
     override // from interface IVector3
@@ -206,21 +189,21 @@ class Vector3 : IVector3, Serializable {
         val x = this.x
         val y = this.y
         val z = this.z
-        val ox = other.x()
-        val oy = other.y()
-        val oz = other.z()
+        val ox = other.x
+        val oy = other.y
+        val oz = other.z
         return result.set(y * oz - z * oy, z * ox - x * oz, x * oy - y * ox)
     }
 
     override // from interface IVector3
     fun triple(b: IVector3, c: IVector3): Float {
-        val bx = b.x()
-        val by = b.y()
-        val bz = b.z()
-        val cx = c.x()
-        val cy = c.y()
-        val cz = c.z()
-        return x() * (by * cz - bz * cy) + y() * (bz * cx - bx * cz) + z() * (bx * cy - by * cx)
+        val bx = b.x
+        val by = b.y
+        val bz = b.z
+        val cx = c.x
+        val cy = c.y
+        val cz = c.z
+        return x * (by * cz - bz * cy) + y * (bz * cx - bx * cz) + z * (bx * cy - by * cx)
     }
 
     override // from interface IVector3
@@ -278,15 +261,15 @@ class Vector3 : IVector3, Serializable {
 
     override // from interface IVector3
     fun distanceSquared(other: IVector3): Float {
-        val dx = x - other.x()
-        val dy = y - other.y()
-        val dz = z - other.z()
+        val dx = x - other.x
+        val dy = y - other.y
+        val dz = z - other.z
         return dx * dx + dy * dy + dz * dz
     }
 
     override // from interface IVector3
     fun manhattanDistance(other: IVector3): Float {
-        return Math.abs(x - other.x()) + Math.abs(y - other.y()) + Math.abs(z - other.z())
+        return Math.abs(x - other.x) + Math.abs(y - other.y) + Math.abs(z - other.z)
     }
 
     override // from interface IVector3
@@ -306,7 +289,7 @@ class Vector3 : IVector3, Serializable {
 
     override // from interface IVector3
     fun mult(other: IVector3, result: Vector3): Vector3 {
-        return result.set(x * other.x(), y * other.y(), z * other.z())
+        return result.set(x * other.x, y * other.y, z * other.z)
     }
 
     override // from interface IVector3
@@ -316,7 +299,7 @@ class Vector3 : IVector3, Serializable {
 
     override // from interface IVector3
     fun add(other: IVector3, result: Vector3): Vector3 {
-        return add(other.x(), other.y(), other.z(), result)
+        return add(other.x, other.y, other.z, result)
     }
 
     override // from interface IVector3
@@ -326,7 +309,7 @@ class Vector3 : IVector3, Serializable {
 
     override // from interface IVector3
     fun subtract(other: IVector3, result: Vector3): Vector3 {
-        return add(-other.x(), -other.y(), -other.z(), result)
+        return add(-other.x, -other.y, -other.z, result)
     }
 
     override // from interface IVector3
@@ -346,7 +329,7 @@ class Vector3 : IVector3, Serializable {
 
     override // from interface IVector3
     fun addScaled(other: IVector3, v: Float, result: Vector3): Vector3 {
-        return result.set(x + other.x() * v, y + other.y() * v, z + other.z() * v)
+        return result.set(x + other.x * v, y + other.y * v, z + other.z * v)
     }
 
     override // from interface IVector3
@@ -359,7 +342,7 @@ class Vector3 : IVector3, Serializable {
         val x = this.x
         val y = this.y
         val z = this.z
-        return result.set(x + t * (other.x() - x), y + t * (other.y() - y), z + t * (other.z() - z))
+        return result.set(x + t * (other.x - x), y + t * (other.y - y), z + t * (other.z - z))
     }
 
     override // from interface IVector3
@@ -423,9 +406,9 @@ class Vector3 : IVector3, Serializable {
 
         /** A vector containing the minimum floating point value for all components
          * (note: the components are -[Float.MAX_VALUE], not [Float.MIN_VALUE]).  */
-        val MIN_VALUE: IVector3 = Vector3(-java.lang.Float.MAX_VALUE, -java.lang.Float.MAX_VALUE, -java.lang.Float.MAX_VALUE)
+        val MIN_VALUE: IVector3 = Vector3(-Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE)
 
         /** A vector containing the maximum floating point value for all components.  */
-        val MAX_VALUE: IVector3 = Vector3(java.lang.Float.MAX_VALUE, java.lang.Float.MAX_VALUE, java.lang.Float.MAX_VALUE)
+        val MAX_VALUE: IVector3 = Vector3(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE)
     }
 }

@@ -4,6 +4,8 @@
 
 package pythagoras.f
 
+import java.lang.Math
+
 /**
  * Cubic curve-related utility methods.
  */
@@ -32,14 +34,14 @@ object CubicCurves {
     }
 
     fun subdivide(src: ICubicCurve, left: CubicCurve?, right: CubicCurve?) {
-        val x1 = src.x1()
-        val y1 = src.y1()
-        var cx1 = src.ctrlX1()
-        var cy1 = src.ctrlY1()
-        var cx2 = src.ctrlX2()
-        var cy2 = src.ctrlY2()
-        val x2 = src.x2()
-        val y2 = src.y2()
+        val x1 = src.x1
+        val y1 = src.y1
+        var cx1 = src.ctrlX1
+        var cy1 = src.ctrlY1
+        var cx2 = src.ctrlX2
+        var cy2 = src.ctrlY2
+        val x2 = src.x2
+        val y2 = src.y2
         var cx = (cx1 + cx2) / 2f
         var cy = (cy1 + cy2) / 2f
         cx1 = (x1 + cx1) / 2f
@@ -100,7 +102,7 @@ object CubicCurves {
         }
     }
 
-    @JvmOverloads fun solveCubic(eqn: FloatArray, res: FloatArray = eqn): Int {
+    fun solveCubic(eqn: FloatArray, res: FloatArray = eqn): Int {
         return Crossing.solveCubic(eqn, res)
     }
 }

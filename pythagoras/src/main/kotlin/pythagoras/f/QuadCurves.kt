@@ -31,12 +31,12 @@ object QuadCurves {
     }
 
     fun subdivide(src: IQuadCurve, left: QuadCurve?, right: QuadCurve?) {
-        val x1 = src.x1()
-        val y1 = src.y1()
-        var cx = src.ctrlX()
-        var cy = src.ctrlY()
-        val x2 = src.x2()
-        val y2 = src.y2()
+        val x1 = src.x1
+        val y1 = src.y1
+        var cx = src.ctrlX
+        var cy = src.ctrlY
+        val x2 = src.x2
+        val y2 = src.y2
         val cx1 = (x1 + cx) / 2f
         val cy1 = (y1 + cy) / 2f
         val cx2 = (x2 + cx) / 2f
@@ -79,7 +79,7 @@ object QuadCurves {
         }
     }
 
-    @JvmOverloads fun solveQuadratic(eqn: FloatArray, res: FloatArray = eqn): Int {
+    fun solveQuadratic(eqn: FloatArray, res: FloatArray = eqn): Int {
         return Crossing.solveQuad(eqn, res)
     }
 }

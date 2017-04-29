@@ -4,10 +4,6 @@
 
 package pythagoras.f
 
-import pythagoras.util.SingularMatrixException
-
-import java.nio.FloatBuffer
-
 /**
  * Provides read-only access to a [Matrix3].
  */
@@ -122,7 +118,6 @@ interface IMatrix3 {
 
      * @return a reference to the result matrix, for chaining.
      */
-    @Throws(SingularMatrixException::class)
     fun invert(result: Matrix3): Matrix3
 
     /**
@@ -137,7 +132,6 @@ interface IMatrix3 {
 
      * @return a reference to the result matrix, for chaining.
      */
-    @Throws(SingularMatrixException::class)
     fun invertAffine(result: Matrix3): Matrix3
 
     /**

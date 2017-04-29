@@ -11,12 +11,12 @@ interface IRay3 {
     /**
      * Returns a reference to the ray's point of origin.
      */
-    fun origin(): IVector3
+    val origin: IVector3
 
     /**
      * Returns a reference to the ray's unit direction vector.
      */
-    fun direction(): IVector3
+    val direction: IVector3
 
     // /**
     //  * Transforms this ray.

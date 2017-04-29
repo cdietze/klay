@@ -6,9 +6,7 @@ package pythagoras.f
 
 import pythagoras.util.Platform
 import pythagoras.util.SingularMatrixException
-
-import java.io.Serializable
-import java.nio.FloatBuffer
+import java.lang.Math
 
 /**
  * A 4x4 column-major matrix.
@@ -115,9 +113,9 @@ class Matrix4 : IMatrix4, Serializable {
      */
     fun setToTransform(translation: IVector3, rotation: IQuaternion, scale: Float): Matrix4 {
         return setToRotation(rotation).set(
-                m00 * scale, m10 * scale, m20 * scale, translation.x(),
-                m01 * scale, m11 * scale, m21 * scale, translation.y(),
-                m02 * scale, m12 * scale, m22 * scale, translation.z(),
+                m00 * scale, m10 * scale, m20 * scale, translation.x,
+                m01 * scale, m11 * scale, m21 * scale, translation.y,
+                m02 * scale, m12 * scale, m22 * scale, translation.z,
                 0f, 0f, 0f, 1f)
     }
 
@@ -127,13 +125,13 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToTransform(translation: IVector3, rotation: IQuaternion, scale: IVector3): Matrix4 {
-        val sx = scale.x()
-        val sy = scale.y()
-        val sz = scale.z()
+        val sx = scale.x
+        val sy = scale.y
+        val sz = scale.z
         return setToRotation(rotation).set(
-                m00 * sx, m10 * sy, m20 * sz, translation.x(),
-                m01 * sx, m11 * sy, m21 * sz, translation.y(),
-                m02 * sx, m12 * sy, m22 * sz, translation.z(),
+                m00 * sx, m10 * sy, m20 * sz, translation.x,
+                m01 * sx, m11 * sy, m21 * sz, translation.y,
+                m02 * sx, m12 * sy, m22 * sz, translation.z,
                 0f, 0f, 0f, 1f)
     }
 
@@ -143,7 +141,7 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToTranslation(translation: IVector3): Matrix4 {
-        return setToTranslation(translation.x(), translation.y(), translation.z())
+        return setToTranslation(translation.x, translation.y, translation.z)
     }
 
     /**
@@ -164,7 +162,7 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setTranslation(translation: IVector3): Matrix4 {
-        return setTranslation(translation.x(), translation.y(), translation.z())
+        return setTranslation(translation.x, translation.y, translation.z)
     }
 
     /**
@@ -193,10 +191,10 @@ class Matrix4 : IMatrix4, Serializable {
             return setToRotation(angle, from.cross(to).normalizeLocal())
         }
         // it's a 180 degree rotation; any axis orthogonal to the from vector will do
-        val axis = Vector3(0f, from.z(), -from.y())
+        val axis = Vector3(0f, from.z, -from.y)
         val length = axis.length()
         return setToRotation(FloatMath.PI, if (length < MathUtil.EPSILON)
-            axis.set(-from.z(), 0f, from.x()).normalizeLocal()
+            axis.set(-from.z, 0f, from.x).normalizeLocal()
         else
             axis.multLocal(1f / length))
     }
@@ -207,7 +205,7 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToRotation(angle: Float, axis: IVector3): Matrix4 {
-        return setToRotation(angle, axis.x(), axis.y(), axis.z())
+        return setToRotation(angle, axis.x, axis.y, axis.z)
     }
 
     /**
@@ -239,10 +237,10 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToRotation(quat: IQuaternion): Matrix4 {
-        val x = quat.x()
-        val y = quat.y()
-        val z = quat.z()
-        val w = quat.w()
+        val x = quat.x
+        val y = quat.y
+        val z = quat.z
+        val w = quat.w
         val xx = x * x
         val yy = y * y
         val zz = z * z
@@ -276,7 +274,7 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToScale(scale: IVector3): Matrix4 {
-        return setToScale(scale.x(), scale.y(), scale.z())
+        return setToScale(scale.x, scale.y, scale.z)
     }
 
     /**
@@ -306,7 +304,7 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToReflection(normal: IVector3): Matrix4 {
-        return setToReflection(normal.x(), normal.y(), normal.z())
+        return setToReflection(normal.x, normal.y, normal.z)
     }
 
     /**
@@ -333,7 +331,7 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToReflection(plane: IPlane): Matrix4 {
-        return setToReflection(plane.normal(), plane.constant())
+        return setToReflection(plane.normal, plane.constant)
     }
 
     /**
@@ -342,7 +340,7 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToReflection(normal: IVector3, constant: Float): Matrix4 {
-        return setToReflection(normal.x(), normal.y(), normal.z(), constant)
+        return setToReflection(normal.x, normal.y, normal.z, constant)
     }
 
     /**
@@ -370,7 +368,7 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToSkew(plane: IPlane, amount: IVector3): Matrix4 {
-        return setToSkew(plane.normal(), plane.constant(), amount)
+        return setToSkew(plane.normal, plane.constant, amount)
     }
 
     /**
@@ -379,8 +377,8 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToSkew(normal: IVector3, constant: Float, amount: IVector3): Matrix4 {
-        return setToSkew(normal.x(), normal.y(), normal.z(), constant,
-                amount.x(), amount.y(), amount.z())
+        return setToSkew(normal.x, normal.y, normal.z, constant,
+                amount.x, amount.y, amount.z)
     }
 
     /**
@@ -422,10 +420,10 @@ class Matrix4 : IMatrix4, Serializable {
         val rtb = 1f / (top - bottom)
         val rnf = 1f / (near - far)
         val n2 = 2f * near
-        val s = (far + near) / (near * nearFarNormal.z() - far * nearFarNormal.z())
+        val s = (far + near) / (near * nearFarNormal.z - far * nearFarNormal.z)
         return set(n2 * rrl, 0f, (right + left) * rrl, 0f,
                 0f, n2 * rtb, (top + bottom) * rtb, 0f,
-                s * nearFarNormal.x(), s * nearFarNormal.y(), (far + near) * rnf, n2 * far * rnf,
+                s * nearFarNormal.x, s * nearFarNormal.y, (far + near) * rnf, n2 * far * rnf,
                 0f, 0f, -1f, 0f)
     }
 
@@ -440,10 +438,10 @@ class Matrix4 : IMatrix4, Serializable {
         val rlr = 1f / (left - right)
         val rbt = 1f / (bottom - top)
         val rnf = 1f / (near - far)
-        val s = 2f / (near * nearFarNormal.z() - far * nearFarNormal.z())
+        val s = 2f / (near * nearFarNormal.z - far * nearFarNormal.z)
         return set(-2f * rlr, 0f, 0f, (right + left) * rlr,
                 0f, -2f * rbt, 0f, (top + bottom) * rbt,
-                s * nearFarNormal.x(), s * nearFarNormal.y(), 2f * rnf, (far + near) * rnf,
+                s * nearFarNormal.x, s * nearFarNormal.y, 2f * rnf, (far + near) * rnf,
                 0f, 0f, 0f, 1f)
     }
 
@@ -1012,9 +1010,9 @@ class Matrix4 : IMatrix4, Serializable {
 
     override // from IMatrix4
     fun projectPoint(point: IVector3, result: Vector3): Vector3 {
-        val px = point.x()
-        val py = point.y()
-        val pz = point.z()
+        val px = point.x
+        val py = point.y
+        val pz = point.z
         val rw = 1f / (m03 * px + m13 * py + m23 * pz + m33)
         return result.set((m00 * px + m10 * py + m20 * pz + m30) * rw,
                 (m01 * px + m11 * py + m21 * pz + m31) * rw,
@@ -1033,9 +1031,9 @@ class Matrix4 : IMatrix4, Serializable {
 
     override // from IMatrix4
     fun transformPoint(point: IVector3, result: Vector3): Vector3 {
-        val px = point.x()
-        val py = point.y()
-        val pz = point.z()
+        val px = point.x
+        val py = point.y
+        val pz = point.z
         return result.set(m00 * px + m10 * py + m20 * pz + m30,
                 m01 * px + m11 * py + m21 * pz + m31,
                 m02 * px + m12 * py + m22 * pz + m32)
@@ -1043,7 +1041,7 @@ class Matrix4 : IMatrix4, Serializable {
 
     override // from IMatrix4
     fun transformPointZ(point: IVector3): Float {
-        return m02 * point.x() + m12 * point.y() + m22 * point.z() + m32
+        return m02 * point.x + m12 * point.y + m22 * point.z + m32
     }
 
     override // from IMatrix4
@@ -1058,9 +1056,9 @@ class Matrix4 : IMatrix4, Serializable {
 
     override // from IMatrix4
     fun transformVector(vector: IVector3, result: Vector3): Vector3 {
-        val vx = vector.x()
-        val vy = vector.y()
-        val vz = vector.z()
+        val vx = vector.x
+        val vy = vector.y
+        val vz = vector.z
         return result.set(m00 * vx + m10 * vy + m20 * vz,
                 m01 * vx + m11 * vy + m21 * vz,
                 m02 * vx + m12 * vy + m22 * vz)
@@ -1073,10 +1071,10 @@ class Matrix4 : IMatrix4, Serializable {
 
     override // from IMatrix4
     fun transform(vector: IVector4, result: Vector4): Vector4 {
-        val vx = vector.x()
-        val vy = vector.y()
-        val vz = vector.z()
-        val vw = vector.w()
+        val vx = vector.x
+        val vy = vector.y
+        val vz = vector.z
+        val vw = vector.w
         return result.set(m00 * vx + m10 * vy + m20 * vz + m30 * vw,
                 m01 * vx + m11 * vy + m21 * vz + m31 * vw,
                 m02 * vx + m12 * vy + m22 * vz + m32 * vw,

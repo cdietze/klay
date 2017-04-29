@@ -4,24 +4,22 @@
 
 package pythagoras.f
 
-import java.io.Serializable
-
 /**
  * Represents a line segment.
  */
-class Line : AbstractLine, Serializable {
+class Line : AbstractLine {
 
     /** The x-coordinate of the start of this line segment.  */
-    var x1: Float = 0.toFloat()
+    override var x1: Float = 0.toFloat()
 
     /** The y-coordinate of the start of this line segment.  */
-    var y1: Float = 0.toFloat()
+    override var y1: Float = 0.toFloat()
 
     /** The x-coordinate of the end of this line segment.  */
-    var x2: Float = 0.toFloat()
+    override var x2: Float = 0.toFloat()
 
     /** The y-coordinate of the end of this line segment.  */
-    var y2: Float = 0.toFloat()
+    override var y2: Float = 0.toFloat()
 
     /**
      * Creates a line from (0,0) to (0,0).
@@ -56,27 +54,7 @@ class Line : AbstractLine, Serializable {
      * Sets the start and end of this line to the specified points.
      */
     fun setLine(p1: XY, p2: XY) {
-        setLine(p1.x(), p1.y(), p2.x(), p2.y())
-    }
-
-    override // from interface ILine
-    fun x1(): Float {
-        return x1
-    }
-
-    override // from interface ILine
-    fun y1(): Float {
-        return y1
-    }
-
-    override // from interface ILine
-    fun x2(): Float {
-        return x2
-    }
-
-    override // from interface ILine
-    fun y2(): Float {
-        return y2
+        setLine(p1.x, p1.y, p2.x, p2.y)
     }
 
     companion object {

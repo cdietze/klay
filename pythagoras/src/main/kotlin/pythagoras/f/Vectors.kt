@@ -3,6 +3,7 @@
 // http://github.com/samskivert/pythagoras
 
 package pythagoras.f
+import java.lang.Math
 
 /**
  * Vector-related utility methods.
@@ -19,10 +20,10 @@ object Vectors {
 
     /** A vector containing the minimum floating point value for all components
      * (note: the components are -[Float.MAX_VALUE], not [Float.MIN_VALUE]).  */
-    val MIN_VALUE: IVector = Vector(-java.lang.Float.MAX_VALUE, -java.lang.Float.MAX_VALUE)
+    val MIN_VALUE: IVector = Vector(-Float.MAX_VALUE, -Float.MAX_VALUE)
 
     /** A vector containing the maximum floating point value for all components.  */
-    val MAX_VALUE: IVector = Vector(java.lang.Float.MAX_VALUE, java.lang.Float.MAX_VALUE)
+    val MAX_VALUE: IVector = Vector(Float.MAX_VALUE, Float.MAX_VALUE)
 
     /**
      * Creates a new vector from polar coordinates.
@@ -35,7 +36,7 @@ object Vectors {
      * Creates a vector from `from` to `to`.
      */
     fun from(from: XY, to: XY): Vector {
-        return Vector(to.x() - from.x(), to.y() - from.y())
+        return Vector(to.x - from.x, to.y - from.y)
     }
 
     /**
@@ -63,7 +64,7 @@ object Vectors {
      * Returns true if the supplied vector's x and y components are `epsilon` close to zero
      * magnitude.
      */
-    @JvmOverloads fun isEpsilonZero(x: Float, y: Float, epsilon: Float = MathUtil.EPSILON): Boolean {
+    fun isEpsilonZero(x: Float, y: Float, epsilon: Float = MathUtil.EPSILON): Boolean {
         return Math.abs(x) <= epsilon && Math.abs(y) <= epsilon
     }
 
@@ -71,8 +72,8 @@ object Vectors {
      * Returns true if the supplied vectors' x and y components are equal to one another within
      * `epsilon`.
      */
-    @JvmOverloads fun epsilonEquals(v1: IVector, v2: IVector, epsilon: Float = MathUtil.EPSILON): Boolean {
-        return Math.abs(v1.x() - v2.x()) <= epsilon && Math.abs(v1.y() - v2.y()) <= epsilon
+    fun epsilonEquals(v1: IVector, v2: IVector, epsilon: Float = MathUtil.EPSILON): Boolean {
+        return Math.abs(v1.x - v2.x) <= epsilon && Math.abs(v1.y - v2.y) <= epsilon
     }
 
     /** Transforms a vector as specified (as a point, accounting for translation), storing the

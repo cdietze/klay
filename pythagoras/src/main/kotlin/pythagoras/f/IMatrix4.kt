@@ -4,8 +4,6 @@
 
 package pythagoras.f
 
-import java.nio.FloatBuffer
-
 /**
  * Provides read-only access to a [Matrix4].
  */

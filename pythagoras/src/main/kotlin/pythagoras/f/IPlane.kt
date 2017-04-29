@@ -4,17 +4,15 @@
 
 package pythagoras.f
 
-import java.nio.FloatBuffer
-
 /**
  * Provides read-only access to a [Plane].
  */
 interface IPlane {
     /** Returns the plane constant.  */
-    fun constant(): Float
+    val constant: Float
 
     /** Returns the plane normal.  */
-    fun normal(): IVector3
+    val normal: IVector3
 
     /**
      * Stores the contents of this plane into the specified buffer.

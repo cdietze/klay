@@ -4,6 +4,8 @@
 
 package pythagoras.f
 
+import java.lang.Math
+
 /**
  * Internal utility methods for computing intersections and containment.
  */

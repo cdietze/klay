@@ -5,18 +5,16 @@
 package pythagoras.f
 
 import pythagoras.util.Platform
-
-import java.io.Serializable
-import java.nio.FloatBuffer
+import java.lang.Math
 
 /**
  * A plane consisting of a unit normal and a constant. All points on the plane satisfy the equation
  * `Ax + By + Cz + D = 0`, where (A, B, C) is the plane normal and D is the constant.
  */
-class Plane : IPlane, Serializable {
+class Plane : IPlane {
 
     /** The plane constant.  */
-    var constant: Float = 0.toFloat()
+    override var constant: Float = 0.toFloat()
 
     /**
      * Creates a plane from the specified normal and constant.
@@ -57,7 +55,7 @@ class Plane : IPlane, Serializable {
      * @return a reference to this plane (for chaining).
      */
     fun set(other: Plane): Plane {
-        return set(other.normal(), other.constant)
+        return set(other.normal, other.constant)
     }
 
     /**
@@ -66,7 +64,7 @@ class Plane : IPlane, Serializable {
      * @return a reference to this plane (for chaining).
      */
     operator fun set(normal: IVector3, constant: Float): Plane {
-        return set(normal.x(), normal.y(), normal.z(), constant)
+        return set(normal.x, normal.y, normal.z, constant)
     }
 
     /**
@@ -133,16 +131,10 @@ class Plane : IPlane, Serializable {
     }
 
     override // from IPlane
-    fun constant(): Float {
-        return constant
-    }
-
-    override // from IPlane
-    fun normal(): IVector3 {
+    val normal: IVector3 get() {
         return _normal
     }
 
-    override // from IPlane
     fun get(buf: FloatBuffer): FloatBuffer {
         return buf.put(_normal.x).put(_normal.y).put(_normal.z).put(constant)
     }
@@ -179,22 +171,22 @@ class Plane : IPlane, Serializable {
     override // from IPlane
     fun intersection(ray: IRay3, result: Vector3): Boolean {
         val distance = distance(ray)
-        if (java.lang.Float.isNaN(distance) || distance < 0f) {
+        if (distance.isNaN() || distance < 0f) {
             return false
         } else {
-            ray.origin().addScaled(ray.direction(), distance, result)
+            ray.origin.addScaled(ray.direction, distance, result)
             return true
         }
     }
 
     override // from IPlane
     fun distance(ray: IRay3): Float {
-        val dividend = -distance(ray.origin())
-        val divisor = _normal.dot(ray.direction())
+        val dividend = -distance(ray.origin)
+        val divisor = _normal.dot(ray.direction)
         if (Math.abs(dividend) < MathUtil.EPSILON) {
             return 0f // origin is on plane
         } else if (Math.abs(divisor) < MathUtil.EPSILON) {
-            return java.lang.Float.NaN // ray is parallel to plane
+            return Float.NaN // ray is parallel to plane
         } else {
             return dividend / divisor
         }
@@ -209,7 +201,7 @@ class Plane : IPlane, Serializable {
             return false
         }
         val oplane = other
-        return constant == oplane.constant && _normal == oplane.normal()
+        return constant == oplane.constant && _normal == oplane.normal
     }
 
     /** The plane normal.  */

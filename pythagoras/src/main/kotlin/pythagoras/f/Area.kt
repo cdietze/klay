@@ -5,13 +5,14 @@
 package pythagoras.f
 
 import pythagoras.util.Platform
-import java.util.*
+import java.lang.Math
+import java.lang.System
 
 /**
  * Stores and manipulates an enclosed area of 2D space.
  * See http://download.oracle.com/javase/6/docs/api/java/awt/geom/Area.html
  */
-class Area : IShape, Cloneable {
+class Area : IShape {
     /**
      * Creates an empty area.
      */
@@ -205,12 +206,12 @@ class Area : IShape, Cloneable {
 
     override // from interface IShape
     fun contains(p: XY): Boolean {
-        return contains(p.x(), p.y())
+        return contains(p.x, p.y)
     }
 
     override // from interface IShape
     fun contains(r: IRectangle): Boolean {
-        return contains(r.x(), r.y(), r.width(), r.height())
+        return contains(r.x, r.y, r.width, r.height)
     }
 
     override // from interface IShape
@@ -226,7 +227,7 @@ class Area : IShape, Cloneable {
 
     override // from interface IShape
     fun intersects(r: IRectangle): Boolean {
-        return intersects(r.x(), r.y(), r.width(), r.height())
+        return intersects(r.x, r.y, r.width, r.height)
     }
 
     override // from interface IShape
@@ -272,8 +273,7 @@ class Area : IShape, Cloneable {
         return area.isEmpty
     }
 
-    // @Override // can't declare @Override due to GWT
-    public override fun clone(): Area {
+    fun clone(): Area {
         val area = Area()
         copy(this, area)
         return area
@@ -1120,7 +1120,7 @@ class Area : IShape, Cloneable {
 
     private fun areaBoundsSquare(): Float {
         val bounds = bounds()
-        return bounds.height() * bounds.width()
+        return bounds.height * bounds.width
     }
 
     private fun isVertex(x: Float, y: Float): Boolean {

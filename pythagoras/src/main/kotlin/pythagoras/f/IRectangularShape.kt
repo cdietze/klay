@@ -11,43 +11,43 @@ package pythagoras.f
  */
 interface IRectangularShape : IShape {
     /** Returns the x-coordinate of the upper-left corner of the framing rectangle.  */
-    fun x(): Float
+    val x: Float
 
     /** Returns the y-coordinate of the upper-left corner of the framing rectangle.  */
-    fun y(): Float
+    val y: Float
 
     /** Returns the width of the framing rectangle.  */
-    fun width(): Float
+    val width: Float
 
     /** Returns the height of the framing rectangle.  */
-    fun height(): Float
+    val height: Float
 
     /** Returns the minimum x,y-coordinate of the framing rectangle.  */
-    fun min(): Point
+    val min: Point
 
     /** Returns the minimum x-coordinate of the framing rectangle.  */
-    fun minX(): Float
+    val minX: Float
 
     /** Returns the minimum y-coordinate of the framing rectangle.  */
-    fun minY(): Float
+    val minY: Float
 
     /** Returns the maximum x,y-coordinate of the framing rectangle.  */
-    fun max(): Point
+    val max: Point
 
     /** Returns the maximum x-coordinate of the framing rectangle.  */
-    fun maxX(): Float
+    val maxX: Float
 
     /** Returns the maximum y-coordinate of the framing rectangle.  */
-    fun maxY(): Float
+    val maxY: Float
 
     /** Returns the center of the framing rectangle.  */
-    fun center(): Point
+    val center: Point
 
     /** Returns the x-coordinate of the center of the framing rectangle.  */
-    fun centerX(): Float
+    val centerX: Float
 
     /** Returns the y-coordinate of the center of the framing rectangle.  */
-    fun centerY(): Float
+    val centerY: Float
 
     /** Returns a copy of this shape's framing rectangle.  */
     fun frame(): Rectangle

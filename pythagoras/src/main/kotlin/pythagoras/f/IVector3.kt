@@ -4,20 +4,18 @@
 
 package pythagoras.f
 
-import java.nio.FloatBuffer
-
 /**
  * Provides read-only access to a [Vector3].
  */
 interface IVector3 {
     /** Returns the x-component of this vector.  */
-    fun x(): Float
+    val x: Float
 
     /** Returns the y-component of this vector.  */
-    fun y(): Float
+    val y: Float
 
     /** Returns the z-component of this vector.  */
-    fun z(): Float
+    val z: Float
 
     /**
      * Computes and returns the dot product of this and the specified other vector.

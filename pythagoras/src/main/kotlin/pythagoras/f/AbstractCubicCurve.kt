@@ -4,7 +4,7 @@
 
 package pythagoras.f
 
-import java.util.*
+import java.lang.Math
 
 /**
  * Provides most of the implementation of [ICubicCurve], obtaining only the start, end and
@@ -13,34 +13,34 @@ import java.util.*
 abstract class AbstractCubicCurve : ICubicCurve {
     override // from interface ICubicCurve
     fun p1(): Point {
-        return Point(x1(), y1())
+        return Point(x1, y1)
     }
 
     override // from interface ICubicCurve
     fun ctrlP1(): Point {
-        return Point(ctrlX1(), ctrlY1())
+        return Point(ctrlX1, ctrlY1)
     }
 
     override // from interface ICubicCurve
     fun ctrlP2(): Point {
-        return Point(ctrlX2(), ctrlY2())
+        return Point(ctrlX2, ctrlY2)
     }
 
     override // from interface ICubicCurve
     fun p2(): Point {
-        return Point(x2(), y2())
+        return Point(x2, y2)
     }
 
     override // from interface ICubicCurve
     fun flatnessSq(): Float {
-        return CubicCurves.flatnessSq(x1(), y1(), ctrlX1(), ctrlY1(),
-                ctrlX2(), ctrlY2(), x2(), y2())
+        return CubicCurves.flatnessSq(x1, y1, ctrlX1, ctrlY1,
+                ctrlX2, ctrlY2, x2, y2)
     }
 
     override // from interface ICubicCurve
     fun flatness(): Float {
-        return CubicCurves.flatness(x1(), y1(), ctrlX1(), ctrlY1(),
-                ctrlX2(), ctrlY2(), x2(), y2())
+        return CubicCurves.flatness(x1, y1, ctrlX1, ctrlY1,
+                ctrlX2, ctrlY2, x2, y2)
     }
 
     override // from interface ICubicCurve
@@ -50,8 +50,8 @@ abstract class AbstractCubicCurve : ICubicCurve {
 
     override // from interface ICubicCurve
     fun clone(): CubicCurve {
-        return CubicCurve(x1(), y1(), ctrlX1(), ctrlY1(),
-                ctrlX2(), ctrlY2(), x2(), y2())
+        return CubicCurve(x1, y1, ctrlX1, ctrlY1,
+                ctrlX2, ctrlY2, x2, y2)
     }
 
     override // from interface IShape
@@ -72,12 +72,12 @@ abstract class AbstractCubicCurve : ICubicCurve {
 
     override // from interface IShape
     fun contains(p: XY): Boolean {
-        return contains(p.x(), p.y())
+        return contains(p.x, p.y)
     }
 
     override // from interface IShape
     fun contains(r: IRectangle): Boolean {
-        return contains(r.x(), r.y(), r.width(), r.height())
+        return contains(r.x, r.y, r.width, r.height)
     }
 
     override // from interface IShape
@@ -88,7 +88,7 @@ abstract class AbstractCubicCurve : ICubicCurve {
 
     override // from interface IShape
     fun intersects(r: IRectangle): Boolean {
-        return intersects(r.x(), r.y(), r.width(), r.height())
+        return intersects(r.x, r.y, r.width, r.height)
     }
 
     override // from interface IShape
@@ -98,14 +98,14 @@ abstract class AbstractCubicCurve : ICubicCurve {
 
     override // from interface IShape
     fun bounds(target: Rectangle): Rectangle {
-        val x1 = x1()
-        val y1 = y1()
-        val x2 = x2()
-        val y2 = y2()
-        val ctrlx1 = ctrlX1()
-        val ctrly1 = ctrlY1()
-        val ctrlx2 = ctrlX2()
-        val ctrly2 = ctrlY2()
+        val x1 = x1
+        val y1 = y1
+        val x2 = x2
+        val y2 = y2
+        val ctrlx1 = ctrlX1
+        val ctrly1 = ctrlY1
+        val ctrlx2 = ctrlX2
+        val ctrly2 = ctrlY2
         val rx1 = Math.min(Math.min(x1, x2), Math.min(ctrlx1, ctrlx2))
         val ry1 = Math.min(Math.min(y1, y2), Math.min(ctrly1, ctrly2))
         val rx2 = Math.max(Math.max(x1, x2), Math.max(ctrlx1, ctrlx2))
@@ -147,17 +147,17 @@ abstract class AbstractCubicCurve : ICubicCurve {
             val count: Int
             if (index == 0) {
                 type = PathIterator.SEG_MOVETO
-                coords[0] = c.x1()
-                coords[1] = c.y1()
+                coords[0] = c.x1
+                coords[1] = c.y1
                 count = 1
             } else {
                 type = PathIterator.SEG_CUBICTO
-                coords[0] = c.ctrlX1()
-                coords[1] = c.ctrlY1()
-                coords[2] = c.ctrlX2()
-                coords[3] = c.ctrlY2()
-                coords[4] = c.x2()
-                coords[5] = c.y2()
+                coords[0] = c.ctrlX1
+                coords[1] = c.ctrlY1
+                coords[2] = c.ctrlX2
+                coords[3] = c.ctrlY2
+                coords[4] = c.x2
+                coords[5] = c.y2
                 count = 3
             }
             t?.transform(coords, 0, coords, 0, count)

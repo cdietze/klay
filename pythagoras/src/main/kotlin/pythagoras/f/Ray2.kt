@@ -3,16 +3,17 @@
 // http://github.com/samskivert/pythagoras
 
 package pythagoras.f
+import java.lang.Math
 
 /**
  * A ray consisting of an origin point and a unit direction vector.
  */
 class Ray2 : IRay2 {
     /** The ray's point of origin.  */
-    val origin = Vector()
+    override val origin = Vector()
 
     /** The ray's unit direction vector.  */
-    val direction = Vector()
+    override val direction = Vector()
 
     /**
      * Creates a ray with the values contained in the supplied origin point and unit direction
@@ -40,7 +41,7 @@ class Ray2 : IRay2 {
      * @return a reference to this ray, for chaining.
      */
     fun set(other: IRay2): Ray2 {
-        return set(other.origin(), other.direction())
+        return set(other.origin, other.direction)
     }
 
     /**
@@ -64,16 +65,6 @@ class Ray2 : IRay2 {
     }
 
     override // from IRay2
-    fun origin(): IVector {
-        return origin
-    }
-
-    override // from IRay2
-    fun direction(): IVector {
-        return direction
-    }
-
-    override // from IRay2
     fun transform(transform: Transform): Ray2 {
         return transform(transform, Ray2())
     }
@@ -88,11 +79,11 @@ class Ray2 : IRay2 {
     override // from IRay2
     fun intersects(pt: IVector): Boolean {
         if (Math.abs(direction.x) > Math.abs(direction.y)) {
-            val t = (pt.x() - origin.x) / direction.x
-            return t >= 0f && origin.y + t * direction.y == pt.y()
+            val t = (pt.x - origin.x) / direction.x
+            return t >= 0f && origin.y + t * direction.y == pt.y
         } else {
-            val t = (pt.y() - origin.y) / direction.y
-            return t >= 0f && origin.x + t * direction.x == pt.x()
+            val t = (pt.y - origin.y) / direction.y
+            return t >= 0f && origin.x + t * direction.x == pt.x
         }
     }
 
@@ -103,16 +94,16 @@ class Ray2 : IRay2 {
         val ay = origin.y
         val bx = direction.x
         val by = direction.y
-        val cx = start.x()
-        val cy = start.y()
-        val dx = end.x() - start.x()
-        val dy = end.y() - start.y()
+        val cx = start.x
+        val cy = start.y
+        val dx = end.x - start.x
+        val dy = end.y - start.y
 
         val divisor = bx * dy - by * dx
         if (Math.abs(divisor) < MathUtil.EPSILON) {
             // the lines are parallel (or the segment is zero-length)
             val t = Math.min(getIntersection(start), getIntersection(end))
-            val isect = t != java.lang.Float.MAX_VALUE
+            val isect = t != Float.MAX_VALUE
             if (isect) {
                 origin.addScaled(direction, t, result)
             }
@@ -134,11 +125,11 @@ class Ray2 : IRay2 {
 
     override // from IRay2
     fun getIntersection(start: IVector, end: IVector, radius: Float, result: Vector): Boolean {
-        val startx = start.x()
-        val starty = start.y()
+        val startx = start.x
+        val starty = start.y
         // compute the segment's line parameters
-        var a = starty - end.y()
-        var b = end.x() - startx
+        var a = starty - end.y
+        var b = end.x - startx
         val len = FloatMath.hypot(a, b)
         if (len < MathUtil.EPSILON) { // start equals end; check as circle
             return getIntersection(start, radius, result)
@@ -195,8 +186,8 @@ class Ray2 : IRay2 {
             return true
         }
         // then if we intersect the circle
-        val ax = origin.x - center.x()
-        val ay = origin.y - center.y()
+        val ax = origin.x - center.x
+        val ay = origin.y - center.y
         val b = 2f * (direction.x * ax + direction.y * ay)
         val c = ax * ax + ay * ay - radius * radius
         val radicand = b * b - 4f * c
@@ -232,11 +223,11 @@ class Ray2 : IRay2 {
      */
     protected fun getIntersection(pt: IVector): Float {
         if (Math.abs(direction.x) > Math.abs(direction.y)) {
-            val t = (pt.x() - origin.x) / direction.x
-            return if (t >= 0f && origin.y + t * direction.y == pt.y()) t else java.lang.Float.MAX_VALUE
+            val t = (pt.x - origin.x) / direction.x
+            return if (t >= 0f && origin.y + t * direction.y == pt.y) t else Float.MAX_VALUE
         } else {
-            val t = (pt.y() - origin.y) / direction.y
-            return if (t >= 0f && origin.x + t * direction.x == pt.x()) t else java.lang.Float.MAX_VALUE
+            val t = (pt.y - origin.y) / direction.y
+            return if (t >= 0f && origin.x + t * direction.x == pt.x) t else Float.MAX_VALUE
         }
     }
 }

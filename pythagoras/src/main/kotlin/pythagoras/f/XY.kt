@@ -11,8 +11,8 @@ package pythagoras.f
  */
 interface XY {
     /** The x coordinate.  */
-    fun x(): Float
+    val x: Float
 
     /** The y coordinate.  */
-    fun y(): Float
+    val y: Float
 }

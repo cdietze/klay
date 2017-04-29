@@ -7,24 +7,24 @@ package pythagoras.f
 /**
  * Provides read-only access to a [QuadCurve].
  */
-interface IQuadCurve : IShape, Cloneable {
+interface IQuadCurve : IShape {
     /** Returns the x-coordinate of the start of this curve.  */
-    fun x1(): Float
+    val x1: Float
 
     /** Returns the y-coordinate of the start of this curve.  */
-    fun y1(): Float
+    val y1: Float
 
     /** Returns the x-coordinate of the control point.  */
-    fun ctrlX(): Float
+    val ctrlX: Float
 
     /** Returns the y-coordinate of the control point.  */
-    fun ctrlY(): Float
+    val ctrlY: Float
 
     /** Returns the x-coordinate of the end of this curve.  */
-    fun x2(): Float
+    val x2: Float
 
     /** Returns the y-coordinate of the end of this curve.  */
-    fun y2(): Float
+    val y2: Float
 
     /** Returns a copy of the starting point of this curve.  */
     fun p1(): Point
@@ -47,5 +47,5 @@ interface IQuadCurve : IShape, Cloneable {
     fun subdivide(left: QuadCurve, right: QuadCurve)
 
     /** Returns a mutable copy of this curve.  */
-    public override fun clone(): QuadCurve
+    fun clone(): QuadCurve
 }

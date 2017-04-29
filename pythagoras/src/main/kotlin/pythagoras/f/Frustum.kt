@@ -4,6 +4,8 @@
 
 package pythagoras.f
 
+import java.lang.Math
+
 /**
  * A pyramidal frustum.
  */
@@ -98,9 +100,9 @@ class Frustum {
     fun setToProjection(
             left: Float, right: Float, bottom: Float, top: Float, near: Float,
             far: Float, nearFarNormal: IVector3, ortho: Boolean, mirrored: Boolean): Frustum {
-        val nfnx = nearFarNormal.x()
-        val nfny = nearFarNormal.y()
-        val nfnz = nearFarNormal.z()
+        val nfnx = nearFarNormal.x
+        val nfny = nearFarNormal.y
+        val nfnz = nearFarNormal.z
         if (ortho) {
             val nrz = -1f / nfnz
             val xl = nfnx * left * nrz
@@ -189,7 +191,7 @@ class Frustum {
      * the distance is less than or equal to zero, the point lies inside the frustum.
      */
     fun distance(point: Vector3): Float {
-        var distance = -java.lang.Float.MAX_VALUE
+        var distance = -Float.MAX_VALUE
         for (plane in _planes) {
             distance = Math.max(distance, plane.distance(point))
         }

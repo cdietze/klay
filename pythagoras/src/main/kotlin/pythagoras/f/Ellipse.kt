@@ -4,24 +4,22 @@
 
 package pythagoras.f
 
-import java.io.Serializable
-
 /**
  * Represents an ellipse that is described by a framing rectangle.
  */
-class Ellipse : AbstractEllipse, Serializable {
+class Ellipse : AbstractEllipse {
 
     /** The x-coordinate of the framing rectangle.  */
-    var x: Float = 0.toFloat()
+    override var x: Float = 0.toFloat()
 
     /** The y-coordinate of the framing rectangle.  */
-    var y: Float = 0.toFloat()
+    override var y: Float = 0.toFloat()
 
     /** The width of the framing rectangle.  */
-    var width: Float = 0.toFloat()
+    override var width: Float = 0.toFloat()
 
     /** The height of the framing rectangle.  */
-    var height: Float = 0.toFloat()
+    override var height: Float = 0.toFloat()
 
     /**
      * Creates an ellipse with framing rectangle (0x0+0+0).
@@ -33,26 +31,6 @@ class Ellipse : AbstractEllipse, Serializable {
      */
     constructor(x: Float, y: Float, width: Float, height: Float) {
         setFrame(x, y, width, height)
-    }
-
-    override // from interface IRectangularShape
-    fun x(): Float {
-        return x
-    }
-
-    override // from interface IRectangularShape
-    fun y(): Float {
-        return y
-    }
-
-    override // from interface IRectangularShape
-    fun width(): Float {
-        return width
-    }
-
-    override // from interface IRectangularShape
-    fun height(): Float {
-        return height
     }
 
     override // from RectangularShape

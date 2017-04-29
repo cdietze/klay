@@ -7,7 +7,7 @@ package pythagoras.f
 /**
  * Provides read-only access to a [Point].
  */
-interface IPoint : XY, Cloneable {
+interface IPoint : XY {
     /** Returns the squared Euclidian distance between this point and the specified point.  */
     fun distanceSq(px: Float, py: Float): Float
 
@@ -76,5 +76,5 @@ interface IPoint : XY, Cloneable {
     fun rotate(angle: Float, result: Point): Point
 
     /** Returns a mutable copy of this point.  */
-    public override fun clone(): Point
+    fun clone(): Point
 }

@@ -5,20 +5,18 @@
 package pythagoras.f
 
 import pythagoras.util.Platform
-
-import java.io.Serializable
-import java.nio.FloatBuffer
+import java.lang.Math
 
 /**
  * A four element vector.
  */
-class Vector4 : IVector4, Serializable {
+class Vector4 : IVector4 {
 
     /** The components of the vector.  */
-    var x: Float = 0.toFloat()
-    var y: Float = 0.toFloat()
-    var z: Float = 0.toFloat()
-    var w: Float = 0.toFloat()
+    override var x: Float = 0.toFloat()
+    override var y: Float = 0.toFloat()
+    override var z: Float = 0.toFloat()
+    override var w: Float = 0.toFloat()
 
     /**
      * Creates a vector from four components.
@@ -59,7 +57,7 @@ class Vector4 : IVector4, Serializable {
      * @return a reference to this vector, for chaining.
      */
     fun set(other: IVector4): Vector4 {
-        return set(other.x(), other.y(), other.z(), other.w())
+        return set(other.x, other.y, other.z, other.w)
     }
 
     /**
@@ -130,36 +128,16 @@ class Vector4 : IVector4, Serializable {
     }
 
     override // from IVector4
-    fun x(): Float {
-        return x
-    }
-
-    override // from IVector4
-    fun y(): Float {
-        return y
-    }
-
-    override // from IVector4
-    fun z(): Float {
-        return z
-    }
-
-    override // from IVector4
-    fun w(): Float {
-        return w
-    }
-
-    override // from IVector4
     fun get(buf: FloatBuffer): FloatBuffer {
         return buf.put(x).put(y).put(z).put(w)
     }
 
     override // from IVector4
     fun epsilonEquals(other: IVector4, epsilon: Float): Boolean {
-        return Math.abs(x - other.x()) < epsilon &&
-                Math.abs(y - other.y()) < epsilon &&
-                Math.abs(z - other.z()) < epsilon &&
-                Math.abs(w - other.w()) < epsilon
+        return Math.abs(x - other.x) < epsilon &&
+                Math.abs(y - other.y) < epsilon &&
+                Math.abs(z - other.z) < epsilon &&
+                Math.abs(w - other.w) < epsilon
     }
 
     override // from interface IVector4

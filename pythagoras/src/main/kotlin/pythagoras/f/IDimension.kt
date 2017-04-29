@@ -7,19 +7,19 @@ package pythagoras.f
 /**
  * Provides read-only access to a [Dimension].
  */
-interface IDimension : Cloneable {
+interface IDimension {
     /**
      * Returns the magnitude in the x-dimension.
      */
-    fun width(): Float
+    val width: Float
 
     /**
      * Returns the magnitude in the y-dimension.
      */
-    fun height(): Float
+    val height: Float
 
     /**
      * Returns a mutable copy of this dimension.
      */
-    public override fun clone(): Dimension
+    fun clone(): Dimension
 }

@@ -3,8 +3,7 @@
 // http://github.com/samskivert/pythagoras
 
 package pythagoras.f
-
-import java.util.ArrayList
+import java.lang.Math
 
 /**
  * An internal class used to compute crossings.

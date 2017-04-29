@@ -5,6 +5,7 @@
 package pythagoras.f
 
 import pythagoras.util.NoninvertibleTransformException
+import java.lang.Math
 
 /**
  * Implements an affine (3x2 matrix) transform. The transformation matrix has the form:
@@ -22,8 +23,8 @@ class AffineTransform : AbstractTransform {
     var m11: Float = 1.toFloat()
 
     /** The translation components of this transform.  */
-    var tx: Float = 0.toFloat()
-    var ty: Float = 0.toFloat()
+    override var tx: Float = 0.toFloat()
+    override var ty: Float = 0.toFloat()
 
     /** Creates an affine transform configured with the identity transform. */
     constructor()
@@ -62,74 +63,68 @@ class AffineTransform : AbstractTransform {
     }
 
     override // from Transform
-    fun uniformScale(): Float {
-        // the square root of the signed area of the parallelogram spanned by the axis vectors
-        val cp = m00 * m11 - m01 * m10
-        return if (cp < 0f) -FloatMath.sqrt(-cp) else FloatMath.sqrt(cp)
-    }
-
-    override // from Transform
-    fun scaleX(): Float {
-        return FloatMath.sqrt(m00 * m00 + m01 * m01)
-    }
-
-    override // from Transform
-    fun scaleY(): Float {
-        return FloatMath.sqrt(m10 * m10 + m11 * m11)
-    }
-
-    override // from Transform
-    fun rotation(): Float {
-        // use the iterative polar decomposition algorithm described by Ken Shoemake:
-        // http://www.cs.wisc.edu/graphics/Courses/838-s2002/Papers/polar-decomp.pdf
-
-        // start with the contents of the upper 2x2 portion of the matrix
-        var n00 = m00
-        var n10 = m10
-        var n01 = m01
-        var n11 = m11
-        for (ii in 0..9) {
-            // store the results of the previous iteration
-            val o00 = n00
-            val o10 = n10
-            val o01 = n01
-            val o11 = n11
-
-            // compute average of the matrix with its inverse transpose
-            val det = o00 * o11 - o10 * o01
-            if (Math.abs(det) == 0f) {
-                // determinant is zero; matrix is not invertible
-                throw NoninvertibleTransformException(this.toString())
-            }
-            val hrdet = 0.5f / det
-            n00 = +o11 * hrdet + o00 * 0.5f
-            n10 = -o01 * hrdet + o10 * 0.5f
-
-            n01 = -o10 * hrdet + o01 * 0.5f
-            n11 = +o00 * hrdet + o11 * 0.5f
-
-            // compute the difference; if it's small enough, we're done
-            val d00 = n00 - o00
-            val d10 = n10 - o10
-            val d01 = n01 - o01
-            val d11 = n11 - o11
-            if (d00 * d00 + d10 * d10 + d01 * d01 + d11 * d11 < MathUtil.EPSILON) {
-                break
-            }
+    val uniformScale: Float
+        get() {
+            // the square root of the signed area of the parallelogram spanned by the axis vectors
+            val cp = m00 * m11 - m01 * m10
+            return if (cp < 0f) -FloatMath.sqrt(-cp) else FloatMath.sqrt(cp)
         }
-        // now that we have a nice orthogonal matrix, we can extract the rotation
-        return FloatMath.atan2(n01, n00)
-    }
 
     override // from Transform
-    fun tx(): Float {
-        return this.tx
-    }
+    val scaleX: Float
+        get() {
+            return FloatMath.sqrt(m00 * m00 + m01 * m01)
+        }
 
     override // from Transform
-    fun ty(): Float {
-        return this.ty
-    }
+    val scaleY: Float
+        get() {
+            return FloatMath.sqrt(m10 * m10 + m11 * m11)
+        }
+
+    override // from Transform
+    val rotation: Float
+        get() {
+            // use the iterative polar decomposition algorithm described by Ken Shoemake:
+            // http://www.cs.wisc.edu/graphics/Courses/838-s2002/Papers/polar-decomp.pdf
+
+            // start with the contents of the upper 2x2 portion of the matrix
+            var n00 = m00
+            var n10 = m10
+            var n01 = m01
+            var n11 = m11
+            for (ii in 0..9) {
+                // store the results of the previous iteration
+                val o00 = n00
+                val o10 = n10
+                val o01 = n01
+                val o11 = n11
+
+                // compute average of the matrix with its inverse transpose
+                val det = o00 * o11 - o10 * o01
+                if (Math.abs(det) == 0f) {
+                    // determinant is zero; matrix is not invertible
+                    throw NoninvertibleTransformException(this.toString())
+                }
+                val hrdet = 0.5f / det
+                n00 = +o11 * hrdet + o00 * 0.5f
+                n10 = -o01 * hrdet + o10 * 0.5f
+
+                n01 = -o10 * hrdet + o01 * 0.5f
+                n11 = +o00 * hrdet + o11 * 0.5f
+
+                // compute the difference; if it's small enough, we're done
+                val d00 = n00 - o00
+                val d10 = n10 - o10
+                val d01 = n01 - o01
+                val d11 = n11 - o11
+                if (d00 * d00 + d10 * d10 + d01 * d01 + d11 * d11 < MathUtil.EPSILON) {
+                    break
+                }
+            }
+            // now that we have a nice orthogonal matrix, we can extract the rotation
+            return FloatMath.atan2(n01, n00)
+        }
 
     override // from Transform
     fun get(matrix: FloatArray) {
@@ -149,7 +144,7 @@ class AffineTransform : AbstractTransform {
     override // from Transform
     fun setScaleX(scaleX: Float): AffineTransform {
         // normalize the scale to 1, then re-apply
-        val mult = scaleX / scaleX()
+        val mult = scaleX / scaleX
         m00 *= mult
         m01 *= mult
         return this
@@ -158,7 +153,7 @@ class AffineTransform : AbstractTransform {
     override // from Transform
     fun setScaleY(scaleY: Float): AffineTransform {
         // normalize the scale to 1, then re-apply
-        val mult = scaleY / scaleY()
+        val mult = scaleY / scaleY
         m10 *= mult
         m11 *= mult
         return this
@@ -167,8 +162,8 @@ class AffineTransform : AbstractTransform {
     override // from Transform
     fun setRotation(angle: Float): AffineTransform {
         // extract the scale, then reapply rotation and scale together
-        val sx = scaleX()
-        val sy = scaleY()
+        val sx = scaleX
+        val sy = scaleY
         val sina = FloatMath.sin(angle)
         val cosa = FloatMath.cos(angle)
         m00 = cosa * sx
@@ -328,8 +323,8 @@ class AffineTransform : AbstractTransform {
 
     override // from Transform
     fun transform(p: IPoint, into: Point): Point {
-        val x = p.x()
-        val y = p.y()
+        val x = p.x
+        val y = p.y
         return into.set(m00 * x + m10 * y + tx, m01 * x + m11 * y + ty)
     }
 
@@ -356,8 +351,8 @@ class AffineTransform : AbstractTransform {
 
     override // from Transform
     fun inverseTransform(p: IPoint, into: Point): Point {
-        val x = p.x() - tx
-        val y = p.y() - ty
+        val x = p.x - tx
+        val y = p.y - ty
         val det = m00 * m11 - m01 * m10
         if (Math.abs(det) == 0f) {
             // determinant is zero; matrix is not invertible
@@ -370,22 +365,22 @@ class AffineTransform : AbstractTransform {
 
     override // from Transform
     fun transformPoint(v: IVector, into: Vector): Vector {
-        val x = v.x()
-        val y = v.y()
+        val x = v.x
+        val y = v.y
         return into.set(m00 * x + m10 * y + tx, m01 * x + m11 * y + ty)
     }
 
     override // from Transform
     fun transform(v: IVector, into: Vector): Vector {
-        val x = v.x()
-        val y = v.y()
+        val x = v.x
+        val y = v.y
         return into.set(m00 * x + m10 * y, m01 * x + m11 * y)
     }
 
     override // from Transform
     fun inverseTransform(v: IVector, into: Vector): Vector {
-        val x = v.x()
-        val y = v.y()
+        val x = v.x
+        val y = v.y
         val det = m00 * m11 - m01 * m10
         if (Math.abs(det) == 0f) {
             // determinant is zero; matrix is not invertible
@@ -410,17 +405,17 @@ class AffineTransform : AbstractTransform {
         if (m00 != 1f || m01 != 0f || m10 != 0f || m11 != 1f)
             return "affine [" +
                     MathUtil.toString(m00) + " " + MathUtil.toString(m01) + " " +
-                    MathUtil.toString(m10) + " " + MathUtil.toString(m11) + " " + translation() + "]"
+                    MathUtil.toString(m10) + " " + MathUtil.toString(m11) + " " + translation + "]"
         else if (tx != 0f || ty != 0f)
-            return "trans " + translation()
+            return "trans " + translation
         else
             return "ident"
     }
 
     // we don't publicize this because it might encourage someone to do something stupid like
     // create a new AffineTransform from another AffineTransform using this instead of copy()
-    protected constructor(other: Transform) : this(other.scaleX(), other.scaleY(), other.rotation(),
-            other.tx(), other.ty()) {
+    protected constructor(other: Transform) : this(other.scaleX, other.scaleY, other.rotation,
+            other.tx, other.ty) {
     }
 
     companion object {

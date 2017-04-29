@@ -4,6 +4,8 @@
 
 package pythagoras.f
 
+import java.lang.Math
+
 /**
  * Utility methods and constants for single-precision floating point math. Extends [MathUtil]
  * with shim methods that call through to [Math] and convert the results to float.

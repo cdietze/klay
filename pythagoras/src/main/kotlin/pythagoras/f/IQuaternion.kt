@@ -9,16 +9,16 @@ package pythagoras.f
  */
 interface IQuaternion {
     /** Returns the x-component of this quaternion.  */
-    fun x(): Float
+    val x: Float
 
     /** Returns the y-component of this quaternion.  */
-    fun y(): Float
+    val y: Float
 
     /** Returns the z-component of this quaternion.  */
-    fun z(): Float
+    val z: Float
 
     /** Returns the w-component of this quaternion.  */
-    fun w(): Float
+    val w: Float
 
     /**
      * Populates the supplied array with the contents of this quaternion.

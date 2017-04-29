@@ -4,21 +4,19 @@
 
 package pythagoras.f
 
-import java.io.Serializable
-
 /**
  * Represents a circle on a plane.
  */
-class Circle : AbstractCircle, Serializable {
+class Circle : AbstractCircle {
 
     /** The x-coordinate of the circle.  */
-    var x: Float = 0.toFloat()
+    override var x: Float = 0.toFloat()
 
     /** The y-coordinate of the circle.  */
-    var y: Float = 0.toFloat()
+    override var y: Float = 0.toFloat()
 
     /** The radius of the circle.  */
-    var radius: Float = 0.toFloat()
+    override var radius: Float = 0.toFloat()
 
     /**
      * Constructs a circle at (0, 0) with radius 0
@@ -35,18 +33,18 @@ class Circle : AbstractCircle, Serializable {
     /**
      * Constructs a circle with the specified properties
      */
-    constructor(p: XY, radius: Float) : this(p.x(), p.y(), radius) {}
+    constructor(p: XY, radius: Float) : this(p.x, p.y, radius) {}
 
     /**
      * Constructs a circle with properties equal to the supplied circle.
      */
-    constructor(c: ICircle) : this(c.x(), c.y(), c.radius()) {}
+    constructor(c: ICircle) : this(c.x, c.y, c.radius) {}
 
     /** Sets the properties of this circle to be equal to those of the supplied circle.
      * @return a reference to this this, for chaining.
      */
     fun set(c: ICircle): Circle {
-        return set(c.x(), c.y(), c.radius())
+        return set(c.x, c.y, c.radius)
     }
 
     /** Sets the properties of this circle to the supplied values.
@@ -57,18 +55,6 @@ class Circle : AbstractCircle, Serializable {
         this.y = y
         this.radius = radius
         return this
-    }
-
-    override fun x(): Float {
-        return x
-    }
-
-    override fun y(): Float {
-        return y
-    }
-
-    override fun radius(): Float {
-        return radius
     }
 
     companion object {

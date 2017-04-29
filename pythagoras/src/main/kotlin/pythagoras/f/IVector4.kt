@@ -4,23 +4,21 @@
 
 package pythagoras.f
 
-import java.nio.FloatBuffer
-
 /**
  * Provides read-only access to a [Vector4].
  */
 interface IVector4 {
     /** Returns the x-component of this vector.  */
-    fun x(): Float
+    val x: Float
 
     /** Returns the y-component of this vector.  */
-    fun y(): Float
+    val y: Float
 
     /** Returns the z-component of this vector.  */
-    fun z(): Float
+    val z: Float
 
     /** Returns the w-component of this vector.  */
-    fun w(): Float
+    val w: Float
 
     /**
      * Populates the supplied buffer with the contents of this vector.

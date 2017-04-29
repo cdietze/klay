@@ -6,14 +6,12 @@ package pythagoras.f
 
 import pythagoras.util.Platform
 import pythagoras.util.SingularMatrixException
-
-import java.io.Serializable
-import java.nio.FloatBuffer
+import java.lang.Math
 
 /**
  * A 3x3 column-major matrix.
  */
-class Matrix3 : IMatrix3, Serializable {
+class Matrix3 : IMatrix3 {
 
     /** The values of the matrix. The names take the form `mCOLROW`.  */
     var m00: Float = 0.toFloat()
@@ -137,7 +135,7 @@ class Matrix3 : IMatrix3, Serializable {
      * Sets the specified row (0, 1, 2) to the supplied vector.
      */
     fun setRow(row: Int, v: Vector3) {
-        setRow(row, v.x(), v.y(), v.z())
+        setRow(row, v.x, v.y, v.z)
     }
 
     /**
@@ -168,7 +166,7 @@ class Matrix3 : IMatrix3, Serializable {
      * Sets the specified column (0, 1, 2) to the supplied vector.
      */
     fun setColumn(col: Int, v: Vector3) {
-        setColumn(col, v.x(), v.y(), v.z())
+        setColumn(col, v.x, v.y, v.z)
     }
 
     /**
@@ -212,7 +210,7 @@ class Matrix3 : IMatrix3, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToRotation(angle: Float, axis: IVector3): Matrix3 {
-        return setToRotation(angle, axis.x(), axis.y(), axis.z())
+        return setToRotation(angle, axis.x, axis.y, axis.z)
     }
 
     /**
@@ -243,10 +241,10 @@ class Matrix3 : IMatrix3, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToRotation(quat: IQuaternion): Matrix3 {
-        val qx = quat.x()
-        val qy = quat.y()
-        val qz = quat.z()
-        val qw = quat.w()
+        val qx = quat.x
+        val qy = quat.y
+        val qz = quat.z
+        val qw = quat.w
         val xx = qx * qx
         val yy = qy * qy
         val zz = qz * qz
@@ -267,7 +265,7 @@ class Matrix3 : IMatrix3, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToScale(scale: IVector3): Matrix3 {
-        return setToScale(scale.x(), scale.y(), scale.z())
+        return setToScale(scale.x, scale.y, scale.z)
     }
 
     /**
@@ -296,7 +294,7 @@ class Matrix3 : IMatrix3, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToReflection(normal: IVector3): Matrix3 {
-        return setToReflection(normal.x(), normal.y(), normal.z())
+        return setToReflection(normal.x, normal.y, normal.z)
     }
 
     /**
@@ -331,8 +329,8 @@ class Matrix3 : IMatrix3, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToTransform(translation: IVector, rotation: Float, scale: Float): Matrix3 {
-        return setToRotation(rotation).set(m00 * scale, m10 * scale, translation.x(),
-                m01 * scale, m11 * scale, translation.y(),
+        return setToRotation(rotation).set(m00 * scale, m10 * scale, translation.x,
+                m01 * scale, m11 * scale, translation.y,
                 0f, 0f, 1f)
     }
 
@@ -342,10 +340,10 @@ class Matrix3 : IMatrix3, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToTransform(translation: IVector, rotation: Float, scale: IVector): Matrix3 {
-        val sx = scale.x()
-        val sy = scale.y()
-        return setToRotation(rotation).set(m00 * sx, m10 * sy, translation.x(),
-                m01 * sx, m11 * sy, translation.y(),
+        val sx = scale.x
+        val sy = scale.y
+        return setToRotation(rotation).set(m00 * sx, m10 * sy, translation.x,
+                m01 * sx, m11 * sy, translation.y,
                 0f, 0f, 1f)
     }
 
@@ -355,7 +353,7 @@ class Matrix3 : IMatrix3, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToTranslation(translation: IVector): Matrix3 {
-        return setToTranslation(translation.x(), translation.y())
+        return setToTranslation(translation.x, translation.y)
     }
 
     /**
@@ -375,7 +373,7 @@ class Matrix3 : IMatrix3, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setTranslation(translation: IVector): Matrix3 {
-        return setTranslation(translation.x(), translation.y())
+        return setTranslation(translation.x, translation.y)
     }
 
     /**
@@ -890,9 +888,9 @@ class Matrix3 : IMatrix3, Serializable {
 
     override // from IMatrix3
     fun transform(vector: IVector3, result: Vector3): Vector3 {
-        val vx = vector.x()
-        val vy = vector.y()
-        val vz = vector.z()
+        val vx = vector.x
+        val vy = vector.y
+        val vz = vector.z
         return result.set(m00 * vx + m10 * vy + m20 * vz,
                 m01 * vx + m11 * vy + m21 * vz,
                 m02 * vx + m12 * vy + m22 * vz)
@@ -910,8 +908,8 @@ class Matrix3 : IMatrix3, Serializable {
 
     override // from IMatrix3
     fun transformPoint(point: IVector, result: Vector): Vector {
-        val px = point.x()
-        val py = point.y()
+        val px = point.x
+        val py = point.y
         return result.set(m00 * px + m10 * py + m20, m01 * px + m11 * py + m21)
     }
 
@@ -927,8 +925,8 @@ class Matrix3 : IMatrix3, Serializable {
 
     override // from IMatrix3
     fun transformVector(vector: IVector, result: Vector): Vector {
-        val vx = vector.x()
-        val vy = vector.y()
+        val vx = vector.x
+        val vy = vector.y
         return result.set(m00 * vx + m10 * vy, m01 * vx + m11 * vy)
     }
 

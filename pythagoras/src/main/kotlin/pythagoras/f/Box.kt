@@ -4,12 +4,12 @@
 
 package pythagoras.f
 
-import java.io.Serializable
+import java.lang.Math
 
 /**
  * An axis-aligned box.
  */
-class Box : IBox, Serializable {
+class Box : IBox {
 
     /**
      * Creates a box with the values contained in the supplied minimum and maximum extents.
@@ -173,13 +173,13 @@ class Box : IBox, Serializable {
     override // from IBox
     fun add(point: IVector3, result: Box): Box {
         result._minExtent.set(
-                Math.min(_minExtent.x, point.x()),
-                Math.min(_minExtent.y, point.y()),
-                Math.min(_minExtent.z, point.z()))
+                Math.min(_minExtent.x, point.x),
+                Math.min(_minExtent.y, point.y),
+                Math.min(_minExtent.z, point.z))
         result._maxExtent.set(
-                Math.max(_maxExtent.x, point.x()),
-                Math.max(_maxExtent.y, point.y()),
-                Math.max(_maxExtent.z, point.z()))
+                Math.max(_maxExtent.x, point.x),
+                Math.max(_maxExtent.y, point.y),
+                Math.max(_maxExtent.z, point.z))
         return result
     }
 
@@ -193,13 +193,13 @@ class Box : IBox, Serializable {
         val omin = other.minimumExtent()
         val omax = other.maximumExtent()
         result._minExtent.set(
-                Math.min(_minExtent.x, omin.x()),
-                Math.min(_minExtent.y, omin.y()),
-                Math.min(_minExtent.z, omin.z()))
+                Math.min(_minExtent.x, omin.x),
+                Math.min(_minExtent.y, omin.y),
+                Math.min(_minExtent.z, omin.z))
         result._maxExtent.set(
-                Math.max(_maxExtent.x, omax.x()),
-                Math.max(_maxExtent.y, omax.y()),
-                Math.max(_maxExtent.z, omax.z()))
+                Math.max(_maxExtent.x, omax.x),
+                Math.max(_maxExtent.y, omax.y),
+                Math.max(_maxExtent.z, omax.z))
         return result
     }
 
@@ -213,13 +213,13 @@ class Box : IBox, Serializable {
         val omin = other.minimumExtent()
         val omax = other.maximumExtent()
         result._minExtent.set(
-                Math.max(_minExtent.x, omin.x()),
-                Math.max(_minExtent.y, omin.y()),
-                Math.max(_minExtent.z, omin.z()))
+                Math.max(_minExtent.x, omin.x),
+                Math.max(_minExtent.y, omin.y),
+                Math.max(_minExtent.z, omin.z))
         result._maxExtent.set(
-                Math.min(_maxExtent.x, omax.x()),
-                Math.min(_maxExtent.y, omax.y()),
-                Math.min(_maxExtent.z, omax.z()))
+                Math.min(_maxExtent.x, omax.x),
+                Math.min(_maxExtent.y, omax.y),
+                Math.min(_maxExtent.z, omax.z))
         return result
     }
 
@@ -280,12 +280,12 @@ class Box : IBox, Serializable {
 
     override // from IBox
     fun project(matrix: IMatrix4, result: Box): Box {
-        var minx = +java.lang.Float.MAX_VALUE
-        var miny = +java.lang.Float.MAX_VALUE
-        var minz = +java.lang.Float.MAX_VALUE
-        var maxx = -java.lang.Float.MAX_VALUE
-        var maxy = -java.lang.Float.MAX_VALUE
-        var maxz = -java.lang.Float.MAX_VALUE
+        var minx = +Float.MAX_VALUE
+        var miny = +Float.MAX_VALUE
+        var minz = +Float.MAX_VALUE
+        var maxx = -Float.MAX_VALUE
+        var maxy = -Float.MAX_VALUE
+        var maxz = -Float.MAX_VALUE
         for (ii in 0..7) {
             val x = if (ii and (1 shl 2) == 0) _minExtent.x else _maxExtent.x
             val y = if (ii and (1 shl 1) == 0) _minExtent.y else _maxExtent.y
@@ -327,7 +327,7 @@ class Box : IBox, Serializable {
 
     override // from IBox
     fun contains(point: IVector3): Boolean {
-        return contains(point.x(), point.y(), point.z())
+        return contains(point.x, point.y, point.z)
     }
 
     override // from IBox
@@ -346,50 +346,50 @@ class Box : IBox, Serializable {
     fun contains(other: IBox): Boolean {
         val omin = other.minimumExtent()
         val omax = other.maximumExtent()
-        return omin.x() >= _minExtent.x && omax.x() <= _maxExtent.x &&
-                omin.y() >= _minExtent.y && omax.y() <= _maxExtent.y &&
-                omin.z() >= _minExtent.z && omax.z() <= _maxExtent.z
+        return omin.x >= _minExtent.x && omax.x <= _maxExtent.x &&
+                omin.y >= _minExtent.y && omax.y <= _maxExtent.y &&
+                omin.z >= _minExtent.z && omax.z <= _maxExtent.z
     }
 
     override // from IBox
     fun intersects(other: IBox): Boolean {
         val omin = other.minimumExtent()
         val omax = other.maximumExtent()
-        return _maxExtent.x >= omin.x() && _minExtent.x <= omax.x() &&
-                _maxExtent.y >= omin.y() && _minExtent.y <= omax.y() &&
-                _maxExtent.z >= omin.z() && _minExtent.z <= omax.z()
+        return _maxExtent.x >= omin.x && _minExtent.x <= omax.x &&
+                _maxExtent.y >= omin.y && _minExtent.y <= omax.y &&
+                _maxExtent.z >= omin.z && _minExtent.z <= omax.z
     }
 
     override // from IBox
     fun intersects(ray: IRay3): Boolean {
-        val dir = ray.direction()
-        return Math.abs(dir.x()) > MathUtil.EPSILON && (intersectsX(ray, _minExtent.x) || intersectsX(ray, _maxExtent.x)) ||
-                Math.abs(dir.y()) > MathUtil.EPSILON && (intersectsY(ray, _minExtent.y) || intersectsY(ray, _maxExtent.y)) ||
-                Math.abs(dir.z()) > MathUtil.EPSILON && (intersectsZ(ray, _minExtent.z) || intersectsZ(ray, _maxExtent.z))
+        val dir = ray.direction
+        return Math.abs(dir.x) > MathUtil.EPSILON && (intersectsX(ray, _minExtent.x) || intersectsX(ray, _maxExtent.x)) ||
+                Math.abs(dir.y) > MathUtil.EPSILON && (intersectsY(ray, _minExtent.y) || intersectsY(ray, _maxExtent.y)) ||
+                Math.abs(dir.z) > MathUtil.EPSILON && (intersectsZ(ray, _minExtent.z) || intersectsZ(ray, _maxExtent.z))
     }
 
     override // from IBox
     fun intersection(ray: IRay3, result: Vector3): Boolean {
-        val origin = ray.origin()
+        val origin = ray.origin
         if (contains(origin)) {
             result.set(origin)
             return true
         }
-        val dir = ray.direction()
-        var t = java.lang.Float.MAX_VALUE
-        if (Math.abs(dir.x()) > MathUtil.EPSILON) {
+        val dir = ray.direction
+        var t = Float.MAX_VALUE
+        if (Math.abs(dir.x) > MathUtil.EPSILON) {
             t = Math.min(t, intersectionX(ray, _minExtent.x))
             t = Math.min(t, intersectionX(ray, _maxExtent.x))
         }
-        if (Math.abs(dir.y()) > MathUtil.EPSILON) {
+        if (Math.abs(dir.y) > MathUtil.EPSILON) {
             t = Math.min(t, intersectionY(ray, _minExtent.y))
             t = Math.min(t, intersectionY(ray, _maxExtent.y))
         }
-        if (Math.abs(dir.z()) > MathUtil.EPSILON) {
+        if (Math.abs(dir.z) > MathUtil.EPSILON) {
             t = Math.min(t, intersectionZ(ray, _minExtent.z))
             t = Math.min(t, intersectionZ(ray, _maxExtent.z))
         }
-        if (t == java.lang.Float.MAX_VALUE) {
+        if (t == Float.MAX_VALUE) {
             return false
         }
         origin.addScaled(dir, t, result)
@@ -420,14 +420,14 @@ class Box : IBox, Serializable {
      * at the plane where x equals the value specified.
      */
     protected fun intersectsX(ray: IRay3, x: Float): Boolean {
-        val origin = ray.origin()
-        val dir = ray.direction()
-        val t = (x - origin.x()) / dir.x()
+        val origin = ray.origin
+        val dir = ray.direction
+        val t = (x - origin.x) / dir.x
         if (t < 0f) {
             return false
         }
-        val iy = origin.y() + t * dir.y()
-        val iz = origin.z() + t * dir.z()
+        val iy = origin.y + t * dir.y
+        val iz = origin.z + t * dir.z
         return iy >= _minExtent.y && iy <= _maxExtent.y &&
                 iz >= _minExtent.z && iz <= _maxExtent.z
     }
@@ -437,14 +437,14 @@ class Box : IBox, Serializable {
      * at the plane where y equals the value specified.
      */
     protected fun intersectsY(ray: IRay3, y: Float): Boolean {
-        val origin = ray.origin()
-        val dir = ray.direction()
-        val t = (y - origin.y()) / dir.y()
+        val origin = ray.origin
+        val dir = ray.direction
+        val t = (y - origin.y) / dir.y
         if (t < 0f) {
             return false
         }
-        val ix = origin.x() + t * dir.x()
-        val iz = origin.z() + t * dir.z()
+        val ix = origin.x + t * dir.x
+        val iz = origin.z + t * dir.z
         return ix >= _minExtent.x && ix <= _maxExtent.x &&
                 iz >= _minExtent.z && iz <= _maxExtent.z
     }
@@ -454,14 +454,14 @@ class Box : IBox, Serializable {
      * at the plane where z equals the value specified.
      */
     protected fun intersectsZ(ray: IRay3, z: Float): Boolean {
-        val origin = ray.origin()
-        val dir = ray.direction()
-        val t = (z - origin.z()) / dir.z()
+        val origin = ray.origin
+        val dir = ray.direction
+        val t = (z - origin.z) / dir.z
         if (t < 0f) {
             return false
         }
-        val ix = origin.x() + t * dir.x()
-        val iy = origin.y() + t * dir.y()
+        val ix = origin.x + t * dir.x
+        val iy = origin.y + t * dir.y
         return ix >= _minExtent.x && ix <= _maxExtent.x &&
                 iy >= _minExtent.y && iy <= _maxExtent.y
     }
@@ -472,19 +472,19 @@ class Box : IBox, Serializable {
      * [Float.MAX_VALUE] if there is no such intersection.
      */
     protected fun intersectionX(ray: IRay3, x: Float): Float {
-        val origin = ray.origin()
-        val dir = ray.direction()
-        val t = (x - origin.x()) / dir.x()
+        val origin = ray.origin
+        val dir = ray.direction
+        val t = (x - origin.x) / dir.x
         if (t < 0f) {
-            return java.lang.Float.MAX_VALUE
+            return Float.MAX_VALUE
         }
-        val iy = origin.y() + t * dir.y()
-        val iz = origin.z() + t * dir.z()
+        val iy = origin.y + t * dir.y
+        val iz = origin.z + t * dir.z
         return if (iy >= _minExtent.y && iy <= _maxExtent.y &&
                 iz >= _minExtent.z && iz <= _maxExtent.z)
             t
         else
-            java.lang.Float.MAX_VALUE
+            Float.MAX_VALUE
     }
 
     /**
@@ -493,19 +493,19 @@ class Box : IBox, Serializable {
      * [Float.MAX_VALUE] if there is no such intersection.
      */
     protected fun intersectionY(ray: IRay3, y: Float): Float {
-        val origin = ray.origin()
-        val dir = ray.direction()
-        val t = (y - origin.y()) / dir.y()
+        val origin = ray.origin
+        val dir = ray.direction
+        val t = (y - origin.y) / dir.y
         if (t < 0f) {
-            return java.lang.Float.MAX_VALUE
+            return Float.MAX_VALUE
         }
-        val ix = origin.x() + t * dir.x()
-        val iz = origin.z() + t * dir.z()
+        val ix = origin.x + t * dir.x
+        val iz = origin.z + t * dir.z
         return if (ix >= _minExtent.x && ix <= _maxExtent.x &&
                 iz >= _minExtent.z && iz <= _maxExtent.z)
             t
         else
-            java.lang.Float.MAX_VALUE
+            Float.MAX_VALUE
     }
 
     /**
@@ -514,19 +514,19 @@ class Box : IBox, Serializable {
      * [Float.MAX_VALUE] if there is no such intersection.
      */
     protected fun intersectionZ(ray: IRay3, z: Float): Float {
-        val origin = ray.origin()
-        val dir = ray.direction()
-        val t = (z - origin.z()) / dir.z()
+        val origin = ray.origin
+        val dir = ray.direction
+        val t = (z - origin.z) / dir.z
         if (t < 0f) {
-            return java.lang.Float.MAX_VALUE
+            return Float.MAX_VALUE
         }
-        val ix = origin.x() + t * dir.x()
-        val iy = origin.y() + t * dir.y()
+        val ix = origin.x + t * dir.x
+        val iy = origin.y + t * dir.y
         return if (ix >= _minExtent.x && ix <= _maxExtent.x &&
                 iy >= _minExtent.y && iy <= _maxExtent.y)
             t
         else
-            java.lang.Float.MAX_VALUE
+            Float.MAX_VALUE
     }
 
     /** The box's minimum extent.  */
