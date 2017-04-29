@@ -52,12 +52,14 @@ class JvmIntBuffer(private val intBuffer: java.nio.IntBuffer) : JvmBuffer(), Int
         intBuffer.get(dst, offset, length)
     }
 
-    override fun put(n: Int) {
+    override fun put(n: Int): IntBuffer {
         intBuffer.put(n)
+        return this
     }
 
-    override fun put(src: IntArray, offset: Int, length: Int) {
+    override fun put(src: IntArray, offset: Int, length: Int): IntBuffer {
         intBuffer.put(src, offset, length)
+        return this
     }
 }
 
@@ -68,12 +70,14 @@ class JvmShortBuffer(private val shortBuffer: java.nio.ShortBuffer) : JvmBuffer(
         shortBuffer.get(dst, offset, length)
     }
 
-    override fun put(n: Short) {
+    override fun put(n: Short): ShortBuffer {
         shortBuffer.put(n)
+        return this
     }
 
-    override fun put(src: ShortArray, offset: Int, length: Int) {
+    override fun put(src: ShortArray, offset: Int, length: Int): ShortBuffer {
         shortBuffer.put(src, offset, length)
+        return this
     }
 }
 
@@ -84,12 +88,14 @@ class JvmFloatBuffer(private val floatBuffer: java.nio.FloatBuffer) : JvmBuffer(
         floatBuffer.get(dst, offset, length)
     }
 
-    override fun put(n: Float) {
+    override fun put(n: Float): FloatBuffer {
         floatBuffer.put(n)
+        return this
     }
 
-    override fun put(src: FloatArray, offset: Int, length: Int) {
+    override fun put(src: FloatArray, offset: Int, length: Int): FloatBuffer {
         floatBuffer.put(src, offset, length)
+        return this
     }
 }
 
@@ -100,11 +106,13 @@ class JvmDoubleBuffer(private val doubleBuffer: java.nio.DoubleBuffer) : JvmBuff
         doubleBuffer.get(dst, offset, length)
     }
 
-    override fun put(n: Double) {
+    override fun put(n: Double): DoubleBuffer {
         doubleBuffer.put(n)
+        return this
     }
 
-    override fun put(src: DoubleArray, offset: Int, length: Int) {
+    override fun put(src: DoubleArray, offset: Int, length: Int): DoubleBuffer {
         doubleBuffer.put(src, offset, length)
+        return this
     }
 }
