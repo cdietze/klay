@@ -26,7 +26,6 @@
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
-        <!--<sourceDirectory>../core/src/main/kotlin</sourceDirectory>-->
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
 
         <plugins>
@@ -43,7 +42,7 @@
                     <execution>
                         <configuration>
                             <sourceDirs>
-                                <sourceDir>src/main/kotlin</sourceDir>
+                                <sourceDir>${project.build.sourceDirectory}</sourceDir>
                                 <sourceDir>../core/src/main/kotlin</sourceDir>
                             </sourceDirs>
                         </configuration>
