@@ -44,6 +44,8 @@
                             <sourceDirs>
                                 <sourceDir>${project.build.sourceDirectory}</sourceDir>
                                 <sourceDir>../core/src/main/kotlin</sourceDir>
+                                <sourceDir>../pythagoras/src/main/kotlin</sourceDir>
+                                <sourceDir>../pythagoras/src/main/kotlin-js</sourceDir>
                             </sourceDirs>
                         </configuration>
                         <id>compile</id>
