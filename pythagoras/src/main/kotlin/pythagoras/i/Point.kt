@@ -4,43 +4,31 @@
 
 package pythagoras.i
 
-import java.io.Serializable
-
 /**
  * Represents a point on a plane.
  */
-class Point : AbstractPoint, Serializable {
+class Point
+/**
+ * Constructs a point at the specified coordinates.
+ */
+constructor(
+        /** The x-coordinate of the point.  */
+        override var x: Int = 0,
+        /** The y-coordinate of the point.  */
+        override var y: Int = 0
 
-    /** The x-coordinate of the point.  */
-    var x: Int = 0
-
-    /** The y-coordinate of the point.  */
-    var y: Int = 0
-
-    /**
-     * Constructs a point at (0, 0).
-     */
-    constructor() {}
-
-    /**
-     * Constructs a point at the specified coordinates.
-     */
-    constructor(x: Int, y: Int) {
-        setLocation(x, y)
-    }
+) : AbstractPoint() {
 
     /**
      * Constructs a point with coordinates equal to the supplied point.
      */
-    constructor(p: IPoint) {
-        setLocation(p.x(), p.y())
-    }
+    constructor(p: IPoint) : this(p.x, p.y)
 
     /**
      * Sets the coordinates of this point to be equal to those of the supplied point.
      */
     fun setLocation(p: IPoint) {
-        setLocation(p.x(), p.y())
+        setLocation(p.x, p.y)
     }
 
     /**
@@ -70,7 +58,7 @@ class Point : AbstractPoint, Serializable {
      * @return a reference to this this, for chaining.
      */
     fun set(p: IPoint): Point {
-        return set(p.x(), p.y())
+        return set(p.x, p.y)
     }
 
     /** Sets the coordinates of this point to the supplied values.
@@ -94,16 +82,6 @@ class Point : AbstractPoint, Serializable {
      */
     fun subtractLocal(x: Int, y: Int): Point {
         return subtract(x, y, this)
-    }
-
-    override // from interface IPoint
-    fun x(): Int {
-        return x
-    }
-
-    override // from interface IPoint
-    fun y(): Int {
-        return y
     }
 
     companion object {

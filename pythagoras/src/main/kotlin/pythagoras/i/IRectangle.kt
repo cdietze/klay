@@ -7,19 +7,19 @@ package pythagoras.i
 /**
  * Provides read-only access to a [Rectangle].
  */
-interface IRectangle : IShape, Cloneable {
+interface IRectangle : IShape {
 
     /** Returns the x-coordinate of the upper-left corner of the framing rectangle.  */
-    fun x(): Int
+    val x: Int
 
     /** Returns the y-coordinate of the upper-left corner of the framing rectangle.  */
-    fun y(): Int
+    val y: Int
 
     /** Returns the width of the framing rectangle.  */
-    fun width(): Int
+    val width: Int
 
     /** Returns the height of the framing rectangle.  */
-    fun height(): Int
+    val height: Int
 
     /** Returns the minimum x-coordinate of the framing rectangle.  */
     fun minX(): Int
@@ -74,7 +74,7 @@ interface IRectangle : IShape, Cloneable {
     fun outcode(point: IPoint): Int
 
     /** Returns a mutable copy of this rectangle.  */
-    public override fun clone(): Rectangle
+    fun clone(): Rectangle
 
     companion object {
         /** The bitmask that indicates that a point lies to the left of this rectangle. See

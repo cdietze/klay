@@ -7,12 +7,12 @@ package pythagoras.i
 /**
  * Provides read-only access to a [Point].
  */
-interface IPoint : Cloneable {
+interface IPoint {
     /** Returns this point's x-coordinate.  */
-    fun x(): Int
+    val x: Int
 
     /** Returns this point's y-coordinate.  */
-    fun y(): Int
+    val y: Int
 
     /** Returns the squared Euclidian distance between this point and the specified point.  */
     fun distanceSq(px: Int, py: Int): Int
@@ -52,5 +52,5 @@ interface IPoint : Cloneable {
     fun subtract(other: IPoint, result: Point): Point
 
     /** Returns a mutable copy of this point.  */
-    public override fun clone(): Point
+    fun clone(): Point
 }
