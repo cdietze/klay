@@ -14,15 +14,15 @@ import java.lang.Math
 class Matrix3 : IMatrix3 {
 
     /** The values of the matrix. The names take the form `mCOLROW`.  */
-    var m00: Float = 0.toFloat()
-    var m10: Float = 0.toFloat()
-    var m20: Float = 0.toFloat()
-    var m01: Float = 0.toFloat()
-    var m11: Float = 0.toFloat()
-    var m21: Float = 0.toFloat()
-    var m02: Float = 0.toFloat()
-    var m12: Float = 0.toFloat()
-    var m22: Float = 0.toFloat()
+    override var m00: Float = 0.toFloat()
+    override var m10: Float = 0.toFloat()
+    override var m20: Float = 0.toFloat()
+    override var m01: Float = 0.toFloat()
+    override var m11: Float = 0.toFloat()
+    override var m21: Float = 0.toFloat()
+    override var m02: Float = 0.toFloat()
+    override var m12: Float = 0.toFloat()
+    override var m22: Float = 0.toFloat()
 
     /**
      * Creates a matrix from its components.
@@ -104,7 +104,7 @@ class Matrix3 : IMatrix3 {
                 }
             }
         }
-        throw ArrayIndexOutOfBoundsException()
+        error("Matrix access out of bounds")
     }
 
     /**
@@ -127,7 +127,7 @@ class Matrix3 : IMatrix3 {
                 m12 = y
                 m22 = z
             }
-            else -> throw ArrayIndexOutOfBoundsException()
+            else -> error("Matrix access out of bounds")
         }
     }
 
@@ -158,7 +158,7 @@ class Matrix3 : IMatrix3 {
                 m21 = y
                 m22 = z
             }
-            else -> throw ArrayIndexOutOfBoundsException()
+            else -> error("Matrix access out of bounds")
         }
     }
 
@@ -480,9 +480,9 @@ class Matrix3 : IMatrix3 {
      * @return a reference to this matrix, for chaining.
      */
     fun set(other: IMatrix3): Matrix3 {
-        return set(other.m00(), other.m10(), other.m20(),
-                other.m01(), other.m11(), other.m21(),
-                other.m02(), other.m12(), other.m22())
+        return set(other.m00, other.m10, other.m20,
+                other.m01, other.m11, other.m21,
+                other.m02, other.m12, other.m22)
     }
 
     /**
@@ -518,51 +518,6 @@ class Matrix3 : IMatrix3 {
     }
 
     override // from IMatrix3
-    fun m00(): Float {
-        return m00
-    }
-
-    override // from IMatrix3
-    fun m10(): Float {
-        return m10
-    }
-
-    override // from IMatrix3
-    fun m20(): Float {
-        return m20
-    }
-
-    override // from IMatrix3
-    fun m01(): Float {
-        return m01
-    }
-
-    override // from IMatrix3
-    fun m11(): Float {
-        return m11
-    }
-
-    override // from IMatrix3
-    fun m21(): Float {
-        return m21
-    }
-
-    override // from IMatrix3
-    fun m02(): Float {
-        return m02
-    }
-
-    override // from IMatrix3
-    fun m12(): Float {
-        return m12
-    }
-
-    override // from IMatrix3
-    fun m22(): Float {
-        return m22
-    }
-
-    override // from IMatrix3
     fun element(row: Int, col: Int): Float {
         when (col) {
             0 -> when (row) {
@@ -581,7 +536,7 @@ class Matrix3 : IMatrix3 {
                 2 -> return m22
             }
         }
-        throw ArrayIndexOutOfBoundsException()
+        error("Matrix access out of bounds")
     }
 
     override // from IMatrix3
@@ -602,7 +557,7 @@ class Matrix3 : IMatrix3 {
                 result.y = m12
                 result.z = m22
             }
-            else -> throw ArrayIndexOutOfBoundsException()
+            else -> error("Matrix access out of bounds")
         }
     }
 
@@ -624,7 +579,7 @@ class Matrix3 : IMatrix3 {
                 result.y = m21
                 result.z = m22
             }
-            else -> throw ArrayIndexOutOfBoundsException()
+            else -> error("Matrix access out of bounds")
         }
     }
 
@@ -656,15 +611,15 @@ class Matrix3 : IMatrix3 {
         val m20 = this.m20
         val m21 = this.m21
         val m22 = this.m22
-        val om00 = other.m00()
-        val om01 = other.m01()
-        val om02 = other.m02()
-        val om10 = other.m10()
-        val om11 = other.m11()
-        val om12 = other.m12()
-        val om20 = other.m20()
-        val om21 = other.m21()
-        val om22 = other.m22()
+        val om00 = other.m00
+        val om01 = other.m01
+        val om02 = other.m02
+        val om10 = other.m10
+        val om11 = other.m11
+        val om12 = other.m12
+        val om20 = other.m20
+        val om21 = other.m21
+        val om22 = other.m22
         return result.set(m00 * om00 + m10 * om01 + m20 * om02,
                 m00 * om10 + m10 * om11 + m20 * om12,
                 m00 * om20 + m10 * om21 + m20 * om22,
@@ -685,9 +640,9 @@ class Matrix3 : IMatrix3 {
 
     override // from IMatrix3
     fun add(other: IMatrix3, result: Matrix3): Matrix3 {
-        return result.set(m00 + other.m00(), m01 + other.m01(), m02 + other.m02(),
-                m10 + other.m10(), m11 + other.m11(), m12 + other.m12(),
-                m20 + other.m20(), m21 + other.m21(), m22 + other.m22())
+        return result.set(m00 + other.m00, m01 + other.m01, m02 + other.m02,
+                m10 + other.m10, m11 + other.m11, m12 + other.m12,
+                m20 + other.m20, m21 + other.m21, m22 + other.m22)
     }
 
     override // from IMatrix3
@@ -707,12 +662,12 @@ class Matrix3 : IMatrix3 {
         val m11 = this.m11
         val m20 = this.m20
         val m21 = this.m21
-        val om00 = other.m00()
-        val om01 = other.m01()
-        val om10 = other.m10()
-        val om11 = other.m11()
-        val om20 = other.m20()
-        val om21 = other.m21()
+        val om00 = other.m00
+        val om01 = other.m01
+        val om10 = other.m10
+        val om11 = other.m11
+        val om20 = other.m20
+        val om21 = other.m21
         return result.set(m00 * om00 + m10 * om01,
                 m00 * om10 + m10 * om11,
                 m00 * om20 + m10 * om21 + m20,
@@ -733,7 +688,6 @@ class Matrix3 : IMatrix3 {
      * {@inheritDoc} This code is based on the examples in the
      * [Matrix and Quaternion FAQ](http://www.j3d.org/matrix_faq/matrfaq_latest.html).
      */
-    @Throws(SingularMatrixException::class)
     override // from IMatrix3
     fun invert(result: Matrix3): Matrix3 {
         val m00 = this.m00
@@ -773,7 +727,6 @@ class Matrix3 : IMatrix3 {
         return invertAffine(Matrix3())
     }
 
-    @Throws(SingularMatrixException::class)
     override // from IMatrix3
     fun invertAffine(result: Matrix3): Matrix3 {
         val m00 = this.m00
@@ -816,15 +769,15 @@ class Matrix3 : IMatrix3 {
         val m20 = this.m20
         val m21 = this.m21
         val m22 = this.m22
-        val om00 = other.m00()
-        val om01 = other.m01()
-        val om02 = other.m02()
-        val om10 = other.m10()
-        val om11 = other.m11()
-        val om12 = other.m12()
-        val om20 = other.m20()
-        val om21 = other.m21()
-        val om22 = other.m22()
+        val om00 = other.m00
+        val om01 = other.m01
+        val om02 = other.m02
+        val om10 = other.m10
+        val om11 = other.m11
+        val om12 = other.m12
+        val om20 = other.m20
+        val om21 = other.m21
+        val om22 = other.m22
         return result.set(m00 + t * (om00 - m00),
                 m10 + t * (om10 - m10),
                 m20 + t * (om20 - m20),
@@ -851,12 +804,12 @@ class Matrix3 : IMatrix3 {
         val m11 = this.m11
         val m20 = this.m20
         val m21 = this.m21
-        val om00 = other.m00()
-        val om01 = other.m01()
-        val om10 = other.m10()
-        val om11 = other.m11()
-        val om20 = other.m20()
-        val om21 = other.m21()
+        val om00 = other.m00
+        val om01 = other.m01
+        val om10 = other.m10
+        val om11 = other.m11
+        val om20 = other.m20
+        val om21 = other.m21
         return result.set(m00 + t * (om00 - m00),
                 m10 + t * (om10 - m10),
                 m20 + t * (om20 - m20),
@@ -866,14 +819,6 @@ class Matrix3 : IMatrix3 {
                 m21 + t * (om21 - m21),
 
                 0f, 0f, 1f)
-    }
-
-    override // from IMatrix3
-    fun get(buf: FloatBuffer): FloatBuffer {
-        buf.put(m00).put(m01).put(m02)
-        buf.put(m10).put(m11).put(m12)
-        buf.put(m20).put(m21).put(m22)
-        return buf
     }
 
     override // from IMatrix3

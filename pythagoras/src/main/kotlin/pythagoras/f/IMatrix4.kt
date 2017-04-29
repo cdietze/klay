@@ -9,52 +9,52 @@ package pythagoras.f
  */
 interface IMatrix4 {
     /** Returns the (0,0)th component of the matrix.  */
-    fun m00(): Float
+    val m00: Float
 
     /** Returns the (1,0)th component of the matrix.  */
-    fun m10(): Float
+    val m10: Float
 
     /** Returns the (2,0)th component of the matrix.  */
-    fun m20(): Float
+    val m20: Float
 
     /** Returns the (3,0)th component of the matrix.  */
-    fun m30(): Float
+    val m30: Float
 
     /** Returns the (0,1)th component of the matrix.  */
-    fun m01(): Float
+    val m01: Float
 
     /** Returns the (1,1)th component of the matrix.  */
-    fun m11(): Float
+    val m11: Float
 
     /** Returns the (2,1)th component of the matrix.  */
-    fun m21(): Float
+    val m21: Float
 
     /** Returns the (3,1)th component of the matrix.  */
-    fun m31(): Float
+    val m31: Float
 
     /** Returns the (0,2)th component of the matrix.  */
-    fun m02(): Float
+    val m02: Float
 
     /** Returns the (1,2)th component of the matrix.  */
-    fun m12(): Float
+    val m12: Float
 
     /** Returns the (2,2)th component of the matrix.  */
-    fun m22(): Float
+    val m22: Float
 
     /** Returns the (3,2)th component of the matrix.  */
-    fun m32(): Float
+    val m32: Float
 
     /** Returns the (0,3)th component of the matrix.  */
-    fun m03(): Float
+    val m03: Float
 
     /** Returns the (1,3)th component of the matrix.  */
-    fun m13(): Float
+    val m13: Float
 
     /** Returns the (2,3)th component of the matrix.  */
-    fun m23(): Float
+    val m23: Float
 
     /** Returns the (3,3)th component of the matrix.  */
-    fun m33(): Float
+    val m33: Float
 
     /**
      * Transposes this matrix.
@@ -167,13 +167,6 @@ interface IMatrix4 {
      * @return a reference to the result object, for chaining.
      */
     fun lerpAffine(other: IMatrix4, t: Float, result: Matrix4): Matrix4
-
-    /**
-     * Places the contents of this matrix into the given buffer in the standard OpenGL order.
-
-     * @return a reference to the buffer, for chaining.
-     */
-    operator fun get(buf: FloatBuffer): FloatBuffer
 
     /**
      * Projects the supplied point in-place using this matrix.

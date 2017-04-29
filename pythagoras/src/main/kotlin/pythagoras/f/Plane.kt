@@ -135,10 +135,6 @@ class Plane : IPlane {
         return _normal
     }
 
-    fun get(buf: FloatBuffer): FloatBuffer {
-        return buf.put(_normal.x).put(_normal.y).put(_normal.z).put(constant)
-    }
-
     override // from IPlane
     fun distance(pt: IVector3): Float {
         return _normal.dot(pt) + constant

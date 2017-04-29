@@ -11,25 +11,25 @@ import java.lang.Math
 /**
  * A 4x4 column-major matrix.
  */
-class Matrix4 : IMatrix4, Serializable {
+class Matrix4 : IMatrix4 {
 
     /** The values of the matrix. The names take the form `mCOLROW`.  */
-    var m00: Float = 0.toFloat()
-    var m10: Float = 0.toFloat()
-    var m20: Float = 0.toFloat()
-    var m30: Float = 0.toFloat()
-    var m01: Float = 0.toFloat()
-    var m11: Float = 0.toFloat()
-    var m21: Float = 0.toFloat()
-    var m31: Float = 0.toFloat()
-    var m02: Float = 0.toFloat()
-    var m12: Float = 0.toFloat()
-    var m22: Float = 0.toFloat()
-    var m32: Float = 0.toFloat()
-    var m03: Float = 0.toFloat()
-    var m13: Float = 0.toFloat()
-    var m23: Float = 0.toFloat()
-    var m33: Float = 0.toFloat()
+    override var m00: Float = 0.toFloat()
+    override var m10: Float = 0.toFloat()
+    override var m20: Float = 0.toFloat()
+    override var m30: Float = 0.toFloat()
+    override var m01: Float = 0.toFloat()
+    override var m11: Float = 0.toFloat()
+    override var m21: Float = 0.toFloat()
+    override var m31: Float = 0.toFloat()
+    override var m02: Float = 0.toFloat()
+    override var m12: Float = 0.toFloat()
+    override var m22: Float = 0.toFloat()
+    override var m32: Float = 0.toFloat()
+    override var m03: Float = 0.toFloat()
+    override var m13: Float = 0.toFloat()
+    override var m23: Float = 0.toFloat()
+    override var m33: Float = 0.toFloat()
 
     /**
      * Creates a matrix from its components.
@@ -50,13 +50,6 @@ class Matrix4 : IMatrix4, Serializable {
      */
     constructor(values: FloatArray) {
         set(values)
-    }
-
-    /**
-     * Creates a matrix from a float buffer.
-     */
-    constructor(buf: FloatBuffer) {
-        set(buf)
     }
 
     /**
@@ -262,9 +255,9 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun setToRotationScale(rotScale: IMatrix3): Matrix4 {
-        return set(rotScale.m00(), rotScale.m01(), rotScale.m02(), 0f,
-                rotScale.m10(), rotScale.m11(), rotScale.m12(), 0f,
-                rotScale.m20(), rotScale.m21(), rotScale.m22(), 0f,
+        return set(rotScale.m00, rotScale.m01, rotScale.m02, 0f,
+                rotScale.m10, rotScale.m11, rotScale.m12, 0f,
+                rotScale.m20, rotScale.m21, rotScale.m22, 0f,
                 0f, 0f, 0f, 1f)
     }
 
@@ -413,7 +406,7 @@ class Matrix4 : IMatrix4, Serializable {
 
      * @return a reference to this matrix, for chaining.
      */
-    @JvmOverloads fun setToFrustum(
+    fun setToFrustum(
             left: Float, right: Float, bottom: Float, top: Float,
             near: Float, far: Float, nearFarNormal: IVector3 = Vector3.UNIT_Z): Matrix4 {
         val rrl = 1f / (right - left)
@@ -432,7 +425,7 @@ class Matrix4 : IMatrix4, Serializable {
 
      * @return a reference to this matrix, for chaining.
      */
-    @JvmOverloads fun setToOrtho(
+    fun setToOrtho(
             left: Float, right: Float, bottom: Float, top: Float,
             near: Float, far: Float, nearFarNormal: IVector3 = Vector3.UNIT_Z): Matrix4 {
         val rlr = 1f / (left - right)
@@ -451,10 +444,10 @@ class Matrix4 : IMatrix4, Serializable {
      * @return a reference to this matrix, for chaining.
      */
     fun set(other: IMatrix4): Matrix4 {
-        return set(other.m00(), other.m10(), other.m20(), other.m30(),
-                other.m01(), other.m11(), other.m21(), other.m31(),
-                other.m02(), other.m12(), other.m22(), other.m32(),
-                other.m03(), other.m13(), other.m23(), other.m33())
+        return set(other.m00, other.m10, other.m20, other.m30,
+                other.m01, other.m11, other.m21, other.m31,
+                other.m02, other.m12, other.m22, other.m32,
+                other.m03, other.m13, other.m23, other.m33)
     }
 
     /**
@@ -467,31 +460,6 @@ class Matrix4 : IMatrix4, Serializable {
                 values[4], values[5], values[6], values[7],
                 values[8], values[9], values[10], values[11],
                 values[12], values[13], values[14], values[15])
-    }
-
-    /**
-     * Sets the contents of this matrix from the supplied (column-major) buffer.
-
-     * @return a reference to this matrix, for chaining.
-     */
-    fun set(buf: FloatBuffer): Matrix4 {
-        m00 = buf.get()
-        m01 = buf.get()
-        m02 = buf.get()
-        m03 = buf.get()
-        m10 = buf.get()
-        m11 = buf.get()
-        m12 = buf.get()
-        m13 = buf.get()
-        m20 = buf.get()
-        m21 = buf.get()
-        m22 = buf.get()
-        m23 = buf.get()
-        m30 = buf.get()
-        m31 = buf.get()
-        m32 = buf.get()
-        m33 = buf.get()
-        return this
     }
 
     /**
@@ -589,86 +557,6 @@ class Matrix4 : IMatrix4, Serializable {
     }
 
     override // from IMatrix4
-    fun m00(): Float {
-        return m00
-    }
-
-    override // from IMatrix4
-    fun m10(): Float {
-        return m10
-    }
-
-    override // from IMatrix4
-    fun m20(): Float {
-        return m20
-    }
-
-    override // from IMatrix4
-    fun m30(): Float {
-        return m30
-    }
-
-    override // from IMatrix4
-    fun m01(): Float {
-        return m01
-    }
-
-    override // from IMatrix4
-    fun m11(): Float {
-        return m11
-    }
-
-    override // from IMatrix4
-    fun m21(): Float {
-        return m21
-    }
-
-    override // from IMatrix4
-    fun m31(): Float {
-        return m31
-    }
-
-    override // from IMatrix4
-    fun m02(): Float {
-        return m02
-    }
-
-    override // from IMatrix4
-    fun m12(): Float {
-        return m12
-    }
-
-    override // from IMatrix4
-    fun m22(): Float {
-        return m22
-    }
-
-    override // from IMatrix4
-    fun m32(): Float {
-        return m32
-    }
-
-    override // from IMatrix4
-    fun m03(): Float {
-        return m03
-    }
-
-    override // from IMatrix4
-    fun m13(): Float {
-        return m13
-    }
-
-    override // from IMatrix4
-    fun m23(): Float {
-        return m23
-    }
-
-    override // from IMatrix4
-    fun m33(): Float {
-        return m33
-    }
-
-    override // from IMatrix4
     fun transpose(): Matrix4 {
         return transpose(Matrix4())
     }
@@ -704,22 +592,22 @@ class Matrix4 : IMatrix4, Serializable {
         val m13 = this.m13
         val m23 = this.m23
         val m33 = this.m33
-        val om00 = other.m00()
-        val om10 = other.m10()
-        val om20 = other.m20()
-        val om30 = other.m30()
-        val om01 = other.m01()
-        val om11 = other.m11()
-        val om21 = other.m21()
-        val om31 = other.m31()
-        val om02 = other.m02()
-        val om12 = other.m12()
-        val om22 = other.m22()
-        val om32 = other.m32()
-        val om03 = other.m03()
-        val om13 = other.m13()
-        val om23 = other.m23()
-        val om33 = other.m33()
+        val om00 = other.m00
+        val om10 = other.m10
+        val om20 = other.m20
+        val om30 = other.m30
+        val om01 = other.m01
+        val om11 = other.m11
+        val om21 = other.m21
+        val om31 = other.m31
+        val om02 = other.m02
+        val om12 = other.m12
+        val om22 = other.m22
+        val om32 = other.m32
+        val om03 = other.m03
+        val om13 = other.m13
+        val om23 = other.m23
+        val om33 = other.m33
         return result.set(m00 * om00 + m10 * om01 + m20 * om02 + m30 * om03,
                 m00 * om10 + m10 * om11 + m20 * om12 + m30 * om13,
                 m00 * om20 + m10 * om21 + m20 * om22 + m30 * om23,
@@ -768,18 +656,18 @@ class Matrix4 : IMatrix4, Serializable {
         val m12 = this.m12
         val m22 = this.m22
         val m32 = this.m32
-        val om00 = other.m00()
-        val om10 = other.m10()
-        val om20 = other.m20()
-        val om30 = other.m30()
-        val om01 = other.m01()
-        val om11 = other.m11()
-        val om21 = other.m21()
-        val om31 = other.m31()
-        val om02 = other.m02()
-        val om12 = other.m12()
-        val om22 = other.m22()
-        val om32 = other.m32()
+        val om00 = other.m00
+        val om10 = other.m10
+        val om20 = other.m20
+        val om30 = other.m30
+        val om01 = other.m01
+        val om11 = other.m11
+        val om21 = other.m21
+        val om31 = other.m31
+        val om02 = other.m02
+        val om12 = other.m12
+        val om22 = other.m22
+        val om32 = other.m32
         return result.set(m00 * om00 + m10 * om01 + m20 * om02,
                 m00 * om10 + m10 * om11 + m20 * om12,
                 m00 * om20 + m10 * om21 + m20 * om22,
@@ -807,7 +695,6 @@ class Matrix4 : IMatrix4, Serializable {
      * {@inheritDoc} This code is based on the examples in the
      * [Matrix and Quaternion FAQ](http://www.j3d.org/matrix_faq/matrfaq_latest.html).
      */
-    @Throws(SingularMatrixException::class)
     override // from IMatrix4
     fun invert(result: Matrix4): Matrix4 {
         val m00 = this.m00
@@ -864,7 +751,6 @@ class Matrix4 : IMatrix4, Serializable {
         return invertAffine(Matrix4())
     }
 
-    @Throws(SingularMatrixException::class)
     override // from IMatrix4
     fun invertAffine(result: Matrix4): Matrix4 {
         val m00 = this.m00
@@ -931,25 +817,25 @@ class Matrix4 : IMatrix4, Serializable {
         val m13 = this.m13
         val m23 = this.m23
         val m33 = this.m33
-        return result.set(m00 + t * (other.m00() - m00),
-                m10 + t * (other.m10() - m10),
-                m20 + t * (other.m20() - m20),
-                m30 + t * (other.m30() - m30),
+        return result.set(m00 + t * (other.m00 - m00),
+                m10 + t * (other.m10 - m10),
+                m20 + t * (other.m20 - m20),
+                m30 + t * (other.m30 - m30),
 
-                m01 + t * (other.m01() - m01),
-                m11 + t * (other.m11() - m11),
-                m21 + t * (other.m21() - m21),
-                m31 + t * (other.m31() - m31),
+                m01 + t * (other.m01 - m01),
+                m11 + t * (other.m11 - m11),
+                m21 + t * (other.m21 - m21),
+                m31 + t * (other.m31 - m31),
 
-                m02 + t * (other.m02() - m02),
-                m12 + t * (other.m12() - m12),
-                m22 + t * (other.m22() - m22),
-                m32 + t * (other.m32() - m32),
+                m02 + t * (other.m02 - m02),
+                m12 + t * (other.m12 - m12),
+                m22 + t * (other.m22 - m22),
+                m32 + t * (other.m32 - m32),
 
-                m03 + t * (other.m03() - m03),
-                m13 + t * (other.m13() - m13),
-                m23 + t * (other.m23() - m23),
-                m33 + t * (other.m33() - m33))
+                m03 + t * (other.m03 - m03),
+                m13 + t * (other.m13 - m13),
+                m23 + t * (other.m23 - m23),
+                m33 + t * (other.m33 - m33))
     }
 
     override // from IMatrix4
@@ -971,31 +857,22 @@ class Matrix4 : IMatrix4, Serializable {
         val m12 = this.m12
         val m22 = this.m22
         val m32 = this.m32
-        return result.set(m00 + t * (other.m00() - m00),
-                m10 + t * (other.m10() - m10),
-                m20 + t * (other.m20() - m20),
-                m30 + t * (other.m30() - m30),
+        return result.set(m00 + t * (other.m00 - m00),
+                m10 + t * (other.m10 - m10),
+                m20 + t * (other.m20 - m20),
+                m30 + t * (other.m30 - m30),
 
-                m01 + t * (other.m01() - m01),
-                m11 + t * (other.m11() - m11),
-                m21 + t * (other.m21() - m21),
-                m31 + t * (other.m31() - m31),
+                m01 + t * (other.m01 - m01),
+                m11 + t * (other.m11 - m11),
+                m21 + t * (other.m21 - m21),
+                m31 + t * (other.m31 - m31),
 
-                m02 + t * (other.m02() - m02),
-                m12 + t * (other.m12() - m12),
-                m22 + t * (other.m22() - m22),
-                m32 + t * (other.m32() - m32),
+                m02 + t * (other.m02 - m02),
+                m12 + t * (other.m12 - m12),
+                m22 + t * (other.m22 - m22),
+                m32 + t * (other.m32 - m32),
 
                 0f, 0f, 0f, 1f)
-    }
-
-    override // from IMatrix4
-    fun get(buf: FloatBuffer): FloatBuffer {
-        buf.put(m00).put(m01).put(m02).put(m03)
-        buf.put(m10).put(m11).put(m12).put(m13)
-        buf.put(m20).put(m21).put(m22).put(m23)
-        buf.put(m30).put(m31).put(m32).put(m33)
-        return buf
     }
 
     override // from IMatrix4
@@ -1091,7 +968,6 @@ class Matrix4 : IMatrix4, Serializable {
      * [Ken
        * Shoemake](http://www.cs.wisc.edu/graphics/Courses/838-s2002/Papers/polar-decomp.pdf).
      */
-    @Throws(SingularMatrixException::class)
     override // from IMatrix4
     fun extractRotation(result: Quaternion): Quaternion {
         // start with the contents of the upper 3x3 portion of the matrix
@@ -1195,25 +1071,25 @@ class Matrix4 : IMatrix4, Serializable {
 
     override // from IMatrix4
     fun epsilonEquals(other: IMatrix4, epsilon: Float): Boolean {
-        return Math.abs(m00 - other.m00()) < epsilon &&
-                Math.abs(m10 - other.m10()) < epsilon &&
-                Math.abs(m20 - other.m20()) < epsilon &&
-                Math.abs(m30 - other.m30()) < epsilon &&
+        return Math.abs(m00 - other.m00) < epsilon &&
+                Math.abs(m10 - other.m10) < epsilon &&
+                Math.abs(m20 - other.m20) < epsilon &&
+                Math.abs(m30 - other.m30) < epsilon &&
 
-                Math.abs(m01 - other.m01()) < epsilon &&
-                Math.abs(m11 - other.m11()) < epsilon &&
-                Math.abs(m21 - other.m21()) < epsilon &&
-                Math.abs(m31 - other.m31()) < epsilon &&
+                Math.abs(m01 - other.m01) < epsilon &&
+                Math.abs(m11 - other.m11) < epsilon &&
+                Math.abs(m21 - other.m21) < epsilon &&
+                Math.abs(m31 - other.m31) < epsilon &&
 
-                Math.abs(m02 - other.m02()) < epsilon &&
-                Math.abs(m12 - other.m12()) < epsilon &&
-                Math.abs(m22 - other.m22()) < epsilon &&
-                Math.abs(m32 - other.m32()) < epsilon &&
+                Math.abs(m02 - other.m02) < epsilon &&
+                Math.abs(m12 - other.m12) < epsilon &&
+                Math.abs(m22 - other.m22) < epsilon &&
+                Math.abs(m32 - other.m32) < epsilon &&
 
-                Math.abs(m03 - other.m03()) < epsilon &&
-                Math.abs(m13 - other.m13()) < epsilon &&
-                Math.abs(m23 - other.m23()) < epsilon &&
-                Math.abs(m33 - other.m33()) < epsilon
+                Math.abs(m03 - other.m03) < epsilon &&
+                Math.abs(m13 - other.m13) < epsilon &&
+                Math.abs(m23 - other.m23) < epsilon &&
+                Math.abs(m33 - other.m33) < epsilon
     }
 
     override fun toString(): String {

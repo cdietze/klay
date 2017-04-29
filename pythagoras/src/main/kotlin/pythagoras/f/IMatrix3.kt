@@ -9,31 +9,31 @@ package pythagoras.f
  */
 interface IMatrix3 {
     /** Returns column 0, row 0 of the matrix.  */
-    fun m00(): Float
+    val m00: Float
 
     /** Returns column 1, row 0 of the matrix.  */
-    fun m10(): Float
+    val m10: Float
 
     /** Returns column 2, row 0 of the matrix.  */
-    fun m20(): Float
+    val m20: Float
 
     /** Returns column 0, row 1 of the matrix.  */
-    fun m01(): Float
+    val m01: Float
 
     /** Returns column 1, row 1 of the matrix.  */
-    fun m11(): Float
+    val m11: Float
 
     /** Returns column 2, row 1 of the matrix.  */
-    fun m21(): Float
+    val m21: Float
 
     /** Returns column 0, row 2 of the matrix.  */
-    fun m02(): Float
+    val m02: Float
 
     /** Returns column 1, row 2 of the matrix.  */
-    fun m12(): Float
+    val m12: Float
 
     /** Returns column 2, row 2 of the matrix.  */
-    fun m22(): Float
+    val m22: Float
 
     /** Returns the matrix element at the specified row and column.  */
     fun element(row: Int, col: Int): Float
@@ -164,13 +164,6 @@ interface IMatrix3 {
      * @return a reference to the result object, for chaining.
      */
     fun lerpAffine(other: IMatrix3, t: Float, result: Matrix3): Matrix3
-
-    /**
-     * Places the contents of this matrix into the given buffer in the standard OpenGL order.
-
-     * @return a reference to the buffer, for chaining.
-     */
-    operator fun get(buf: FloatBuffer): FloatBuffer
 
     /**
      * Transforms a vector in-place by the inner 3x3 part of this matrix.

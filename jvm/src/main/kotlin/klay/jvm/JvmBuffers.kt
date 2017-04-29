@@ -30,6 +30,7 @@ class JvmBuffers : klay.core.GL20.Buffers() {
 }
 
 class JvmByteBuffer(override val nioBuffer: java.nio.ByteBuffer) : JvmBuffer(), ByteBuffer {
+    override fun get(): Byte = nioBuffer.get()
 
     override fun get(dst: ByteArray, offset: Int, length: Int) {
         nioBuffer.get(dst, offset, length)
@@ -47,6 +48,7 @@ class JvmByteBuffer(override val nioBuffer: java.nio.ByteBuffer) : JvmBuffer(), 
 
 class JvmIntBuffer(private val intBuffer: java.nio.IntBuffer) : JvmBuffer(), IntBuffer {
     override val nioBuffer: java.nio.IntBuffer = intBuffer
+    override fun get(): Int = intBuffer.get()
     override fun get(i: Int): Int = intBuffer.get(i)
     override fun get(dst: IntArray, offset: Int, length: Int) {
         intBuffer.get(dst, offset, length)
@@ -65,6 +67,7 @@ class JvmIntBuffer(private val intBuffer: java.nio.IntBuffer) : JvmBuffer(), Int
 
 class JvmShortBuffer(private val shortBuffer: java.nio.ShortBuffer) : JvmBuffer(), ShortBuffer {
     override val nioBuffer: java.nio.ShortBuffer = shortBuffer
+    override fun get(): Short = shortBuffer.get()
     override fun get(i: Int): Short = shortBuffer.get(i)
     override fun get(dst: ShortArray, offset: Int, length: Int) {
         shortBuffer.get(dst, offset, length)
@@ -83,6 +86,7 @@ class JvmShortBuffer(private val shortBuffer: java.nio.ShortBuffer) : JvmBuffer(
 
 class JvmFloatBuffer(private val floatBuffer: java.nio.FloatBuffer) : JvmBuffer(), FloatBuffer {
     override val nioBuffer: java.nio.FloatBuffer = floatBuffer
+    override fun get(): Float = floatBuffer.get()
     override fun get(i: Int): Float = floatBuffer.get(i)
     override fun get(dst: FloatArray, offset: Int, length: Int) {
         floatBuffer.get(dst, offset, length)
@@ -101,6 +105,7 @@ class JvmFloatBuffer(private val floatBuffer: java.nio.FloatBuffer) : JvmBuffer(
 
 class JvmDoubleBuffer(private val doubleBuffer: java.nio.DoubleBuffer) : JvmBuffer(), DoubleBuffer {
     override val nioBuffer: java.nio.DoubleBuffer = doubleBuffer
+    override fun get(): Double = doubleBuffer.get()
     override fun get(i: Int): Double = doubleBuffer.get(i)
     override fun get(dst: DoubleArray, offset: Int, length: Int) {
         doubleBuffer.get(dst, offset, length)
