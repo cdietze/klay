@@ -7,18 +7,18 @@ package pythagoras.f
 /**
  * Provides read-only access to a [Line].
  */
-interface ILine : IShape, Cloneable {
+interface ILine : IShape {
     /** Returns the x-coordinate of the start of this line.  */
-    fun x1(): Float
+    val x1: Float
 
     /** Returns the y-coordinate of the start of this line.  */
-    fun y1(): Float
+    val y1: Float
 
     /** Returns the x-coordinate of the end of this line.  */
-    fun x2(): Float
+    val x2: Float
 
     /** Returns the y-coordinate of the end of this line.  */
-    fun y2(): Float
+    val y2: Float
 
     /** Returns a copy of the starting point of this line.  */
     fun p1(): Point
@@ -70,5 +70,5 @@ interface ILine : IShape, Cloneable {
     fun relativeCCW(p: XY): Int
 
     /** Returns a mutable copy of this line.  */
-    public override fun clone(): Line
+    fun clone(): Line
 }

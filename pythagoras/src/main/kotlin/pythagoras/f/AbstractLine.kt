@@ -4,8 +4,6 @@
 
 package pythagoras.f
 
-import java.util.*
-
 /**
  * Provides most of the implementation of [ILine], obtaining only the start and end points
  * from the derived class.
@@ -18,7 +16,7 @@ abstract class AbstractLine : ILine {
 
     override // from interface ILine
     fun p1(target: Point): Point {
-        return target.set(x1(), y1())
+        return target.set(x1, y1)
     }
 
     override // from interface ILine
@@ -28,62 +26,62 @@ abstract class AbstractLine : ILine {
 
     override // from interface ILine
     fun p2(target: Point): Point {
-        return target.set(x2(), y2())
+        return target.set(x2, y2)
     }
 
     override // from interface ILine
     fun pointLineDistSq(px: Float, py: Float): Float {
-        return Lines.pointLineDistSq(px, py, x1(), y1(), x2(), y2())
+        return Lines.pointLineDistSq(px, py, x1, y1, x2, y2)
     }
 
     override // from interface ILine
     fun pointLineDistSq(p: XY): Float {
-        return Lines.pointLineDistSq(p.x(), p.y(), x1(), y1(), x2(), y2())
+        return Lines.pointLineDistSq(p.x, p.y, x1, y1, x2, y2)
     }
 
     override // from interface ILine
     fun pointLineDist(px: Float, py: Float): Float {
-        return Lines.pointLineDist(px, py, x1(), y1(), x2(), y2())
+        return Lines.pointLineDist(px, py, x1, y1, x2, y2)
     }
 
     override // from interface ILine
     fun pointLineDist(p: XY): Float {
-        return Lines.pointLineDist(p.x(), p.y(), x1(), y1(), x2(), y2())
+        return Lines.pointLineDist(p.x, p.y, x1, y1, x2, y2)
     }
 
     override // from interface ILine
     fun pointSegDistSq(px: Float, py: Float): Float {
-        return Lines.pointSegDistSq(px, py, x1(), y1(), x2(), y2())
+        return Lines.pointSegDistSq(px, py, x1, y1, x2, y2)
     }
 
     override // from interface ILine
     fun pointSegDistSq(p: XY): Float {
-        return Lines.pointSegDistSq(p.x(), p.y(), x1(), y1(), x2(), y2())
+        return Lines.pointSegDistSq(p.x, p.y, x1, y1, x2, y2)
     }
 
     override // from interface ILine
     fun pointSegDist(px: Float, py: Float): Float {
-        return Lines.pointSegDist(px, py, x1(), y1(), x2(), y2())
+        return Lines.pointSegDist(px, py, x1, y1, x2, y2)
     }
 
     override // from interface ILine
     fun pointSegDist(p: XY): Float {
-        return Lines.pointSegDist(p.x(), p.y(), x1(), y1(), x2(), y2())
+        return Lines.pointSegDist(p.x, p.y, x1, y1, x2, y2)
     }
 
     override // from interface ILine
     fun relativeCCW(px: Float, py: Float): Int {
-        return Lines.relativeCCW(px, py, x1(), y1(), x2(), y2())
+        return Lines.relativeCCW(px, py, x1, y1, x2, y2)
     }
 
     override // from interface ILine
     fun relativeCCW(p: XY): Int {
-        return Lines.relativeCCW(p.x(), p.y(), x1(), y1(), x2(), y2())
+        return Lines.relativeCCW(p.x, p.y, x1, y1, x2, y2)
     }
 
     override // from interface ILine
     fun clone(): Line {
-        return Line(x1(), y1(), x2(), y2())
+        return Line(x1, y1, x2, y2)
     }
 
     override // from interface IShape
@@ -112,7 +110,7 @@ abstract class AbstractLine : ILine {
 
     override // from interface IShape
     fun intersects(rx: Float, ry: Float, rw: Float, rh: Float): Boolean {
-        return Lines.lineIntersectsRect(x1(), y1(), x2(), y2(), rx, ry, rw, rh)
+        return Lines.lineIntersectsRect(x1, y1, x2, y2, rx, ry, rw, rh)
     }
 
     override // from interface IShape
@@ -127,10 +125,10 @@ abstract class AbstractLine : ILine {
 
     override // from interface IShape
     fun bounds(target: Rectangle): Rectangle {
-        val x1 = x1()
-        val x2 = x2()
-        val y1 = y1()
-        val y2 = y2()
+        val x1 = x1
+        val x2 = x2
+        val y1 = y1
+        val y2 = y2
         val rx: Float
         val ry: Float
         val rw: Float
@@ -172,10 +170,10 @@ abstract class AbstractLine : ILine {
         private var index: Int = 0
 
         init {
-            this.x1 = l.x1()
-            this.y1 = l.y1()
-            this.x2 = l.x2()
-            this.y2 = l.y2()
+            this.x1 = l.x1
+            this.y1 = l.y1
+            this.x2 = l.x2
+            this.y2 = l.y2
         }
 
         override fun windingRule(): Int {

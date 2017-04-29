@@ -10,34 +10,40 @@ package pythagoras.f
 class IdentityTransform : AbstractTransform() {
 
     override // from Transform
-    fun uniformScale(): Float {
-        return 1f
-    }
+    val uniformScale: Float
+        get() {
+            return 1f
+        }
 
     override // from Transform
-    fun scaleX(): Float {
-        return 1f
-    }
+    val scaleX: Float
+        get() {
+            return 1f
+        }
 
     override // from Transform
-    fun scaleY(): Float {
-        return 1f
-    }
+    val scaleY: Float
+        get() {
+            return 1f
+        }
 
     override // from Transform
-    fun rotation(): Float {
-        return 0f
-    }
+    val rotation: Float
+        get() {
+            return 0f
+        }
 
     override // from Transform
-    fun tx(): Float {
-        return 0f
-    }
+    val tx: Float
+        get() {
+            return 0f
+        }
 
     override // from Transform
-    fun ty(): Float {
-        return 0f
-    }
+    val ty: Float
+        get() {
+            return 0f
+        }
 
     override // from Transform
     fun get(matrix: FloatArray) {

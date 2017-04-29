@@ -4,13 +4,13 @@
 
 package pythagoras.f
 
-import java.util.NoSuchElementException
-import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
+import java.lang.Math
+import java.lang.System
 
 /**
  * A path iterator that flattens curves.
  */
-internal class FlatteningPathIterator @JvmOverloads constructor(
+internal class FlatteningPathIterator constructor(
         /** The source PathIterator  */
         private val p: PathIterator,
         /** The flatness of new path  */

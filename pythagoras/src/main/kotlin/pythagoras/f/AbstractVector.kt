@@ -13,7 +13,7 @@ import pythagoras.util.Platform
 abstract class AbstractVector : IVector {
     override // from interface IVector
     fun dot(other: IVector): Float {
-        return x() * other.x() + y() * other.y()
+        return x * other.x + y * other.y
     }
 
     override // from interface IVector
@@ -23,10 +23,10 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun cross(other: IVector, result: Vector): Vector {
-        val x = x()
-        val y = y()
-        val ox = other.x()
-        val oy = other.y()
+        val x = x
+        val y = y
+        val ox = other.x
+        val oy = other.y
         return result.set(y * ox - x * oy, x * oy - y * ox)
     }
 
@@ -37,7 +37,7 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun negate(result: Vector): Vector {
-        return result.set(-x(), -y())
+        return result.set(-x, -y)
     }
 
     override // from interface IVector
@@ -57,14 +57,14 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun lengthSq(): Float {
-        val x = x()
-        val y = y()
+        val x = x
+        val y = y
         return x * x + y * y
     }
 
     override // from interface IVector
     val isZero: Boolean
-        get() = Vectors.isZero(x(), y())
+        get() = Vectors.isZero(x, y)
 
     override // from interface IVector
     fun distance(other: IVector): Float {
@@ -73,14 +73,14 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun distanceSq(other: IVector): Float {
-        val dx = x() - other.x()
-        val dy = y() - other.y()
+        val dx = x - other.x
+        val dy = y - other.y
         return dx * dx + dy * dy
     }
 
     override // from interface IVector
     fun angle(): Float {
-        return FloatMath.atan2(y(), x())
+        return FloatMath.atan2(y, x)
     }
 
     override // from interface IVector
@@ -96,7 +96,7 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun scale(v: Float, result: Vector): Vector {
-        return result.set(x() * v, y() * v)
+        return result.set(x * v, y * v)
     }
 
     override // from interface IVector
@@ -106,7 +106,7 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun scale(other: IVector, result: Vector): Vector {
-        return result.set(x() * other.x(), y() * other.y())
+        return result.set(x * other.x, y * other.y)
     }
 
     override // from interface IVector
@@ -116,7 +116,7 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun add(other: IVector, result: Vector): Vector {
-        return add(other.x(), other.y(), result)
+        return add(other.x, other.y, result)
     }
 
     override // from interface IVector
@@ -126,7 +126,7 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun subtract(other: IVector, result: Vector): Vector {
-        return add(-other.x(), -other.y(), result)
+        return add(-other.x, -other.y, result)
     }
 
     override // from interface IVector
@@ -136,7 +136,7 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun add(x: Float, y: Float, result: Vector): Vector {
-        return result.set(x() + x, y() + y)
+        return result.set(x + x, y + y)
     }
 
     override // from interface IVector
@@ -146,7 +146,7 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun subtract(x: Float, y: Float, result: Vector): Vector {
-        return result.set(x() - x, y() - y)
+        return result.set(x - x, y - y)
     }
 
     override // from interface IVector
@@ -156,7 +156,7 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun addScaled(other: IVector, v: Float, result: Vector): Vector {
-        return result.set(x() + other.x() * v, y() + other.y() * v)
+        return result.set(x + other.x * v, y + other.y * v)
     }
 
     override // from interface IVector
@@ -166,8 +166,8 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun rotate(angle: Float, result: Vector): Vector {
-        val x = x()
-        val y = y()
+        val x = x
+        val y = y
         val sina = FloatMath.sin(angle)
         val cosa = FloatMath.cos(angle)
         return result.set(x * cosa - y * sina, x * sina + y * cosa)
@@ -175,21 +175,21 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun rotateAndAdd(angle: Float, add: IVector, result: Vector): Vector {
-        val x = x()
-        val y = y()
+        val x = x
+        val y = y
         val sina = FloatMath.sin(angle)
         val cosa = FloatMath.cos(angle)
-        return result.set(x * cosa - y * sina + add.x(), x * sina + y * cosa + add.y())
+        return result.set(x * cosa - y * sina + add.x, x * sina + y * cosa + add.y)
     }
 
     override // from interface IVector
     fun rotateScaleAndAdd(angle: Float, scale: Float, add: IVector, result: Vector): Vector {
-        val x = x()
-        val y = y()
+        val x = x
+        val y = y
         val sina = FloatMath.sin(angle)
         val cosa = FloatMath.cos(angle)
-        return result.set((x * cosa - y * sina) * scale + add.x(),
-                (x * sina + y * cosa) * scale + add.y())
+        return result.set((x * cosa - y * sina) * scale + add.x,
+                (x * sina + y * cosa) * scale + add.y)
     }
 
     override // from interface IVector
@@ -199,10 +199,10 @@ abstract class AbstractVector : IVector {
 
     override // from interface IVector
     fun lerp(other: IVector, t: Float, result: Vector): Vector {
-        val x = x()
-        val y = y()
-        val dx = other.x() - x
-        val dy = other.y() - y
+        val x = x
+        val y = y
+        val dx = other.x - x
+        val dy = other.y - y
         return result.set(x + t * dx, y + t * dy)
     }
 
@@ -217,16 +217,16 @@ abstract class AbstractVector : IVector {
         }
         if (obj is AbstractVector) {
             val p = obj
-            return x() == p.x() && y() == p.y()
+            return x == p.x && y == p.y
         }
         return false
     }
 
     override fun hashCode(): Int {
-        return Platform.hashCode(x()) xor Platform.hashCode(y())
+        return Platform.hashCode(x) xor Platform.hashCode(y)
     }
 
     override fun toString(): String {
-        return Vectors.vectorToString(x(), y())
+        return Vectors.vectorToString(x, y)
     }
 }

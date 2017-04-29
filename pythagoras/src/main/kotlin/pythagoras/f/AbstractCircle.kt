@@ -13,30 +13,30 @@ import pythagoras.util.Platform
 abstract class AbstractCircle : ICircle {
     override // from ICircle
     fun intersects(c: ICircle): Boolean {
-        val maxDist = radius() + c.radius()
-        return Points.distanceSq(x(), y(), c.x(), c.y()) < maxDist * maxDist
+        val maxDist = radius + c.radius
+        return Points.distanceSq(x, y, c.x, c.y) < maxDist * maxDist
     }
 
     override // from ICircle
     fun contains(p: XY): Boolean {
-        val r = radius()
-        return Points.distanceSq(x(), y(), p.x(), p.y()) < r * r
+        val r = radius
+        return Points.distanceSq(x, y, p.x, p.y) < r * r
     }
 
     override // from ICircle
     fun contains(x: Float, y: Float): Boolean {
-        val r = radius()
-        return Points.distanceSq(x(), y(), x, y) < r * r
+        val r = radius
+        return Points.distanceSq(x, y, x, y) < r * r
     }
 
     override // from ICircle
     fun offset(x: Float, y: Float): Circle {
-        return Circle(x() + x, y() + y, radius())
+        return Circle(x + x, y + y, radius)
     }
 
     override // from ICircle
     fun offset(x: Float, y: Float, result: Circle): Circle {
-        result.set(x() + x, y() + y, radius())
+        result.set(x + x, y + y, radius)
         return result
     }
 
@@ -51,12 +51,12 @@ abstract class AbstractCircle : ICircle {
         }
         if (obj is AbstractCircle) {
             val c = obj
-            return x() == c.x() && y() == c.y() && radius() == c.radius()
+            return x == c.x && y == c.y && radius == c.radius
         }
         return false
     }
 
     override fun hashCode(): Int {
-        return Platform.hashCode(x()) xor Platform.hashCode(y()) xor Platform.hashCode(radius())
+        return Platform.hashCode(x) xor Platform.hashCode(y) xor Platform.hashCode(radius)
     }
 }

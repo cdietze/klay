@@ -3,6 +3,7 @@
 // http://github.com/samskivert/pythagoras
 
 package pythagoras.f
+import java.lang.Math
 
 /**
  * Math utility methods.
@@ -34,7 +35,7 @@ open class MathUtil {
          */
         fun ifloor(v: Float): Int {
             val iv = v.toInt()
-            return if (v >= 0f || iv.toFloat() == v || iv == Integer.MIN_VALUE) iv else iv - 1
+            return if (v >= 0f || iv.toFloat() == v || iv == Int.MIN_VALUE) iv else iv - 1
         }
 
         /**
@@ -43,7 +44,7 @@ open class MathUtil {
          */
         fun iceil(v: Float): Int {
             val iv = v.toInt()
-            return if (v <= 0f || iv.toFloat() == v || iv == Integer.MAX_VALUE) iv else iv + 1
+            return if (v <= 0f || iv.toFloat() == v || iv == Int.MAX_VALUE) iv else iv + 1
         }
 
         /**
@@ -201,9 +202,9 @@ open class MathUtil {
          * Formats the supplied floating point value, truncated to the given number of decimal places.
          * The value is also always preceded by a sign (e.g. +1.0 or -0.5).
          */
-        @JvmOverloads fun toString(value: Float, decimalPlaces: Int = TO_STRING_DECIMAL_PLACES): String {
+        fun toString(value: Float, decimalPlaces: Int = TO_STRING_DECIMAL_PLACES): String {
             var value = value
-            if (java.lang.Float.isNaN(value)) return "NaN"
+            if (value.isNaN()) return "NaN"
 
             val buf = StringBuilder()
             if (value >= 0)
@@ -222,11 +223,12 @@ open class MathUtil {
                     buf.append(ivalue)
                 }
                 // trim trailing zeros
-                for (ii in 0..decimalPlaces - 1 - 1) {
-                    if (buf[buf.length - 1] == '0') {
-                        buf.setLength(buf.length - 1)
-                    }
-                }
+                // TODO(cdi) commented out, because Kotlin does not have StringBuilder#setLength
+//                for (ii in 0..decimalPlaces - 1 - 1) {
+//                    if (buf[buf.length - 1] == '0') {
+//                        buf.setLength(buf.length - 1)
+//                    }
+//                }
             }
             return buf.toString()
         }

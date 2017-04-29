@@ -3,6 +3,7 @@
 // http://github.com/samskivert/pythagoras
 
 package pythagoras.f
+import java.lang.Math
 
 /**
  * Rectangle-related utility methods.
@@ -12,10 +13,10 @@ object Rectangles {
      * Intersects the supplied two rectangles, writing the result into `dst`.
      */
     fun intersect(src1: IRectangle, src2: IRectangle, dst: Rectangle) {
-        val x1 = Math.max(src1.minX(), src2.minX())
-        val y1 = Math.max(src1.minY(), src2.minY())
-        val x2 = Math.min(src1.maxX(), src2.maxX())
-        val y2 = Math.min(src1.maxY(), src2.maxY())
+        val x1 = Math.max(src1.minX, src2.minX)
+        val y1 = Math.max(src1.minY, src2.minY)
+        val x2 = Math.min(src1.maxX, src2.maxX)
+        val y2 = Math.min(src1.maxY, src2.maxY)
         dst.setBounds(x1, y1, x2 - x1, y2 - y1)
     }
 
@@ -23,10 +24,10 @@ object Rectangles {
      * Unions the supplied two rectangles, writing the result into `dst`.
      */
     fun union(src1: IRectangle, src2: IRectangle, dst: Rectangle) {
-        val x1 = Math.min(src1.minX(), src2.minX())
-        val y1 = Math.min(src1.minY(), src2.minY())
-        val x2 = Math.max(src1.maxX(), src2.maxX())
-        val y2 = Math.max(src1.maxY(), src2.maxY())
+        val x1 = Math.min(src1.minX, src2.minX)
+        val y1 = Math.min(src1.minY, src2.minY)
+        val x2 = Math.max(src1.maxX, src2.maxX)
+        val y2 = Math.max(src1.maxY, src2.maxY)
         dst.setBounds(x1, y1, x2 - x1, y2 - y1)
     }
 
@@ -35,9 +36,9 @@ object Rectangles {
      * writing the result into `out`.
      * @return `out` for call chaining convenience.
      */
-    @JvmOverloads fun closestInteriorPoint(r: IRectangle, p: IPoint, out: Point = Point()): Point {
-        out.set(MathUtil.clamp(p.x(), r.minX(), r.maxX()),
-                MathUtil.clamp(p.y(), r.minY(), r.maxY()))
+    fun closestInteriorPoint(r: IRectangle, p: IPoint, out: Point = Point()): Point {
+        out.set(MathUtil.clamp(p.x, r.minX, r.maxX),
+                MathUtil.clamp(p.y, r.minY, r.maxY))
         return out
     }
 
@@ -48,7 +49,7 @@ object Rectangles {
      */
     fun pointRectDistanceSq(r: IRectangle, p: IPoint): Float {
         val p2 = closestInteriorPoint(r, p)
-        return Points.distanceSq(p.x(), p.y(), p2.x, p2.y)
+        return Points.distanceSq(p.x, p.y, p2.x, p2.y)
     }
 
     /**

@@ -4,6 +4,8 @@
 
 package pythagoras.f
 
+import java.lang.Math
+
 /**
  * Various geometry utility methods.
  */

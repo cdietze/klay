@@ -9,10 +9,10 @@ package pythagoras.f
  */
 class Ray3 : IRay3 {
     /** The ray's point of origin.  */
-    val origin = Vector3()
+    override val origin = Vector3()
 
     /** The ray's unit direction vector.  */
-    val direction = Vector3()
+    override val direction = Vector3()
 
     /**
      * Creates a ray with the values contained in the supplied origin point and unit direction
@@ -40,7 +40,7 @@ class Ray3 : IRay3 {
      * @return a reference to this ray, for chaining.
      */
     fun set(other: Ray3): Ray3 {
-        return set(other.origin(), other.direction())
+        return set(other.origin, other.direction)
     }
 
     /**
@@ -62,16 +62,6 @@ class Ray3 : IRay3 {
     // public Ray3 transformLocal (Transform3D transform) {
     //     return transform(transform, this);
     // }
-
-    override // from IRay3
-    fun origin(): Vector3 {
-        return origin
-    }
-
-    override // from IRay3
-    fun direction(): Vector3 {
-        return direction
-    }
 
     // @Override // from IRay3
     // public Ray3 transform (Transform3D transform) {

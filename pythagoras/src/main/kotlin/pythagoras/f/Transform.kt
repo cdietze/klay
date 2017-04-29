@@ -13,33 +13,33 @@ import pythagoras.util.NoninvertibleTransformException
 interface Transform {
     /** Returns the uniform scale applied by this transform. The uniform scale will be approximated
      * for non-uniform transforms.  */
-    fun uniformScale(): Float
+    val uniformScale: Float
 
     /** Returns the scale vector for this transform.  */
-    fun scale(): Vector
+    val scale: Vector
 
     /** Returns the x-component of the scale applied by this transform. Note that this will be
      * extracted and therefore approximate for affine transforms.  */
-    fun scaleX(): Float
+    val scaleX: Float
 
     /** Returns the y-component of the scale applied by this transform. Note that this will be
      * extracted and therefore approximate for affine transforms.  */
-    fun scaleY(): Float
+    val scaleY: Float
 
     /** Returns the rotation applied by this transform. Note that the rotation is extracted and
      * therefore approximate for affine transforms.
      * @throws NoninvertibleTransformException if the transform is not invertible.
      */
-    fun rotation(): Float
+    val rotation: Float
 
     /** Returns the translation vector for this transform.  */
-    fun translation(): Vector
+    val translation: Vector
 
     /** Returns the x-coordinate of the translation component.  */
-    fun tx(): Float
+    val tx: Float
 
     /** Returns the y-coordinate of the translation component.  */
-    fun ty(): Float
+    val ty: Float
 
     /** Copies the affine transform matrix into the supplied array.
      * @param matrix the array which receives `m00, m01, m10, m11, tx, ty`.

@@ -4,30 +4,28 @@
 
 package pythagoras.f
 
-import java.io.Serializable
-
 /**
  * Represents a rectangle with rounded corners, defined by an arc width and height.
  */
-class RoundRectangle : AbstractRoundRectangle, Serializable {
+class RoundRectangle : AbstractRoundRectangle {
 
     /** The x-coordinate of the framing rectangle.  */
-    var x: Float = 0.toFloat()
+    override var x: Float = 0.toFloat()
 
     /** The y-coordinate of the framing rectangle.  */
-    var y: Float = 0.toFloat()
+    override var y: Float = 0.toFloat()
 
     /** The width of the framing rectangle.  */
-    var width: Float = 0.toFloat()
+    override var width: Float = 0.toFloat()
 
     /** The height of the framing rectangle.  */
-    var height: Float = 0.toFloat()
+    override var height: Float = 0.toFloat()
 
     /** The width of the arc that defines the rounded corners.  */
-    var arcwidth: Float = 0.toFloat()
+    override var arcWidth: Float = 0.toFloat()
 
     /** The height of the arc that defines the rounded corners.  */
-    var archeight: Float = 0.toFloat()
+    override var arcHeight: Float = 0.toFloat()
 
     /**
      * Creates a rounded rectangle with frame (0x0+0+0) and corners of size (0x0).
@@ -51,8 +49,8 @@ class RoundRectangle : AbstractRoundRectangle, Serializable {
         this.y = y
         this.width = width
         this.height = height
-        this.arcwidth = arcwidth
-        this.archeight = archeight
+        this.arcWidth = arcwidth
+        this.arcHeight = archeight
     }
 
     /**
@@ -60,43 +58,13 @@ class RoundRectangle : AbstractRoundRectangle, Serializable {
      * rectangle.
      */
     fun setRoundRect(rr: IRoundRectangle) {
-        setRoundRect(rr.x(), rr.y(), rr.width(), rr.height(),
-                rr.arcWidth(), rr.arcHeight())
-    }
-
-    override // from interface IRoundRectangle
-    fun arcWidth(): Float {
-        return arcwidth
-    }
-
-    override // from interface IRoundRectangle
-    fun arcHeight(): Float {
-        return archeight
-    }
-
-    override // from interface IRectangularShape
-    fun x(): Float {
-        return x
-    }
-
-    override // from interface IRectangularShape
-    fun y(): Float {
-        return y
-    }
-
-    override // from interface IRectangularShape
-    fun width(): Float {
-        return width
-    }
-
-    override // from interface IRectangularShape
-    fun height(): Float {
-        return height
+        setRoundRect(rr.x, rr.y, rr.width, rr.height,
+                rr.arcWidth, rr.arcHeight)
     }
 
     override // from RoundRectangle
     fun setFrame(x: Float, y: Float, width: Float, height: Float) {
-        setRoundRect(x, y, width, height, arcwidth, archeight)
+        setRoundRect(x, y, width, height, arcWidth, arcHeight)
     }
 
     companion object {

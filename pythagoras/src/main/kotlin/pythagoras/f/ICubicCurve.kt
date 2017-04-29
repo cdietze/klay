@@ -7,30 +7,30 @@ package pythagoras.f
 /**
  * Provides read-only access to a [CubicCurve].
  */
-interface ICubicCurve : IShape, Cloneable {
+interface ICubicCurve : IShape {
     /** Returns the x-coordinate of the start of this curve.  */
-    fun x1(): Float
+    val x1: Float
 
     /** Returns the y-coordinate of the start of this curve.  */
-    fun y1(): Float
+    val y1: Float
 
     /** Returns the x-coordinate of the first control point.  */
-    fun ctrlX1(): Float
+    val ctrlX1: Float
 
     /** Returns the y-coordinate of the first control point.  */
-    fun ctrlY1(): Float
+    val ctrlY1: Float
 
     /** Returns the x-coordinate of the second control point.  */
-    fun ctrlX2(): Float
+    val ctrlX2: Float
 
     /** Returns the y-coordinate of the second control point.  */
-    fun ctrlY2(): Float
+    val ctrlY2: Float
 
     /** Returns the x-coordinate of the end of this curve.  */
-    fun x2(): Float
+    val x2: Float
 
     /** Returns the y-coordinate of the end of this curve.  */
-    fun y2(): Float
+    val y2: Float
 
     /** Returns a copy of the starting point of this curve.  */
     fun p1(): Point
@@ -56,5 +56,5 @@ interface ICubicCurve : IShape, Cloneable {
     fun subdivide(left: CubicCurve, right: CubicCurve)
 
     /** Returns a mutable copy of this curve.  */
-    public override fun clone(): CubicCurve
+    fun clone(): CubicCurve
 }

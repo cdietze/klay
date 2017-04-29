@@ -7,20 +7,20 @@ package pythagoras.f
 /**
  * Provides read-only access to an [Arc].
  */
-interface IArc : IRectangularShape, Cloneable {
+interface IArc : IRectangularShape {
 
     /** Returns the type of this arc: [.OPEN], etc.  */
-    fun arcType(): Int
+    val arcType: Int
 
     /** Returns the starting angle of this arc.  */
-    fun angleStart(): Float
+    val angleStart: Float
 
     /** Returns the angular extent of this arc.  */
-    fun angleExtent(): Float
+    val angleExtent: Float
 
     /** Returns the intersection of the ray from the center (defined by the starting angle) and the
      * elliptical boundary of the arc.  */
-    fun startPoint(): Point
+    val startPoint: Point
 
     /** Writes the intersection of the ray from the center (defined by the starting angle) and the
      * elliptical boundary of the arc into `target`.
@@ -30,7 +30,7 @@ interface IArc : IRectangularShape, Cloneable {
 
     /** Returns the intersection of the ray from the center (defined by the starting angle plus the
      * angular extent of the arc) and the elliptical boundary of the arc.  */
-    fun endPoint(): Point
+    val endPoint: Point
 
     /** Writes the intersection of the ray from the center (defined by the starting angle plus the
      * angular extent of the arc) and the elliptical boundary of the arc into `target`.
@@ -42,7 +42,7 @@ interface IArc : IRectangularShape, Cloneable {
     fun containsAngle(angle: Float): Boolean
 
     /** Returns a mutable copy of this arc.  */
-    public override fun clone(): Arc
+    fun clone(): Arc
 
     companion object {
         /** An arc type indicating a simple, unconnected curve.  */

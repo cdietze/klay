@@ -5,21 +5,19 @@
 package pythagoras.f
 
 import pythagoras.util.Platform
-
-import java.io.Serializable
-import java.util.Random
+import java.util.*
 
 /**
  * A unit quaternion. Many of the formulas come from the
  * [Matrix and Quaternion FAQ](http://www.j3d.org/matrix_faq/matrfaq_latest.html).
  */
-class Quaternion : IQuaternion, Serializable {
+class Quaternion : IQuaternion {
 
     /** The components of the quaternion.  */
-    var x: Float = 0.toFloat()
-    var y: Float = 0.toFloat()
-    var z: Float = 0.toFloat()
-    var w: Float = 0.toFloat()
+    override var x: Float = 0.toFloat()
+    override var y: Float = 0.toFloat()
+    override var z: Float = 0.toFloat()
+    override var w: Float = 0.toFloat()
 
     /**
      * Creates a quaternion from four components.
@@ -55,7 +53,7 @@ class Quaternion : IQuaternion, Serializable {
      * @return a reference to this quaternion, for chaining.
      */
     fun set(other: IQuaternion): Quaternion {
-        return set(other.x(), other.y(), other.z(), other.w())
+        return set(other.x, other.y, other.z, other.w)
     }
 
     /**
@@ -94,10 +92,10 @@ class Quaternion : IQuaternion, Serializable {
             return fromAngleAxis(angle, from.cross(to).normalizeLocal())
         }
         // it's a 180 degree rotation; any axis orthogonal to the from vector will do
-        val axis = Vector3(0f, from.z(), -from.y())
+        val axis = Vector3(0f, from.z, -from.y)
         val length = axis.length()
         return fromAngleAxis(FloatMath.PI, if (length < MathUtil.EPSILON)
-            axis.set(-from.z(), 0f, from.x()).normalizeLocal()
+            axis.set(-from.z, 0f, from.x).normalizeLocal()
         else
             axis.multLocal(1f / length))
     }
@@ -108,7 +106,7 @@ class Quaternion : IQuaternion, Serializable {
      * @return a reference to the quaternion, for chaining.
      */
     fun fromVectorFromNegativeZ(to: IVector3): Quaternion {
-        return fromVectorFromNegativeZ(to.x(), to.y(), to.z())
+        return fromVectorFromNegativeZ(to.x, to.y, to.z)
     }
 
     /**
@@ -134,16 +132,16 @@ class Quaternion : IQuaternion, Serializable {
      * @return a reference to this quaternion, for chaining.
      */
     fun fromAxes(nx: IVector3, ny: IVector3, nz: IVector3): Quaternion {
-        val nxx = nx.x()
-        val nyy = ny.y()
-        val nzz = nz.z()
+        val nxx = nx.x
+        val nyy = ny.y
+        val nzz = nz.z
         val x2 = (1f + nxx - nyy - nzz) / 4f
         val y2 = (1f - nxx + nyy - nzz) / 4f
         val z2 = (1f - nxx - nyy + nzz) / 4f
         val w2 = 1f - x2 - y2 - z2
-        return set(FloatMath.sqrt(x2) * if (ny.z() >= nz.y()) +1f else -1f,
-                FloatMath.sqrt(y2) * if (nz.x() >= nx.z()) +1f else -1f,
-                FloatMath.sqrt(z2) * if (nx.y() >= ny.x()) +1f else -1f,
+        return set(FloatMath.sqrt(x2) * if (ny.z >= nz.y) +1f else -1f,
+                FloatMath.sqrt(y2) * if (nz.x >= nx.z) +1f else -1f,
+                FloatMath.sqrt(z2) * if (nx.y >= ny.x) +1f else -1f,
                 FloatMath.sqrt(w2))
     }
 
@@ -154,7 +152,7 @@ class Quaternion : IQuaternion, Serializable {
      * @return a reference to this quaternion, for chaining.
      */
     fun fromAngleAxis(angle: Float, axis: IVector3): Quaternion {
-        return fromAngleAxis(angle, axis.x(), axis.y(), axis.z())
+        return fromAngleAxis(angle, axis.x, axis.y, axis.z)
     }
 
     /**
@@ -296,26 +294,6 @@ class Quaternion : IQuaternion, Serializable {
     }
 
     override // from IQuaternion
-    fun x(): Float {
-        return x
-    }
-
-    override // from IQuaternion
-    fun y(): Float {
-        return y
-    }
-
-    override // from IQuaternion
-    fun z(): Float {
-        return z
-    }
-
-    override // from IQuaternion
-    fun w(): Float {
-        return w
-    }
-
-    override // from IQuaternion
     fun get(values: FloatArray) {
         values[0] = x
         values[1] = y
@@ -325,7 +303,7 @@ class Quaternion : IQuaternion, Serializable {
 
     override // from IQuaternion
     fun hasNaN(): Boolean {
-        return java.lang.Float.isNaN(x) || java.lang.Float.isNaN(y) || java.lang.Float.isNaN(z) || java.lang.Float.isNaN(w)
+        return x.isNaN() || y.isNaN() || z.isNaN() || w.isNaN()
     }
 
     override // from IQuaternion
@@ -383,10 +361,10 @@ class Quaternion : IQuaternion, Serializable {
 
     override // from IQuaternion
     fun mult(other: IQuaternion, result: Quaternion): Quaternion {
-        val ox = other.x()
-        val oy = other.y()
-        val oz = other.z()
-        val ow = other.w()
+        val ox = other.x
+        val oy = other.y
+        val oz = other.z
+        val ow = other.w
         return result.set(w * ox + x * ow + y * oz - z * oy,
                 w * oy + y * ow + z * ox - x * oz,
                 w * oz + z * ow + x * oy - y * ox,
@@ -400,10 +378,10 @@ class Quaternion : IQuaternion, Serializable {
 
     override // from IQuaternion
     fun slerp(other: IQuaternion, t: Float, result: Quaternion): Quaternion {
-        var ox = other.x()
-        var oy = other.y()
-        var oz = other.z()
-        var ow = other.w()
+        var ox = other.x
+        var oy = other.y
+        var oz = other.z
+        var ow = other.w
         var cosa = x * ox + y * oy + z * oz + w * ow
         val s0: Float
         val s1: Float
@@ -448,9 +426,9 @@ class Quaternion : IQuaternion, Serializable {
         val yz = y * z
         val yw = y * w
         val zw = z * w
-        val vx = vector.x()
-        val vy = vector.y()
-        val vz = vector.z()
+        val vx = vector.x
+        val vy = vector.y
+        val vz = vector.z
         val vx2 = vx * 2f
         val vy2 = vy * 2f
         val vz2 = vz * 2f
@@ -485,15 +463,15 @@ class Quaternion : IQuaternion, Serializable {
         val yz = y * z
         val yw = y * w
         val zw = z * w
-        val vx = vector.x()
-        val vy = vector.y()
-        val vz = vector.z()
+        val vx = vector.x
+        val vy = vector.y
+        val vz = vector.z
         val vx2 = vx * 2f
         val vy2 = vy * 2f
         val vz2 = vz * 2f
-        return result.set(vx + vy2 * (xy - zw) + vz2 * (xz + yw) - vx2 * (yy + zz) + add.x(),
-                vy + vx2 * (xy + zw) + vz2 * (yz - xw) - vy2 * (xx + zz) + add.y(),
-                vz + vx2 * (xz - yw) + vy2 * (yz + xw) - vz2 * (xx + yy) + add.z())
+        return result.set(vx + vy2 * (xy - zw) + vz2 * (xz + yw) - vx2 * (yy + zz) + add.x,
+                vy + vx2 * (xy + zw) + vz2 * (yz - xw) - vy2 * (xx + zz) + add.y,
+                vz + vx2 * (xz - yw) + vy2 * (yz + xw) - vz2 * (xx + yy) + add.z)
     }
 
     override // from IQuaternion
@@ -508,22 +486,22 @@ class Quaternion : IQuaternion, Serializable {
         val yz = y * z
         val yw = y * w
         val zw = z * w
-        val vx = vector.x()
-        val vy = vector.y()
-        val vz = vector.z()
+        val vx = vector.x
+        val vy = vector.y
+        val vz = vector.z
         val vx2 = vx * 2f
         val vy2 = vy * 2f
         val vz2 = vz * 2f
         return result.set(
-                (vx + vy2 * (xy - zw) + vz2 * (xz + yw) - vx2 * (yy + zz)) * scale + add.x(),
-                (vy + vx2 * (xy + zw) + vz2 * (yz - xw) - vy2 * (xx + zz)) * scale + add.y(),
-                (vz + vx2 * (xz - yw) + vy2 * (yz + xw) - vz2 * (xx + yy)) * scale + add.z())
+                (vx + vy2 * (xy - zw) + vz2 * (xz + yw) - vx2 * (yy + zz)) * scale + add.x,
+                (vy + vx2 * (xy + zw) + vz2 * (yz - xw) - vy2 * (xx + zz)) * scale + add.y,
+                (vz + vx2 * (xz - yw) + vy2 * (yz + xw) - vz2 * (xx + yy)) * scale + add.z)
     }
 
     override // from IQuaternion
     fun transformZ(vector: IVector3): Float {
-        return vector.z() + vector.x() * 2f * (x * z - y * w) +
-                vector.y() * 2f * (y * z + x * w) - vector.z() * 2f * (x * x + y * y)
+        return vector.z + vector.x * 2f * (x * z - y * w) +
+                vector.y * 2f * (y * z + x * w) - vector.z * 2f * (x * x + y * y)
     }
 
     override // from IQuaternion
@@ -538,9 +516,9 @@ class Quaternion : IQuaternion, Serializable {
     override // from IQuaternion
     fun integrate(velocity: IVector3, t: Float, result: Quaternion): Quaternion {
         // TODO: use Runge-Kutta integration?
-        val qx = 0.5f * velocity.x()
-        val qy = 0.5f * velocity.y()
-        val qz = 0.5f * velocity.z()
+        val qx = 0.5f * velocity.x
+        val qy = 0.5f * velocity.y
+        val qz = 0.5f * velocity.z
         return result.set(x + t * (qx * w + qy * z - qz * y),
                 y + t * (qy * w + qz * x - qx * z),
                 z + t * (qz * w + qx * y - qy * x),

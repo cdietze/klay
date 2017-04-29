@@ -5,8 +5,7 @@
 package pythagoras.f
 
 import pythagoras.util.Platform
-
-import java.util.NoSuchElementException
+import java.lang.Math
 
 /**
  * Provides most of the implementation of [IRectangle], obtaining only the location and
@@ -20,7 +19,7 @@ abstract class AbstractRectangle : RectangularShape(), IRectangle {
 
     override // from interface IRectangle
     fun location(target: Point): Point {
-        return target.set(x(), y())
+        return target.set(x, y)
     }
 
     override // from interface IRectangle
@@ -30,22 +29,22 @@ abstract class AbstractRectangle : RectangularShape(), IRectangle {
 
     override // from interface IRectangle
     fun size(target: Dimension): Dimension {
-        target.setSize(width(), height())
+        target.setSize(width, height)
         return target
     }
 
     override // from interface IRectangle
     fun intersection(rx: Float, ry: Float, rw: Float, rh: Float): Rectangle {
-        val x1 = Math.max(x(), rx)
-        val y1 = Math.max(y(), ry)
-        val x2 = Math.min(maxX(), rx + rw)
-        val y2 = Math.min(maxY(), ry + rh)
+        val x1 = Math.max(x, rx)
+        val y1 = Math.max(y, ry)
+        val x2 = Math.min(maxX, rx + rw)
+        val y2 = Math.min(maxY, ry + rh)
         return Rectangle(x1, y1, x2 - x1, y2 - y1)
     }
 
     override // from interface IRectangle
     fun intersection(r: IRectangle): Rectangle {
-        return intersection(r.x(), r.y(), r.width(), r.height())
+        return intersection(r.x, r.y, r.width, r.height)
     }
 
     override // from interface IRectangle
@@ -57,31 +56,31 @@ abstract class AbstractRectangle : RectangularShape(), IRectangle {
 
     override // from interface IRectangle
     fun intersectsLine(x1: Float, y1: Float, x2: Float, y2: Float): Boolean {
-        return Lines.lineIntersectsRect(x1, y1, x2, y2, x(), y(), width(), height())
+        return Lines.lineIntersectsRect(x1, y1, x2, y2, x, y, width, height)
     }
 
     override // from interface IRectangle
     fun intersectsLine(l: ILine): Boolean {
-        return intersectsLine(l.x1(), l.y1(), l.x2(), l.y2())
+        return intersectsLine(l.x1, l.y1, l.x2, l.y2)
     }
 
     override // from interface IRectangle
     fun outcode(px: Float, py: Float): Int {
         var code = 0
 
-        if (width() <= 0) {
+        if (width <= 0) {
             code = code or (IRectangle.OUT_LEFT or IRectangle.OUT_RIGHT)
-        } else if (px < x()) {
+        } else if (px < x) {
             code = code or IRectangle.OUT_LEFT
-        } else if (px > maxX()) {
+        } else if (px > maxX) {
             code = code or IRectangle.OUT_RIGHT
         }
 
-        if (height() <= 0) {
+        if (height <= 0) {
             code = code or (IRectangle.OUT_TOP or IRectangle.OUT_BOTTOM)
-        } else if (py < y()) {
+        } else if (py < y) {
             code = code or IRectangle.OUT_TOP
-        } else if (py > maxY()) {
+        } else if (py > maxY) {
             code = code or IRectangle.OUT_BOTTOM
         }
 
@@ -90,7 +89,7 @@ abstract class AbstractRectangle : RectangularShape(), IRectangle {
 
     override // from interface IRectangle
     fun outcode(p: XY): Int {
-        return outcode(p.x(), p.y())
+        return outcode(p.x, p.y)
     }
 
     override // from interface IRectangle
@@ -104,23 +103,23 @@ abstract class AbstractRectangle : RectangularShape(), IRectangle {
         var py = py
         if (isEmpty) return false
 
-        val x = x()
-        val y = y()
+        val x = x
+        val y = y
         if (px < x || py < y) return false
 
         px -= x
         py -= y
-        return px <= width() && py <= height()
+        return px <= width && py <= height
     }
 
     override // from interface IShape
     fun contains(rx: Float, ry: Float, rw: Float, rh: Float): Boolean {
         if (isEmpty) return false
 
-        val x1 = x()
-        val y1 = y()
-        val x2 = x1 + width()
-        val y2 = y1 + height()
+        val x1 = x
+        val y1 = y
+        val x2 = x1 + width
+        val y2 = y1 + height
         return x1 <= rx && rx + rw <= x2 && y1 <= ry && ry + rh <= y2
     }
 
@@ -128,10 +127,10 @@ abstract class AbstractRectangle : RectangularShape(), IRectangle {
     fun intersects(rx: Float, ry: Float, rw: Float, rh: Float): Boolean {
         if (isEmpty) return false
 
-        val x1 = x()
-        val y1 = y()
-        val x2 = x1 + width()
-        val y2 = y1 + height()
+        val x1 = x
+        val y1 = y
+        val x2 = x1 + width
+        val y2 = y1 + height
         return rx + rw > x1 && rx < x2 && ry + rh > y1 && ry < y2
     }
 
@@ -152,21 +151,21 @@ abstract class AbstractRectangle : RectangularShape(), IRectangle {
         }
         if (obj is AbstractRectangle) {
             val r = obj
-            return r.x() == x() && r.y() == y() &&
-                    r.width() == width() && r.height() == height()
+            return r.x == x && r.y == y &&
+                    r.width == width && r.height == height
         }
         return false
     }
 
     override // from Object
     fun hashCode(): Int {
-        return Platform.hashCode(x()) xor Platform.hashCode(y()) xor
-                Platform.hashCode(width()) xor Platform.hashCode(height())
+        return Platform.hashCode(x) xor Platform.hashCode(y) xor
+                Platform.hashCode(width) xor Platform.hashCode(height)
     }
 
     override // from Object
     fun toString(): String {
-        return Dimensions.dimenToString(width(), height()) + Points.pointToString(x(), y())
+        return Dimensions.dimenToString(width, height) + Points.pointToString(x, y)
     }
 
     /** An iterator over an [IRectangle].  */
@@ -180,10 +179,10 @@ abstract class AbstractRectangle : RectangularShape(), IRectangle {
         private var index: Int = 0
 
         init {
-            this.x = r.x()
-            this.y = r.y()
-            this.width = r.width()
-            this.height = r.height()
+            this.x = r.x
+            this.y = r.y
+            this.width = r.width
+            this.height = r.height
             if (width < 0f || height < 0f) {
                 index = 6
             }

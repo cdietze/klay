@@ -3,6 +3,7 @@
 // http://github.com/samskivert/pythagoras
 
 package pythagoras.f
+import java.lang.Math
 
 /**
  * Point-related utility methods.
@@ -33,8 +34,8 @@ object Points {
      * Returns true if the supplied points' x and y components are equal to one another within
      * `epsilon`.
      */
-    @JvmOverloads fun epsilonEquals(p1: IPoint, p2: IPoint, epsilon: Float = MathUtil.EPSILON): Boolean {
-        return Math.abs(p1.x() - p2.x()) < epsilon && Math.abs(p1.y() - p2.y()) < epsilon
+    fun epsilonEquals(p1: IPoint, p2: IPoint, epsilon: Float = MathUtil.EPSILON): Boolean {
+        return Math.abs(p1.x - p2.x) < epsilon && Math.abs(p1.y - p2.y) < epsilon
     }
 
     /** Transforms a point as specified, storing the result in the point provided.

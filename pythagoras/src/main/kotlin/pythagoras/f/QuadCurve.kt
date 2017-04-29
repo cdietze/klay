@@ -4,30 +4,28 @@
 
 package pythagoras.f
 
-import java.io.Serializable
-
 /**
  * Represents a quadratic curve.
  */
-class QuadCurve : AbstractQuadCurve, Serializable {
+class QuadCurve : AbstractQuadCurve {
 
     /** The x-coordinate of the start of this curve.  */
-    var x1: Float = 0.toFloat()
+    override var x1: Float = 0.toFloat()
 
     /** The y-coordinate of the start of this curve.  */
-    var y1: Float = 0.toFloat()
+    override var y1: Float = 0.toFloat()
 
     /** The x-coordinate of the control point.  */
-    var ctrlx: Float = 0.toFloat()
+    override var ctrlX: Float = 0.toFloat()
 
     /** The y-coordinate of the control point.  */
-    var ctrly: Float = 0.toFloat()
+    override var ctrlY: Float = 0.toFloat()
 
     /** The x-coordinate of the end of this curve.  */
-    var x2: Float = 0.toFloat()
+    override var x2: Float = 0.toFloat()
 
     /** The y-coordinate of the end of this curve.  */
-    var y2: Float = 0.toFloat()
+    override var y2: Float = 0.toFloat()
 
     /**
      * Creates a quad curve with all points at (0,0).
@@ -47,8 +45,8 @@ class QuadCurve : AbstractQuadCurve, Serializable {
     fun setCurve(x1: Float, y1: Float, ctrlx: Float, ctrly: Float, x2: Float, y2: Float) {
         this.x1 = x1
         this.y1 = y1
-        this.ctrlx = ctrlx
-        this.ctrly = ctrly
+        this.ctrlX = ctrlx
+        this.ctrlY = ctrly
         this.x2 = x2
         this.y2 = y2
     }
@@ -57,7 +55,7 @@ class QuadCurve : AbstractQuadCurve, Serializable {
      * Configures the start, control, and end points for this curve.
      */
     fun setCurve(p1: XY, cp: XY, p2: XY) {
-        setCurve(p1.x(), p1.y(), cp.x(), cp.y(), p2.x(), p2.y())
+        setCurve(p1.x, p1.y, cp.x, cp.y, p2.x, p2.y)
     }
 
     /**
@@ -75,9 +73,9 @@ class QuadCurve : AbstractQuadCurve, Serializable {
      * specified offset in the `points` array.
      */
     fun setCurve(points: Array<XY>, offset: Int) {
-        setCurve(points[offset + 0].x(), points[offset + 0].y(),
-                points[offset + 1].x(), points[offset + 1].y(),
-                points[offset + 2].x(), points[offset + 2].y())
+        setCurve(points[offset + 0].x, points[offset + 0].y,
+                points[offset + 1].x, points[offset + 1].y,
+                points[offset + 2].x, points[offset + 2].y)
     }
 
     /**
@@ -85,38 +83,8 @@ class QuadCurve : AbstractQuadCurve, Serializable {
      * curve.
      */
     fun setCurve(curve: IQuadCurve) {
-        setCurve(curve.x1(), curve.y1(), curve.ctrlX(), curve.ctrlY(),
-                curve.x2(), curve.y2())
-    }
-
-    override // from interface IQuadCurve
-    fun x1(): Float {
-        return x1
-    }
-
-    override // from interface IQuadCurve
-    fun y1(): Float {
-        return y1
-    }
-
-    override // from interface IQuadCurve
-    fun ctrlX(): Float {
-        return ctrlx
-    }
-
-    override // from interface IQuadCurve
-    fun ctrlY(): Float {
-        return ctrly
-    }
-
-    override // from interface IQuadCurve
-    fun x2(): Float {
-        return x2
-    }
-
-    override // from interface IQuadCurve
-    fun y2(): Float {
-        return y2
+        setCurve(curve.x1, curve.y1, curve.ctrlX, curve.ctrlY,
+                curve.x2, curve.y2)
     }
 
     companion object {

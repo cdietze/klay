@@ -7,13 +7,13 @@ package pythagoras.f
 /**
  * Provides read-only access to a [RoundRectangle].
  */
-interface IRoundRectangle : IRectangularShape, Cloneable {
+interface IRoundRectangle : IRectangularShape {
     /** Returns the width of the corner arc.  */
-    fun arcWidth(): Float
+    val arcWidth: Float
 
     /** Returns the height of the corner arc.  */
-    fun arcHeight(): Float
+    val arcHeight: Float
 
     /** Returns a mutable copy of this round rectangle.  */
-    public override fun clone(): RoundRectangle
+    fun clone(): RoundRectangle
 }

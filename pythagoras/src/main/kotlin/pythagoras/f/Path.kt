@@ -5,15 +5,15 @@
 package pythagoras.f
 
 import pythagoras.util.Platform
-
-import java.util.NoSuchElementException
+import java.lang.Math
+import java.lang.System
 
 /**
  * Represents a path constructed from lines and curves and which can contain subpaths.
  */
-class Path : IShape, Cloneable {
+class Path : IShape {
 
-    @JvmOverloads constructor(rule: Int = WIND_NON_ZERO, initialCapacity: Int = BUFFER_SIZE) {
+    constructor(rule: Int = WIND_NON_ZERO, initialCapacity: Int = BUFFER_SIZE) {
         setWindingRule(rule)
         types = ByteArray(initialCapacity)
         points = FloatArray(initialCapacity * 2)
@@ -210,17 +210,17 @@ class Path : IShape, Cloneable {
 
     override // from interface IShape
     fun contains(p: XY): Boolean {
-        return contains(p.x(), p.y())
+        return contains(p.x, p.y)
     }
 
     override // from interface IShape
     fun contains(r: IRectangle): Boolean {
-        return contains(r.x(), r.y(), r.width(), r.height())
+        return contains(r.x, r.y, r.width, r.height)
     }
 
     override // from interface IShape
     fun intersects(r: IRectangle): Boolean {
-        return intersects(r.x(), r.y(), r.width(), r.height())
+        return intersects(r.x, r.y, r.width, r.height)
     }
 
     override // from interface IShape
@@ -234,7 +234,7 @@ class Path : IShape, Cloneable {
     }
 
     // @Override // can't declare @Override due to GWT
-    public override fun clone(): Path {
+    fun clone(): Path {
         return Path(rule, Platform.clone(types), Platform.clone(points), typeSize, pointSize)
     }
 
@@ -283,7 +283,7 @@ class Path : IShape, Cloneable {
     }
 
     /** An iterator over a [Path].  */
-    protected class Iterator @JvmOverloads internal constructor(
+    protected class Iterator internal constructor(
             /** The source Path object.  */
             private val p: Path,
             /** The path iterator transformation.  */

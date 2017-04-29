@@ -4,7 +4,7 @@
 
 package pythagoras.f
 
-import java.util.NoSuchElementException
+import java.lang.Math
 
 /**
  * Provides most of the implementation of [IQuadCurve], obtaining only the start, end and
@@ -13,27 +13,27 @@ import java.util.NoSuchElementException
 abstract class AbstractQuadCurve : IQuadCurve {
     override // from interface IQuadCurve
     fun p1(): Point {
-        return Point(x1(), y1())
+        return Point(x1, y1)
     }
 
     override // from interface IQuadCurve
     fun ctrlP(): Point {
-        return Point(ctrlX(), ctrlY())
+        return Point(ctrlX, ctrlY)
     }
 
     override // from interface IQuadCurve
     fun p2(): Point {
-        return Point(x2(), y2())
+        return Point(x2, y2)
     }
 
     override // from interface IQuadCurve
     fun flatnessSq(): Float {
-        return Lines.pointSegDistSq(ctrlX(), ctrlY(), x1(), y1(), x2(), y2())
+        return Lines.pointSegDistSq(ctrlX, ctrlY, x1, y1, x2, y2)
     }
 
     override // from interface IQuadCurve
     fun flatness(): Float {
-        return Lines.pointSegDist(ctrlX(), ctrlY(), x1(), y1(), x2(), y2())
+        return Lines.pointSegDist(ctrlX, ctrlY, x1, y1, x2, y2)
     }
 
     override // from interface IQuadCurve
@@ -43,7 +43,7 @@ abstract class AbstractQuadCurve : IQuadCurve {
 
     override // from interface IQuadCurve
     fun clone(): QuadCurve {
-        return QuadCurve(x1(), y1(), ctrlX(), ctrlY(), x2(), y2())
+        return QuadCurve(x1, y1, ctrlX, ctrlY, x2, y2)
     }
 
     override // from interface IShape
@@ -64,12 +64,12 @@ abstract class AbstractQuadCurve : IQuadCurve {
 
     override // from interface IShape
     fun contains(p: XY): Boolean {
-        return contains(p.x(), p.y())
+        return contains(p.x, p.y)
     }
 
     override // from interface IShape
     fun contains(r: IRectangle): Boolean {
-        return contains(r.x(), r.y(), r.width(), r.height())
+        return contains(r.x, r.y, r.width, r.height)
     }
 
     override // from interface IShape
@@ -80,7 +80,7 @@ abstract class AbstractQuadCurve : IQuadCurve {
 
     override // from interface IShape
     fun intersects(r: IRectangle): Boolean {
-        return intersects(r.x(), r.y(), r.width(), r.height())
+        return intersects(r.x, r.y, r.width, r.height)
     }
 
     override // from interface IShape
@@ -90,12 +90,12 @@ abstract class AbstractQuadCurve : IQuadCurve {
 
     override // from interface IShape
     fun bounds(target: Rectangle): Rectangle {
-        val x1 = x1()
-        val y1 = y1()
-        val x2 = x2()
-        val y2 = y2()
-        val ctrlx = ctrlX()
-        val ctrly = ctrlY()
+        val x1 = x1
+        val y1 = y1
+        val x2 = x2
+        val y2 = y2
+        val ctrlx = ctrlX
+        val ctrly = ctrlY
         val rx0 = Math.min(Math.min(x1, x2), ctrlx)
         val ry0 = Math.min(Math.min(y1, y2), ctrly)
         val rx1 = Math.max(Math.max(x1, x2), ctrlx)
@@ -130,22 +130,20 @@ abstract class AbstractQuadCurve : IQuadCurve {
         }
 
         override fun currentSegment(coords: FloatArray): Int {
-            if (isDone) {
-                throw NoSuchElementException("Iterator out of bounds")
-            }
+            require(!isDone, { -> "Iterator out of bounds"})
             val type: Int
             val count: Int
             if (index == 0) {
                 type = PathIterator.SEG_MOVETO
-                coords[0] = c.x1()
-                coords[1] = c.y1()
+                coords[0] = c.x1
+                coords[1] = c.y1
                 count = 1
             } else {
                 type = PathIterator.SEG_QUADTO
-                coords[0] = c.ctrlX()
-                coords[1] = c.ctrlY()
-                coords[2] = c.x2()
-                coords[3] = c.y2()
+                coords[0] = c.ctrlX
+                coords[1] = c.ctrlY
+                coords[2] = c.x2
+                coords[3] = c.y2
                 count = 2
             }
             t?.transform(coords, 0, coords, 0, count)

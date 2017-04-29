@@ -4,24 +4,24 @@
 
 package pythagoras.f
 
-import java.io.Serializable
+import java.lang.Math
 
 /**
  * Represents an arc defined by a framing rectangle, start angle, angular extend, and closure type.
  */
-class Arc : AbstractArc, Serializable {
+class Arc : AbstractArc {
 
     /** The x-coordinate of this arc's framing rectangle.  */
-    var x: Float = 0.toFloat()
+    override var x: Float = 0.toFloat()
 
     /** The y-coordinate of this arc's framing rectangle.  */
-    var y: Float = 0.toFloat()
+    override var y: Float = 0.toFloat()
 
     /** The width of this arc's framing rectangle.  */
-    var width: Float = 0.toFloat()
+    override var width: Float = 0.toFloat()
 
     /** The height of this arc's framing rectangle.  */
-    var height: Float = 0.toFloat()
+    override var height: Float = 0.toFloat()
 
     /** The starting angle of this arc.  */
     var start: Float = 0.toFloat()
@@ -32,7 +32,7 @@ class Arc : AbstractArc, Serializable {
     /**
      * Creates an arc of the specified type with frame (0x0+0+0) and zero angles.
      */
-    @JvmOverloads constructor(type: Int = IArc.OPEN) {
+    constructor(type: Int = IArc.OPEN) {
         setArcType(type)
     }
 
@@ -49,44 +49,13 @@ class Arc : AbstractArc, Serializable {
      * angular extent.
      */
     constructor(bounds: IRectangle, start: Float, extent: Float, type: Int) {
-        setArc(bounds.x(), bounds.y(), bounds.width(), bounds.height(),
+        setArc(bounds.x, bounds.y, bounds.width, bounds.height,
                 start, extent, type)
     }
 
-    override // from interface IArc
-    fun arcType(): Int {
-        return type
-    }
-
-    override // from interface IArc
-    fun x(): Float {
-        return x
-    }
-
-    override // from interface IArc
-    fun y(): Float {
-        return y
-    }
-
-    override // from interface IArc
-    fun width(): Float {
-        return width
-    }
-
-    override // from interface IArc
-    fun height(): Float {
-        return height
-    }
-
-    override // from interface IArc
-    fun angleStart(): Float {
-        return start
-    }
-
-    override // from interface IArc
-    fun angleExtent(): Float {
-        return extent
-    }
+    override val arcType: Int get() = type
+    override val angleStart: Float get() = start
+    override val angleExtent: Float get() = extent
 
     /**
      * Sets the type of this arc to the specified value.
@@ -132,7 +101,7 @@ class Arc : AbstractArc, Serializable {
      * values.
      */
     fun setArc(point: XY, size: IDimension, start: Float, extent: Float, type: Int) {
-        setArc(point.x(), point.y(), size.width(), size.height(), start, extent, type)
+        setArc(point.x, point.y, size.width, size.height, start, extent, type)
     }
 
     /**
@@ -140,7 +109,7 @@ class Arc : AbstractArc, Serializable {
      * values.
      */
     fun setArc(rect: IRectangle, start: Float, extent: Float, type: Int) {
-        setArc(rect.x(), rect.y(), rect.width(), rect.height(), start, extent, type)
+        setArc(rect.x, rect.y, rect.width, rect.height, start, extent, type)
     }
 
     /**
@@ -148,8 +117,8 @@ class Arc : AbstractArc, Serializable {
      * the supplied arc.
      */
     fun setArc(arc: IArc) {
-        setArc(arc.x(), arc.y(), arc.width(), arc.height(), arc.angleStart(),
-                arc.angleExtent(), arc.arcType())
+        setArc(arc.x, arc.y, arc.width, arc.height, arc.angleStart,
+                arc.angleExtent, arc.arcType)
     }
 
     /**
@@ -167,13 +136,13 @@ class Arc : AbstractArc, Serializable {
      */
     fun setArcByTangent(p1: XY, p2: XY, p3: XY, radius: Float) {
         // use simple geometric calculations of arc center, radius and angles by tangents
-        var a1 = -FloatMath.atan2(p1.y() - p2.y(), p1.x() - p2.x())
-        var a2 = -FloatMath.atan2(p3.y() - p2.y(), p3.x() - p2.x())
+        var a1 = -FloatMath.atan2(p1.y - p2.y, p1.x - p2.x)
+        var a2 = -FloatMath.atan2(p3.y - p2.y, p3.x - p2.x)
         val am = (a1 + a2) / 2f
         var ah = a1 - am
         val d = radius / Math.abs(FloatMath.sin(ah))
-        val x = p2.x() + d * FloatMath.cos(am)
-        val y = p2.y() - d * FloatMath.sin(am)
+        val x = p2.x + d * FloatMath.cos(am)
+        val y = p2.y - d * FloatMath.sin(am)
         ah = if (ah >= 0f) FloatMath.PI * 1.5f - ah else FloatMath.PI * 0.5f - ah
         a1 = normAngle(FloatMath.toDegrees(am - ah))
         a2 = normAngle(FloatMath.toDegrees(am + ah))
@@ -189,7 +158,7 @@ class Arc : AbstractArc, Serializable {
      * the center of this arc.
      */
     fun setAngleStart(point: XY) {
-        val angle = FloatMath.atan2(point.y() - centerY(), point.x() - centerX())
+        val angle = FloatMath.atan2(point.y - centerY, point.x - centerX)
         setAngleStart(normAngle(-FloatMath.toDegrees(angle)))
     }
 
@@ -201,8 +170,8 @@ class Arc : AbstractArc, Serializable {
      * counterclockwise from the first point around to the second point.
      */
     fun setAngles(x1: Float, y1: Float, x2: Float, y2: Float) {
-        val cx = centerX()
-        val cy = centerY()
+        val cx = centerX
+        val cy = centerY
         val a1 = normAngle(-FloatMath.toDegrees(FloatMath.atan2(y1 - cy, x1 - cx)))
         var a2 = normAngle(-FloatMath.toDegrees(FloatMath.atan2(y2 - cy, x2 - cx)))
         a2 -= a1
@@ -221,12 +190,12 @@ class Arc : AbstractArc, Serializable {
      * counterclockwise from the first point around to the second point.
      */
     fun setAngles(p1: XY, p2: XY) {
-        setAngles(p1.x(), p1.y(), p2.x(), p2.y())
+        setAngles(p1.x, p1.y, p2.x, p2.y)
     }
 
     override // from RectangularShape
     fun setFrame(x: Float, y: Float, width: Float, height: Float) {
-        setArc(x, y, width, height, angleStart(), angleExtent(), type)
+        setArc(x, y, width, height, angleStart, angleExtent, type)
     }
 
     private var type: Int = 0

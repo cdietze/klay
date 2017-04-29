@@ -4,7 +4,7 @@
 
 package pythagoras.f
 
-import java.util.NoSuchElementException
+import java.lang.Math
 
 /**
  * Provides most of the implementation of [IRoundRectangle], obtaining the framing rectangle
@@ -13,8 +13,8 @@ import java.util.NoSuchElementException
 abstract class AbstractRoundRectangle : RectangularShape(), IRoundRectangle {
     override // from interface IRoundRectangle
     fun clone(): RoundRectangle {
-        return RoundRectangle(x(), y(), width(), height(),
-                arcWidth(), arcHeight())
+        return RoundRectangle(x, y, width, height,
+                arcWidth, arcHeight)
     }
 
     override // from interface IShape
@@ -23,16 +23,16 @@ abstract class AbstractRoundRectangle : RectangularShape(), IRoundRectangle {
         var py = py
         if (isEmpty) return false
 
-        val rx1 = x()
-        val ry1 = y()
-        val rx2 = rx1 + width()
-        val ry2 = ry1 + height()
+        val rx1 = x
+        val ry1 = y
+        val rx2 = rx1 + width
+        val ry2 = ry1 + height
         if (px < rx1 || px >= rx2 || py < ry1 || py >= ry2) {
             return false
         }
 
-        val aw = arcWidth() / 2f
-        val ah = arcHeight() / 2f
+        val aw = arcWidth / 2f
+        val ah = arcHeight / 2f
         val cx: Float
         val cy: Float
         if (px < rx1 + aw) {
@@ -70,10 +70,10 @@ abstract class AbstractRoundRectangle : RectangularShape(), IRoundRectangle {
     fun intersects(rx: Float, ry: Float, rw: Float, rh: Float): Boolean {
         if (isEmpty || rw <= 0f || rh <= 0f) return false
 
-        val x1 = x()
-        val y1 = y()
-        val x2 = x1 + width()
-        val y2 = y1 + height()
+        val x1 = x
+        val y1 = y
+        val x2 = x1 + width
+        val y2 = y1 + height
         val rx1 = rx
         val ry1 = ry
         val rx2 = rx + rw
@@ -105,12 +105,12 @@ abstract class AbstractRoundRectangle : RectangularShape(), IRoundRectangle {
         private var index: Int = 0
 
         init {
-            this.x = rr.x()
-            this.y = rr.y()
-            this.width = rr.width()
-            this.height = rr.height()
-            this.aw = Math.min(width, rr.arcWidth())
-            this.ah = Math.min(height, rr.arcHeight())
+            this.x = rr.x
+            this.y = rr.y
+            this.width = rr.width
+            this.height = rr.height
+            this.aw = Math.min(width, rr.arcWidth)
+            this.ah = Math.min(height, rr.arcHeight)
             if (width < 0f || height < 0f || aw < 0f || ah < 0f) {
                 index = POINTS.size
             }

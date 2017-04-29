@@ -9,10 +9,10 @@ package pythagoras.f
  */
 class Vector : AbstractVector {
     /** The x-component of the vector.  */
-    var x: Float = 0.toFloat()
+    override var x: Float = 0.toFloat()
 
     /** The y-component of the vector.  */
-    var y: Float = 0.toFloat()
+    override var y: Float = 0.toFloat()
 
     /** Creates a vector with the specified x and y components.  */
     constructor(x: Float, y: Float) {
@@ -117,7 +117,7 @@ class Vector : AbstractVector {
      * @return a reference to this vector, for chaining.
      */
     fun set(other: XY): Vector {
-        return set(other.x(), other.y())
+        return set(other.x, other.y)
     }
 
     /** Copies the elements of an array.
@@ -150,15 +150,5 @@ class Vector : AbstractVector {
      */
     fun setLength(length: Float): Vector {
         return normalizeLocal().scaleLocal(length)
-    }
-
-    override // from XY
-    fun x(): Float {
-        return x
-    }
-
-    override // from XY
-    fun y(): Float {
-        return y
     }
 }

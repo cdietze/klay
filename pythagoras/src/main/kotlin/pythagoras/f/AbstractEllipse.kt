@@ -4,8 +4,6 @@
 
 package pythagoras.f
 
-import java.util.*
-
 /**
  * Provides most of the implementation of [IEllipse], obtaining the framing rectangle from
  * the derived class.
@@ -13,14 +11,14 @@ import java.util.*
 abstract class AbstractEllipse : RectangularShape(), IEllipse {
     override // from IEllipse
     fun clone(): Ellipse {
-        return Ellipse(x(), y(), width(), height())
+        return Ellipse(x, y, width, height)
     }
 
     override // from interface IShape
     fun contains(px: Float, py: Float): Boolean {
         if (isEmpty) return false
-        val a = (px - x()) / width() - 0.5f
-        val b = (py - y()) / height() - 0.5f
+        val a = (px - x) / width - 0.5f
+        val b = (py - y) / height - 0.5f
         return a * a + b * b < 0.25f
     }
 
@@ -37,8 +35,8 @@ abstract class AbstractEllipse : RectangularShape(), IEllipse {
     override // from interface IShape
     fun intersects(rx: Float, ry: Float, rw: Float, rh: Float): Boolean {
         if (isEmpty || rw <= 0f || rh <= 0f) return false
-        val cx = x() + width() / 2f
-        val cy = y() + height() / 2f
+        val cx = x + width / 2f
+        val cy = y + height / 2f
         val rx1 = rx
         val ry1 = ry
         val rx2 = rx + rw
@@ -62,10 +60,10 @@ abstract class AbstractEllipse : RectangularShape(), IEllipse {
         private var index: Int = 0
 
         init {
-            this.x = e.x()
-            this.y = e.y()
-            this.width = e.width()
-            this.height = e.height()
+            this.x = e.x
+            this.y = e.y
+            this.width = e.width
+            this.height = e.height
             if (width < 0f || height < 0f) {
                 index = 6
             }

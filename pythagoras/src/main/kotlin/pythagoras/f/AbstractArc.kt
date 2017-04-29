@@ -4,7 +4,7 @@
 
 package pythagoras.f
 
-import java.util.*
+import java.lang.Math
 
 /**
  * Provides most of the implementation of [IArc], obtaining only the frame and other metrics
@@ -12,38 +12,40 @@ import java.util.*
  */
 abstract class AbstractArc : RectangularShape(), IArc {
     override // from interface IArc
-    fun startPoint(): Point {
-        return startPoint(Point())
-    }
+    val startPoint: Point
+        get() {
+            return startPoint(Point())
+        }
 
     override // from interface IArc
     fun startPoint(target: Point): Point {
-        val a = FloatMath.toRadians(angleStart())
-        return target.set(x() + (1f + FloatMath.cos(a)) * width() / 2f,
-                y() + (1f - FloatMath.sin(a)) * height() / 2f)
+        val a = FloatMath.toRadians(angleStart)
+        return target.set(x + (1f + FloatMath.cos(a)) * width / 2f,
+                y + (1f - FloatMath.sin(a)) * height / 2f)
     }
 
     override // from interface IArc
-    fun endPoint(): Point {
-        return endPoint(Point())
-    }
+    val endPoint: Point
+        get() {
+            return endPoint(Point())
+        }
 
     override // from interface IArc
     fun endPoint(target: Point): Point {
-        val a = FloatMath.toRadians(angleStart() + angleExtent())
-        return target.set(x() + (1f + FloatMath.cos(a)) * width() / 2f,
-                y() + (1f - FloatMath.sin(a)) * height() / 2f)
+        val a = FloatMath.toRadians(angleStart + angleExtent)
+        return target.set(x + (1f + FloatMath.cos(a)) * width / 2f,
+                y + (1f - FloatMath.sin(a)) * height / 2f)
     }
 
     override // from interface IArc
     fun containsAngle(angle: Float): Boolean {
         var angle = angle
-        val extent = angleExtent()
+        val extent = angleExtent
         if (extent >= 360f) {
             return true
         }
         angle = normAngle(angle)
-        val a1 = normAngle(angleStart())
+        val a1 = normAngle(angleStart)
         val a2 = a1 + extent
         if (a2 > 360f) {
             return angle >= a1 || angle <= a2 - 360f
@@ -56,40 +58,40 @@ abstract class AbstractArc : RectangularShape(), IArc {
 
     override // from interface IArc
     fun clone(): Arc {
-        return Arc(x(), y(), width(), height(), angleStart(), angleExtent(),
-                arcType())
+        return Arc(x, y, width, height, angleStart, angleExtent,
+                arcType)
     }
 
     override // from RectangularShape
     val isEmpty: Boolean
-        get() = arcType() == IArc.OPEN || super.isEmpty
+        get() = arcType == IArc.OPEN || super.isEmpty
 
     override // from RectangularShape
     fun contains(px: Float, py: Float): Boolean {
         // normalize point
-        val nx = (px - x()) / width() - 0.5f
-        val ny = (py - y()) / height() - 0.5f
+        val nx = (px - x) / width - 0.5f
+        val ny = (py - y) / height - 0.5f
         if (nx * nx + ny * ny > 0.25) {
             return false
         }
 
-        val extent = angleExtent()
+        val extent = angleExtent
         val absExtent = Math.abs(extent)
         if (absExtent >= 360f) {
             return true
         }
 
         val containsAngle = containsAngle(FloatMath.toDegrees(-FloatMath.atan2(ny, nx)))
-        if (arcType() == IArc.PIE) {
+        if (arcType == IArc.PIE) {
             return containsAngle
         }
         if (absExtent <= 180f && !containsAngle) {
             return false
         }
 
-        val l = Line(startPoint(), endPoint())
+        val l = Line(startPoint, endPoint)
         val ccw1 = l.relativeCCW(px, py)
-        val ccw2 = l.relativeCCW(centerX(), centerY())
+        val ccw2 = l.relativeCCW(centerX, centerY)
         return ccw1 == 0 || ccw2 == 0 || (ccw1 + ccw2 == 0) xor (absExtent > 180f)
     }
 
@@ -100,21 +102,21 @@ abstract class AbstractArc : RectangularShape(), IArc {
             return false
         }
 
-        val absExtent = Math.abs(angleExtent())
-        if (arcType() != IArc.PIE || absExtent <= 180f || absExtent >= 360f) {
+        val absExtent = Math.abs(angleExtent)
+        if (arcType != IArc.PIE || absExtent <= 180f || absExtent >= 360f) {
             return true
         }
 
         val r = Rectangle(rx, ry, rw, rh)
-        val cx = centerX()
-        val cy = centerY()
+        val cx = centerX
+        val cy = centerY
         if (r.contains(cx, cy)) {
             return false
         }
 
-        val p1 = startPoint()
-        val p2 = endPoint()
-        return !r.intersectsLine(cx, cy, p1.x(), p1.y()) && !r.intersectsLine(cx, cy, p2.x(), p2.y())
+        val p1 = startPoint
+        val p2 = endPoint
+        return !r.intersectsLine(cx, cy, p1.x, p1.y) && !r.intersectsLine(cx, cy, p2.x, p2.y)
     }
 
     override // from RectangularShape
@@ -129,23 +131,23 @@ abstract class AbstractArc : RectangularShape(), IArc {
             return true
         }
 
-        val cx = centerX()
-        val cy = centerY()
-        val p1 = startPoint()
-        val p2 = endPoint()
+        val cx = centerX
+        val cy = centerY
+        val p1 = startPoint
+        val p2 = endPoint
 
         // check: does rectangle contain arc's points
         val r = Rectangle(rx, ry, rw, rh)
-        if (r.contains(p1) || r.contains(p2) || arcType() == IArc.PIE && r.contains(cx, cy)) {
+        if (r.contains(p1) || r.contains(p2) || arcType == IArc.PIE && r.contains(cx, cy)) {
             return true
         }
 
-        if (arcType() == IArc.PIE) {
-            if (r.intersectsLine(p1.x(), p1.y(), cx, cy) || r.intersectsLine(p2.x(), p2.y(), cx, cy)) {
+        if (arcType == IArc.PIE) {
+            if (r.intersectsLine(p1.x, p1.y, cx, cy) || r.intersectsLine(p2.x, p2.y, cx, cy)) {
                 return true
             }
         } else {
-            if (r.intersectsLine(p1.x(), p1.y(), p2.x(), p2.y())) {
+            if (r.intersectsLine(p1.x, p1.y, p2.x, p2.y)) {
                 return true
             }
         }
@@ -159,26 +161,26 @@ abstract class AbstractArc : RectangularShape(), IArc {
     override // from RectangularShape
     fun bounds(target: Rectangle): Rectangle {
         if (isEmpty) {
-            target.setBounds(x(), y(), width(), height())
+            target.setBounds(x, y, width, height)
             return target
         }
 
-        val rx1 = x()
-        val ry1 = y()
-        val rx2 = rx1 + width()
-        val ry2 = ry1 + height()
+        val rx1 = x
+        val ry1 = y
+        val rx2 = rx1 + width
+        val ry2 = ry1 + height
 
-        val p1 = startPoint()
-        val p2 = endPoint()
+        val p1 = startPoint
+        val p2 = endPoint
 
-        var bx1 = if (containsAngle(180f)) rx1 else Math.min(p1.x(), p2.x())
-        var by1 = if (containsAngle(90f)) ry1 else Math.min(p1.y(), p2.y())
-        var bx2 = if (containsAngle(0f)) rx2 else Math.max(p1.x(), p2.x())
-        var by2 = if (containsAngle(270f)) ry2 else Math.max(p1.y(), p2.y())
+        var bx1 = if (containsAngle(180f)) rx1 else Math.min(p1.x, p2.x)
+        var by1 = if (containsAngle(90f)) ry1 else Math.min(p1.y, p2.y)
+        var bx2 = if (containsAngle(0f)) rx2 else Math.max(p1.x, p2.x)
+        var by2 = if (containsAngle(270f)) ry2 else Math.max(p1.y, p2.y)
 
-        if (arcType() == IArc.PIE) {
-            val cx = centerX()
-            val cy = centerY()
+        if (arcType == IArc.PIE) {
+            val cx = centerX
+            val cy = centerY
             bx1 = Math.min(bx1, cx)
             by1 = Math.min(by1, cy)
             bx2 = Math.max(bx2, cx)
@@ -258,13 +260,13 @@ abstract class AbstractArc : RectangularShape(), IArc {
         private var my: Float = 0.toFloat()
 
         init {
-            this.width = a.width() / 2f
-            this.height = a.height() / 2f
-            this.x = a.x() + width
-            this.y = a.y() + height
-            this.angle = -FloatMath.toRadians(a.angleStart())
-            this.extent = -a.angleExtent()
-            this.type = a.arcType()
+            this.width = a.width / 2f
+            this.height = a.height / 2f
+            this.x = a.x + width
+            this.y = a.y + height
+            this.angle = -FloatMath.toRadians(a.angleStart)
+            this.extent = -a.angleExtent
+            this.type = a.arcType
 
             if (width < 0 || height < 0) {
                 arcCount = 0

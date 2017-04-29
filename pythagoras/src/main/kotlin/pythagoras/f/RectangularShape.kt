@@ -3,6 +3,7 @@
 // http://github.com/samskivert/pythagoras
 
 package pythagoras.f
+import java.lang.Math
 
 /**
  * The base class for various [IShape] objects whose geometry is defined by a rectangular
@@ -18,7 +19,7 @@ abstract class RectangularShape : IRectangularShape {
      * Sets the location and size of the framing rectangle of this shape to the supplied values.
      */
     fun setFrame(loc: XY, size: IDimension) {
-        setFrame(loc.x(), loc.y(), size.width(), size.height())
+        setFrame(loc.x, loc.y, size.width, size.height)
     }
 
     /**
@@ -26,7 +27,7 @@ abstract class RectangularShape : IRectangularShape {
      * supplied rectangle.
      */
     fun setFrame(r: IRectangle) {
-        setFrame(r.x(), r.y(), r.width(), r.height())
+        setFrame(r.x, r.y, r.width, r.height)
     }
 
     /**
@@ -60,7 +61,7 @@ abstract class RectangularShape : IRectangularShape {
      * diagonal line.
      */
     fun setFrameFromDiagonal(p1: XY, p2: XY) {
-        setFrameFromDiagonal(p1.x(), p1.y(), p2.x(), p2.y())
+        setFrameFromDiagonal(p1.x, p1.y, p2.x, p2.y)
     }
 
     /**
@@ -79,53 +80,62 @@ abstract class RectangularShape : IRectangularShape {
      * center and corner points.
      */
     fun setFrameFromCenter(center: XY, corner: XY) {
-        setFrameFromCenter(center.x(), center.y(), corner.x(), corner.y())
+        setFrameFromCenter(center.x, center.y, corner.x, corner.y)
     }
 
     override // from IRectangularShape
-    fun min(): Point {
-        return Point(minX(), minY())
-    }
+    val min: Point
+        get() {
+            return Point(minX, minY)
+        }
 
     override // from IRectangularShape
-    fun minX(): Float {
-        return x()
-    }
+    val minX: Float
+        get() {
+            return x
+        }
 
     override // from IRectangularShape
-    fun minY(): Float {
-        return y()
-    }
+    val minY: Float
+        get() {
+            return y
+        }
 
     override // from IRectangularShape
-    fun max(): Point {
-        return Point(maxX(), maxY())
-    }
+    val max: Point
+        get() {
+            return Point(maxX, maxY)
+        }
 
     override // from IRectangularShape
-    fun maxX(): Float {
-        return x() + width()
-    }
+    val maxX: Float
+        get() {
+            return x + width
+        }
 
     override // from IRectangularShape
-    fun maxY(): Float {
-        return y() + height()
-    }
+    val maxY: Float
+        get() {
+            return y + height
+        }
 
     override // from IRectangularShape
-    fun center(): Point {
-        return Point(centerX(), centerY())
-    }
+    val center: Point
+        get() {
+            return Point(centerX, centerY)
+        }
 
     override // from IRectangularShape
-    fun centerX(): Float {
-        return x() + width() / 2
-    }
+    val centerX: Float
+        get() {
+            return x + width / 2
+        }
 
     override // from IRectangularShape
-    fun centerY(): Float {
-        return y() + height() / 2
-    }
+    val centerY: Float
+        get() {
+            return y + height / 2
+        }
 
     override // from IRectangularShape
     fun frame(): Rectangle {
@@ -139,21 +149,21 @@ abstract class RectangularShape : IRectangularShape {
 
     override // from interface IShape
     val isEmpty: Boolean
-        get() = width() <= 0 || height() <= 0
+        get() = width <= 0 || height <= 0
 
     override // from interface IShape
     fun contains(point: XY): Boolean {
-        return contains(point.x(), point.y())
+        return contains(point.x, point.y)
     }
 
     override // from interface IShape
     fun contains(rect: IRectangle): Boolean {
-        return contains(rect.x(), rect.y(), rect.width(), rect.height())
+        return contains(rect.x, rect.y, rect.width, rect.height)
     }
 
     override // from interface IShape
     fun intersects(rect: IRectangle): Boolean {
-        return intersects(rect.x(), rect.y(), rect.width(), rect.height())
+        return intersects(rect.x, rect.y, rect.width, rect.height)
     }
 
     override // from interface IShape
@@ -163,7 +173,7 @@ abstract class RectangularShape : IRectangularShape {
 
     override // from interface IShape
     fun bounds(target: Rectangle): Rectangle {
-        target.setBounds(x(), y(), width(), height())
+        target.setBounds(x, y, width, height)
         return target
     }
 

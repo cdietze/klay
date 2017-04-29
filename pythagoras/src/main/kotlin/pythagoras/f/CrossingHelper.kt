@@ -4,8 +4,6 @@
 
 package pythagoras.f
 
-import java.util.ArrayList
-
 /**
  * An internal class used to compute crossings.
  */

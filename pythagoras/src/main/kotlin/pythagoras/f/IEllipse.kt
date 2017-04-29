@@ -7,7 +7,7 @@ package pythagoras.f
 /**
  * Provides read-only access to an [Ellipse].
  */
-interface IEllipse : IRectangularShape, Cloneable {
+interface IEllipse : IRectangularShape{
     /** Returns a mutable copy of this ellipse.  */
-    public override fun clone(): Ellipse
+    fun clone(): Ellipse
 }

@@ -9,13 +9,13 @@ package pythagoras.f
  */
 interface ICircle {
     /** Returns this circle's x-coordinate.  */
-    fun x(): Float
+    val x: Float
 
     /** Returns this circle's y-coordinate.  */
-    fun y(): Float
+    val y: Float
 
     /** Returns this circle's radius.  */
-    fun radius(): Float
+    val radius: Float
 
     /** Returns true if this circle intersects the supplied circle.  */
     fun intersects(c: ICircle): Boolean
