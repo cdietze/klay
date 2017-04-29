@@ -362,11 +362,6 @@ class Vector3 : IVector3 {
         values[2] = z
     }
 
-    override // from interface IVector3
-    fun get(buf: FloatBuffer): FloatBuffer {
-        return buf.put(x).put(y).put(z)
-    }
-
     override fun toString(): String {
         return "[$x, $y, $z]"
     }

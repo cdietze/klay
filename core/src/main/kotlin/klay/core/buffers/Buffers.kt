@@ -10,6 +10,7 @@ interface Buffer {
 }
 
 interface ByteBuffer : Buffer {
+    fun get(): Byte
     fun get(dst: ByteArray, offset: Int, length: Int)
     fun put(src: ByteArray, offset: Int, length: Int)
     fun asShortBuffer(): ShortBuffer
@@ -19,6 +20,7 @@ interface ByteBuffer : Buffer {
 }
 
 interface ShortBuffer : Buffer {
+    fun get(): Short
     fun get(i: Int): Short
     fun get(dst: ShortArray, offset: Int, length: Int)
     fun put(n: Short): ShortBuffer
@@ -26,6 +28,7 @@ interface ShortBuffer : Buffer {
 }
 
 interface IntBuffer : Buffer {
+    fun get(): Int
     fun get(i: Int): Int
     fun get(dst: IntArray, offset: Int, length: Int)
     fun put(n: Int): IntBuffer
@@ -33,6 +36,7 @@ interface IntBuffer : Buffer {
 }
 
 interface FloatBuffer : Buffer {
+    fun get(): Float
     fun get(i: Int): Float
     fun get(dst: FloatArray, offset: Int, length: Int)
     fun put(n: Float): FloatBuffer
@@ -40,6 +44,7 @@ interface FloatBuffer : Buffer {
 }
 
 interface DoubleBuffer : Buffer {
+    fun get(): Double
     fun get(i: Int): Double
     fun get(dst: DoubleArray, offset: Int, length: Int)
     fun put(n: Double): DoubleBuffer

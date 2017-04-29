@@ -290,10 +290,10 @@ class Box : IBox {
             val x = if (ii and (1 shl 2) == 0) _minExtent.x else _maxExtent.x
             val y = if (ii and (1 shl 1) == 0) _minExtent.y else _maxExtent.y
             val z = if (ii and (1 shl 0) == 0) _minExtent.z else _maxExtent.z
-            val rw = 1f / (matrix.m03() * x + matrix.m13() * y + matrix.m23() * z + matrix.m33())
-            val px = (matrix.m00() * x + matrix.m10() * y + matrix.m20() * z + matrix.m30()) * rw
-            val py = (matrix.m01() * x + matrix.m11() * y + matrix.m21() * z + matrix.m31()) * rw
-            val pz = (matrix.m02() * x + matrix.m12() * y + matrix.m22() * z + matrix.m32()) * rw
+            val rw = 1f / (matrix.m03 * x + matrix.m13 * y + matrix.m23 * z + matrix.m33)
+            val px = (matrix.m00 * x + matrix.m10 * y + matrix.m20 * z + matrix.m30) * rw
+            val py = (matrix.m01 * x + matrix.m11 * y + matrix.m21 * z + matrix.m31) * rw
+            val pz = (matrix.m02 * x + matrix.m12 * y + matrix.m22 * z + matrix.m32) * rw
             minx = Math.min(minx, px)
             miny = Math.min(miny, py)
             minz = Math.min(minz, pz)

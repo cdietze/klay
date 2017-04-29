@@ -15,11 +15,6 @@ interface IPlane {
     val normal: IVector3
 
     /**
-     * Stores the contents of this plane into the specified buffer.
-     */
-    operator fun get(buf: FloatBuffer): FloatBuffer
-
-    /**
      * Computes and returns the signed distance from the plane to the specified point.
      */
     fun distance(pt: IVector3): Float

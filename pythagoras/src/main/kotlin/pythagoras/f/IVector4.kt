@@ -21,13 +21,6 @@ interface IVector4 {
     val w: Float
 
     /**
-     * Populates the supplied buffer with the contents of this vector.
-
-     * @return a reference to the buffer, for chaining.
-     */
-    operator fun get(buf: FloatBuffer): FloatBuffer
-
-    /**
      * Compares this vector to another with the provided epsilon.
      */
     fun epsilonEquals(other: IVector4, epsilon: Float): Boolean

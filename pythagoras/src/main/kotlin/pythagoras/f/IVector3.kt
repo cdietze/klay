@@ -223,11 +223,4 @@ interface IVector3 {
      * Populates the supplied array with the contents of this vector.
      */
     operator fun get(values: FloatArray)
-
-    /**
-     * Populates the supplied buffer with the contents of this vector.
-
-     * @return a reference to the buffer, for chaining.
-     */
-    operator fun get(buf: FloatBuffer): FloatBuffer
 }

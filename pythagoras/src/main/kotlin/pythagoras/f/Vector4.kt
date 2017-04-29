@@ -33,13 +33,6 @@ class Vector4 : IVector4 {
     }
 
     /**
-     * Creates a vector from a float buffer.
-     */
-    constructor(buf: FloatBuffer) {
-        set(buf)
-    }
-
-    /**
      * Copy constructor.
      */
     constructor(other: IVector4) {
@@ -67,15 +60,6 @@ class Vector4 : IVector4 {
      */
     fun set(values: FloatArray): Vector4 {
         return set(values[0], values[1], values[2], values[3])
-    }
-
-    /**
-     * Sets all of the elements of the vector.
-
-     * @return a reference to this vector, for chaining.
-     */
-    fun set(buf: FloatBuffer): Vector4 {
-        return set(buf.get(), buf.get(), buf.get(), buf.get())
     }
 
     /**
@@ -128,11 +112,6 @@ class Vector4 : IVector4 {
     }
 
     override // from IVector4
-    fun get(buf: FloatBuffer): FloatBuffer {
-        return buf.put(x).put(y).put(z).put(w)
-    }
-
-    override // from IVector4
     fun epsilonEquals(other: IVector4, epsilon: Float): Boolean {
         return Math.abs(x - other.x) < epsilon &&
                 Math.abs(y - other.y) < epsilon &&
@@ -177,22 +156,22 @@ class Vector4 : IVector4 {
 
     override // from IVector4
     fun mult(matrix: IMatrix4, result: Vector4): Vector4 {
-        val m00 = matrix.m00()
-        val m10 = matrix.m10()
-        val m20 = matrix.m20()
-        val m30 = matrix.m30()
-        val m01 = matrix.m01()
-        val m11 = matrix.m11()
-        val m21 = matrix.m21()
-        val m31 = matrix.m31()
-        val m02 = matrix.m02()
-        val m12 = matrix.m12()
-        val m22 = matrix.m22()
-        val m32 = matrix.m32()
-        val m03 = matrix.m03()
-        val m13 = matrix.m13()
-        val m23 = matrix.m23()
-        val m33 = matrix.m33()
+        val m00 = matrix.m00
+        val m10 = matrix.m10
+        val m20 = matrix.m20
+        val m30 = matrix.m30
+        val m01 = matrix.m01
+        val m11 = matrix.m11
+        val m21 = matrix.m21
+        val m31 = matrix.m31
+        val m02 = matrix.m02
+        val m12 = matrix.m12
+        val m22 = matrix.m22
+        val m32 = matrix.m32
+        val m03 = matrix.m03
+        val m13 = matrix.m13
+        val m23 = matrix.m23
+        val m33 = matrix.m33
         val vx = x
         val vy = y
         val vz = z
