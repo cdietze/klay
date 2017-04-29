@@ -4,6 +4,8 @@
 
 package pythagoras.i
 
+import java.lang.Math
+
 /**
  * Rectangle-related utility methods.
  */
