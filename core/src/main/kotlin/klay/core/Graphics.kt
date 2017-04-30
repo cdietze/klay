@@ -2,5 +2,5 @@ package klay.core
 
 interface Graphics {
 
-    val gl : GL20
+    val gl: GL20
 }

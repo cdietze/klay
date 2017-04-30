@@ -56,7 +56,7 @@ class HelloLwjglWorld {
         }
 
         // Get the thread stack and push a new frame
-        stackPush().use { stack :MemoryStack ->
+        stackPush().use { stack: MemoryStack ->
             val pWidth = stack.mallocInt(1) // int*
             val pHeight = stack.mallocInt(1) // int*
 
