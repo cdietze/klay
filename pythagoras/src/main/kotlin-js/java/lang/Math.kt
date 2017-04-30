@@ -4,6 +4,9 @@ import kotlin.js.Math as JsMath
 
 /**
  * Math utility methods and constants.
+ *
+ * Implementation needed for JS backend.
+ * Based on [Code taken from GWT project](https://github.com/gwtproject/gwt/blob/master/user/super/com/google/gwt/emul/java/lang/Math.java)
  */
 object Math {
     // The following methods are not implemented because JS doesn't provide the
