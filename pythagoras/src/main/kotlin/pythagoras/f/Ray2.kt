@@ -3,6 +3,7 @@
 // http://github.com/samskivert/pythagoras
 
 package pythagoras.f
+
 import java.lang.Math
 
 /**

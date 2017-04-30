@@ -11,7 +11,7 @@ class Dimension
 /**
  * Creates a dimension with the specified width and height,
  * using (0,0) as default.
-*/
+ */
 constructor(width: Float = 0f, height: Float = 0f) : AbstractDimension() {
 
     /** The magnitude in the x-dimension.  */
@@ -23,8 +23,6 @@ constructor(width: Float = 0f, height: Float = 0f) : AbstractDimension() {
     init {
         setSize(width, height)
     }
-
-
 
     /**
      * Creates a dimension with width and height equal to the supplied dimension.
