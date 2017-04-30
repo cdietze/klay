@@ -50,7 +50,7 @@
                 </executions>
             </plugin>
 
-            <!-- Unpack kotlin.js from its JAR -->
+            <!-- Unpack JS files from their JARs (kotlin.js, klay.js) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
