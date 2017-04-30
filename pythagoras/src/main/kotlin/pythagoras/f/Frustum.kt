@@ -17,11 +17,11 @@ class Frustum {
     }
 
     /** The vertices of the frustum.  */
-    protected var _vertices: Array<Vector3> = Array(8, { _ -> Vector3()} )
+    protected var _vertices: Array<Vector3> = Array(8, { _ -> Vector3() })
 
     /** The planes of the frustum (as derived from the vertices). The plane normals point out of
      * the frustum.  */
-    protected var _planes: Array<Plane> = Array(6, { _ -> Plane()})
+    protected var _planes: Array<Plane> = Array(6, { _ -> Plane() })
 
     /** The frustum's bounding box (as derived from the vertices).  */
     protected var _bounds = Box()

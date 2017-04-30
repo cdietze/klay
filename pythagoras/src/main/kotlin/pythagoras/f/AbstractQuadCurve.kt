@@ -130,7 +130,7 @@ abstract class AbstractQuadCurve : IQuadCurve {
         }
 
         override fun currentSegment(coords: FloatArray): Int {
-            require(!isDone, { -> "Iterator out of bounds"})
+            require(!isDone, { -> "Iterator out of bounds" })
             val type: Int
             val count: Int
             if (index == 0) {
