@@ -14,9 +14,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>de.cdietze.klay</groupId>
-            <artifactId>pythagoras</artifactId>
-            <version>${project.version}</version>
+            <groupId>de.cdietze</groupId>
+            <artifactId>pythagoras.kt</artifactId>
+            <version>${pythagoras.kt.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
