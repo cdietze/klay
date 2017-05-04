@@ -71,12 +71,21 @@
                                     <includes>*.js</includes>
                                 </artifactItem>
                                 <artifactItem>
+                                    <groupId>de.cdietze</groupId>
+                                    <artifactId>pythagoras.kt</artifactId>
+                                    <classifier>js</classifier>
+                                    <version>${pythagoras.kt.version}</version>
+                                    <outputDirectory>${project.build.directory}/js/lib</outputDirectory>
+                                    <includes>*.js</includes>
+                                </artifactItem>
+                                <artifactItem>
                                     <groupId>de.cdietze.klay</groupId>
                                     <artifactId>klay-js</artifactId>
                                     <version>${project.version}</version>
                                     <outputDirectory>${project.build.directory}/js/lib</outputDirectory>
                                     <includes>*.js</includes>
                                 </artifactItem>
+
                             </artifactItems>
                         </configuration>
                     </execution>

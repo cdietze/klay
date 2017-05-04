@@ -44,8 +44,7 @@
                             <sourceDirs>
                                 <sourceDir>${project.build.sourceDirectory}</sourceDir>
                                 <sourceDir>../core/src/main/kotlin</sourceDir>
-                                <sourceDir>../pythagoras/src/main/kotlin</sourceDir>
-                                <sourceDir>../pythagoras/src/main/kotlin-js</sourceDir>
+                                <sourceDir>target/dep-src</sourceDir>
                             </sourceDirs>
                         </configuration>
                         <id>compile</id>
@@ -63,6 +62,33 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>de.cdietze</groupId>
+                                    <artifactId>pythagoras.kt</artifactId>
+                                    <classifier>js</classifier>
+                                    <version>${pythagoras.kt.version}</version>
+                                    <outputDirectory>${project.build.directory}/dep-src</outputDirectory>
+                                    <includes>**/*.kt</includes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
