@@ -1,6 +1,6 @@
 package klay.core
 
-import klay.core.react.Signal
+import react.Signal
 
 abstract class Platform {
     abstract val graphics: Graphics
