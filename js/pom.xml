@@ -63,6 +63,7 @@
                 </executions>
             </plugin>
 
+            <!-- We need the source of all dependencies for the JS build, so unpack the .kt files -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -79,6 +80,13 @@
                                     <groupId>de.cdietze</groupId>
                                     <artifactId>pythagoras.kt-js</artifactId>
                                     <version>${pythagoras.kt.version}</version>
+                                    <outputDirectory>${project.build.directory}/dep-src</outputDirectory>
+                                    <includes>**/*.kt</includes>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>de.cdietze</groupId>
+                                    <artifactId>react.kt-js</artifactId>
+                                    <version>${react.kt.version}</version>
                                     <outputDirectory>${project.build.directory}/dep-src</outputDirectory>
                                     <includes>**/*.kt</includes>
                                 </artifactItem>

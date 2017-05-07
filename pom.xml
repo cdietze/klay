@@ -13,6 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.1.2</kotlin.version>
         <pythagoras.kt.version>1.0-SNAPSHOT</pythagoras.kt.version>
+        <react.kt.version>1.0-SNAPSHOT</react.kt.version>
     </properties>
 
     <modules>
