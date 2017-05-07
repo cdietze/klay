@@ -77,8 +77,7 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>de.cdietze</groupId>
-                                    <artifactId>pythagoras.kt</artifactId>
-                                    <classifier>js</classifier>
+                                    <artifactId>pythagoras.kt-js</artifactId>
                                     <version>${pythagoras.kt.version}</version>
                                     <outputDirectory>${project.build.directory}/dep-src</outputDirectory>
                                     <includes>**/*.kt</includes>
