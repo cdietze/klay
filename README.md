@@ -20,3 +20,9 @@ To launch the JVM demo app invoke `mvn -Pjvm test`.
 
 To launch the JS demo, build using `mvn install` then open `./tests/js/src/main/resources/index.html` in a browser.
 
+
+License
+---
+Klay is released under the Apache License, Version 2.0 which can be found
+in the `LICENSE` file and at http://www.apache.org/licenses/LICENSE-2.0 on the
+web.
