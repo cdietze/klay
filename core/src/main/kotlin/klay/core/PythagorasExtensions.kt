@@ -4,6 +4,10 @@ import klay.core.buffers.FloatBuffer
 import pythagoras.f.*
 
 /**
+ * This file contains extension functions for Pythagoras.kt classes.
+ */
+
+/**
  * Places the contents of this matrix into the given buffer in the standard OpenGL order.
 
  * @return a reference to the buffer, for chaining.
