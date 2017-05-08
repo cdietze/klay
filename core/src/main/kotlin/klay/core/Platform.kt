@@ -60,7 +60,7 @@ abstract class Platform {
     abstract val graphics: Graphics
 
     /** Returns the [Input] service.  */
-    val input: Nothing = TODO("Input not implemented")
+    abstract val input: Input
 
     /** Returns the [Json] service.  */
     val json: Nothing = TODO("Json not implemented")

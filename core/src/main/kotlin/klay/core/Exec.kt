@@ -10,7 +10,7 @@ import java.util.*
 abstract class Exec {
 
     /** A default exec implementation which processes [.invokeLater] via the frame tick.  */
-    class Default(protected val plat: Platform) : Exec() {
+    open class Default(protected val plat: Platform) : Exec() {
         private val pending = ArrayList<Runnable>()
         private val running = ArrayList<Runnable>()
 
