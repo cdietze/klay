@@ -602,7 +602,7 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
     abstract fun glStencilOp(fail: Int, zfail: Int, zpass: Int)
     abstract fun glStencilOpSeparate(face: Int, fail: Int, zfail: Int, zpass: Int)
 
-    abstract fun glTexImage2D(target: Int, level: Int, internalformat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, pixels: Buffer)
+    abstract fun glTexImage2D(target: Int, level: Int, internalformat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, pixels: Buffer?)
     abstract fun glTexImage2D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int)
     abstract fun glTexImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Buffer)
     abstract fun glTexImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int)

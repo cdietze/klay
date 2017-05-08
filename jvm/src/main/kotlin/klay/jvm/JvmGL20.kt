@@ -508,8 +508,11 @@ class JvmGL20 : klay.core.GL20(JvmBuffers(), java.lang.Boolean.getBoolean("playn
 
     override fun glTexImage2D(target: Int, level: Int, internalformat: Int,
                               width: Int, height: Int, border: Int, format: Int, type: Int,
-                              pixels: Buffer) {
-        if (pixels is JvmByteBuffer)
+                              pixels: Buffer?) {
+        if (pixels == null)
+            GL11.glTexImage2D(target, level, internalformat, width, height,
+                    border, format, type, null as java.nio.ByteBuffer?)
+        else if (pixels is JvmByteBuffer)
             GL11.glTexImage2D(target, level, internalformat, width, height,
                     border, format, type, pixels.nioBuffer)
         else if (pixels is JvmShortBuffer)
