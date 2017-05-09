@@ -19,7 +19,7 @@
     <modules>
         <module>core</module>
         <module>jvm</module>
-        <module>js</module>
+        <!--<module>js</module>-->
         <module>tests</module>
     </modules>
 
