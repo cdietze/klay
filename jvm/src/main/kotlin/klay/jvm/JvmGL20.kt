@@ -13,7 +13,7 @@ import java.nio.ByteOrder
 /**
  * An implementation of the [GL20] interface based on LWJGL3 and OpenGL ~3.0.
  */
-class JvmGL20 : klay.core.GL20(JvmBuffers(), java.lang.Boolean.getBoolean("playn.glerrors")) {
+class JvmGL20 : klay.core.GL20(JvmBuffers(), java.lang.Boolean.getBoolean("klay.glerrors")) {
 
     override fun glActiveTexture(texture: Int) {
         GL13.glActiveTexture(texture)

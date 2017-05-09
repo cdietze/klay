@@ -24,23 +24,21 @@ abstract class Image : TileSource, Canvas.Drawable {
      * Returns the scale of resolution independent pixels to actual pixels for this image. This will
      * be [Scale.ONE] unless HiDPI images are being used.
      */
-    abstract fun scale(): Scale
+    abstract val scale: Scale
 
     /**
      * This image's width in display units. If this image is loaded asynchrously, this will return
      * 0 until loading is complete. See [.state].
      */
-    fun width(): Float {
-        return scale().invScaled(pixelWidth().toFloat())
-    }
+    override val width: Float
+        get() = scale.invScaled(pixelWidth().toFloat())
 
     /**
      * This image's height in display units. If this image is loaded asynchrously, this will return
      * 0 until loading is complete. See [.state].
      */
-    fun height(): Float {
-        return scale().invScaled(pixelHeight().toFloat())
-    }
+    override val height: Float
+        get() = scale.invScaled(pixelHeight().toFloat())
 
     /**
      * Returns the width of this image in physical pixels. If this image is loaded asynchrously,
@@ -168,7 +166,7 @@ abstract class Image : TileSource, Canvas.Drawable {
                     "Invalid texture size: " + texWidth + "x" + texHeight + " from: " + this)
 
         val tex = Texture(gfx, gfx.createTexture(config), config, texWidth, texHeight,
-                scale(), width(), height())
+                scale, width, height)
         tex.update(this) // this will handle non-POT source image conversion
         return tex
     }
