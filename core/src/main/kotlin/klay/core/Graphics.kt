@@ -21,9 +21,10 @@ import react.Closeable
 /**
  * Provides access to graphics information and services.
  */
-abstract class Graphics protected constructor(protected val plat: Platform,
-                                              /** Provides access to GL services.  */
-                                              val gl: GL20, private var scale: Scale) {
+abstract class Graphics(open val plat: Platform,
+                        /** Provides access to GL services.  */
+                        open val gl: GL20,
+                        private var scale: Scale) {
     protected val viewSizeM = Dimension()
     private var viewPixelWidth: Int = 0
     private var viewPixelHeight: Int = 0
@@ -117,7 +118,7 @@ abstract class Graphics protected constructor(protected val plat: Platform,
      * Lays out multiple lines of text using the specified format and wrap configuration. The text
      * may subsequently be rendered on a canvas via [(TextLayout,float,float)][Canvas.fillText].
      */
-    abstract fun layoutText(text: String, format: TextFormat, wrap: TextWrap): Array<TextLayout>
+    abstract fun layoutText(text: String, format: TextFormat, wrap: TextWrap): Array<out TextLayout>
 
     /**
      * Queues the supplied graphics resource for disposal on the next frame tick. This is generally

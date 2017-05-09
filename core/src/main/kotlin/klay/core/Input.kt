@@ -8,7 +8,7 @@ import react.Signal
  * platform-specific code, and events are dispatched via the platform-independent [Mouse],
  * [Touch] and [Keyboard] classes.
  */
-class Input protected constructor(private val plat: Platform) {
+open class Input(open val plat: Platform) {
 
     /** Enables or disables mouse interaction.
      * No mouse events will be dispatched whilst this big switch is in the off position.  */
@@ -32,14 +32,10 @@ class Input protected constructor(private val plat: Platform) {
     var keyboardEvents: Signal<Keyboard.Event> = Signal.create()
 
     /** Returns true if this platform has mouse input.  */
-    fun hasMouse(): Boolean {
-        return false
-    }
+    open val hasMouse: Boolean = false
 
     /** Returns true if this platform has touch input.  */
-    fun hasTouch(): Boolean {
-        return false
-    }
+    open val hasTouch: Boolean = false
 
     /**
      * Returns true if this device has a hardware keyboard, false if not. Devices that lack a
@@ -47,17 +43,13 @@ class Input protected constructor(private val plat: Platform) {
      * support four hardware buttons are an exception. Use [.getText] for text entry on a
      * non-hardware-keyboard having device.
      */
-    fun hasHardwareKeyboard(): Boolean {
-        return false
-    }
+    open val hasHardwareKeyboard: Boolean = false
 
     /**
      * Returns true if this platform supports mouse locking. The user may still block it when it is
      * requested, or detection may be broken for some browsers.
      */
-    fun hasMouseLock(): Boolean {
-        return false
-    }
+    open val hasMouseLock: Boolean = false
 
     /**
      * Returns whether the mouse is currently locked.
@@ -66,7 +58,7 @@ class Input protected constructor(private val plat: Platform) {
      * Lock or unlock the mouse. When the mouse is locked, mouse events are still received even when
      * the pointer leaves the game window.
      */
-    var isMouseLocked: Boolean
+    open var isMouseLocked: Boolean
         get() = false
         set(locked) {} // noop!
 
@@ -86,7 +78,7 @@ class Input protected constructor(private val plat: Platform) {
      * @return a future which provides the text when it becomes available. If the user cancels the
      * * text entry process, null is supplied. Otherwise the entered text is supplied.
      */
-    fun getText(textType: Keyboard.TextType, label: String, initialValue: String): RFuture<String> {
+    open fun getText(textType: Keyboard.TextType, label: String, initialValue: String): RFuture<String> {
         return RFuture.failure(Exception("getText not supported"))
     }
 
@@ -98,7 +90,7 @@ class Input protected constructor(private val plat: Platform) {
      * * display the title, so be sure your dialog makes sense if only `text` is showing.
      * *
      * @param text the text of the dialog. The text will be wrapped by the underlying platform, but
-     * * PlayN will do its utmost to ensure that newlines are honored by the platform in question so
+     * * Klay will do its utmost to ensure that newlines are honored by the platform in question so
      * * that hard line breaks and blank lines are reproduced correctly.
      * *
      * @param ok the text of the button which will deliver a `true` result and be placed in
@@ -115,7 +107,7 @@ class Input protected constructor(private val plat: Platform) {
      * * cancel buttons respectively. If some unexpected error occurs displaying the dialog (unlikley),
      * * it will be reported by failing the future.
      */
-    fun sysDialog(title: String, text: String, ok: String, cancel: String): RFuture<Boolean> {
+    open fun sysDialog(title: String, text: String, ok: String, cancel: String): RFuture<Boolean> {
         return RFuture.failure(Exception("sysDialog not supported"))
     }
 

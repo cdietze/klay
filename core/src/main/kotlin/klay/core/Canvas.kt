@@ -3,9 +3,9 @@ package klay.core
 /**
  * A 2D drawing canvas. Rendering is performed by the CPU into a bitmap.
  */
-abstract class Canvas protected constructor(protected val gfx: Graphics,
-                                            /** The image that underlies this canvas.  */
-                                            val image: Image) {
+abstract class Canvas(val gfx: Graphics,
+                      /** The image that underlies this canvas.  */
+                      val image: Image) {
 
     /**
      * Values that may be used with
@@ -356,8 +356,8 @@ abstract class Canvas protected constructor(protected val gfx: Graphics,
     protected var isDirty: Boolean = false
 
     init {
-        this.width = image.width()
-        this.height = image.height()
+        this.width = image.width
+        this.height = image.height
         if (width <= 0 || height <= 0)
             throw IllegalArgumentException(
                     "Canvas must be > 0 in width and height: " + width + "x" + height)

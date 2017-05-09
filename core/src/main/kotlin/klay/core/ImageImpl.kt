@@ -12,7 +12,7 @@ abstract class ImageImpl : Image {
     class Data(val scale: Scale, val bitmap: Any, val pixelWidth: Int, val pixelHeight: Int)
 
     protected val source: String
-    protected var scale: Scale
+    override var scale: Scale
     protected var pixelWidth: Int = 0
     protected var pixelHeight: Int = 0
 
@@ -35,10 +35,6 @@ abstract class ImageImpl : Image {
         if (pixelHeight == 0) pixelHeight = 50
         setBitmap(createErrorBitmap(pixelWidth, pixelHeight))
         (state as RPromise<Image>).fail(error) // state is a deferred promise
-    }
-
-    override fun scale(): Scale {
-        return scale
     }
 
     override fun pixelWidth(): Int {

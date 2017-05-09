@@ -48,10 +48,12 @@ abstract class Platform {
     abstract fun openURL(url: String)
 
     /** Returns the [Assets] service.  */
-    val assets: Nothing = TODO("Assets not implemented")
+    val assets: Nothing
+        get() = TODO("Assets not implemented")
 
     /** Returns the [Audio] service.  */
-    val audio: Nothing = TODO("Audio not implemented")
+    val audio: Nothing
+        get() = TODO("Audio not implemented")
 
     /** Returns the [Exec] service.  */
     abstract val exec: Exec
@@ -63,13 +65,15 @@ abstract class Platform {
     abstract val input: Input
 
     /** Returns the [Json] service.  */
-    val json: Nothing = TODO("Json not implemented")
+    val json: Nothing
+        get() = TODO("Json not implemented")
 
     /** Returns the [Log] service.  */
     abstract val log: Log
 
     /** Returns the [Net] service.  */
-    val net : Nothing = TODO("Net not implemented")
+    val net : Nothing
+        get() = TODO("Net not implemented")
 
     /** Returns the [Storage] storage service.  */
     fun storage(): Nothing = TODO("Storage not implemented")
