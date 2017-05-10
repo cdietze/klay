@@ -18,6 +18,7 @@
 
     <modules>
         <module>core</module>
+        <module>scene</module>
         <module>jvm</module>
         <!--<module>js</module>-->
         <module>tests</module>
