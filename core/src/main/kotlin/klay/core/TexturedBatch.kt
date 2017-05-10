@@ -35,7 +35,7 @@ open class TexturedBatch protected constructor(val gl: GL20) : GLBatch() {
             return "  vec4 textureColor = texture2D(u_Texture, v_TexCoord);\n"
         }
 
-        protected fun textureTint(): String {
+        protected open fun textureTint(): String {
             return "  textureColor.rgb *= v_Color.rgb;\n"
         }
 

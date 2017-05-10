@@ -15,6 +15,7 @@
 
     <modules>
         <module>jvm</module>
+        <module>core</module>
         <!--<module>js</module>-->
     </modules>
 </project>
