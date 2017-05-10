@@ -3,7 +3,7 @@ package klay.core
 /**
  * Defines and dispatches touch events.
  */
-class Touch {
+open class Touch {
 
     /** Contains information on a touch event.  */
     class Event @JvmOverloads constructor(flags: Int, time: Double, x: Float, y: Float,

@@ -6,7 +6,7 @@ import react.Slot
 /**
  * Defines and dispatches mouse events.
  */
-class Mouse {
+open class Mouse {
 
     /** The base class for all mouse events.  */
     open class Event protected constructor(flags: Int, time: Double, x: Float, y: Float) : klay.core.Event.XY(flags, time, x, y)

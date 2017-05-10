@@ -7,7 +7,7 @@ import react.Signal
  * which tracks a single "pointer" with simple interactions. If you want global pointer events,
  * you have to create an instance of this class yourself.
  */
-class Pointer(private val plat: Platform) {
+open class Pointer(private val plat: Platform) {
 
     /** Contains information on a pointer event.  */
     class Event(flags: Int, time: Double, x: Float, y: Float,
