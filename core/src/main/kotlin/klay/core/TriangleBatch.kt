@@ -18,7 +18,7 @@ class TriangleBatch
 @JvmOverloads constructor(gl: GL20, source: TriangleBatch.Source = TriangleBatch.Source()) : QuadBatch(gl) {
 
     /** The source for the stock triangle batch shader program.  */
-    class Source : TexturedBatch.Source() {
+    open class Source : TexturedBatch.Source() {
 
         /** Returns the source of the vertex shader program.  */
         fun vertex(): String {

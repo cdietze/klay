@@ -15,7 +15,7 @@ class TextBlock
 (
         /** The individual lines of text in this block. Obtained by a call to
          * [Graphics.layoutText].  */
-        val lines: Array<TextLayout>) {
+        val lines: Array<out TextLayout>) {
 
     /** Used to align a block of text.  */
     enum class Align {
@@ -103,7 +103,7 @@ class TextBlock
          * positive, indicating that the text should be rendered at that offset. This is to account for
          * the fact that some text renders to the left of its reported origin due to font
          * extravagance.  */
-        fun getBounds(lines: Array<TextLayout>, into: Rectangle): Rectangle {
+        fun getBounds(lines: Array<out TextLayout>, into: Rectangle): Rectangle {
             // some font glyphs start rendering at a negative inset, blowing outside their bounding box
             // (naughty!); in such cases, we use xAdjust to shift everything to the right to ensure that we
             // don't paint outside our reported bounding box (so that someone can create a single canvas of

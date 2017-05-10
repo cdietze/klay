@@ -24,7 +24,7 @@ class Pointer
     abstract class Listener : Slot<Any> {
 
         /** Notifies listener of a pointer start event.  */
-        fun onStart(iact: Interaction) {}
+        open fun onStart(iact: Interaction) {}
 
         /** Notifies listener of a pointer drag (move) event.  */
         fun onDrag(iact: Interaction) {}

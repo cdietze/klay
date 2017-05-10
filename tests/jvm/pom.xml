@@ -17,14 +17,19 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jre8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
             <groupId>de.cdietze.klay</groupId>
             <artifactId>klay-jvm</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jre8</artifactId>
-            <version>${kotlin.version}</version>
+            <groupId>de.cdietze.klay</groupId>
+            <artifactId>klay-tests-core</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
