@@ -4,8 +4,9 @@ import klay.core.*
 import pythagoras.f.Point
 import java.util.concurrent.ConcurrentLinkedDeque
 
-// TODO(cdi) find a nicer way than the additional ctor arg, but `plat` will access the field which is undefined in `init`
-open class JavaInput(override val plat: JavaPlatform, plat2: JavaPlatform=plat) : Input(plat) {
+open class JavaInput(plat: JavaPlatform) : Input(plat) {
+
+    override val plat: JavaPlatform = plat
 
     // used for injecting keyboard evnets
     private val kevQueue = ConcurrentLinkedDeque<Keyboard.Event>()
@@ -19,7 +20,7 @@ open class JavaInput(override val plat: JavaPlatform, plat2: JavaPlatform=plat) 
 
     init {
         // if touch emulation is configured, wire it up
-        if (plat2.config.emulateTouch) emulateTouch()
+        if (plat.config.emulateTouch) emulateTouch()
     }
 
     /** Posts a key event received from elsewhere (i.e. a native UI component). This is useful for
