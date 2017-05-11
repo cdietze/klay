@@ -316,8 +316,8 @@ abstract class Layer : Closeable {
      */
     fun transform(): AffineTransform {
         if (isSet(Flag.XFDIRTY)) {
-            val sina = FloatMath.sin(rotation)
-            val cosa = FloatMath.cos(rotation)
+            val sina = MathUtil.sin(rotation)
+            val cosa = MathUtil.cos(rotation)
             val m00 = cosa * scaleX
             val m01 = sina * scaleY
             val m10 = -sina * scaleX

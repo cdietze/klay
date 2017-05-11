@@ -1,10 +1,10 @@
 package klay.core
 
 import pythagoras.f.*
+import pythagoras.f.Vector
 import pythagoras.i.Rectangle
 import react.Closeable
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * A surface provides a simple drawing API to a GPU accelerated render target. This can be either
@@ -344,12 +344,12 @@ open class Surface
 
         val dx = x1 - x0
         val dy = y1 - y0
-        val length = FloatMath.sqrt(dx * dx + dy * dy)
+        val length = MathUtil.sqrt(dx * dx + dy * dy)
         val wx = dx * (width / 2) / length
         val wy = dy * (width / 2) / length
 
         val xf = AffineTransform()
-        xf.setRotation(FloatMath.atan2(dy, dx))
+        xf.setRotation(MathUtil.atan2(dy, dx))
         xf.setTranslation(x0 + wy, y0 - wx)
         Transforms.multiply(tx(), xf, xf)
 
