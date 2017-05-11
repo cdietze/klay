@@ -4,7 +4,7 @@ import klay.core.*
 import klay.scene.CanvasLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import pythagoras.f.FloatMath
+import pythagoras.f.MathUtil
 
 class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas rendering features.") {
     private var nextX: Float = 0.toFloat()
@@ -153,9 +153,9 @@ class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas r
                 canvas.setFillColor(0xFFCCCCCC.toInt()).fillRect(0f, 0f, 50f, 50f)
                 canvas.setFillColor(0xFFCCCCCC.toInt()).fillRect(50f, 50f, 50f, 50f)
                 val capF = game.graphics.layoutText("F", TextFormat(F_FONT))
-                val theta = -FloatMath.PI / 4
-                val tsin = FloatMath.sin(theta)
-                val tcos = FloatMath.cos(theta)
+                val theta = -MathUtil.PI / 4
+                val tsin = MathUtil.sin(theta)
+                val tcos = MathUtil.cos(theta)
                 canvas.setFillColor(0xFF000000.toInt()).fillText(capF, 0f, 0f)
                 canvas.transform(tcos, -tsin, tsin, tcos, 50f, 50f)
                 canvas.setFillColor(0xFF000000.toInt()).fillText(capF, 0f, 0f)
@@ -216,7 +216,7 @@ class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas r
 //            // round the width so that it goes to zero sometimes (which should be fine)
 //            if (tileLayer != null)
 //                tileLayer.forceWidth = Math.round(
-//                        Math.abs(FloatMath.sin(clock.tick / 2000f)) * 100f).toFloat()
+//                        Math.abs(MathUtil.sin(clock.tick / 2000f)) * 100f).toFloat()
 //        }))
 
         val cancan = createCanvas(50, 50, object : Drawer {
@@ -227,7 +227,7 @@ class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas r
         addTestCanvas("canvas drawn on canvas", 100, 100, object : Drawer {
             override fun draw(canvas: Canvas) {
                 canvas.translate(50f, 25f)
-                canvas.rotate(FloatMath.PI / 4)
+                canvas.rotate(MathUtil.PI / 4)
                 canvas.draw(cancan.image, 0f, 0f)
             }
         })
