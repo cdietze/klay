@@ -27,7 +27,7 @@ abstract class SceneGame(plat: Platform, updateRate: Int) : Game(plat, updateRat
         viewSurf = Surface(plat.graphics, plat.graphics.defaultRenderTarget, defaultBatch)
         rootLayer = RootLayer()
 
-        paint.connect { this::paintScene }.atPrio(scenePaintPrio())
+        paint.connect { paintScene() }.atPrio(scenePaintPrio())
     }
 
     /**
