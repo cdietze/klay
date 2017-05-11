@@ -1,6 +1,7 @@
 package klay.jvm
 
 import klay.core.buffers.*
+import java.nio.ByteOrder
 
 abstract class JvmBuffer : Buffer {
     abstract val nioBuffer: java.nio.Buffer
@@ -17,7 +18,7 @@ abstract class JvmBuffer : Buffer {
     override fun position(): Int = nioBuffer.position()
 
     override fun position(i: Int) {
-        nioBuffer.position()
+        nioBuffer.position(i)
     }
 
     override fun capacity(): Int = nioBuffer.capacity()
@@ -25,7 +26,7 @@ abstract class JvmBuffer : Buffer {
 
 class JvmBuffers : klay.core.GL20.Buffers() {
     override fun createByteBuffer(size: Int): ByteBuffer {
-        return JvmByteBuffer(java.nio.ByteBuffer.allocate(size))
+        return JvmByteBuffer(java.nio.ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder()))
     }
 }
 
