@@ -14,8 +14,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>jvm</module>
+        <module>assets</module>
         <module>core</module>
+        <module>jvm</module>
         <!--<module>js</module>-->
     </modules>
 </project>
