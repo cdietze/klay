@@ -3,7 +3,7 @@ package klay.core
 import react.Signal
 
 /**
- * Defines a simple game API. It's not necessary to use this abstraction for your PlayN games, but
+ * Defines a simple game API. It's not necessary to use this abstraction for your Klay games, but
  * it takes care of some standard stuff that most games are likely to want.
 
  *
