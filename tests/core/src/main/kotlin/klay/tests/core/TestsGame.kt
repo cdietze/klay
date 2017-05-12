@@ -35,7 +35,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
             return value.toString()
         }
 
-        fun set(idx: Int) {
+        open fun set(idx: Int) {
             this.valueIdx = idx
             layer.setTile(game!!.ui.formatButton(prefix + toString(values[idx])))
         }
@@ -76,13 +76,13 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
                 ClippedLayerTest(this),
                 CanvasStressTest(this),
                 ImageTypeTest(this),
-                AlphaLayerTest(this)
-//                ImageScalingTest(this),
-//                DepthTest(this),
-//                ClearBackgroundTest(this),
-//                PauseResumeTest(this),
-//                TextTest(this),
-//                ScaledTextTest(this),
+                AlphaLayerTest(this),
+                ImageScalingTest(this),
+                DepthTest(this),
+                ClearBackgroundTest(this),
+                PauseResumeTest(this),
+                TextTest(this),
+                ScaledTextTest(this)
 //                DialogTest(this),
 //                LayerClickTest(this),
 //                PointerMouseTouchTest(this),
