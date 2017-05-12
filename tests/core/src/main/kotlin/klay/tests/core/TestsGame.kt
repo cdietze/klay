@@ -70,13 +70,13 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
         input.mouseEvents.connect(klay.scene.Mouse.Dispatcher(rootLayer, true))
 
         tests = arrayOf<Test>(
-                CanvasTest(this)
-//                SurfaceTest(this),
-//                SubImageTest(this),
-//                ClippedLayerTest(this),
-//                CanvasStressTest(this),
-//                ImageTypeTest(this),
-//                AlphaLayerTest(this),
+                CanvasTest(this),
+                SurfaceTest(this),
+                SubImageTest(this),
+                ClippedLayerTest(this),
+                CanvasStressTest(this),
+                ImageTypeTest(this),
+                AlphaLayerTest(this)
 //                ImageScalingTest(this),
 //                DepthTest(this),
 //                ClearBackgroundTest(this),

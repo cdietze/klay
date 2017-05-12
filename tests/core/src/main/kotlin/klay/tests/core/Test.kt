@@ -12,7 +12,7 @@ abstract class Test(protected val game: TestsGame, val name: String, val descrip
 
     open fun init() {}
 
-    fun dispose() {
+    open fun dispose() {
         conns.close()
     }
 

@@ -361,7 +361,7 @@ abstract class Layer : Closeable {
      */
     fun setAlpha(alpha: Float): Layer {
         this.alpha = alpha
-        val ialpha = (0xFF * MathUtil.clamp(alpha, 0f, 1f)) as Int
+        val ialpha = MathUtil.round(0xFF * MathUtil.clamp(alpha, 0f, 1f))
         this.tint = ialpha shl 24 or (tint and 0xFFFFFF)
         return this
     }
