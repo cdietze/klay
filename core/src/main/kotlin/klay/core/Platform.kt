@@ -48,12 +48,10 @@ abstract class Platform {
     abstract fun openURL(url: String)
 
     /** Returns the [Assets] service.  */
-    val assets: Nothing
-        get() = TODO("Assets not implemented")
+    abstract val assets: Assets
 
     /** Returns the [Audio] service.  */
-    val audio: Nothing
-        get() = TODO("Audio not implemented")
+    abstract val audio: Audio
 
     /** Returns the [Exec] service.  */
     abstract val exec: Exec
