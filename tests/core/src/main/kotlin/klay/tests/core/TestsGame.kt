@@ -57,6 +57,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
     val log = plat.log
     val input = plat.input
     val graphics = plat.graphics
+    val assets = plat.assets
     val pointer: Pointer
     val ui: UI
 

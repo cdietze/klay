@@ -6,18 +6,17 @@ import klay.jvm.JavaPlatform
 import klay.jvm.LWJGLPlatform
 import klay.tests.core.TestsGame
 
-object JvmMain {
+object JvmTestsMain {
 
     @JvmStatic
     fun main(args: Array<String>) {
         println("Hello Kotlin on JVM!")
         val config = JavaPlatform.Config()
+        config.width = 800
+        config.height = 600
+        config.appName = "Klay-JvmTests"
         val plat = LWJGLPlatform(config)
-//        MyGame(plat)
         TestsGame(plat, args)
         plat.start()
     }
-}
-
-class MyGame(plat: Platform) : Game(plat, 25) {
 }

@@ -5,6 +5,7 @@ import klay.scene.CanvasLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
 import pythagoras.f.MathUtil
+import react.Connection
 
 class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas rendering features.") {
     private var nextX: Float = 0.toFloat()
@@ -37,13 +38,12 @@ class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas r
             }
         })
 
-        //TODO(cdi) re-add once Assets work
-//        addTestCanvas("image fill pattern", 100, 100, "images/tile.png", object : ImageDrawer {
-//            override fun draw(canvas: Canvas, tile: Image) {
-//                canvas.setFillPattern(tile.createPattern(true, true))
-//                canvas.fillRect(0f, 0f, 100f, 100f)
-//            }
-//        })
+        addTestCanvas("image fill pattern", 100, 100, "images/tile.png", object : ImageDrawer {
+            override fun draw(canvas: Canvas, tile: Image) {
+                canvas.setFillPattern(tile.createPattern(true, true))
+                canvas.fillRect(0f, 0f, 100f, 100f)
+            }
+        })
 
         addTestCanvas("lines and circles", 100, 100, object : Drawer {
             override fun draw(canvas: Canvas) {
@@ -63,20 +63,19 @@ class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas r
             }
         })
 
-        //TODO(cdi) re-add once Assets work
-//        addTestCanvas("image, subimage", 100, 100, "images/orange.png", object : ImageDrawer {
-//            override fun draw(canvas: Canvas, orange: Image) {
-//                canvas.setFillColor(0xFF99CCFF.toInt())
-//                canvas.fillRect(0f, 0f, 100f, 100f)
-//
-//                // draw an image normally, scaled, cropped, cropped and scaled, etc.
-//                val half = 37 / 2f
-//                canvas.draw(orange, 10f, 10f)
-//                canvas.draw(orange, 55f, 10f, 37f, 37f, half, half, half, half)
-//                canvas.draw(orange, 10f, 55f, 37f, 37f, half, 0f, half, half)
-//                canvas.draw(orange, 55f, 55f, 37f, 37f, half, half / 2, half, half)
-//            }
-//        })
+        addTestCanvas("image, subimage", 100, 100, "images/orange.png", object : ImageDrawer {
+            override fun draw(canvas: Canvas, orange: Image) {
+                canvas.setFillColor(0xFF99CCFF.toInt())
+                canvas.fillRect(0f, 0f, 100f, 100f)
+
+                // draw an image normally, scaled, cropped, cropped and scaled, etc.
+                val half = 37 / 2f
+                canvas.draw(orange, 10f, 10f)
+                canvas.draw(orange, 55f, 10f, 37f, 37f, half, half, half, half)
+                canvas.draw(orange, 10f, 55f, 37f, 37f, half, 0f, half, half)
+                canvas.draw(orange, 55f, 55f, 37f, 37f, half, half / 2, half, half)
+            }
+        })
 
         val repcan = createCanvas(30, 30, object : Drawer {
             override fun draw(canvas: Canvas) {
@@ -198,26 +197,25 @@ class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas r
             }
         })
 
-        //TODO(cdi) re-add once Assets work
-//        val tileLayer = ImageLayer(
-//                game.assets.getImage("images/tile.png").setConfig(repeat))
-//        addTestLayer("img layer anim setWidth", 100, 100, tileLayer.setSize(0f, 100f))
-//        conns.add<Connection>(game.paint.connect({ clock: Clock ->
-//            val curSecs = clock.tick / 1000
-//            if (curSecs != lastSecs) {
-//                val tcanvas = time!!.begin()
-//                tcanvas.clear()
-//                tcanvas.setStrokeColor(0xFF000000.toInt()).strokeRect(0f, 0f, 99f, 99f)
-//                tcanvas.drawText("" + curSecs, 40f, 55f)
-//                lastSecs = curSecs
-//                time!!.end()
-//            }
-//
-//            // round the width so that it goes to zero sometimes (which should be fine)
-//            if (tileLayer != null)
-//                tileLayer.forceWidth = Math.round(
-//                        Math.abs(MathUtil.sin(clock.tick / 2000f)) * 100f).toFloat()
-//        }))
+        val tileLayer = ImageLayer(
+                game.assets.getImage("images/tile.png").setConfig(repeat))
+        addTestLayer("img layer anim setWidth", 100, 100, tileLayer.setSize(0f, 100f))
+        conns.add<Connection>(game.paint.connect({ clock: Clock ->
+            val curSecs = clock.tick / 1000
+            if (curSecs != lastSecs) {
+                val tcanvas = time!!.begin()
+                tcanvas.clear()
+                tcanvas.setStrokeColor(0xFF000000.toInt()).strokeRect(0f, 0f, 99f, 99f)
+                tcanvas.drawText("" + curSecs, 40f, 55f)
+                lastSecs = curSecs
+                time!!.end()
+            }
+
+            // round the width so that it goes to zero sometimes (which should be fine)
+            if (tileLayer != null)
+                tileLayer.forceWidth = Math.round(
+                        Math.abs(MathUtil.sin(clock.tick / 2000f)) * 100f).toFloat()
+        }))
 
         val cancan = createCanvas(50, 50, object : Drawer {
             override fun draw(canvas: Canvas) {
@@ -272,16 +270,16 @@ class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas r
     }
 
     //TODO(cdi) re-add once Assets work
-//    private fun addTestCanvas(descrip: String, width: Int, height: Int, imagePath: String,
-//                              drawer: ImageDrawer) {
-//        val target = game.graphics.createCanvas(width.toFloat(), height.toFloat())
-//        val layer = ImageLayer().setSize(width.toFloat(), height.toFloat())
-//        game.assets.getImage(imagePath).state.onSuccess({ image: Image ->
-//            drawer.draw(target, image)
-//            layer.setTile(target.toTexture())
-//        })
-//        addTestLayer(descrip, width, height, layer)
-//    }
+    private fun addTestCanvas(descrip: String, width: Int, height: Int, imagePath: String,
+                              drawer: ImageDrawer) {
+        val target = game.graphics.createCanvas(width.toFloat(), height.toFloat())
+        val layer = ImageLayer().setSize(width.toFloat(), height.toFloat())
+        game.assets.getImage(imagePath).state.onSuccess({ image: Image ->
+            drawer.draw(target, image)
+            layer.setTile(target.toTexture())
+        })
+        addTestLayer(descrip, width, height, layer)
+    }
 
     private val F_FONT = Font("Helvetica", Font.Style.BOLD, 48f)
 
