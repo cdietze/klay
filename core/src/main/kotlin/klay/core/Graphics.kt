@@ -99,7 +99,7 @@ abstract class Graphics(open val plat: Platform,
 
         val id = createTexture(config)
         gl.glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texWidth, texHeight,
-                0, GL_RGBA, GL_UNSIGNED_BYTE, null as Buffer)
+                0, GL_RGBA, GL_UNSIGNED_BYTE, null)
         return Texture(this, id, config, texWidth, texHeight, scale, width, height)
     }
 
