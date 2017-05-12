@@ -12,7 +12,7 @@
     <artifactId>klay-tests-jvm</artifactId>
 
     <properties>
-        <mainClass>klay.tests.jvm.JvmMain</mainClass>
+        <mainClass>klay.tests.jvm.JvmTestsMain</mainClass>
     </properties>
 
     <dependencies>
@@ -22,13 +22,18 @@
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
-            <groupId>de.cdietze.klay</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>klay-jvm</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>de.cdietze.klay</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>klay-tests-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>klay-tests-assets</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

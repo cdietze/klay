@@ -67,7 +67,7 @@ class CanvasLayer : klay.scene.ImageLayer {
     /** Informs this layer that a drawing operation has just completed. The backing canvas image data
      * is uploaded to the GPU.  */
     fun end() {
-        val tex = tile() as Texture
+        val tex = tile() as Texture?
         val image = canvas!!.image
         // if our texture is already the right size, just update it
         if (tex != null && tex.pixelWidth == image.pixelWidth() &&
