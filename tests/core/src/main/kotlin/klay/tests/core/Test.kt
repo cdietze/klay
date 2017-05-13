@@ -20,7 +20,7 @@ abstract class Test(protected val game: TestsGame, val name: String, val descrip
         return false
     }
 
-    fun available(): Boolean {
+    open fun available(): Boolean {
         return true
     }
 
