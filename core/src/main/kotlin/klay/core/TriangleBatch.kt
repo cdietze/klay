@@ -13,7 +13,7 @@ import pythagoras.f.AffineTransform
  * A batch which renders indexed triangles. It serves as a [QuadBatch], but can also render
  * arbitrary triangles via [.addTris].
  */
-class TriangleBatch
+open class TriangleBatch
 /** Creates a triangle batch with the supplied custom shader program.  */
 @JvmOverloads constructor(gl: GL20, source: TriangleBatch.Source = TriangleBatch.Source()) : QuadBatch(gl) {
 
@@ -21,7 +21,7 @@ class TriangleBatch
     open class Source : TexturedBatch.Source() {
 
         /** Returns the source of the vertex shader program.  */
-        fun vertex(): String {
+        open fun vertex(): String {
             return VERT_UNIFS +
                     VERT_ATTRS +
                     PER_VERT_ATTRS +

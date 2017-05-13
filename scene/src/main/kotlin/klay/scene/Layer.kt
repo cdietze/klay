@@ -148,7 +148,7 @@ abstract class Layer : Closeable {
          * `layer`'s coordinate system) hits `layer`, or one of its children. This allows a
          * layer to customize the default hit testing approach, which is to simply check whether the
          * point intersects a layer's bounds. See [Layer.hitTest].  */
-        fun hitTest(layer: Layer, p: Point): Layer
+        fun hitTest(layer: Layer, p: Point): Layer?
     }
 
     /**
