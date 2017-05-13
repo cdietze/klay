@@ -1,7 +1,6 @@
 package klay.core
 
 import react.Signal
-import sun.nio.ch.Net
 
 /**
  * Provides access to all Klay cross-platform services.
@@ -70,8 +69,7 @@ abstract class Platform {
     abstract val log: Log
 
     /** Returns the [Net] service.  */
-    val net: Nothing
-        get() = TODO("Net not implemented")
+    abstract val net: Net
 
     /** Returns the [Storage] storage service.  */
     abstract val storage: Storage
