@@ -59,6 +59,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
     val graphics = plat.graphics
     val assets = plat.assets
     val storage = plat.storage
+    val net = plat.net
     val pointer: Pointer
     val ui: UI
 
@@ -88,9 +89,9 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
                 LayerClickTest(this),
                 PointerMouseTouchTest(this),
                 MouseWheelTest(this),
-                ShaderTest(this)
-//                SoundTest(this),
-//                NetTest(this),
+                ShaderTest(this),
+                SoundTest(this),
+                NetTest(this)
 //                FullscreenTest(this)
         )
         // display basic instructions
