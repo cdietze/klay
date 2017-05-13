@@ -27,7 +27,7 @@ class Pointer
         open fun onStart(iact: Interaction) {}
 
         /** Notifies listener of a pointer drag (move) event.  */
-        fun onDrag(iact: Interaction) {}
+        open fun onDrag(iact: Interaction) {}
 
         /** Notifies listener of a pointer end event.  */
         fun onEnd(iact: Interaction) {}

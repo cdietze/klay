@@ -70,11 +70,11 @@ abstract class Platform {
     abstract val log: Log
 
     /** Returns the [Net] service.  */
-    val net : Nothing
+    val net: Nothing
         get() = TODO("Net not implemented")
 
     /** Returns the [Storage] storage service.  */
-    fun storage(): Nothing = TODO("Storage not implemented")
+    abstract val storage: Storage
 
     /**
      * Called when a backend (or other framework code) encounters an exception that it can recover
