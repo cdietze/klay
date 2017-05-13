@@ -107,7 +107,7 @@ open class Input(open val plat: Platform) {
      * * cancel buttons respectively. If some unexpected error occurs displaying the dialog (unlikley),
      * * it will be reported by failing the future.
      */
-    open fun sysDialog(title: String, text: String, ok: String, cancel: String): RFuture<Boolean> {
+    open fun sysDialog(title: String, text: String, ok: String, cancel: String?): RFuture<Boolean> {
         return RFuture.failure(Exception("sysDialog not supported"))
     }
 

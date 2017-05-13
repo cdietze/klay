@@ -71,6 +71,7 @@ abstract class JavaPlatform(val config: JavaPlatform.Config) : Platform() {
 
     override val assets = JavaAssets(this)
     override val audio = JavaAudio(exec)
+    override val storage = JavaStorage(log, config.storageFileName)
 
     // TODO(cdi) re-add Headless mode. We cannot just pass null for the GL20 reference and making it a GL20?
     // seems too far-ranging for something that is actually just for testing

@@ -16,10 +16,10 @@ class Touch : klay.core.Touch() {
     abstract class Listener : Slot<Any> {
 
         /** Notifies listener of a touch start event.  */
-        fun onStart(iact: Interaction) {}
+        open fun onStart(iact: Interaction) {}
 
         /** Notifies listener of a touch move event.  */
-        fun onMove(iact: Interaction) {}
+        open fun onMove(iact: Interaction) {}
 
         /** Notifies listener of a touch end event.  */
         fun onEnd(iact: Interaction) {}

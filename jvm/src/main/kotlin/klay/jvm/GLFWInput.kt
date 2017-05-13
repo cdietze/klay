@@ -96,7 +96,7 @@ class GLFWInput(override val plat: LWJGLPlatform, private val window: Long) : Ja
     }
 
     override fun sysDialog(title: String, text: String,
-                           ok: String, cancel: String): RFuture<Boolean> {
+                           ok: String, cancel: String?): RFuture<Boolean> {
         if (plat.needsHeadless()) throw UnsupportedOperationException(NO_UI_ERROR)
 
         val optType = JOptionPane.OK_CANCEL_OPTION
@@ -107,9 +107,7 @@ class GLFWInput(override val plat: LWJGLPlatform, private val window: Long) : Ja
         return RFuture.success(result == 0)
     }
 
-    fun hasMouseLock(): Boolean {
-        return true
-    }
+    override val hasMouseLock: Boolean = true
 
     override var isMouseLocked: Boolean
         get() = glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED
