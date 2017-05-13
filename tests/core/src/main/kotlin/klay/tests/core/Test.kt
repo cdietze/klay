@@ -16,7 +16,7 @@ abstract class Test(protected val game: TestsGame, val name: String, val descrip
         conns.close()
     }
 
-    fun usesPositionalInputs(): Boolean {
+    open fun usesPositionalInputs(): Boolean {
         return false
     }
 

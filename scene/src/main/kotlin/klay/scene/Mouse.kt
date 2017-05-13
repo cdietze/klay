@@ -31,33 +31,33 @@ class Mouse : klay.core.Mouse() {
         /** Notifies listener of a mouse motion event. A motion event is dispatched when no button is
          * currently pressed, in an isolated "one shot" interaction, and always goes to the layer hit
          * by the event coordinates.  */
-        fun onMotion(event: MotionEvent, iact: Interaction) {}
+        open fun onMotion(event: MotionEvent, iact: Interaction) {}
 
         /** Notifies listener of mouse entry or exit. Hover events are dispatched in an isolated "one
          * shot" interaction, regardless of whether there is currently a button-triggered interaction
          * in progress, and always got to the layer whose hover status changed.  */
-        fun onHover(event: HoverEvent, iact: Interaction) {}
+        open fun onHover(event: HoverEvent, iact: Interaction) {}
 
         /** Notifies listener of a mouse button event. A button down event will start an interaction if
          * no interaction is already in progress, or will be dispatched to the hit layer of the
          * current interaction if an interaction is in progress. If additional buttons are pressed
          * during an interaction, the interaction does not end until *all* of the buttons are
          * released.  */
-        fun onButton(event: ButtonEvent, iact: Interaction) {}
+        open fun onButton(event: ButtonEvent, iact: Interaction) {}
 
         /** Notifies listener of a mouse drag event. A drag event is dispatched when a button event has
          * started an interaction, and always goes to the layer hit by the button event that started
          * the interaction, *not* to the layer intersected by the motion event coordinates.  */
-        fun onDrag(event: MotionEvent, iact: Interaction) {}
+        open fun onDrag(event: MotionEvent, iact: Interaction) {}
 
         /** Notifies listener of a mouse wheel event. If no interaction is in progress, the wheel event
          * is dispatched to the layer intersected by the event coordinates, but if an interaction is
          * in progress, the event goes to the layer hit by the event that started the interaction.  */
-        fun onWheel(event: WheelEvent, iact: Interaction) {}
+        open fun onWheel(event: WheelEvent, iact: Interaction) {}
 
         /** Notifies the listener that the current interaction was canceled. This is dispatched when
          * some other layer that was also privy to this interaction has captured the interaction.  */
-        fun onCancel() {}
+        open fun onCancel() {}
 
         override fun invoke(event: Any) {
             if (event is Interaction)

@@ -85,10 +85,10 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
                 TextTest(this),
                 ScaledTextTest(this),
                 DialogTest(this),
-                LayerClickTest(this)
-//                PointerMouseTouchTest(this),
-//                MouseWheelTest(this),
-//                ShaderTest(this),
+                LayerClickTest(this),
+                PointerMouseTouchTest(this),
+                MouseWheelTest(this),
+                ShaderTest(this)
 //                SoundTest(this),
 //                NetTest(this),
 //                FullscreenTest(this)

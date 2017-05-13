@@ -30,10 +30,10 @@ class Pointer
         open fun onDrag(iact: Interaction) {}
 
         /** Notifies listener of a pointer end event.  */
-        fun onEnd(iact: Interaction) {}
+        open fun onEnd(iact: Interaction) {}
 
         /** Notifies listener of a pointer cancel event.  */
-        fun onCancel(iact: Interaction) {}
+        open fun onCancel(iact: Interaction) {}
 
         override fun invoke(event: Any) {
             if (event is Interaction) {

@@ -1,9 +1,8 @@
 package klay.scene
 
-import java.util.HashMap
-
 import pythagoras.f.Point
 import react.Slot
+import java.util.*
 
 /**
  * Integrates the layer system with touch interactions. To receive touch events on layers, connect
@@ -22,10 +21,10 @@ class Touch : klay.core.Touch() {
         open fun onMove(iact: Interaction) {}
 
         /** Notifies listener of a touch end event.  */
-        fun onEnd(iact: Interaction) {}
+        open fun onEnd(iact: Interaction) {}
 
         /** Notifies listener of a touch cancel event.  */
-        fun onCancel(iact: Interaction) {}
+        open fun onCancel(iact: Interaction) {}
 
         override fun invoke(event: Any) {
             if (event is Interaction) {
