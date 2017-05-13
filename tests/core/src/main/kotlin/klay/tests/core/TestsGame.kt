@@ -91,8 +91,8 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
                 MouseWheelTest(this),
                 ShaderTest(this),
                 SoundTest(this),
-                NetTest(this)
-//                FullscreenTest(this)
+                NetTest(this),
+                FullscreenTest(this)
         )
         // display basic instructions
         log.info("Right click, touch with two fingers, or type ESC to return to test menu.")
