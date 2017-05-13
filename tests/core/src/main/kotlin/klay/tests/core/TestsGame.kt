@@ -58,6 +58,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
     val input = plat.input
     val graphics = plat.graphics
     val assets = plat.assets
+    val storage = plat.storage
     val pointer: Pointer
     val ui: UI
 
@@ -82,9 +83,9 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
                 ClearBackgroundTest(this),
                 PauseResumeTest(this),
                 TextTest(this),
-                ScaledTextTest(this)
-//                DialogTest(this),
-//                LayerClickTest(this),
+                ScaledTextTest(this),
+                DialogTest(this),
+                LayerClickTest(this)
 //                PointerMouseTouchTest(this),
 //                MouseWheelTest(this),
 //                ShaderTest(this),
