@@ -1,7 +1,7 @@
 package klay.core
 
+import klay.core.buffers.ByteBuffer
 import react.RFuture
-import java.nio.ByteBuffer
 
 /**
  * Fetches and returns assets.
