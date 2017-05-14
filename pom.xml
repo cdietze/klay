@@ -20,8 +20,13 @@
         <module>core</module>
         <module>scene</module>
         <module>jvm</module>
-        <!--<module>js</module>-->
         <module>tests</module>
     </modules>
 
+    <profiles>
+        <profile>
+            <id>js</id>
+            <modules><module>js</module></modules>
+        </profile>
+    </profiles>
 </project>
