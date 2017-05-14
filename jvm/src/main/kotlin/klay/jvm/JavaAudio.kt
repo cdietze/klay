@@ -19,7 +19,7 @@ class JavaAudio(private val exec: Exec) : Audio() {
      */
     fun createSound(rsrc: JavaAssets.Resource, music: Boolean): JavaSound {
         val sound = JavaSound(exec)
-        exec.invokeAsync(Runnable {
+        exec.invokeAsync({
             try {
                 var ais = rsrc.openAudioStream()
                 var clip = AudioSystem.getClip()

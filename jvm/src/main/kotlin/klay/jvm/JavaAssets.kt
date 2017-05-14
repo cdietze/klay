@@ -82,7 +82,7 @@ class JavaAssets
 
     override fun getRemoteImage(url: String, width: Int, height: Int): Image {
         val image = JavaImage(plat, true, width, height, url)
-        exec.invokeAsync(Runnable {
+        exec.invokeAsync({
             try {
                 val bmp = ImageIO.read(URL(url))
                 image.succeed(ImageImpl.Data(Scale.ONE, bmp, bmp.width, bmp.height))
