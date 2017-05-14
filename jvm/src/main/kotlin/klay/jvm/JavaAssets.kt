@@ -1,13 +1,13 @@
 package klay.jvm
 
 import klay.core.*
+import klay.core.buffers.ByteBuffer
 import pythagoras.f.MathUtil
 import java.awt.Font
 import java.awt.image.BufferedImage
 import java.io.*
 import java.net.URL
 import java.net.URLDecoder
-import java.nio.ByteBuffer
 import java.util.*
 import javax.imageio.ImageIO
 import javax.sound.sampled.AudioInputStream
@@ -52,7 +52,7 @@ class JavaAssets
      * TODO: remove? get?
      */
     fun addDirectory(dir: File) {
-        val ndirs = Array<File>(directories.size, {directories[it]})
+        val ndirs = Array<File>(directories.size, { directories[it] })
         System.arraycopy(directories, 0, ndirs, 0, directories.size)
         ndirs[ndirs.size - 1] = dir
         directories = ndirs
@@ -186,7 +186,7 @@ class JavaAssets
 
         @Throws(IOException::class)
         open fun readBytes(): ByteBuffer {
-            return ByteBuffer.wrap(toByteArray(openStream()))
+            return JvmByteBuffer(java.nio.ByteBuffer.wrap(toByteArray(openStream())))
         }
 
         @Throws(Exception::class)
@@ -232,9 +232,9 @@ class JavaAssets
         override fun readBytes(): ByteBuffer {
             openStream().use { `in` ->
                 `in`.channel.use { fc ->
-                    val buf = ByteBuffer.allocateDirect(fc.size().toInt()) // no >2GB files
+                    val buf = java.nio.ByteBuffer.allocateDirect(fc.size().toInt()) // no >2GB files
                     fc.read(buf)
-                    return buf
+                    return JvmByteBuffer(buf)
                 }
             }
         }
