@@ -1,7 +1,6 @@
 package klay.core
 
 import react.RPromise
-import java.util.*
 
 /**
  * Handles execution of units of code, both on background threads ([.invokeAsync]) and on the
@@ -11,8 +10,8 @@ abstract class Exec {
 
     /** A default exec implementation which processes [.invokeLater] via the frame tick.  */
     open class Default(protected val plat: Platform) : Exec() {
-        private val pending = ArrayList<Runnable>()
-        private val running = ArrayList<Runnable>()
+        private val pending = ArrayList<() -> Unit>()
+        private val running = ArrayList<() -> Unit>()
 
         init {
             plat.frame.connect { dispatch() }.atPrio(java.lang.Short.MAX_VALUE.toInt())
@@ -21,11 +20,11 @@ abstract class Exec {
         override val isAsyncSupported: Boolean
             get() = false
 
-        override fun invokeAsync(action: Runnable) {
+        override fun invokeAsync(action: () -> Unit) {
             throw UnsupportedOperationException()
         }
 
-        @Synchronized override fun invokeLater(action: Runnable) {
+        @Synchronized override fun invokeLater(action: () -> Unit) {
             pending.add(action)
         }
 
@@ -40,7 +39,7 @@ abstract class Exec {
             while (ii < ll) {
                 val action = running[ii]
                 try {
-                    action.run()
+                    action()
                 } catch (e: Throwable) {
                     plat.reportError("invokeLater Runnable failed: " + action, e)
                 }
@@ -56,7 +55,7 @@ abstract class Exec {
      * listens to the frame signal at a very high priority so that invoke later actions will run
      * before the game's normal callbacks.
      */
-    abstract fun invokeLater(action: Runnable)
+    abstract fun invokeLater(action: () -> Unit)
 
     /**
      * Creates a promise which defers notification of success or failure to the game thread,
@@ -66,11 +65,11 @@ abstract class Exec {
     fun <T> deferredPromise(): RPromise<T> {
         return object : RPromise<T>() {
             override fun succeed(value: T) {
-                invokeLater(Runnable { superSucceed(value) })
+                invokeLater({ superSucceed(value) })
             }
 
             override fun fail(cause: Throwable) {
-                invokeLater(Runnable { superFail(cause) })
+                invokeLater({ superFail(cause) })
             }
 
             private fun superSucceed(value: T) {
@@ -93,7 +92,7 @@ abstract class Exec {
      * Invokes the supplied action on a separate thread.
      * @throws UnsupportedOperationException if the platform does not support async operations.
      */
-    open fun invokeAsync(action: Runnable) {
+    open fun invokeAsync(action: () -> Unit) {
         throw UnsupportedOperationException()
     }
 }

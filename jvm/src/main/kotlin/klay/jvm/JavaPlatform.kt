@@ -62,7 +62,7 @@ abstract class JavaPlatform(val config: JavaPlatform.Config) : Platform() {
         override val isAsyncSupported: Boolean
             get() = true
 
-        override fun invokeAsync(action: Runnable) {
+        override fun invokeAsync(action: () -> Unit) {
             pool.execute(action)
         }
     }

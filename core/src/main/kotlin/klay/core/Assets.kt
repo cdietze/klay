@@ -39,7 +39,7 @@ abstract class Assets(protected val exec: Exec) {
      */
     fun getImage(path: String): Image {
         val image = createImage(true, 0, 0, path)
-        exec.invokeAsync(Runnable {
+        exec.invokeAsync({
             try {
                 image.succeed(load(path))
             } catch (t: Throwable) {
@@ -112,7 +112,7 @@ abstract class Assets(protected val exec: Exec) {
      */
     fun getText(path: String): RFuture<String> {
         val result = exec.deferredPromise<String>()
-        exec.invokeAsync(Runnable {
+        exec.invokeAsync({
             try {
                 result.succeed(getTextSync(path))
             } catch (t: Throwable) {
@@ -143,7 +143,7 @@ abstract class Assets(protected val exec: Exec) {
      */
     fun getBytes(path: String): RFuture<ByteBuffer> {
         val result = exec.deferredPromise<ByteBuffer>()
-        exec.invokeAsync(Runnable {
+        exec.invokeAsync({
             try {
                 result.succeed(getBytesSync(path))
             } catch (t: Throwable) {

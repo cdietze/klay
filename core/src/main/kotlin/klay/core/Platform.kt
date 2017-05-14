@@ -98,7 +98,7 @@ abstract class Platform {
     }
 
     @Deprecated("Use {@link Exec#invokeLater}. ")
-    fun invokeLater(runnable: Runnable) {
+    fun invokeLater(runnable: () -> Unit) {
         exec.invokeLater(runnable)
     }
 
@@ -107,7 +107,7 @@ abstract class Platform {
         get() = exec.isAsyncSupported
 
     @Deprecated("Use {@link Exec#invokeAsync}. ")
-    fun invokeAsync(action: Runnable) {
+    fun invokeAsync(action: () -> Unit) {
         exec.invokeAsync(action)
     }
 

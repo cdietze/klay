@@ -144,7 +144,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
     // defers display of menu by one frame to avoid the right click or touch being processed by the
     // menu when it is displayed
     internal fun displayMenuLater() {
-        plat.exec.invokeLater(Runnable { displayMenu() })
+        plat.exec.invokeLater({ displayMenu() })
     }
 
     internal fun displayMenu() {

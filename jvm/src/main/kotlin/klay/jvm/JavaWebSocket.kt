@@ -23,23 +23,23 @@ class JavaWebSocket(exec: Exec, uri: String, listener: Net.WebSocket.Listener) :
 
         socket = object : WebSocketClient(juri, Draft_17()) {
             override fun onMessage(buffer: ByteBuffer) {
-                exec.invokeLater(Runnable { listener.onDataMessage(buffer) })
+                exec.invokeLater({ listener.onDataMessage(buffer) })
             }
 
             override fun onMessage(msg: String) {
-                exec.invokeLater(Runnable { listener.onTextMessage(msg) })
+                exec.invokeLater({ listener.onTextMessage(msg) })
             }
 
             override fun onError(e: Exception) {
-                exec.invokeLater(Runnable { listener.onError(e.message!!) })
+                exec.invokeLater({ listener.onError(e.message!!) })
             }
 
             override fun onClose(code: Int, reason: String, remote: Boolean) {
-                exec.invokeLater(Runnable { listener.onClose() })
+                exec.invokeLater({ listener.onClose() })
             }
 
             override fun onOpen(handshake: ServerHandshake) {
-                exec.invokeLater(Runnable { listener.onOpen() })
+                exec.invokeLater({ listener.onOpen() })
             }
         }
         socket.connect()
