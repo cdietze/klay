@@ -15,7 +15,7 @@ abstract class GLBatch {
      * * default frame buffer (the screen), and false when rendering to textures.
      */
     open fun begin(fbufWidth: Float, fbufHeight: Float, flip: Boolean) {
-        if (begun) throw IllegalStateException(javaClass.simpleName + " mismatched begin()")
+        if (begun) throw IllegalStateException(this::class.simpleName + " mismatched begin()")
         begun = true
     }
 
@@ -27,7 +27,7 @@ abstract class GLBatch {
     open fun flush() {
         if (!begun)
             throw IllegalStateException(
-                    javaClass.simpleName + " flush() without begin()")
+                    this::class.simpleName + " flush() without begin()")
     }
 
     /**
@@ -35,7 +35,7 @@ abstract class GLBatch {
      * default implementation calls [.flush] and marks this batch as inactive.
      */
     open fun end() {
-        if (!begun) throw IllegalStateException(javaClass.simpleName + " mismatched end()")
+        if (!begun) throw IllegalStateException(this::class.simpleName + " mismatched end()")
         try {
             flush()
         } finally {
@@ -50,6 +50,6 @@ abstract class GLBatch {
     open fun close() {
         if (begun)
             throw IllegalStateException(
-                    javaClass.simpleName + " close() without end()")
+                    this::class.simpleName + " close() without end()")
     }
 }
