@@ -8,7 +8,7 @@ import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.geom.AffineTransform
 
-internal class JavaCanvasState @JvmOverloads constructor(var fillColor: Int = 0xff000000.toInt(), var strokeColor: Int = 0xffffffff.toInt(), var fillGradient: JavaGradient? = null, var fillPattern: JavaPattern? = null,
+internal class JavaCanvasState constructor(var fillColor: Int = 0xff000000.toInt(), var strokeColor: Int = 0xffffffff.toInt(), var fillGradient: JavaGradient? = null, var fillPattern: JavaPattern? = null,
                                                          var transform: AffineTransform = AffineTransform(), var strokeWidth: Float = 1.0f, var lineCap: LineCap = LineCap.SQUARE, var lineJoin: LineJoin = LineJoin.MITER,
                                                          var miterLimit: Float = 10.0f, var clipper: Clipper = JavaCanvasState.NOCLIP, var composite: Composite = Composite.SRC_OVER, var alpha: Float = 1f) {
 

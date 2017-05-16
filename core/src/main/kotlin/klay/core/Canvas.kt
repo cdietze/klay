@@ -131,7 +131,7 @@ abstract class Canvas(val gfx: Graphics,
     /**
      * Draws a scaled image at the specified location `(x, y)` size `(w x h)`.
      */
-    @JvmOverloads fun draw(image: Drawable, x: Float, y: Float, w: Float = image.width, h: Float = image.height): Canvas {
+    fun draw(image: Drawable, x: Float, y: Float, w: Float = image.width, h: Float = image.height): Canvas {
         image.draw(gc(), x, y, w, h)
         isDirty = true
         return this
@@ -334,7 +334,7 @@ abstract class Canvas(val gfx: Graphics,
     /** A helper function for creating a texture from this canvas's image, and then disposing this
      * canvas. This is useful for situations where you create a canvas, draw something in it, turn
      * it into a texture and then never use the canvas again.  */
-    @JvmOverloads fun toTexture(config: Texture.Config = Texture.Config.DEFAULT): Texture {
+    fun toTexture(config: Texture.Config = Texture.Config.DEFAULT): Texture {
         try {
             return image.createTexture(config)
         } finally {

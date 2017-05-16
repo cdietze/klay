@@ -5,7 +5,7 @@ package klay.core
  */
 class TextWrap
 /** Creates a text wrap config with the specified width and indent.  */
-@JvmOverloads constructor(
+constructor(
         /** The width at which the text is wrapped.  */
         val width: Float,
         /** An indent applied to the first line of text.  */

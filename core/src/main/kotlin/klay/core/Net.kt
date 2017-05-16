@@ -68,7 +68,7 @@ abstract class Net {
          * "`contentType`; charset=UTF-8". The supplied content type should probably be something
          * like `text/plain` or `text/xml` or `application/json`. This converts the
          * request to a POST.  */
-        @JvmOverloads fun setPayload(payload: String, contentType: String = "text/plain"): Builder {
+        fun setPayload(payload: String, contentType: String = "text/plain"): Builder {
             this.payloadString = payload
             this.contentType = contentType
             return this
@@ -76,7 +76,7 @@ abstract class Net {
 
         /** Configures the payload of this request as raw bytes with the specified content type. This
          * converts the request to a POST.  */
-        @JvmOverloads fun setPayload(payload: ByteArray, contentType: String = "application/octet-stream"): Builder {
+        fun setPayload(payload: ByteArray, contentType: String = "application/octet-stream"): Builder {
             this.payloadBytes = payload
             this.contentType = contentType
             return this
