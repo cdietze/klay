@@ -101,7 +101,6 @@ abstract class Assets(protected val exec: Exec) {
      * @throws UnsupportedOperationException on platforms that cannot support synchronous asset
      * * loading (e.g. HTML5 and Flash).
      */
-    @Throws(Exception::class)
     abstract fun getTextSync(path: String): String
 
     /**
@@ -132,7 +131,6 @@ abstract class Assets(protected val exec: Exec) {
      * @throws UnsupportedOperationException on platforms that cannot support synchronous asset
      * * loading (e.g. HTML5 and Flash).
      */
-    @Throws(Exception::class)
     abstract fun getBytesSync(path: String): ByteBuffer
 
     /**
@@ -156,7 +154,6 @@ abstract class Assets(protected val exec: Exec) {
     /**
      * Synchronously loads image data at `path`.
      */
-    @Throws(Exception::class)
     protected abstract fun load(path: String): ImageImpl.Data
 
     /**

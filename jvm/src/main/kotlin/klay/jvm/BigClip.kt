@@ -82,7 +82,6 @@ internal class BigClip : Clip, LineListener {
      * same AudioFormat as the original Clip.
      * @param clip Clip The Clip used to configure the BigClip.
      */
-    @Throws(LineUnavailableException::class)
     constructor(clip: Clip) {
         dataLine = AudioSystem.getSourceDataLine(clip.format)
     }
@@ -171,7 +170,6 @@ internal class BigClip : Clip, LineListener {
 
     private var _format: AudioFormat? = null
 
-    @Throws(IOException::class, LineUnavailableException::class)
     override fun open(stream: AudioInputStream) {
 
         val is1: AudioInputStream
@@ -211,7 +209,6 @@ internal class BigClip : Clip, LineListener {
         inputStream = ByteArrayInputStream(audioData!!)
     }
 
-    @Throws(LineUnavailableException::class)
     override fun open(format: AudioFormat, data: ByteArray, offset: Int, bufferSize: Int) {
         val input = ByteArray(bufferSize)
         for (ii in input.indices) {
@@ -412,7 +409,6 @@ internal class BigClip : Clip, LineListener {
         dataLine!!.close()
     }
 
-    @Throws(LineUnavailableException::class)
     override fun open() {
         throw IllegalArgumentException("illegal call to open() in interface Clip")
     }

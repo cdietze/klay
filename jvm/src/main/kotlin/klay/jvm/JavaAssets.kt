@@ -5,7 +5,10 @@ import klay.core.buffers.ByteBuffer
 import pythagoras.f.MathUtil
 import java.awt.Font
 import java.awt.image.BufferedImage
-import java.io.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.InputStream
 import java.net.URL
 import java.net.URLDecoder
 import java.util.*
@@ -75,7 +78,6 @@ class JavaAssets
      * *
      * @throws Exception if an error occurs loading or decoding the font.
      */
-    @Throws(Exception::class)
     fun getFont(path: String): Font {
         return requireResource(path).createFont()
     }
@@ -101,12 +103,10 @@ class JavaAssets
         return getSound(path, true)
     }
 
-    @Throws(Exception::class)
     override fun getTextSync(path: String): String {
         return requireResource(path).readString()
     }
 
-    @Throws(Exception::class)
     override fun getBytesSync(path: String): ByteBuffer {
         return requireResource(path).readBytes()
     }
@@ -135,7 +135,6 @@ class JavaAssets
      * loader checked. If not found, then the extra directories, if any, are checked, in order. If
      * the file is not found in any of the extra directories either, then an exception is thrown.
      */
-    @Throws(IOException::class)
     protected fun requireResource(path: String): Resource {
         val url = this::class.java.classLoader.getResource(this.pathPrefix + path)
         if (url != null) {
@@ -168,67 +167,54 @@ class JavaAssets
     }
 
     abstract class Resource {
-        @Throws(IOException::class)
         abstract fun readImage(): BufferedImage
 
-        @Throws(IOException::class)
         abstract fun openStream(): InputStream
 
-        @Throws(Exception::class)
         open fun openAudioStream(): AudioInputStream {
             return AudioSystem.getAudioInputStream(openStream())
         }
 
-        @Throws(Exception::class)
         open fun createFont(): Font {
             return Font.createFont(Font.TRUETYPE_FONT, openStream())
         }
 
-        @Throws(IOException::class)
         open fun readBytes(): ByteBuffer {
             return JvmByteBuffer(java.nio.ByteBuffer.wrap(toByteArray(openStream())))
         }
 
-        @Throws(Exception::class)
         fun readString(): String {
             return String(toByteArray(openStream()))
         }
     }
 
     protected class URLResource(val url: URL) : Resource() {
-        @Throws(IOException::class)
         override fun openStream(): InputStream {
             return url.openStream()
         }
 
-        @Throws(IOException::class)
         override fun readImage(): BufferedImage {
             return ImageIO.read(url)
         }
     }
 
     protected class FileResource(val file: File) : Resource() {
-        @Throws(IOException::class)
         override fun openStream(): FileInputStream {
             return FileInputStream(file)
         }
 
-        @Throws(IOException::class)
         override fun readImage(): BufferedImage {
             return ImageIO.read(file)
         }
 
-        @Throws(Exception::class)
         override fun openAudioStream(): AudioInputStream {
             return AudioSystem.getAudioInputStream(file)
         }
 
-        @Throws(Exception::class)
         override fun createFont(): Font {
             return Font.createFont(Font.TRUETYPE_FONT, file)
         }
 
-        @Throws(IOException::class)
         override fun readBytes(): ByteBuffer {
             openStream().use { `in` ->
                 `in`.channel.use { fc ->
@@ -240,7 +226,6 @@ class JavaAssets
         }
     }
 
-    @Throws(Exception::class)
     override fun load(path: String): ImageImpl.Data {
         var error: Exception? = null
         for (rsrc in assetScale().getScaledResources(path)) {
@@ -277,7 +262,6 @@ class JavaAssets
 
     companion object {
 
-        @Throws(IOException::class)
         internal fun toByteArray(`in`: InputStream): ByteArray {
             try {
                 var buffer = ByteArray(512)
