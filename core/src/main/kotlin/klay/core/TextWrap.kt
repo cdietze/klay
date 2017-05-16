@@ -28,7 +28,7 @@ constructor(
 
         /** An instance that indicates that we should only wrap on manual line breaks and not at any
          * specific width.  */
-        val MANUAL = TextWrap(java.lang.Float.MAX_VALUE)
+        val MANUAL = TextWrap(Float.MAX_VALUE)
     }
 }
 /** Creates a text wrap config with the specified width and no indent.  */
