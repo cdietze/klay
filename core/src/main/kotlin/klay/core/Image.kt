@@ -31,26 +31,26 @@ abstract class Image : TileSource, Canvas.Drawable {
      * 0 until loading is complete. See [.state].
      */
     override val width: Float
-        get() = scale.invScaled(pixelWidth().toFloat())
+        get() = scale.invScaled(pixelWidth.toFloat())
 
     /**
      * This image's height in display units. If this image is loaded asynchrously, this will return
      * 0 until loading is complete. See [.state].
      */
     override val height: Float
-        get() = scale.invScaled(pixelHeight().toFloat())
+        get() = scale.invScaled(pixelHeight.toFloat())
 
     /**
      * Returns the width of this image in physical pixels. If this image is loaded asynchrously,
      * this will return 0 until loading is complete. See [.state].
      */
-    abstract fun pixelWidth(): Int
+    abstract val pixelWidth: Int
 
     /**
      * Returns the height of this image in physical pixels. If this image is loaded asynchrously,
      * this will return 0 until loading is complete. See [.state].
      */
-    abstract fun pixelHeight(): Int
+    abstract val pixelHeight: Int
 
     /**
      * Extracts pixel data from a rectangular area of this image. This method may perform poorly, in
@@ -123,8 +123,8 @@ abstract class Image : TileSource, Canvas.Drawable {
      * is [Texture.close]d, a subsequent call to this method will create a new default texture.
      */
     fun texture(): Texture {
-        if (texture == null || texture!!.disposed()) texture = createTexture(texconf)
-        return texture!!
+        if (_texture == null || _texture!!.disposed()) _texture = createTexture(texconf)
+        return _texture!!
     }
 
     /**
@@ -133,11 +133,11 @@ abstract class Image : TileSource, Canvas.Drawable {
      * necessary if you want to update the default texture for an image associated with a [ ], or if you have used [.setRgb] to change the contents of this image.
      */
     fun updateTexture(): Texture {
-        if (texture == null || texture!!.disposed())
-            texture = createTexture(texconf)
+        if (_texture == null || _texture!!.disposed())
+            _texture = createTexture(texconf)
         else
-            texture!!.update(this)
-        return texture!!
+            _texture!!.update(this)
+        return _texture!!
     }
 
     /**
@@ -159,8 +159,8 @@ abstract class Image : TileSource, Canvas.Drawable {
             throw IllegalStateException(
                     "Cannot create texture from unready image: " + this)
 
-        val texWidth = config.toTexWidth(pixelWidth())
-        val texHeight = config.toTexHeight(pixelHeight())
+        val texWidth = config.toTexWidth(pixelWidth)
+        val texHeight = config.toTexHeight(pixelHeight)
         if (texWidth <= 0 || texHeight <= 0)
             throw IllegalArgumentException(
                     "Invalid texture size: " + texWidth + "x" + texHeight + " from: " + this)
@@ -225,7 +225,7 @@ abstract class Image : TileSource, Canvas.Drawable {
 
     protected val gfx: Graphics
     protected var texconf: Texture.Config = Texture.Config.DEFAULT
-    protected var texture: Texture? = null
+    protected var _texture: Texture? = null
 
     protected constructor(gfx: Graphics, state: RFuture<Image>) {
         this.gfx = gfx

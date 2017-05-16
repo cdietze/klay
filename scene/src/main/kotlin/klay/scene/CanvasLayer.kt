@@ -70,8 +70,8 @@ class CanvasLayer : klay.scene.ImageLayer {
         val tex = tile() as Texture?
         val image = canvas!!.image
         // if our texture is already the right size, just update it
-        if (tex != null && tex.pixelWidth == image.pixelWidth() &&
-                tex.pixelHeight == image.pixelHeight())
+        if (tex != null && tex.pixelWidth == image.pixelWidth &&
+                tex.pixelHeight == image.pixelHeight)
             tex.update(image)
         else
             super.setTile(canvas!!.image.createTexture(Texture.Config.DEFAULT))// otherwise we need to create a new texture (setTexture will unreference the old texture which

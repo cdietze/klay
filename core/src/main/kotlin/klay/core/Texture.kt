@@ -99,8 +99,8 @@ class Texture(// needed to access GL20 and to queue our destruction on finalize
         // like creating a second texture, a frame buffer to render into it, sending a GPU batch and
         // doing all the blah blah blah is going to be more expensive overall
         if (config.repeatX || config.repeatY || config.mipmaps) {
-            val pixWidth = image.pixelWidth()
-            val pixHeight = image.pixelHeight()
+            val pixWidth = image.pixelWidth
+            val pixHeight = image.pixelHeight
             val potWidth = config.toTexWidth(pixWidth)
             val potHeight = config.toTexWidth(pixHeight)
             if (potWidth != pixWidth || potHeight != pixHeight) {
