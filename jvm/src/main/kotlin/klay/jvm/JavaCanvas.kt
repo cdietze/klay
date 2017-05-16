@@ -71,7 +71,7 @@ internal class JavaCanvas(gfx: Graphics, image: JavaImage) : Canvas(gfx, image) 
         val cy = MathUtil.ifloor(y)
         val cwidth = MathUtil.iceil(width)
         val cheight = MathUtil.iceil(height)
-        currentState().clipper = object:JavaCanvasState.Clipper {
+        currentState().clipper = object : JavaCanvasState.Clipper {
             override fun setClip(gfx: Graphics2D) {
                 gfx.setClip(cx, cy, cwidth, cheight)
             }

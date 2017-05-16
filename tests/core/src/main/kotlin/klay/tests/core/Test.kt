@@ -29,7 +29,7 @@ abstract class Test(protected val game: TestsGame, val name: String, val descrip
     }
 
     protected fun addTest(lx: Float, ly: Float, layer: Layer, lwidth: Float, lheight: Float,
-                                        descrip: String, twidth: Float = lwidth): Float {
+                          descrip: String, twidth: Float = lwidth): Float {
         game.rootLayer.addAt(layer, lx + (twidth - lwidth) / 2, ly)
         return addDescrip(descrip, lx, ly + lheight + 5f, twidth)
     }
