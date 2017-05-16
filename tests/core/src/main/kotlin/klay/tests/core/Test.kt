@@ -24,11 +24,11 @@ abstract class Test(protected val game: TestsGame, val name: String, val descrip
         return true
     }
 
-    @JvmOverloads protected fun addTest(lx: Float, ly: Float, layer: Layer, descrip: String, twidth: Float = layer.width()): Float {
+    protected fun addTest(lx: Float, ly: Float, layer: Layer, descrip: String, twidth: Float = layer.width()): Float {
         return addTest(lx, ly, layer, layer.width(), layer.height(), descrip, twidth)
     }
 
-    @JvmOverloads protected fun addTest(lx: Float, ly: Float, layer: Layer, lwidth: Float, lheight: Float,
+    protected fun addTest(lx: Float, ly: Float, layer: Layer, lwidth: Float, lheight: Float,
                                         descrip: String, twidth: Float = lwidth): Float {
         game.rootLayer.addAt(layer, lx + (twidth - lwidth) / 2, ly)
         return addDescrip(descrip, lx, ly + lheight + 5f, twidth)

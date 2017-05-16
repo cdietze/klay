@@ -257,7 +257,7 @@ open class Surface
 
     /** Clears the entire surface to the specified color.
      * The channels are values in the range `[0,1]`.  */
-    @JvmOverloads fun clear(red: Float = 0f, green: Float = 0f, blue: Float = 0f, alpha: Float = 0f): Surface {
+    fun clear(red: Float = 0f, green: Float = 0f, blue: Float = 0f, alpha: Float = 0f): Surface {
         batch!!.gl.glClearColor(red, green, blue, alpha)
         batch!!.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         return this
@@ -266,7 +266,7 @@ open class Surface
     /**
      * Draws a tile at the specified location `(x, y)` and size `(w x h)`.
      */
-    @JvmOverloads fun draw(tile: Tile, x: Float, y: Float, w: Float = tile.width(), h: Float = tile.height()): Surface {
+    fun draw(tile: Tile, x: Float, y: Float, w: Float = tile.width(), h: Float = tile.height()): Surface {
         if (!checkIntersection || intersects(x, y, w, h)) {
             tile.addToBatch(batch!!, tint, tx(), x, y, w, h)
         }

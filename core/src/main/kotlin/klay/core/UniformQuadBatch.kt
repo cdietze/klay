@@ -17,7 +17,7 @@ import klay.core.GL20.Companion.GL_UNSIGNED_SHORT
  */
 class UniformQuadBatch
 /** Creates a uniform quad batch with the supplied custom shader program builder.  */
-@JvmOverloads constructor(gl: GL20, source: UniformQuadBatch.Source = UniformQuadBatch.Source()) : QuadBatch(gl) {
+constructor(gl: GL20, source: UniformQuadBatch.Source = UniformQuadBatch.Source()) : QuadBatch(gl) {
 
     /** The source for the stock quad batch shader program.  */
     class Source : TexturedBatch.Source() {

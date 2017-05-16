@@ -67,7 +67,7 @@ abstract class Interaction<E : Event.XY>(
      * events will go only to the current layer, or that layer and its parents, or that layer and
      * its children. Other layers in the interaction will receive a cancellation event and nothing
      * further.  */
-    @JvmOverloads fun capture(mode: CaptureMode = CaptureMode.ONLY) {
+    fun capture(mode: CaptureMode = CaptureMode.ONLY) {
         assert(dispatchLayer != null)
         if (canceled) throw IllegalStateException("Cannot capture canceled interaction.")
         if (capturingLayer !== dispatchLayer && captured())

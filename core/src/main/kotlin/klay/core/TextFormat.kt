@@ -5,7 +5,7 @@ package klay.core
  */
 class TextFormat
 /** Creates a configured text format instance.  */
-@JvmOverloads constructor(
+constructor(
         /** The font in which to render the text (null indicates that the default font is used).  */
         val font: Font? = null,
         /** Whether or not the text should be antialiased. Defaults to true.

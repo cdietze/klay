@@ -15,7 +15,7 @@ import pythagoras.f.AffineTransform
  */
 open class TriangleBatch
 /** Creates a triangle batch with the supplied custom shader program.  */
-@JvmOverloads constructor(gl: GL20, source: TriangleBatch.Source = TriangleBatch.Source()) : QuadBatch(gl) {
+constructor(gl: GL20, source: TriangleBatch.Source = TriangleBatch.Source()) : QuadBatch(gl) {
 
     /** The source for the stock triangle batch shader program.  */
     open class Source : TexturedBatch.Source() {

@@ -6,7 +6,7 @@ package klay.core
 open class Touch {
 
     /** Contains information on a touch event.  */
-    class Event @JvmOverloads constructor(flags: Int, time: Double, x: Float, y: Float,
+    class Event constructor(flags: Int, time: Double, x: Float, y: Float,
                                           /** Whether this event represents a start, move, etc.  */
                                           val kind: Event.Kind,
                                           /** The id of the touch associated with this event.  */

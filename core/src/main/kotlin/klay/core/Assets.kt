@@ -55,7 +55,7 @@ abstract class Assets(protected val exec: Exec) {
      * *Note:* on non-HTML platforms, this spawns a new thread for each loaded image. Thus,
      * attempts to load large numbers of remote images simultaneously may result in poor performance.
      */
-    @JvmOverloads open fun getRemoteImage(url: String, width: Int = 0, height: Int = 0): Image {
+    open fun getRemoteImage(url: String, width: Int = 0, height: Int = 0): Image {
         val error = Exception(
                 "Remote image loading not yet supported: " + url + "@" + width + "x" + height)
         val image = createImage(false, width, height, url)
