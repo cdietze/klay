@@ -98,17 +98,14 @@ class JavaStorage(private val log: Log, storageFileName: String) : Storage {
             _values.remove(key)
         }
 
-        @Throws(BackingStoreException::class)
         override fun removeNodeSpi() {
             throw BackingStoreException("Not implemented")
         }
 
-        @Throws(BackingStoreException::class)
         override fun keysSpi(): Array<String> {
             return _values.keys.toTypedArray()
         }
 
-        @Throws(BackingStoreException::class)
         override fun childrenNamesSpi(): Array<String> {
             throw BackingStoreException("Not implemented")
         }
@@ -117,12 +114,10 @@ class JavaStorage(private val log: Log, storageFileName: String) : Storage {
             throw RuntimeException("Not implemented")
         }
 
-        @Throws(BackingStoreException::class)
         override fun syncSpi() {
             throw BackingStoreException("Not implemented")
         }
 
-        @Throws(BackingStoreException::class)
         override fun flushSpi() {
             throw BackingStoreException("Not implemented")
         }
