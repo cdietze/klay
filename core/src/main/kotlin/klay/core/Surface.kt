@@ -147,8 +147,8 @@ open class Surface
 
     /** Rotates the current transformation matrix by the specified angle in radians.  */
     fun rotate(angle: Float): Surface {
-        val sr = Math.sin(angle.toDouble()).toFloat()
-        val cr = Math.cos(angle.toDouble()).toFloat()
+        val sr = MathUtil.sin(angle)
+        val cr = MathUtil.cos(angle)
         transform(cr, sr, -sr, cr, 0f, 0f)
         return this
     }
@@ -392,9 +392,9 @@ open class Surface
         else {
             // intersect current with previous
             val pr = scissors[scissorDepth - 1]
-            r.setLocation(Math.max(pr.x, x), Math.max(pr.y, y))
-            r.setSize(Math.max(Math.min(pr.maxX(), x + width - 1) - r.x, 0),
-                    Math.max(Math.min(pr.maxY(), y + height - 1) - r.y, 0))
+            r.setLocation(maxOf(pr.x, x), maxOf(pr.y, y))
+            r.setSize(maxOf(minOf(pr.maxX(), x + width - 1) - r.x, 0),
+                    maxOf(minOf(pr.maxY(), y + height - 1) - r.y, 0))
         }
         scissorDepth++
         return r
