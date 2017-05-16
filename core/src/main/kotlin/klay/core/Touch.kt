@@ -7,16 +7,16 @@ open class Touch {
 
     /** Contains information on a touch event.  */
     class Event constructor(flags: Int, time: Double, x: Float, y: Float,
-                                          /** Whether this event represents a start, move, etc.  */
-                                          val kind: Event.Kind,
-                                          /** The id of the touch associated with this event.  */
-                                          val id: Int,
-                                          /** The pressure of the touch.  */
-                                          val pressure: Float = -1f,
+                            /** Whether this event represents a start, move, etc.  */
+                            val kind: Event.Kind,
+                            /** The id of the touch associated with this event.  */
+                            val id: Int,
+                            /** The pressure of the touch.  */
+                            val pressure: Float = -1f,
             // TODO(mdb): provide guidance as to range in the docs? 0 to 1?
 
-                                          /** The size of the touch.  */
-                                          val size: Float = -1f) : klay.core.Event.XY(flags, time, x, y) {
+                            /** The size of the touch.  */
+                            val size: Float = -1f) : klay.core.Event.XY(flags, time, x, y) {
 
         /** Enumerates the different kinds of touch event.  */
         enum class Kind private constructor(
