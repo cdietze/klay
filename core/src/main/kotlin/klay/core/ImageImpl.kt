@@ -13,8 +13,10 @@ abstract class ImageImpl : Image {
 
     protected val source: String
     override var scale: Scale
-    protected var pixelWidth: Int = 0
-    protected var pixelHeight: Int = 0
+    override var pixelWidth: Int = 0
+        protected set
+    override var pixelHeight: Int = 0
+        protected set
 
     /** Notifies this image that its implementation bitmap is available.
      * This can be called from any thread.  */
@@ -35,14 +37,6 @@ abstract class ImageImpl : Image {
         if (pixelHeight == 0) pixelHeight = 50
         setBitmap(createErrorBitmap(pixelWidth, pixelHeight))
         (state as RPromise<Image>).fail(error) // state is a deferred promise
-    }
-
-    override fun pixelWidth(): Int {
-        return pixelWidth
-    }
-
-    override fun pixelHeight(): Int {
-        return pixelHeight
     }
 
     protected constructor(gfx: Graphics, scale: Scale, pixelWidth: Int, pixelHeight: Int, source: String,
