@@ -8,8 +8,11 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
+import java.nio.charset.Charset
 
 open class JavaNet(private val exec: Exec) : Net() {
+
+    override fun encodeString(bytes: ByteArray, encoding: String): String = String(bytes, Charset.forName(encoding))
 
     override fun createWebSocket(url: String, listener: WebSocket.Listener): WebSocket {
         return JavaWebSocket(exec, url, listener)
@@ -47,7 +50,7 @@ open class JavaNet(private val exec: Exec) : Net() {
                     var encoding: String? = conn.contentEncoding
                     if (encoding == null) encoding = UTF8
 
-                    result.succeed(object : Response.Binary(code, payload, encoding!!) {
+                    result.succeed(object : BinaryResponse(code, payload, encoding!!) {
                         override fun extractHeaders(): Map<String, List<String>> {
                             // conn.headerFields actually contains one entry with a null key
                             // and the repsonse status as value, so filter that one out
