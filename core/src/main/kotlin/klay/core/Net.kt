@@ -1,10 +1,7 @@
 package klay.core
 
+import klay.core.buffers.ByteBuffer
 import react.RFuture
-import java.io.IOException
-import java.io.UnsupportedEncodingException
-import java.nio.ByteBuffer
-import java.nio.charset.Charset
 import java.util.*
 
 /**
@@ -46,10 +43,10 @@ abstract class Net {
     /** Used to report HTTP error responses by [.get] and [.post].  */
     class HttpException(
             /** The HTTP error code reported by the server.  */
-            val errorCode: Int, message: String) : IOException(message) {
+            val errorCode: Int, message: String) : Exception(message) {
 
         override fun toString(): String {
-            val msg = localizedMessage
+            val msg = message
             return "HTTP " + errorCode + if (msg == null) "" else ": " + msg
         }
     }
@@ -60,17 +57,17 @@ abstract class Net {
     /** Builds a request and allows it to be configured and executed.  */
     inner class Builder(val url: String) {
         val headers: MutableList<Header> = ArrayList()
-        var contentType = "text/plain"
+        var _contentType = "text/plain"
         var payloadString: String? = null
         var payloadBytes: ByteArray? = null
 
         /** Configures the payload of this request as a UTF-8 string with content type configured as
-         * "`contentType`; charset=UTF-8". The supplied content type should probably be something
+         * "`_contentType`; charset=UTF-8". The supplied content type should probably be something
          * like `text/plain` or `text/xml` or `application/json`. This converts the
          * request to a POST.  */
         fun setPayload(payload: String, contentType: String = "text/plain"): Builder {
             this.payloadString = payload
-            this.contentType = contentType
+            this._contentType = contentType
             return this
         }
 
@@ -78,7 +75,7 @@ abstract class Net {
          * converts the request to a POST.  */
         fun setPayload(payload: ByteArray, contentType: String = "application/octet-stream"): Builder {
             this.payloadBytes = payload
-            this.contentType = contentType
+            this._contentType = contentType
             return this
         }
 
@@ -105,7 +102,7 @@ abstract class Net {
         }
 
         fun contentType(): String {
-            return contentType + if (payloadString != null) "; charset=" + UTF8 else ""
+            return _contentType + if (payloadString != null) "; charset=" + UTF8 else ""
         }
 
         init {
@@ -120,23 +117,6 @@ abstract class Net {
     /** Communicates an HTTP response to the caller.  */
     abstract class Response protected constructor(private val responseCode: Int) {
         private var headersMap: Map<String, List<String>>? = null
-
-        /** Used to deliver binary response data.  */
-        abstract class Binary(responseCode: Int, private val payload: ByteArray, private val encoding: String) : Response(responseCode) {
-
-            override fun payloadString(): String {
-                try {
-                    return String(payload, Charset.forName(encoding))
-                } catch (uee: UnsupportedEncodingException) {
-                    return uee.toString()
-                }
-
-            }
-
-            override fun payload(): ByteArray {
-                return payload
-            }
-        }
 
         /** Returns the HTTP response code provided by the server.  */
         fun responseCode(): Int {
@@ -184,6 +164,23 @@ abstract class Net {
             return headersMap!!
         }
     }
+
+    /** Used to deliver binary response data.  */
+    abstract inner class BinaryResponse(responseCode: Int, private val payload: ByteArray, private val encoding: String) : Response(responseCode) {
+
+        override fun payloadString(): String {
+            return encodeString(payload, encoding)
+        }
+
+        override fun payload(): ByteArray {
+            return payload
+        }
+    }
+
+    /**
+     * Converts the given [bytes] into a [String] using the specified [encoding].
+     */
+    protected abstract fun encodeString(bytes: ByteArray, encoding: String): String
 
     /**
      * Create a websocket with given URL and listener.

@@ -4,10 +4,10 @@ import klay.core.Keyboard
 import klay.core.Net
 import klay.core.Platform
 import klay.core.TextBlock
+import klay.core.buffers.ByteBuffer
 import klay.scene.ImageLayer
 import react.RFuture
 import react.Slot
-import java.nio.ByteBuffer
 
 class NetTest(game: TestsGame) : Test(game, "Net", "Tests network support.") {
 

@@ -23,7 +23,7 @@ class JavaWebSocket(exec: Exec, uri: String, listener: Net.WebSocket.Listener) :
 
         socket = object : WebSocketClient(juri, Draft_17()) {
             override fun onMessage(buffer: ByteBuffer) {
-                exec.invokeLater({ listener.onDataMessage(buffer) })
+                exec.invokeLater({ listener.onDataMessage(JvmByteBuffer(buffer)) })
             }
 
             override fun onMessage(msg: String) {
@@ -58,12 +58,11 @@ class JavaWebSocket(exec: Exec, uri: String, listener: Net.WebSocket.Listener) :
 
     }
 
-    override fun send(data: ByteBuffer) {
+    override fun send(data: klay.core.buffers.ByteBuffer) {
         try {
-            socket.getConnection().send(data)
+            socket.getConnection().send((data as JvmByteBuffer).nioBuffer)
         } catch (e: Throwable) {
             throw RuntimeException(e)
         }
-
     }
 }
