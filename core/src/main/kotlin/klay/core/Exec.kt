@@ -14,7 +14,7 @@ abstract class Exec {
         private val running = ArrayList<() -> Unit>()
 
         init {
-            plat.frame.connect { dispatch() }.atPrio(java.lang.Short.MAX_VALUE.toInt())
+            plat.frame.connect { dispatch() }.atPrio(Short.MAX_VALUE.toInt())
         }
 
         override val isAsyncSupported: Boolean
