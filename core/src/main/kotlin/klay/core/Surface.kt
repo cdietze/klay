@@ -4,7 +4,6 @@ import pythagoras.f.*
 import pythagoras.f.Vector
 import pythagoras.i.Rectangle
 import react.Closeable
-import java.util.*
 
 /**
  * A surface provides a simple drawing API to a GPU accelerated render target. This can be either
