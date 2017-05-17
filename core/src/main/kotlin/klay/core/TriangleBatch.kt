@@ -413,6 +413,25 @@ constructor(gl: GL20, source: TriangleBatch.Source = TriangleBatch.Source()) : Q
         elements = ShortArray(newElems)
     }
 
+    protected fun add(into: FloatArray, offset: Int, stables: FloatArray): Int {
+        gl.bufs.arrayCopy(stables, 0, into, offset, stables.size)
+        return offset + stables.size
+    }
+
+    protected fun add(into: FloatArray, offset: Int, stables: FloatArray, soff: Int, slen: Int): Int {
+        gl.bufs.arrayCopy(stables, soff, into, offset, slen)
+        return offset + slen
+    }
+
+    protected fun add(into: FloatArray, offset: Int, x: Float, y: Float, sx: Float, sy: Float): Int {
+        var offset = offset
+        into[offset++] = x
+        into[offset++] = y
+        into[offset++] = sx
+        into[offset++] = sy
+        return offset
+    }
+
     companion object {
 
         private val START_VERTS = 16 * 4
@@ -420,25 +439,6 @@ constructor(gl: GL20, source: TriangleBatch.Source = TriangleBatch.Source()) : Q
         private val START_ELEMS = 6 * START_VERTS / 4
         private val EXPAND_ELEMS = 6 * EXPAND_VERTS / 4
         private val FLOAT_SIZE_BYTES = 4
-
-        protected fun add(into: FloatArray, offset: Int, stables: FloatArray): Int {
-            System.arraycopy(stables, 0, into, offset, stables.size)
-            return offset + stables.size
-        }
-
-        protected fun add(into: FloatArray, offset: Int, stables: FloatArray, soff: Int, slen: Int): Int {
-            System.arraycopy(stables, soff, into, offset, slen)
-            return offset + slen
-        }
-
-        protected fun add(into: FloatArray, offset: Int, x: Float, y: Float, sx: Float, sy: Float): Int {
-            var offset = offset
-            into[offset++] = x
-            into[offset++] = y
-            into[offset++] = sx
-            into[offset++] = sy
-            return offset
-        }
 
         protected val QUAD_INDICES = intArrayOf(0, 1, 2, 1, 3, 2)
     }

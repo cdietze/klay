@@ -28,6 +28,14 @@ class JvmBuffers : klay.core.GL20.Buffers() {
     override fun createByteBuffer(size: Int): ByteBuffer {
         return JvmByteBuffer(java.nio.ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder()))
     }
+
+    override fun arrayCopy(src: IntArray, srcPos: Int, dest: IntArray, destPos: Int, length: Int) {
+        System.arraycopy(src, srcPos, dest, destPos, length)
+    }
+
+    override fun arrayCopy(src: FloatArray, srcPos: Int, dest: FloatArray, destPos: Int, length: Int) {
+        System.arraycopy(src, srcPos, dest, destPos, length)
+    }
 }
 
 class JvmByteBuffer(override val nioBuffer: java.nio.ByteBuffer) : JvmBuffer(), ByteBuffer {
