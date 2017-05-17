@@ -95,7 +95,6 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
             floatBuffer.limit(length)
         }
 
-        abstract fun createByteBuffer(size: Int): ByteBuffer
         fun createShortBuffer(size: Int): ShortBuffer {
             return createByteBuffer(size * 2).asShortBuffer()
         }
@@ -115,6 +114,11 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
             }
             return newLength
         }
+
+        abstract fun createByteBuffer(size: Int): ByteBuffer
+
+        abstract fun arrayCopy(src: IntArray, srcPos: Int, dest: IntArray, destPos: Int, length: Int)
+        abstract fun arrayCopy(src: FloatArray, srcPos: Int, dest: FloatArray, destPos: Int, length: Int)
     }
 
     /**
