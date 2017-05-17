@@ -97,20 +97,6 @@ abstract class Platform {
 
     }
 
-    @Deprecated("Use {@link Exec#invokeLater}. ")
-    fun invokeLater(runnable: () -> Unit) {
-        exec.invokeLater(runnable)
-    }
-
-    val isAsyncSupported: Boolean
-        @Deprecated("Use {@link Exec#isAsyncSupported}. ")
-        get() = exec.isAsyncSupported
-
-    @Deprecated("Use {@link Exec#invokeAsync}. ")
-    fun invokeAsync(action: () -> Unit) {
-        exec.invokeAsync(action)
-    }
-
     protected fun emitFrame() {
         try {
             frame.emit(this)
