@@ -1,7 +1,5 @@
 package klay.core
 
-import java.util.*
-
 open class BatchImpl(protected val storage: Storage) : Storage.Batch {
     private var updates: MutableMap<String, String?>? = HashMap()
 

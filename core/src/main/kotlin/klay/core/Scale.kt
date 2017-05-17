@@ -1,7 +1,6 @@
 package klay.core
 
 import pythagoras.f.MathUtil
-import java.util.*
 
 /**
  * Encapsulates a scale factor, provides useful utility methods.
