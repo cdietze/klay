@@ -83,10 +83,10 @@ abstract class Canvas(val gfx: Graphics,
     }
 
     /** The width of this canvas.  */
-    val width: Float
+    val width: Float = image.width
 
     /** The height of this canvas.  */
-    val height: Float
+    val height: Float = image.height
 
     /**
      * Returns an immutable snapshot of the image that backs this canvas. Subsequent changes to this
@@ -356,8 +356,6 @@ abstract class Canvas(val gfx: Graphics,
     protected var isDirty: Boolean = false
 
     init {
-        this.width = image.width
-        this.height = image.height
         if (width <= 0 || height <= 0)
             throw IllegalArgumentException(
                     "Canvas must be > 0 in width and height: " + width + "x" + height)

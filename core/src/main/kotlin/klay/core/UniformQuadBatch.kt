@@ -28,7 +28,7 @@ constructor(gl: GL20, source: UniformQuadBatch.Source = UniformQuadBatch.Source(
         }
 
         /** Returns the raw vertex source, which will have some parameters subbed into it.  */
-        protected fun vertex(): String {
+        private fun vertex(): String {
             return VERT_UNIFS +
                     VERT_ATTRS +
                     VERT_VARS +
@@ -90,19 +90,19 @@ constructor(gl: GL20, source: UniformQuadBatch.Source = UniformQuadBatch.Source(
         }
     }
 
-    protected val maxQuads: Short
+    private val maxQuads: Short
 
-    protected val program: GLProgram
-    protected val uTexture: Int
-    protected val uHScreenSize: Int
-    protected val uFlip: Int
-    protected val uData: Int
-    protected val aVertex: Int
+    private val program: GLProgram
+    private val uTexture: Int
+    private val uHScreenSize: Int
+    private val uFlip: Int
+    private val uData: Int
+    private val aVertex: Int
 
-    protected val verticesId: Int
-    protected val elementsId: Int
-    protected val data: FloatArray
-    protected var quadCounter: Int = 0
+    private val verticesId: Int
+    private val elementsId: Int
+    private val data: FloatArray
+    private var quadCounter: Int = 0
 
     init {
         val maxVecs = usableMaxUniformVectors(gl) - extraVec4s()
@@ -241,17 +241,17 @@ constructor(gl: GL20, source: UniformQuadBatch.Source = UniformQuadBatch.Source(
         return "uquad/" + maxQuads
     }
 
-    protected fun vec4sPerQuad(): Int {
+    private fun vec4sPerQuad(): Int {
         return BASE_VEC4S_PER_QUAD
     }
 
     /** Returns how many vec4s this shader uses above and beyond those in the base implementation. If
      * you add any extra attributes or uniforms, your subclass will need to account for them here.  */
-    protected fun extraVec4s(): Int {
+    private fun extraVec4s(): Int {
         return 0
     }
 
-    protected fun addExtraQuadData(data: FloatArray, pos: Int): Int {
+    private fun addExtraQuadData(data: FloatArray, pos: Int): Int {
         return pos
     }
 

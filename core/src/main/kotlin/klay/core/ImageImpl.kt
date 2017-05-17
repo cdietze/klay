@@ -61,8 +61,7 @@ abstract class ImageImpl : Image {
 
     protected constructor(plat: Platform, async: Boolean, preScale: Scale, preWidth: Int, preHeight: Int,
                           source: String) : this(plat.graphics, if (async) plat.exec.deferredPromise() else RPromise.create<Image>(),
-            preScale, preWidth, preHeight, source) {
-    }
+            preScale, preWidth, preHeight, source)
 
     protected abstract fun setBitmap(bitmap: Any)
     protected abstract fun createErrorBitmap(pixelWidth: Int, pixelHeight: Int): Any

@@ -25,7 +25,7 @@ class TextureSurface
 
     /** Creates a texture surface which is `width x height` in display units.
      * A managed backing texture will be automatically created.  */
-    constructor(gfx: Graphics, defaultBatch: QuadBatch, width: Float, height: Float) : this(gfx, defaultBatch, gfx.createTexture(width, height, Texture.Config.DEFAULT)) {}
+    constructor(gfx: Graphics, defaultBatch: QuadBatch, width: Float, height: Float) : this(gfx, defaultBatch, gfx.createTexture(width, height, Texture.Config.DEFAULT))
 
     override fun close() {
         super.close()

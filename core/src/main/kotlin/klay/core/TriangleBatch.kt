@@ -79,7 +79,7 @@ constructor(gl: GL20, source: TriangleBatch.Source = TriangleBatch.Source()) : Q
         }
     }
 
-    private val delayedBinding: Boolean
+    private val delayedBinding: Boolean = "Intel" == gl.glGetString(GL20.GL_VENDOR)
 
     protected val program: GLProgram
     protected val uTexture: Int
@@ -100,7 +100,6 @@ constructor(gl: GL20, source: TriangleBatch.Source = TriangleBatch.Source()) : Q
     protected var elemPos: Int = 0
 
     init {
-        delayedBinding = "Intel" == gl.glGetString(GL20.GL_VENDOR)
 
         program = GLProgram(gl, source.vertex(), source.fragment())
         uTexture = program.getUniformLocation("u_Texture")
