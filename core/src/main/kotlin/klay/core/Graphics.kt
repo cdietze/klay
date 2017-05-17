@@ -13,7 +13,6 @@ import klay.core.GL20.Companion.GL_TEXTURE_MIN_FILTER
 import klay.core.GL20.Companion.GL_TEXTURE_WRAP_S
 import klay.core.GL20.Companion.GL_TEXTURE_WRAP_T
 import klay.core.GL20.Companion.GL_UNSIGNED_BYTE
-import klay.core.buffers.Buffer
 import pythagoras.f.Dimension
 import pythagoras.f.IDimension
 import react.Closeable
@@ -167,8 +166,8 @@ abstract class Graphics(open val plat: Platform,
     protected fun viewportChanged(pixelWidth: Int, pixelHeight: Int) {
         viewPixelWidth = pixelWidth
         viewPixelHeight = pixelHeight
-        viewSizeM.width = scale!!.invScaled(pixelWidth.toFloat())
-        viewSizeM.height = scale!!.invScaled(pixelHeight.toFloat())
+        viewSizeM.width = scale.invScaled(pixelWidth.toFloat())
+        viewSizeM.height = scale.invScaled(pixelHeight.toFloat())
         plat.log.info("viewPortChanged ${pixelWidth}x${pixelHeight}/${scale.factor} -> $viewSize")
     }
 

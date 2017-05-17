@@ -19,7 +19,7 @@ open class Touch {
                             val size: Float = -1f) : klay.core.Event.XY(flags, time, x, y) {
 
         /** Enumerates the different kinds of touch event.  */
-        enum class Kind private constructor(
+        enum class Kind constructor(
                 // NOTE: this enum order must match Pointer.Event.Kind exactly
 
                 /** Whether this touch kind starts or ends an interaction.  */

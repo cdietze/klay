@@ -1,7 +1,6 @@
 package klay.core
 
 import pythagoras.f.*
-import pythagoras.f.Vector
 import pythagoras.i.Rectangle
 import react.Closeable
 
@@ -60,7 +59,7 @@ open class Surface
 
     /** Completes a series of drawing commands to this surface.  */
     fun end(): Surface {
-        batch!!.end()
+        batch.end()
         return this
     }
 
@@ -71,7 +70,7 @@ open class Surface
     fun pushBatch(newBatch: QuadBatch?): QuadBatch? {
         if (newBatch == null) return null
         val oldBatch = batch
-        batch!!.end()
+        batch.end()
         batch = beginBatch(newBatch)
         return oldBatch
     }
@@ -79,7 +78,7 @@ open class Surface
     /** Restores the batch that was in effect prior to a [.pushBatch] call.  */
     fun popBatch(oldBatch: QuadBatch?) {
         if (oldBatch != null) {
-            batch!!.end()
+            batch.end()
             batch = beginBatch(oldBatch)
         }
     }
@@ -113,23 +112,23 @@ open class Surface
      * * to skip their drawing if this returns false, but they must still call [.endClipped].
      */
     fun startClipped(x: Int, y: Int, width: Int, height: Int): Boolean {
-        batch!!.flush() // flush any pending unclipped calls
+        batch.flush() // flush any pending unclipped calls
         val r = pushScissorState(x, if (target.flip()) target.height() - y - height else y, width, height)
-        batch!!.gl.glScissor(r.x, r.y, r.width, r.height)
-        if (scissorDepth == 1) batch!!.gl.glEnable(GL20.GL_SCISSOR_TEST)
-        batch!!.gl.checkError("startClipped")
+        batch.gl.glScissor(r.x, r.y, r.width, r.height)
+        if (scissorDepth == 1) batch.gl.glEnable(GL20.GL_SCISSOR_TEST)
+        batch.gl.checkError("startClipped")
         return !r.isEmpty
     }
 
     /** Ends a series of drawing commands that were clipped per a call to [.startClipped].  */
     fun endClipped() {
-        batch!!.flush() // flush our clipped calls with SCISSOR_TEST still enabled
+        batch.flush() // flush our clipped calls with SCISSOR_TEST still enabled
         val r = popScissorState()
         if (r == null)
-            batch!!.gl.glDisable(GL20.GL_SCISSOR_TEST)
+            batch.gl.glDisable(GL20.GL_SCISSOR_TEST)
         else
-            batch!!.gl.glScissor(r.x, r.y, r.width, r.height)
-        batch!!.gl.checkError("endClipped")
+            batch.gl.glScissor(r.x, r.y, r.width, r.height)
+        batch.gl.checkError("endClipped")
     }
 
     /** Translates the current transformation matrix by the given amount.  */
@@ -257,8 +256,8 @@ open class Surface
     /** Clears the entire surface to the specified color.
      * The channels are values in the range `[0,1]`.  */
     fun clear(red: Float = 0f, green: Float = 0f, blue: Float = 0f, alpha: Float = 0f): Surface {
-        batch!!.gl.glClearColor(red, green, blue, alpha)
-        batch!!.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+        batch.gl.glClearColor(red, green, blue, alpha)
+        batch.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         return this
     }
 
@@ -267,7 +266,7 @@ open class Surface
      */
     fun draw(tile: Tile, x: Float, y: Float, w: Float = tile.width(), h: Float = tile.height()): Surface {
         if (!checkIntersection || intersects(x, y, w, h)) {
-            tile.addToBatch(batch!!, tint, tx(), x, y, w, h)
+            tile.addToBatch(batch, tint, tx(), x, y, w, h)
         }
         return this
     }
@@ -279,7 +278,7 @@ open class Surface
      */
     fun draw(tile: Tile, tint: Int, x: Float, y: Float, w: Float, h: Float): Surface {
         if (!checkIntersection || intersects(x, y, w, h)) {
-            tile.addToBatch(batch!!, tint, tx(), x, y, w, h)
+            tile.addToBatch(batch, tint, tx(), x, y, w, h)
         }
         return this
     }
@@ -291,7 +290,7 @@ open class Surface
     fun draw(tile: Tile, dx: Float, dy: Float, dw: Float, dh: Float,
              sx: Float, sy: Float, sw: Float, sh: Float): Surface {
         if (!checkIntersection || intersects(dx, dy, dw, dh)) {
-            tile.addToBatch(batch!!, tint, tx(), dx, dy, dw, dh, sx, sy, sw, sh)
+            tile.addToBatch(batch, tint, tx(), dx, dy, dw, dh, sx, sy, sw, sh)
         }
         return this
     }
@@ -304,7 +303,7 @@ open class Surface
     fun draw(tile: Tile, tint: Int, dx: Float, dy: Float, dw: Float, dh: Float,
              sx: Float, sy: Float, sw: Float, sh: Float): Surface {
         if (!checkIntersection || intersects(dx, dy, dw, dh)) {
-            tile.addToBatch(batch!!, tint, tx(), dx, dy, dw, dh, sx, sy, sw, sh)
+            tile.addToBatch(batch, tint, tx(), dx, dy, dw, dh, sx, sy, sw, sh)
         }
         return this
     }
@@ -353,9 +352,9 @@ open class Surface
         Transforms.multiply(tx(), xf, xf)
 
         if (patternTex != null) {
-            batch!!.addQuad(patternTex!!, tint, xf, 0f, 0f, length, width)
+            batch.addQuad(patternTex!!, tint, xf, 0f, 0f, length, width)
         } else {
-            batch!!.addQuad(colorTex, Tint.combine(fillColor, tint), xf, 0f, 0f, length, width)
+            batch.addQuad(colorTex, Tint.combine(fillColor, tint), xf, 0f, 0f, length, width)
         }
         return this
     }
@@ -365,9 +364,9 @@ open class Surface
      */
     fun fillRect(x: Float, y: Float, width: Float, height: Float): Surface {
         if (patternTex != null) {
-            batch!!.addQuad(patternTex!!, tint, tx(), x, y, width, height)
+            batch.addQuad(patternTex!!, tint, tx(), x, y, width, height)
         } else {
-            batch!!.addQuad(colorTex, Tint.combine(fillColor, tint), tx(), x, y, width, height)
+            batch.addQuad(colorTex, Tint.combine(fillColor, tint), tx(), x, y, width, height)
         }
         return this
     }

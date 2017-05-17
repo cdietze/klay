@@ -19,7 +19,7 @@ class Font
     }
 
     /** Creates a font as specified with [Style.PLAIN]..  */
-    constructor(name: String, size: Float) : this(name, Style.PLAIN, size) {}
+    constructor(name: String, size: Float) : this(name, Style.PLAIN, size)
 
     /** Derives a font with the same name and style as this one, at the specified size.  */
     fun derive(size: Float): Font {

@@ -19,7 +19,7 @@ open class Pointer(private val plat: Platform) {
                 var isTouch: Boolean) : klay.core.Event.XY(flags, time, x, y) {
 
         /** Enumerates the different kinds of pointer event.  */
-        enum class Kind private constructor(
+        enum class Kind constructor(
                 /** Whether this kind starts or ends an interaction.  */
                 val isStart: Boolean, val isEnd: Boolean) {
             START(true, false), DRAG(false, false), END(false, true), CANCEL(false, true)
