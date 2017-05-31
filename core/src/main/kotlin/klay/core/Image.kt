@@ -195,13 +195,13 @@ abstract class Image : TileSource, Canvas.Drawable {
             override val width: Float = rwidth
             override val height: Float = rheight
 
-            override fun draw(ctx: Any, x: Float, y: Float, width: Float, height: Float) {
-                image.draw(ctx, x, y, width, height, rx, ry, rwidth, rheight)
+            override fun draw(gc: Any, x: Float, y: Float, width: Float, height: Float) {
+                image.draw(gc, x, y, width, height, rx, ry, rwidth, rheight)
             }
 
-            override fun draw(ctx: Any, dx: Float, dy: Float, dw: Float, dh: Float,
+            override fun draw(gc: Any, dx: Float, dy: Float, dw: Float, dh: Float,
                               sx: Float, sy: Float, sw: Float, sh: Float) {
-                image.draw(ctx, dx, dy, dw, dh, rx + sx, ry + sy, sw, sh)
+                image.draw(gc, dx, dy, dw, dh, rx + sx, ry + sy, sw, sh)
             }
         }
     }

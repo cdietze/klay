@@ -23,7 +23,7 @@ class CanvasLayer : klay.scene.ImageLayer {
      * will display nothing until a [.begin]/[.end] pair is used to render something to
      * its backing canvas.
      */
-    constructor(gfx: Graphics, size: IDimension) : this(gfx, size.width, size.height) {}
+    constructor(gfx: Graphics, size: IDimension) : this(gfx, size.width, size.height)
 
     /**
      * Creates a canvas layer with a backing canvas of size `width x height` (in display

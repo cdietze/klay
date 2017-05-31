@@ -82,16 +82,16 @@ class Mouse : klay.core.Mouse() {
         internal fun emit(lner: Listener) {
             val mevent = event
             if (mevent is ButtonEvent) {
-                lner.onButton(mevent as ButtonEvent, this)
+                lner.onButton(mevent, this)
             } else if (mevent is MotionEvent) {
                 if (solo)
-                    lner.onMotion(mevent as MotionEvent, this)
+                    lner.onMotion(mevent, this)
                 else
-                    lner.onDrag(mevent as MotionEvent, this)
+                    lner.onDrag(mevent, this)
             } else if (mevent is HoverEvent) {
-                lner.onHover(mevent as HoverEvent, this)
+                lner.onHover(mevent, this)
             } else if (mevent is WheelEvent) {
-                lner.onWheel(mevent as WheelEvent, this)
+                lner.onWheel(mevent, this)
             }
         }
 
@@ -108,7 +108,7 @@ class Mouse : klay.core.Mouse() {
 
         override fun invoke(event: Event) {
             if (event is ButtonEvent) {
-                val bevent = event as ButtonEvent
+                val bevent = event
                 if (bevent.down) {
                     // if we have no current interaction, start one
                     if (currentIact == null) {
@@ -166,7 +166,7 @@ class Mouse : klay.core.Mouse() {
         }
     }
 
-    protected class CancelEvent : Event(0, 0.0, 0f, 0f)
+    class CancelEvent : Event(0, 0.0, 0f, 0f)
 
     companion object {
         private val cancelEvent = CancelEvent()

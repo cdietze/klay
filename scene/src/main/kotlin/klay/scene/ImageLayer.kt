@@ -62,7 +62,7 @@ open class ImageLayer : Layer {
     /**
      * Creates a texture layer with no texture. It will be invisible until a texture is set into it.
      */
-    constructor() {} // nada!
+    constructor()
 
     /**
      * Returns the tile rendered by this layer.

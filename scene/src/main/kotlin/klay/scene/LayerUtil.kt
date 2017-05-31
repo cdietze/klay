@@ -37,17 +37,17 @@ object LayerUtil {
      * results are stored into `into`, which is returned for convenience.
      */
     fun layerToParent(layer: Layer?, parent: Layer?, point: XY, into: Point): Point {
-        var layer = layer
+        var _layer = layer
         into.set(point)
-        while (layer !== parent) {
-            if (layer == null) {
+        while (_layer !== parent) {
+            if (_layer == null) {
                 throw IllegalArgumentException(
                         "Failed to find parent, perhaps you passed parent, layer instead of " + "layer, parent?")
             }
-            into.x -= layer!!.originX()
-            into.y -= layer!!.originY()
-            layer!!.transform().transform(into, into)
-            layer = layer!!.parent()
+            into.x -= _layer.originX()
+            into.y -= _layer.originY()
+            _layer.transform().transform(into, into)
+            _layer = _layer.parent()
         }
         return into
     }
@@ -195,10 +195,10 @@ object LayerUtil {
      * parent) will always return 0.
      */
     fun graphDepth(layer: Layer?): Int {
-        var layer = layer
+        var _layer = layer
         var depth = -1
-        while (layer != null) {
-            layer = layer!!.parent()
+        while (_layer != null) {
+            _layer = _layer.parent()
             depth++
         }
         return depth
@@ -216,7 +216,7 @@ object LayerUtil {
         val x = pt.x
         val y = pt.y
         if (layer is GroupLayer) {
-            val gl = layer as GroupLayer
+            val gl = layer
             for (ii in gl.children() - 1 downTo 0) {
                 val child = gl.childAt(ii)
                 if (!child.visible()) continue // ignore invisible children
@@ -244,7 +244,7 @@ object LayerUtil {
         log.debug(prefix + layer)
         if (layer is GroupLayer) {
             val gprefix = prefix + "  "
-            val glayer = layer as GroupLayer
+            val glayer = layer
             var ii = 0
             val ll = glayer.children()
             while (ii < ll) {

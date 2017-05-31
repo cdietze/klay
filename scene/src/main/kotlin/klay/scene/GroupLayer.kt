@@ -63,7 +63,7 @@ open class GroupLayer : ClippedLayer, Iterable<Layer> {
             index = findInsertion(child.depth())// otherwise find the appropriate insertion point via binary search
 
         // remove the child from any existing parent, preventing multiple parents
-        if (parent != null) parent!!.remove(child)
+        parent?.remove(child)
         children.add(index, child)
         child.setParent(this)
         if (state.get() === State.ADDED) child.onAdd()
@@ -147,7 +147,7 @@ open class GroupLayer : ClippedLayer, Iterable<Layer> {
      * Removes and disposes all child layers from this group.
      */
     fun disposeAll() {
-        val toDispose = children.toTypedArray<Layer>()
+        val toDispose : Array<Layer> = children.toTypedArray()
         // remove all of the children efficiently
         removeAll()
         // now that the children have been detached, dispose them

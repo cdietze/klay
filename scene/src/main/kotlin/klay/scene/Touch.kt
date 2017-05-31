@@ -47,8 +47,8 @@ class Touch : klay.core.Touch() {
             return if (source == null)
                 Event(0, 0.0, 0f, 0f, Event.Kind.CANCEL, 0)
             else
-                Event(0, source!!.time, source!!.x, source!!.y, Event.Kind.CANCEL,
-                        source!!.id, source!!.pressure, source!!.size)
+                Event(0, source.time, source.x, source.y, Event.Kind.CANCEL,
+                        source.id, source.pressure, source.size)
         }
     }
 

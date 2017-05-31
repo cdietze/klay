@@ -54,7 +54,7 @@ class Pointer
             return if (source == null)
                 Event(0, 0.0, 0f, 0f, Event.Kind.CANCEL, false)
             else
-                Event(0, source!!.time, source!!.x, source!!.y, Event.Kind.CANCEL, source!!.isTouch)
+                Event(0, source.time, source.x, source.y, Event.Kind.CANCEL, source.isTouch)
         }
     }
 

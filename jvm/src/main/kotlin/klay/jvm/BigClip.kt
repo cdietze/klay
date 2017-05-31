@@ -184,9 +184,8 @@ internal class BigClip : Clip, LineListener {
         val is2 = is1
 
         val buf = ByteArray(1 shl 16)
-        var numRead = 0
+        var numRead = is2.read(buf)
         val baos = ByteArrayOutputStream()
-        numRead = is2.read(buf)
         while (numRead > -1) {
             baos.write(buf, 0, numRead)
             numRead = is2.read(buf, 0, buf.size)
@@ -300,7 +299,7 @@ internal class BigClip : Clip, LineListener {
 
             active = true
 
-            var bytesRead = 0
+            var bytesRead : Int
             val frameSize = dataLine!!.format.frameSize
             val bufSize = dataLine!!.bufferSize
             var startOrMove = true
