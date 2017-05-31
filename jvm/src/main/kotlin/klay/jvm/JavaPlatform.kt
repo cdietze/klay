@@ -119,7 +119,7 @@ abstract class JavaPlatform(val config: JavaPlatform.Config) : Platform() {
         if (config.activationKey != null) {
             input.keyboardEvents.connect { event: Keyboard.Event ->
                 if (event is Keyboard.KeyEvent) {
-                    val kevent = event as Keyboard.KeyEvent
+                    val kevent = event
                     if (kevent.key === config.activationKey && kevent.down) {
                         toggleActivation()
                     }

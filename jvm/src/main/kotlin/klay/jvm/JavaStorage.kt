@@ -122,6 +122,6 @@ class JavaStorage(private val log: Log, storageFileName: String) : Storage {
             throw BackingStoreException("Not implemented")
         }
 
-        protected var _values: MutableMap<String, String> = HashMap()
+        private var _values: MutableMap<String, String> = HashMap()
     }
 }

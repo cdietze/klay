@@ -11,7 +11,7 @@ import java.util.*
 
 internal class JavaCanvas(gfx: Graphics, image: JavaImage) : Canvas(gfx, image) {
 
-    val g2d: Graphics2D
+    val g2d: Graphics2D = image.bufferedImage()!!.createGraphics()
     private val stateStack = LinkedList<JavaCanvasState>()
 
     private val ellipse = Ellipse2D.Float()
@@ -21,7 +21,6 @@ internal class JavaCanvas(gfx: Graphics, image: JavaImage) : Canvas(gfx, image) 
 
     init {
 
-        g2d = image.bufferedImage()!!.createGraphics()
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
         val scale = image.scale.factor
         g2d.scale(scale.toDouble(), scale.toDouble())
@@ -85,9 +84,9 @@ internal class JavaCanvas(gfx: Graphics, image: JavaImage) : Canvas(gfx, image) 
 
     override fun createGradient(cfg: Gradient.Config): Gradient {
         if (cfg is Gradient.Linear)
-            return JavaGradient.create(cfg as Gradient.Linear)
+            return JavaGradient.create(cfg)
         else if (cfg is Gradient.Radial)
-            return JavaGradient.create(cfg as Gradient.Radial)
+            return JavaGradient.create(cfg)
         else
             throw IllegalArgumentException("Unknown config: " + cfg)
     }

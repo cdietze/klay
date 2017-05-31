@@ -45,7 +45,7 @@ class JavaAssets
             if (prefix.startsWith("/") || prefix.endsWith("/")) {
                 throw IllegalArgumentException("Prefix must not start or end with '/'.")
             }
-            field = if (prefix.length == 0) prefix else prefix + "/"
+            field = if (prefix.isEmpty()) prefix else prefix + "/"
         }
     private var assetScale: Scale? = null
 
@@ -55,7 +55,7 @@ class JavaAssets
      * TODO: remove? get?
      */
     fun addDirectory(dir: File) {
-        val ndirs = Array<File>(directories.size, { directories[it] })
+        val ndirs = Array(directories.size, { directories[it] })
         System.arraycopy(directories, 0, ndirs, 0, directories.size)
         ndirs[ndirs.size - 1] = dir
         directories = ndirs
@@ -111,17 +111,17 @@ class JavaAssets
         return requireResource(path).readBytes()
     }
 
-    protected fun getSound(path: String, music: Boolean): Sound {
+    private fun getSound(path: String, music: Boolean): Sound {
         var err: Exception? = null
-        for (suff in SUFFIXES) {
-            val soundPath = path + suff
-            try {
-                return plat.audio.createSound(requireResource(soundPath), music)
-            } catch (e: Exception) {
-                err = e // note the error, and loop through and try the next format
-            }
-
-        }
+        SUFFIXES
+                .map { path + it }
+                .forEach {
+                    try {
+                        return plat.audio.createSound(requireResource(it), music)
+                    } catch (e: Exception) {
+                        err = e // note the error, and loop through and try the next format
+                    }
+                }
         plat.log().warn("Sound load error $path: $err")
         return Sound.Error(err!!)
     }
@@ -135,24 +135,22 @@ class JavaAssets
      * loader checked. If not found, then the extra directories, if any, are checked, in order. If
      * the file is not found in any of the extra directories either, then an exception is thrown.
      */
-    protected fun requireResource(path: String): Resource {
+    private fun requireResource(path: String): Resource {
         val url = this::class.java.classLoader.getResource(this.pathPrefix + path)
         if (url != null) {
-            return if (url!!.getProtocol() == "file")
-                FileResource(File(URLDecoder.decode(url!!.getPath(), "UTF-8")))
+            return if (url.protocol == "file")
+                FileResource(File(URLDecoder.decode(url.path, "UTF-8")))
             else
                 URLResource(url)
         }
-        for (dir in directories) {
-            val f = File(dir, path).canonicalFile
-            if (f.exists()) {
-                return FileResource(f)
-            }
-        }
+        directories
+                .map { File(it, path).canonicalFile }
+                .filter { it.exists() }
+                .forEach { return FileResource(it) }
         throw FileNotFoundException(path)
     }
 
-    protected fun scaleImage(image: BufferedImage, viewImageRatio: Float): BufferedImage {
+    private fun scaleImage(image: BufferedImage, viewImageRatio: Float): BufferedImage {
         val swidth = MathUtil.iceil(viewImageRatio * image.width)
         val sheight = MathUtil.iceil(viewImageRatio * image.height)
         val scaled = BufferedImage(swidth, sheight, BufferedImage.TYPE_INT_ARGB_PRE)
@@ -162,7 +160,7 @@ class JavaAssets
         return scaled
     }
 
-    protected fun assetScale(): Scale {
+    private fun assetScale(): Scale {
         return if (assetScale != null) assetScale!! else plat.graphics.scale()
     }
 
@@ -188,7 +186,7 @@ class JavaAssets
         }
     }
 
-    protected class URLResource(val url: URL) : Resource() {
+    private class URLResource(val url: URL) : Resource() {
         override fun openStream(): InputStream {
             return url.openStream()
         }
@@ -198,7 +196,7 @@ class JavaAssets
         }
     }
 
-    protected class FileResource(val file: File) : Resource() {
+    private class FileResource(val file: File) : Resource() {
         override fun openStream(): FileInputStream {
             return FileInputStream(file)
         }
@@ -263,7 +261,7 @@ class JavaAssets
     companion object {
 
         internal fun toByteArray(`in`: InputStream): ByteArray {
-            try {
+            `in`.use { `in` ->
                 var buffer = ByteArray(512)
                 var size = 0
                 while (true) {
@@ -277,11 +275,9 @@ class JavaAssets
                     buffer = Arrays.copyOf(buffer, size)
                 }
                 return buffer
-            } finally {
-                `in`.close()
             }
         }
 
-        protected val SUFFIXES = arrayOf(".wav", ".mp3")
+        private val SUFFIXES = arrayOf(".wav", ".mp3")
     }
 }

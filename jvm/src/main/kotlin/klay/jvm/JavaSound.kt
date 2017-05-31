@@ -10,11 +10,11 @@ import javax.sound.sampled.FloatControl
 class JavaSound(exec: Exec) : SoundImpl<Clip>(exec) {
 
     override fun playingImpl(): Boolean {
-        return impl!!.isActive()
+        return impl!!.isActive
     }
 
     override fun playImpl(): Boolean {
-        impl!!.setFramePosition(0)
+        impl!!.framePosition = 0
         if (_looping) {
             impl!!.loop(Clip.LOOP_CONTINUOUSLY)
         } else {
@@ -55,7 +55,7 @@ class JavaSound(exec: Exec) : SoundImpl<Clip>(exec) {
         //   return MathUtil.pow(10, gain/20);
         // }
 
-        protected fun toGain(volume: Float, min: Float, max: Float): Float {
+        private fun toGain(volume: Float, min: Float, max: Float): Float {
             return MathUtil.clamp(20 * MathUtil.log10(volume), min, max)
         }
     }

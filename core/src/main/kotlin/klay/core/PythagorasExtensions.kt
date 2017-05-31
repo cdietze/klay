@@ -35,7 +35,7 @@ fun IMatrix4.get(buf: FloatBuffer): FloatBuffer {
 /**
  * Creates a matrix from a float buffer.
  */
-fun Matrix4.Companion.new(buf: FloatBuffer) = Matrix4().set(buf)
+fun newMatrix(buf: FloatBuffer) = Matrix4().set(buf)
 
 /**
  * Sets the contents of this matrix from the supplied (column-major) buffer.
@@ -79,7 +79,7 @@ fun IVector4.get(buf: FloatBuffer): FloatBuffer = buf.put(x).put(y).put(z).put(w
 /**
  * Creates a vector from a float buffer.
  */
-fun Vector4.Companion.new(buf: FloatBuffer): Vector4 = Vector4().set(buf)
+fun newVector(buf: FloatBuffer): Vector4 = Vector4().set(buf)
 
 /**
  * Sets all of the elements of the vector.
