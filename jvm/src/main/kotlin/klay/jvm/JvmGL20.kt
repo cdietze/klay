@@ -690,51 +690,51 @@ class JvmGL20 : klay.core.GL20(JvmBuffers(), java.lang.Boolean.getBoolean("klay.
         GL20.glValidateProgram(program)
     }
 
-    override fun glVertexAttrib1f(indx: Int, x: Float) {
-        GL20.glVertexAttrib1f(indx, x)
+    override fun glVertexAttrib1f(index: Int, x: Float) {
+        GL20.glVertexAttrib1f(index, x)
     }
 
-    override fun glVertexAttrib1fv(indx: Int, values: FloatBuffer) {
-        GL20.glVertexAttrib1f(indx, (values as JvmFloatBuffer).nioBuffer.get())
+    override fun glVertexAttrib1fv(index: Int, values: FloatBuffer) {
+        GL20.glVertexAttrib1f(index, (values as JvmFloatBuffer).nioBuffer.get())
     }
 
-    override fun glVertexAttrib2f(indx: Int, x: Float, y: Float) {
-        GL20.glVertexAttrib2f(indx, x, y)
+    override fun glVertexAttrib2f(index: Int, x: Float, y: Float) {
+        GL20.glVertexAttrib2f(index, x, y)
     }
 
-    override fun glVertexAttrib2fv(indx: Int, values: FloatBuffer) {
+    override fun glVertexAttrib2fv(index: Int, values: FloatBuffer) {
         val nioBuffer = (values as JvmFloatBuffer).nioBuffer
-        GL20.glVertexAttrib2f(indx, nioBuffer.get(), nioBuffer.get())
+        GL20.glVertexAttrib2f(index, nioBuffer.get(), nioBuffer.get())
     }
 
-    override fun glVertexAttrib3f(indx: Int, x: Float, y: Float, z: Float) {
-        GL20.glVertexAttrib3f(indx, x, y, z)
+    override fun glVertexAttrib3f(index: Int, x: Float, y: Float, z: Float) {
+        GL20.glVertexAttrib3f(index, x, y, z)
     }
 
-    override fun glVertexAttrib3fv(indx: Int, values: FloatBuffer) {
+    override fun glVertexAttrib3fv(index: Int, values: FloatBuffer) {
         val nioBuffer = (values as JvmFloatBuffer).nioBuffer
-        GL20.glVertexAttrib3f(indx, nioBuffer.get(), nioBuffer.get(), nioBuffer.get())
+        GL20.glVertexAttrib3f(index, nioBuffer.get(), nioBuffer.get(), nioBuffer.get())
     }
 
-    override fun glVertexAttrib4f(indx: Int, x: Float, y: Float, z: Float, w: Float) {
-        GL20.glVertexAttrib4f(indx, x, y, z, w)
+    override fun glVertexAttrib4f(index: Int, x: Float, y: Float, z: Float, w: Float) {
+        GL20.glVertexAttrib4f(index, x, y, z, w)
     }
 
-    override fun glVertexAttrib4fv(indx: Int, values: FloatBuffer) {
+    override fun glVertexAttrib4fv(index: Int, values: FloatBuffer) {
         val nioBuffer = (values as JvmFloatBuffer).nioBuffer
-        GL20.glVertexAttrib4f(indx, nioBuffer.get(), nioBuffer.get(), nioBuffer.get(), nioBuffer.get())
+        GL20.glVertexAttrib4f(index, nioBuffer.get(), nioBuffer.get(), nioBuffer.get(), nioBuffer.get())
     }
 
-    override fun glVertexAttribPointer(indx: Int, size: Int, type: Int, normalized: Boolean, stride: Int,
+    override fun glVertexAttribPointer(index: Int, size: Int, type: Int, normalized: Boolean, stride: Int,
                                        ptr: Buffer) {
         if (ptr is JvmFloatBuffer) {
-            GL20.glVertexAttribPointer(indx, size, type, normalized, stride, ptr.nioBuffer)
+            GL20.glVertexAttribPointer(index, size, type, normalized, stride, ptr.nioBuffer)
         } else if (ptr is JvmByteBuffer) {
-            GL20.glVertexAttribPointer(indx, size, type, normalized, stride, ptr.nioBuffer)
+            GL20.glVertexAttribPointer(index, size, type, normalized, stride, ptr.nioBuffer)
         } else if (ptr is JvmShortBuffer) {
-            GL20.glVertexAttribPointer(indx, size, type, normalized, stride, ptr.nioBuffer)
+            GL20.glVertexAttribPointer(index, size, type, normalized, stride, ptr.nioBuffer)
         } else if (ptr is JvmIntBuffer) {
-            GL20.glVertexAttribPointer(indx, size, type, normalized, stride, ptr.nioBuffer)
+            GL20.glVertexAttribPointer(index, size, type, normalized, stride, ptr.nioBuffer)
         } else {
             throw RuntimeException("NYI for " + ptr.javaClass)
         }
@@ -748,9 +748,9 @@ class JvmGL20 : klay.core.GL20(JvmBuffers(), java.lang.Boolean.getBoolean("klay.
         GL11.glDrawElements(mode, count, type, indices.toLong())
     }
 
-    override fun glVertexAttribPointer(indx: Int, size: Int, type: Int,
+    override fun glVertexAttribPointer(index: Int, size: Int, type: Int,
                                        normalized: Boolean, stride: Int, ptr: Int) {
-        GL20.glVertexAttribPointer(indx, size, type, normalized, stride, ptr.toLong())
+        GL20.glVertexAttribPointer(index, size, type, normalized, stride, ptr.toLong())
     }
 
     override val platformGLExtensions: String
