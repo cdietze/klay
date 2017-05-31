@@ -443,20 +443,20 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
         glUniformMatrix4fv(location, count, transpose, bufs.floatBuffer)
     }
 
-    fun glVertexAttrib1fv(indx: Int, values: FloatArray, offset: Int) {
-        glVertexAttrib1f(indx, values[indx + offset])
+    fun glVertexAttrib1fv(index: Int, values: FloatArray, offset: Int) {
+        glVertexAttrib1f(index, values[index + offset])
     }
 
-    fun glVertexAttrib2fv(indx: Int, values: FloatArray, offset: Int) {
-        glVertexAttrib2f(indx, values[indx + offset], values[indx + 1 + offset])
+    fun glVertexAttrib2fv(index: Int, values: FloatArray, offset: Int) {
+        glVertexAttrib2f(index, values[index + offset], values[index + 1 + offset])
     }
 
-    fun glVertexAttrib3fv(indx: Int, values: FloatArray, offset: Int) {
-        glVertexAttrib3f(indx, values[indx + offset], values[indx + 1 + offset], values[indx + 2 + offset])
+    fun glVertexAttrib3fv(index: Int, values: FloatArray, offset: Int) {
+        glVertexAttrib3f(index, values[index + offset], values[index + 1 + offset], values[index + 2 + offset])
     }
 
-    fun glVertexAttrib4fv(indx: Int, values: FloatArray, offset: Int) {
-        glVertexAttrib4f(indx, values[indx + offset], values[indx + 1 + offset], values[indx + 2 + offset], values[indx + 3 + offset])
+    fun glVertexAttrib4fv(index: Int, values: FloatArray, offset: Int) {
+        glVertexAttrib4f(index, values[index + offset], values[index + 1 + offset], values[index + 2 + offset], values[index + 3 + offset])
     }
 
     abstract val platformGLExtensions: String
@@ -643,16 +643,16 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
     abstract fun glUseProgram(program: Int)
     abstract fun glValidateProgram(program: Int)
 
-    abstract fun glVertexAttrib1f(indx: Int, x: Float)
-    abstract fun glVertexAttrib1fv(indx: Int, values: FloatBuffer)
-    abstract fun glVertexAttrib2f(indx: Int, x: Float, y: Float)
-    abstract fun glVertexAttrib2fv(indx: Int, values: FloatBuffer)
-    abstract fun glVertexAttrib3f(indx: Int, x: Float, y: Float, z: Float)
-    abstract fun glVertexAttrib3fv(indx: Int, values: FloatBuffer)
-    abstract fun glVertexAttrib4f(indx: Int, x: Float, y: Float, z: Float, w: Float)
-    abstract fun glVertexAttrib4fv(indx: Int, values: FloatBuffer)
-    abstract fun glVertexAttribPointer(indx: Int, size: Int, type: Int, normalized: Boolean, stride: Int, ptr: Buffer)
-    abstract fun glVertexAttribPointer(indx: Int, size: Int, type: Int, normalized: Boolean, stride: Int, ptr: Int)
+    abstract fun glVertexAttrib1f(index: Int, x: Float)
+    abstract fun glVertexAttrib1fv(index: Int, values: FloatBuffer)
+    abstract fun glVertexAttrib2f(index: Int, x: Float, y: Float)
+    abstract fun glVertexAttrib2fv(index: Int, values: FloatBuffer)
+    abstract fun glVertexAttrib3f(index: Int, x: Float, y: Float, z: Float)
+    abstract fun glVertexAttrib3fv(index: Int, values: FloatBuffer)
+    abstract fun glVertexAttrib4f(index: Int, x: Float, y: Float, z: Float, w: Float)
+    abstract fun glVertexAttrib4fv(index: Int, values: FloatBuffer)
+    abstract fun glVertexAttribPointer(index: Int, size: Int, type: Int, normalized: Boolean, stride: Int, ptr: Buffer)
+    abstract fun glVertexAttribPointer(index: Int, size: Int, type: Int, normalized: Boolean, stride: Int, ptr: Int)
 
     abstract fun glViewport(x: Int, y: Int, width: Int, height: Int)
     abstract fun hasGLSL(): Boolean
