@@ -10,11 +10,11 @@ import java.awt.geom.Rectangle2D
 import java.awt.image.BufferedImage
 
 class JavaImage : ImageImpl {
-    protected var img: BufferedImage? = null
+    private var img: BufferedImage? = null
 
-    constructor(gfx: Graphics, scale: Scale, img: BufferedImage, source: String) : super(gfx, scale, img.width, img.height, source, img) {}
+    constructor(gfx: Graphics, scale: Scale, img: BufferedImage, source: String) : super(gfx, scale, img.width, img.height, source, img)
 
-    constructor(plat: JavaPlatform, async: Boolean, preWidth: Int, preHeight: Int, source: String) : super(plat, async, Scale.ONE, preWidth, preHeight, source) {}
+    constructor(plat: JavaPlatform, async: Boolean, preWidth: Int, preHeight: Int, source: String) : super(plat, async, Scale.ONE, preWidth, preHeight, source)
 
     /**
      * Returns the [BufferedImage] that underlies this image. This is for games that need to

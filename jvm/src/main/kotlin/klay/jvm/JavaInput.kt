@@ -51,7 +51,7 @@ open class JavaInput(plat: JavaPlatform) : Input(plat) {
         val pivotKey = plat.config.pivotKey
         keyboardEvents.connect { event: Keyboard.Event ->
             if (event is Keyboard.KeyEvent) {
-                val kevent = event as Keyboard.KeyEvent
+                val kevent = event
                 if (kevent.key === pivotKey && kevent.down) {
                     pivot = Point(x, y)
                 }
@@ -60,7 +60,7 @@ open class JavaInput(plat: JavaPlatform) : Input(plat) {
 
         mouseEvents.connect { event: Mouse.Event ->
             if (event is Mouse.ButtonEvent) {
-                val bevent = event as Mouse.ButtonEvent
+                val bevent = event
                 if (bevent.button === Mouse.ButtonEvent.Id.LEFT) {
                     mouseDown = bevent.down
                     if (mouseDown) {
@@ -104,10 +104,10 @@ open class JavaInput(plat: JavaPlatform) : Input(plat) {
         val ex = event.x
         val ey = event.y
         val main = toTouch(event.time, ex, ey, kind, 0)
-        val evs = if (pivot == null)
-            arrayOf<Touch.Event>(main)
+        val evs : Array<Touch.Event> = if (pivot == null)
+            arrayOf(main)
         else
-            arrayOf<Touch.Event>(main, toTouch(event.time, 2 * pivot!!.x - ex, 2 * pivot!!.y - ey, kind, 1))
+            arrayOf(main, toTouch(event.time, 2 * pivot!!.x - ex, 2 * pivot!!.y - ey, kind, 1))
         plat.dispatchEvent(touchEvents, evs)
     }
 

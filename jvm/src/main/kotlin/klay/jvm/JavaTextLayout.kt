@@ -74,7 +74,7 @@ internal class JavaTextLayout(text: String, format: TextFormat, private val layo
             text = normalizeEOL(text)
 
             // we do some fiddling to work around the fact that TextLayout chokes on the empty string
-            val ltext = if (text.length == 0) " " else text
+            val ltext = if (text.isEmpty()) " " else text
 
             // set up an attributed character iterator so that we can measure the text
             val astring = AttributedString(ltext)

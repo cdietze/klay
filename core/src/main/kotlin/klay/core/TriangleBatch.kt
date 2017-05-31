@@ -151,36 +151,35 @@ constructor(gl: GL20, source: TriangleBatch.Source = TriangleBatch.Source()) : Q
 
     /**
      * Adds a collection of textured triangles to the current render operation.
-
      * @param xys a list of x/y coordinates as: `[x1, y1, x2, y2, ...]`.
-     * *
+     *
      * @param xysOffset the offset of the coordinates array, must not be negative and no greater than
-     * * `xys.length`. Note: this is an absolute offset; since `xys` contains pairs of
-     * * values, this will be some multiple of two.
-     * *
+     * `xys.length`. Note: this is an absolute offset; since `xys` contains pairs of
+     * values, this will be some multiple of two.
+     *
      * @param xysLen the number of coordinates to read, must be no less than zero and no greater than
-     * * `xys.length - xysOffset`. Note: this is an absolute length; since `xys` contains
-     * * pairs of values, this will be some multiple of two.
-     * *
+     * `xys.length - xysOffset`. Note: this is an absolute length; since `xys` contains
+     * pairs of values, this will be some multiple of two.
+     *
      * @param tw the width of the texture for which we will auto-generate texture coordinates.
-     * *
+     *
      * @param th the height of the texture for which we will auto-generate texture coordinates.
-     * *
+     *
      * @param indices the index of the triangle vertices in the `xys` array. Because this
-     * * method renders a slice of `xys`, one must also specify `indexBase` which tells us
-     * * how to interpret indices. The index into `xys` will be computed as:
-     * * `2*(indices[ii] - indexBase)`, so if your indices reference vertices relative to the
-     * * whole array you should pass `xysOffset/2` for `indexBase`, but if your indices
-     * * reference vertices relative to *the slice* then you should pass zero.
-     * *
+     * method renders a slice of `xys`, one must also specify `indexBase` which tells us
+     * how to interpret indices. The index into `xys` will be computed as:
+     * `2*(indices[ ii ] - indexBase)`, so if your indices reference vertices relative to the
+     * whole array you should pass `xysOffset/2` for `indexBase`, but if your indices
+     * reference vertices relative to *the slice* then you should pass zero.
+     *
      * @param indicesOffset the offset of the indices array, must not be negative and no greater than
-     * * `indices.length`.
-     * *
+     * `indices.length`.
+     *
      * @param indicesLen the number of indices to read, must be no less than zero and no greater than
-     * * `indices.length - indicesOffset`.
-     * *
+     * `indices.length - indicesOffset`.
+     *
      * @param indexBase the basis for interpreting `indices`. See the docs for `indices`
-     * * for details.
+     * for details.
      */
     fun addTris(tex: Texture, tint: Int, xf: AffineTransform,
                 xys: FloatArray, xysOffset: Int, xysLen: Int, tw: Float, th: Float,

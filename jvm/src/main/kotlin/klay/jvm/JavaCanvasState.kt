@@ -18,8 +18,7 @@ internal class JavaCanvasState constructor(var fillColor: Int = 0xff000000.toInt
 
     constructor(toCopy: JavaCanvasState) : this(toCopy.fillColor, toCopy.strokeColor, toCopy.fillGradient, toCopy.fillPattern,
             toCopy.transform, toCopy.strokeWidth, toCopy.lineCap, toCopy.lineJoin, toCopy.miterLimit,
-            toCopy.clipper, toCopy.composite, toCopy.alpha) {
-    }
+            toCopy.clipper, toCopy.composite, toCopy.alpha)
 
     // TODO: optimize this so we're not setting this stuff all the time.
     fun prepareClear(gfx: Graphics2D) {

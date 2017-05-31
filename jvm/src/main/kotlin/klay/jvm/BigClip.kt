@@ -74,7 +74,7 @@ internal class BigClip : Clip, LineListener {
      * Default constructor for a BigClip. Does nothing. Information from the AudioInputStream passed
      * in open() will be used to get an appropriate SourceDataLine.
      */
-    constructor() {}
+    constructor()
 
     /**
      * There are a number of AudioSystem methods that will return a configured Clip. This

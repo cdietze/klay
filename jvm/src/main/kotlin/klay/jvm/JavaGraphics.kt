@@ -80,7 +80,7 @@ abstract class JavaGraphics(override val plat: Platform, gl20: GL20, scale: Scal
             fonts.put(font.name, jfont)
         }
         // derive a font instance at the desired style and size
-        return jfont!!.deriveFont(STYLE_TO_JAVA[font.style.ordinal], font.size.toFloat())
+        return jfont.deriveFont(STYLE_TO_JAVA[font.style.ordinal], font.size)
     }
 
     internal fun checkGetImageBuffer(byteSize: Int): ByteBuffer {

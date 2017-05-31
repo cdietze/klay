@@ -9,19 +9,19 @@ import java.awt.image.DataBufferByte
 import java.awt.image.DataBufferInt
 import java.nio.ByteBuffer
 
-abstract class LWJGLGraphics protected constructor(open val jplat: JavaPlatform)// real scale factor set later
+abstract class LWJGLGraphics protected constructor(jplat: JavaPlatform)// real scale factor set later
     : JavaGraphics(jplat, JvmGL20(), Scale.ONE) {
 
     override fun upload(img: BufferedImage, tex: Texture) {
         // Convert the bitmap into a format for quick uploading (NOOPs if already optimized)
         val bitmap = convertImage(img)
 
-        val dbuf = bitmap.getRaster().getDataBuffer()
+        val dbuf = bitmap.raster.dataBuffer
         val bbuf: ByteBuffer
         val format: Int
         val type: Int
 
-        if (bitmap.getType() == BufferedImage.TYPE_INT_ARGB_PRE) {
+        if (bitmap.type == BufferedImage.TYPE_INT_ARGB_PRE) {
             val ibuf = dbuf as DataBufferInt
             val iSize = ibuf.size * 4
             bbuf = checkGetImageBuffer(iSize)
@@ -31,7 +31,7 @@ abstract class LWJGLGraphics protected constructor(open val jplat: JavaPlatform)
             format = GL12.GL_BGRA
             type = GL12.GL_UNSIGNED_INT_8_8_8_8_REV
 
-        } else if (bitmap.getType() == BufferedImage.TYPE_4BYTE_ABGR) {
+        } else if (bitmap.type == BufferedImage.TYPE_4BYTE_ABGR) {
             val dbbuf = dbuf as DataBufferByte
             bbuf = checkGetImageBuffer(dbbuf.size)
             bbuf.put(dbbuf.data)
@@ -42,11 +42,11 @@ abstract class LWJGLGraphics protected constructor(open val jplat: JavaPlatform)
         } else {
             // Something went awry and convertImage thought this image was in a good form already,
             // except we don't know how to deal with it
-            throw RuntimeException("Image type wasn't converted to usable: " + bitmap.getType())
+            throw RuntimeException("Image type wasn't converted to usable: " + bitmap.type)
         }
 
         gl.glBindTexture(GL11.GL_TEXTURE_2D, tex.id)
-        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, bitmap.getWidth(), bitmap.getHeight(),
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, bitmap.width, bitmap.height,
                 0, format, type, bbuf)
         gl.checkError("updateTexture")
     }

@@ -51,7 +51,7 @@ class JavaWebSocket(exec: Exec, uri: String, listener: Net.WebSocket.Listener) :
 
     override fun send(data: String) {
         try {
-            socket.getConnection().send(data)
+            socket.connection.send(data)
         } catch (e: Throwable) {
             throw RuntimeException(e)
         }
@@ -60,7 +60,7 @@ class JavaWebSocket(exec: Exec, uri: String, listener: Net.WebSocket.Listener) :
 
     override fun send(data: klay.core.buffers.ByteBuffer) {
         try {
-            socket.getConnection().send((data as JvmByteBuffer).nioBuffer)
+            socket.connection.send((data as JvmByteBuffer).nioBuffer)
         } catch (e: Throwable) {
             throw RuntimeException(e)
         }
