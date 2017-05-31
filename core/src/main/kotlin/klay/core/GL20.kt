@@ -385,43 +385,43 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
         glTexParameteriv(target, pname, bufs.intBuffer)
     }
 
-    fun glUniform1fv(location: Int, count: Int, v: FloatArray, offset: Int) {
-        bufs.setFloatBuffer(v, offset, count)
+    fun glUniform1fv(location: Int, count: Int, value: FloatArray, offset: Int) {
+        bufs.setFloatBuffer(value, offset, count)
         glUniform1fv(location, count, bufs.floatBuffer)
     }
 
-    fun glUniform1iv(location: Int, count: Int, v: IntArray, offset: Int) {
-        bufs.setIntBuffer(v, offset, count)
+    fun glUniform1iv(location: Int, count: Int, value: IntArray, offset: Int) {
+        bufs.setIntBuffer(value, offset, count)
         glUniform1iv(location, count, bufs.intBuffer)
     }
 
-    fun glUniform2fv(location: Int, count: Int, v: FloatArray, offset: Int) {
-        bufs.setFloatBuffer(v, 2 * offset, 2 * count)
+    fun glUniform2fv(location: Int, count: Int, value: FloatArray, offset: Int) {
+        bufs.setFloatBuffer(value, 2 * offset, 2 * count)
         glUniform2fv(location, count, bufs.floatBuffer)
     }
 
-    fun glUniform2iv(location: Int, count: Int, v: IntArray, offset: Int) {
-        bufs.setIntBuffer(v, 2 * offset, 2 * count)
+    fun glUniform2iv(location: Int, count: Int, value: IntArray, offset: Int) {
+        bufs.setIntBuffer(value, 2 * offset, 2 * count)
         glUniform2iv(location, count, bufs.intBuffer)
     }
 
-    fun glUniform3fv(location: Int, count: Int, v: FloatArray, offset: Int) {
-        bufs.setFloatBuffer(v, 3 * offset, 3 * count)
+    fun glUniform3fv(location: Int, count: Int, value: FloatArray, offset: Int) {
+        bufs.setFloatBuffer(value, 3 * offset, 3 * count)
         glUniform3fv(location, count, bufs.floatBuffer)
     }
 
-    fun glUniform3iv(location: Int, count: Int, v: IntArray, offset: Int) {
-        bufs.setIntBuffer(v, 3 * offset, 3 * count)
+    fun glUniform3iv(location: Int, count: Int, value: IntArray, offset: Int) {
+        bufs.setIntBuffer(value, 3 * offset, 3 * count)
         glUniform3iv(location, count, bufs.intBuffer)
     }
 
-    fun glUniform4fv(location: Int, count: Int, v: FloatArray, offset: Int) {
-        bufs.setFloatBuffer(v, 4 * offset, 4 * count)
+    fun glUniform4fv(location: Int, count: Int, value: FloatArray, offset: Int) {
+        bufs.setFloatBuffer(value, 4 * offset, 4 * count)
         glUniform4fv(location, count, bufs.floatBuffer)
     }
 
-    fun glUniform4iv(location: Int, count: Int, v: IntArray, offset: Int) {
-        bufs.setIntBuffer(v, 4 * offset, 4 * count)
+    fun glUniform4iv(location: Int, count: Int, value: IntArray, offset: Int) {
+        bufs.setIntBuffer(value, 4 * offset, 4 * count)
         glUniform4iv(location, count, bufs.intBuffer)
     }
 
@@ -485,17 +485,17 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
     abstract fun glCompileShader(shader: Int)
 
     abstract fun glCompressedTexImage2D(target: Int, level: Int, internalformat: Int, width: Int, height: Int, border: Int, imageSize: Int, data: Buffer)
-    abstract fun glCompressedTexImage2D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int)
-    abstract fun glCompressedTexImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: ByteBuffer)
-    abstract fun glCompressedTexImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int)
+    abstract fun glCompressedTexImage2D(target: Int, level: Int, internalformat: Int, width: Int, height: Int, border: Int, imageSize: Int, data: Int)
+    abstract fun glCompressedTexImage3D(target: Int, level: Int, internalformat: Int, width: Int, height: Int, depth: Int, border: Int, imageSize: Int, data: ByteBuffer)
+    abstract fun glCompressedTexImage3D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, depth: Int, border: Int, imageSize: Int, data: Int)
     abstract fun glCompressedTexSubImage2D(target: Int, level: Int, xoffset: Int, yoffset: Int, width: Int, height: Int, format: Int, imageSize: Int, data: Buffer)
-    abstract fun glCompressedTexSubImage2D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int)
-    abstract fun glCompressedTexSubImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int, arg10: ByteBuffer)
-    abstract fun glCompressedTexSubImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int, arg10: Int)
+    abstract fun glCompressedTexSubImage2D(target: Int, level: Int, xoffset: Int, yoffset: Int, width: Int, height: Int, format: Int, imageSize: Int, data: Int)
+    abstract fun glCompressedTexSubImage3D(target: Int, level: Int, xoffset: Int, yoffset: Int, zoffset: Int, width: Int, height: Int, depth: Int, format: Int, imageSize: Int, data: ByteBuffer)
+    abstract fun glCompressedTexSubImage3D(target: Int, level: Int, xoffset: Int, yoffset: Int, zoffset: Int, width: Int, height: Int, depth: Int, format: Int, imageSize: Int, data: Int)
 
     abstract fun glCopyTexImage2D(target: Int, level: Int, internalformat: Int, x: Int, y: Int, width: Int, height: Int, border: Int)
     abstract fun glCopyTexSubImage2D(target: Int, level: Int, xoffset: Int, yoffset: Int, x: Int, y: Int, width: Int, height: Int)
-    abstract fun glCopyTexSubImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int)
+    abstract fun glCopyTexSubImage3D(target: Int, level: Int, xoffset: Int, yoffset: Int, zoffset: Int, x: Int, y: Int, width: Int, height: Int)
     abstract fun glCreateProgram(): Int
     abstract fun glCreateShader(type: Int): Int
     abstract fun glCullFace(mode: Int)
@@ -540,7 +540,7 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
     abstract fun glGetAttribLocation(program: Int, name: String): Int
     abstract fun glGetBoolean(pname: Int): Boolean
     abstract fun glGetBooleanv(pname: Int, params: ByteBuffer)
-    abstract fun glGetBoundBuffer(arg0: Int): Int
+    abstract fun glGetBoundBuffer(target: Int): Int
     abstract fun glGetBufferParameteriv(target: Int, pname: Int, params: IntBuffer)
     abstract fun glGetError(): Int
     abstract fun glGetFloat(pname: Int): Float
@@ -548,7 +548,7 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
     abstract fun glGetFramebufferAttachmentParameteriv(target: Int, attachment: Int, pname: Int, params: IntBuffer)
     abstract fun glGetInteger(pname: Int): Int
     abstract fun glGetIntegerv(pname: Int, params: IntBuffer)
-    abstract fun glGetProgramBinary(arg0: Int, arg1: Int, arg2: IntBuffer, arg3: IntBuffer, arg4: ByteBuffer)
+    abstract fun glGetProgramBinary(program: Int, bufSize: Int, length: IntBuffer, binaryFormat: IntBuffer, binary: ByteBuffer)
     abstract fun glGetProgramInfoLog(program: Int, bufsize: Int, length: IntBuffer, infolog: ByteBuffer)
     abstract fun glGetProgramInfoLog(program: Int): String
     abstract fun glGetProgramiv(program: Int, pname: Int, params: IntBuffer)
@@ -582,10 +582,10 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
 
     abstract fun glLineWidth(width: Float)
     abstract fun glLinkProgram(program: Int)
-    abstract fun glMapBuffer(arg0: Int, arg1: Int): ByteBuffer
+    abstract fun glMapBuffer(target: Int, access: Int): ByteBuffer
     abstract fun glPixelStorei(pname: Int, param: Int)
     abstract fun glPolygonOffset(factor: Float, units: Float)
-    abstract fun glProgramBinary(arg0: Int, arg1: Int, arg2: ByteBuffer, arg3: Int)
+    abstract fun glProgramBinary(program: Int, binaryFormat: Int, binary: ByteBuffer, length: Int)
     abstract fun glReadPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, pixels: Buffer)
     abstract fun glReadPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, pixelsBufferOffset: Int)
     abstract fun glReleaseShaderCompiler()
@@ -607,39 +607,39 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
     abstract fun glStencilOpSeparate(face: Int, fail: Int, zfail: Int, zpass: Int)
 
     abstract fun glTexImage2D(target: Int, level: Int, internalformat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, pixels: Buffer?)
-    abstract fun glTexImage2D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int)
-    abstract fun glTexImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Buffer)
-    abstract fun glTexImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int)
+    abstract fun glTexImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, pixels: Int)
+    abstract fun glTexImage3D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, depth: Int, border: Int, format: Int, type: Int, pixels: Buffer)
+    abstract fun glTexImage3D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, depth: Int, border: Int, format: Int, type: Int, pixels: Int)
     abstract fun glTexParameterf(target: Int, pname: Int, param: Float)
     abstract fun glTexParameterfv(target: Int, pname: Int, params: FloatBuffer)
     abstract fun glTexParameteri(target: Int, pname: Int, param: Int)
     abstract fun glTexParameteriv(target: Int, pname: Int, params: IntBuffer)
     abstract fun glTexSubImage2D(target: Int, level: Int, xoffset: Int, yoffset: Int, width: Int, height: Int, format: Int, type: Int, pixels: Buffer)
-    abstract fun glTexSubImage2D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int)
-    abstract fun glTexSubImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int, arg10: ByteBuffer)
-    abstract fun glTexSubImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int, arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int, arg10: Int)
+    abstract fun glTexSubImage2D(target: Int, level: Int, xoffset: Int, yoffset: Int, width: Int, height: Int, format: Int, type: Int, pixels: Int)
+    abstract fun glTexSubImage3D(target: Int, level: Int, xoffset: Int, yoffset: Int, zoffset: Int, width: Int, height: Int, depth: Int, format: Int, type: Int, pixels: ByteBuffer)
+    abstract fun glTexSubImage3D(target: Int, level: Int, xoffset: Int, yoffset: Int, zoffset: Int, width: Int, height: Int, depth: Int, format: Int, type: Int, pixels: Int)
 
     abstract fun glUniform1f(location: Int, x: Float)
-    abstract fun glUniform1fv(location: Int, count: Int, v: FloatBuffer)
+    abstract fun glUniform1fv(location: Int, count: Int, buffer: FloatBuffer)
     abstract fun glUniform1i(location: Int, x: Int)
-    abstract fun glUniform1iv(location: Int, count: Int, v: IntBuffer)
+    abstract fun glUniform1iv(location: Int, count: Int, value: IntBuffer)
     abstract fun glUniform2f(location: Int, x: Float, y: Float)
-    abstract fun glUniform2fv(location: Int, count: Int, v: FloatBuffer)
+    abstract fun glUniform2fv(location: Int, count: Int, value: FloatBuffer)
     abstract fun glUniform2i(location: Int, x: Int, y: Int)
-    abstract fun glUniform2iv(location: Int, count: Int, v: IntBuffer)
+    abstract fun glUniform2iv(location: Int, count: Int, value: IntBuffer)
     abstract fun glUniform3f(location: Int, x: Float, y: Float, z: Float)
-    abstract fun glUniform3fv(location: Int, count: Int, v: FloatBuffer)
+    abstract fun glUniform3fv(location: Int, count: Int, value: FloatBuffer)
     abstract fun glUniform3i(location: Int, x: Int, y: Int, z: Int)
-    abstract fun glUniform3iv(location: Int, count: Int, v: IntBuffer)
+    abstract fun glUniform3iv(location: Int, count: Int, value: IntBuffer)
     abstract fun glUniform4f(location: Int, x: Float, y: Float, z: Float, w: Float)
-    abstract fun glUniform4fv(location: Int, count: Int, v: FloatBuffer)
+    abstract fun glUniform4fv(location: Int, count: Int, value: FloatBuffer)
     abstract fun glUniform4i(location: Int, x: Int, y: Int, z: Int, w: Int)
-    abstract fun glUniform4iv(location: Int, count: Int, v: IntBuffer)
+    abstract fun glUniform4iv(location: Int, count: Int, value: IntBuffer)
     abstract fun glUniformMatrix2fv(location: Int, count: Int, transpose: Boolean, value: FloatBuffer)
     abstract fun glUniformMatrix3fv(location: Int, count: Int, transpose: Boolean, value: FloatBuffer)
     abstract fun glUniformMatrix4fv(location: Int, count: Int, transpose: Boolean, value: FloatBuffer)
 
-    abstract fun glUnmapBuffer(arg0: Int): Boolean
+    abstract fun glUnmapBuffer(target: Int): Boolean
     abstract fun glUseProgram(program: Int)
     abstract fun glValidateProgram(program: Int)
 
