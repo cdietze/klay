@@ -610,76 +610,76 @@ class JvmGL20 : klay.core.GL20(JvmBuffers(), java.lang.Boolean.getBoolean("klay.
         GL20.glUniform2i(location, x, y)
     }
 
-    override fun glUniform2iv(location: Int, count: Int, buffer: IntBuffer) {
-        val oldLimit = buffer.limit()
-        buffer.limit(buffer.position() + 2 * count)
-        GL20.glUniform2iv(location, (buffer as JvmIntBuffer).nioBuffer)
-        buffer.limit(oldLimit)
+    override fun glUniform2iv(location: Int, count: Int, value: IntBuffer) {
+        val oldLimit = value.limit()
+        value.limit(value.position() + 2 * count)
+        GL20.glUniform2iv(location, (value as JvmIntBuffer).nioBuffer)
+        value.limit(oldLimit)
     }
 
     override fun glUniform3f(location: Int, x: Float, y: Float, z: Float) {
         GL20.glUniform3f(location, x, y, z)
     }
 
-    override fun glUniform3fv(location: Int, count: Int, buffer: FloatBuffer) {
-        val oldLimit = buffer.limit()
-        buffer.limit(buffer.position() + 3 * count)
-        GL20.glUniform3fv(location, (buffer as JvmFloatBuffer).nioBuffer)
-        buffer.limit(oldLimit)
+    override fun glUniform3fv(location: Int, count: Int, value: FloatBuffer) {
+        val oldLimit = value.limit()
+        value.limit(value.position() + 3 * count)
+        GL20.glUniform3fv(location, (value as JvmFloatBuffer).nioBuffer)
+        value.limit(oldLimit)
     }
 
     override fun glUniform3i(location: Int, x: Int, y: Int, z: Int) {
         GL20.glUniform3i(location, x, y, z)
     }
 
-    override fun glUniform3iv(location: Int, count: Int, buffer: IntBuffer) {
-        val oldLimit = buffer.limit()
-        buffer.limit(buffer.position() + 3 * count)
-        GL20.glUniform3iv(location, (buffer as JvmIntBuffer).nioBuffer)
-        buffer.limit(oldLimit)
+    override fun glUniform3iv(location: Int, count: Int, value: IntBuffer) {
+        val oldLimit = value.limit()
+        value.limit(value.position() + 3 * count)
+        GL20.glUniform3iv(location, (value as JvmIntBuffer).nioBuffer)
+        value.limit(oldLimit)
     }
 
     override fun glUniform4f(location: Int, x: Float, y: Float, z: Float, w: Float) {
         GL20.glUniform4f(location, x, y, z, w)
     }
 
-    override fun glUniform4fv(location: Int, count: Int, buffer: FloatBuffer) {
-        val oldLimit = buffer.limit()
-        buffer.limit(buffer.position() + 4 * count)
-        GL20.glUniform4fv(location, (buffer as JvmFloatBuffer).nioBuffer)
-        buffer.limit(oldLimit)
+    override fun glUniform4fv(location: Int, count: Int, value: FloatBuffer) {
+        val oldLimit = value.limit()
+        value.limit(value.position() + 4 * count)
+        GL20.glUniform4fv(location, (value as JvmFloatBuffer).nioBuffer)
+        value.limit(oldLimit)
     }
 
     override fun glUniform4i(location: Int, x: Int, y: Int, z: Int, w: Int) {
         GL20.glUniform4i(location, x, y, z, w)
     }
 
-    override fun glUniform4iv(location: Int, count: Int, buffer: IntBuffer) {
-        val oldLimit = buffer.limit()
-        buffer.limit(buffer.position() + 4 * count)
-        GL20.glUniform4iv(location, (buffer as JvmIntBuffer).nioBuffer)
-        buffer.limit(oldLimit)
+    override fun glUniform4iv(location: Int, count: Int, value: IntBuffer) {
+        val oldLimit = value.limit()
+        value.limit(value.position() + 4 * count)
+        GL20.glUniform4iv(location, (value as JvmIntBuffer).nioBuffer)
+        value.limit(oldLimit)
     }
 
-    override fun glUniformMatrix2fv(location: Int, count: Int, transpose: Boolean, buffer: FloatBuffer) {
-        val oldLimit = buffer.limit()
-        buffer.limit(buffer.position() + 2 * 2 * count)
-        GL20.glUniformMatrix2fv(location, transpose, (buffer as JvmFloatBuffer).nioBuffer)
-        buffer.limit(oldLimit)
+    override fun glUniformMatrix2fv(location: Int, count: Int, transpose: Boolean, value: FloatBuffer) {
+        val oldLimit = value.limit()
+        value.limit(value.position() + 2 * 2 * count)
+        GL20.glUniformMatrix2fv(location, transpose, (value as JvmFloatBuffer).nioBuffer)
+        value.limit(oldLimit)
     }
 
-    override fun glUniformMatrix3fv(location: Int, count: Int, transpose: Boolean, buffer: FloatBuffer) {
-        val oldLimit = buffer.limit()
-        buffer.limit(buffer.position() + 3 * 3 * count)
-        GL20.glUniformMatrix3fv(location, transpose, (buffer as JvmFloatBuffer).nioBuffer)
-        buffer.limit(oldLimit)
+    override fun glUniformMatrix3fv(location: Int, count: Int, transpose: Boolean, value: FloatBuffer) {
+        val oldLimit = value.limit()
+        value.limit(value.position() + 3 * 3 * count)
+        GL20.glUniformMatrix3fv(location, transpose, (value as JvmFloatBuffer).nioBuffer)
+        value.limit(oldLimit)
     }
 
-    override fun glUniformMatrix4fv(location: Int, count: Int, transpose: Boolean, buffer: FloatBuffer) {
-        val oldLimit = buffer.limit()
-        buffer.limit(buffer.position() + 4 * 4 * count)
-        GL20.glUniformMatrix4fv(location, transpose, (buffer as JvmFloatBuffer).nioBuffer)
-        buffer.limit(oldLimit)
+    override fun glUniformMatrix4fv(location: Int, count: Int, transpose: Boolean, value: FloatBuffer) {
+        val oldLimit = value.limit()
+        value.limit(value.position() + 4 * 4 * count)
+        GL20.glUniformMatrix4fv(location, transpose, (value as JvmFloatBuffer).nioBuffer)
+        value.limit(oldLimit)
     }
 
     override fun glUseProgram(program: Int) {

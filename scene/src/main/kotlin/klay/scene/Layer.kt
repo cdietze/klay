@@ -905,7 +905,7 @@ abstract class Layer : Closeable {
     }
 
     /** Enumerates bit flags tracked by this layer.  */
-    protected enum class Flag private constructor(val bitmask: Int) {
+    protected enum class Flag constructor(val bitmask: Int) {
         VISIBLE(1 shl 0),
         INTERACTIVE(1 shl 1),
         XFDIRTY(1 shl 2),

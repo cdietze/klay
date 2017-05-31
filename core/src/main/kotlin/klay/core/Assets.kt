@@ -173,13 +173,13 @@ abstract class Assets(protected val exec: Exec) {
          * `foo/bar/baz/../../bing.png` becomes `foo/bing.png`.
          */
         protected fun normalizePath(path: String): String {
-            var path = path
+            var _path = path
             var pathLen: Int
             do {
-                pathLen = path.length
-                path = path.replace("[^/]+/\\.\\./".toRegex(), "")
-            } while (path.length != pathLen)
-            return path
+                pathLen = _path.length
+                _path = _path.replace("[^/]+/\\.\\./".toRegex(), "")
+            } while (_path.length != pathLen)
+            return _path
         }
     }
 }

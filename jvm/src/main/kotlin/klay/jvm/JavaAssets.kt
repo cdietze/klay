@@ -254,8 +254,8 @@ class JavaAssets
         throw if (error != null) error else FileNotFoundException(path)
     }
 
-    override fun createImage(async: Boolean, rwid: Int, rhei: Int, source: String): ImageImpl {
-        return JavaImage(plat, async, rwid, rhei, source)
+    override fun createImage(async: Boolean, rawWidth: Int, rawHeight: Int, source: String): ImageImpl {
+        return JavaImage(plat, async, rawWidth, rawHeight, source)
     }
 
     companion object {

@@ -326,29 +326,29 @@ open class Surface
      * Fills a line between the specified coordinates, of the specified display unit width.
      */
     fun drawLine(x0: Float, y0: Float, x1: Float, y1: Float, width: Float): Surface {
-        var x0 = x0
-        var y0 = y0
-        var x1 = x1
-        var y1 = y1
+        var _x0 = x0
+        var _y0 = y0
+        var _x1 = x1
+        var _y1 = y1
         // swap the line end points if x1 is less than x0
         if (x1 < x0) {
-            var temp = x0
-            x0 = x1
-            x1 = temp
-            temp = y0
-            y0 = y1
-            y1 = temp
+            var temp = _x0
+            _x0 = _x1
+            _x1 = temp
+            temp = _y0
+            _y0 = _y1
+            _y1 = temp
         }
 
-        val dx = x1 - x0
-        val dy = y1 - y0
+        val dx = _x1 - _x0
+        val dy = _y1 - _y0
         val length = MathUtil.sqrt(dx * dx + dy * dy)
         val wx = dx * (width / 2) / length
         val wy = dy * (width / 2) / length
 
         val xf = AffineTransform()
         xf.setRotation(MathUtil.atan2(dy, dx))
-        xf.setTranslation(x0 + wy, y0 - wx)
+        xf.setTranslation(_x0 + wy, _y0 - wx)
         Transforms.multiply(tx(), xf, xf)
 
         if (patternTex != null) {

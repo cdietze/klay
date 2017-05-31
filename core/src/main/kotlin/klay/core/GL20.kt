@@ -516,7 +516,7 @@ abstract class GL20 protected constructor(val bufs: GL20.Buffers, val checkError
     abstract fun glDisableVertexAttribArray(index: Int)
     abstract fun glDrawArrays(mode: Int, first: Int, count: Int)
     abstract fun glDrawElements(mode: Int, count: Int, type: Int, indices: Buffer)
-    abstract fun glDrawElements(mode: Int, count: Int, type: Int, offset: Int)
+    abstract fun glDrawElements(mode: Int, count: Int, type: Int, indices: Int)
     abstract fun glEnable(cap: Int)
     abstract fun glEnableVertexAttribArray(index: Int)
     abstract fun glFinish()

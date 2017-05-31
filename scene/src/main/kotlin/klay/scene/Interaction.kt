@@ -109,14 +109,14 @@ abstract class Interaction<E : Event.XY>(
                         depth = Depth.AT
                     else if (depth == Depth.AT) depth = Depth.ABOVE
                     if (captureMode != null && !captureMode!!.allow(depth)) {
-                        target = target!!.parent()
+                        target = target.parent()
                         continue
                     }
                     dispatch(target)
                     // the above dispatch may have caused a capture, in which case capturing layer will have
                     // just been set and we need to update our depth accordingly
                     if (target === capturingLayer) depth = Depth.AT
-                    target = target!!.parent()
+                    target = target.parent()
                 }
             } else {
                 dispatch(hitLayer)
@@ -154,11 +154,11 @@ abstract class Interaction<E : Event.XY>(
                         depth = Depth.AT
                     else if (depth == Depth.AT) depth = Depth.ABOVE
                     if (exceptMode != null && exceptMode.allow(depth)) {
-                        target = target!!.parent()
+                        target = target.parent()
                         continue
                     }
                     dispatch(target)
-                    target = target!!.parent()
+                    target = target.parent()
                 }
             } else {
                 if (hitLayer !== except) dispatch(hitLayer)

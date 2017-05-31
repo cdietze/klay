@@ -31,26 +31,26 @@ class GLFWGraphics(override val plat: JavaPlatform, private val window: Long) : 
     }
 
     override fun setSize(width: Int, height: Int, fullscreen: Boolean) {
-        var width = width
-        var height = height
+        var _width = width
+        var _height = height
         if (plat.config.fullscreen !== fullscreen) {
             plat.log().warn("fullscreen cannot be changed via setSize, use config.fullscreen instead")
             return
         }
         val vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor())
-        if (width > vidMode.width()) {
-            plat.log().debug("Capping window width at desktop width: " + width + " -> " +
+        if (_width > vidMode.width()) {
+            plat.log().debug("Capping window width at desktop width: " + _width + " -> " +
                     vidMode.width())
-            width = vidMode.width()
+            _width = vidMode.width()
         }
-        if (height > vidMode.height()) {
-            plat.log().debug("Capping window height at desktop height: " + height + " -> " +
+        if (_height > vidMode.height()) {
+            plat.log().debug("Capping window height at desktop height: " + _height + " -> " +
                     vidMode.height())
-            height = vidMode.height()
+            _height = vidMode.height()
         }
-        glfwSetWindowSize(window, width, height)
+        glfwSetWindowSize(window, _width, _height)
         // plat.log().info("setSize: " + width + "x" + height);
-        viewSizeM.setSize(width.toFloat(), height.toFloat())
+        viewSizeM.setSize(_width.toFloat(), _height.toFloat())
 
         val fbSize = BufferUtils.createIntBuffer(2)
         val addr = MemoryUtil.memAddress(fbSize)

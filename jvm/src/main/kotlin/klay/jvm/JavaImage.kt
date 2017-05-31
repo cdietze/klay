@@ -45,33 +45,29 @@ class JavaImage : ImageImpl {
         return JavaImage(gfx, scale, (xform as JavaBitmapTransformer).transform(img!!), source)
     }
 
-    override fun draw(ctx: Any, x: Float, y: Float, w: Float, h: Float) {
+    override fun draw(gc: Any, x: Float, y: Float, width: Float, height: Float) {
         // using img.getWidth/Height here accounts for ctx.scale.factor
-        val tx = AffineTransform(w / img!!.width, 0f, 0f,
-                h / img!!.height, x, y)
-        (ctx as Graphics2D).drawImage(img, tx, null)
+        val tx = AffineTransform(width / img!!.width, 0f, 0f,
+                height / img!!.height, x, y)
+        (gc as Graphics2D).drawImage(img, tx, null)
     }
 
-    override fun draw(ctx: Any, dx: Float, dy: Float, dw: Float, dh: Float,
+    override fun draw(gc: Any, dx: Float, dy: Float, dw: Float, dh: Float,
                       sx: Float, sy: Float, sw: Float, sh: Float) {
-        var sx = sx
-        var sy = sy
-        var sw = sw
-        var sh = sh
         // adjust our source rect to account for the scale factor
         val f = scale.factor
-        sx *= f
-        sy *= f
-        sw *= f
-        sh *= f
+        val _sx = sx * f
+        val _sy = sy * f
+        val _sw = sw * f
+        val _sh = sh * f
         // now render the image through a clip and with a scaling transform, so that only the desired
         // source rect is rendered, and is rendered into the desired target region
-        val scaleX = dw / sw
-        val scaleY = dh / sh
-        val gfx = ctx as Graphics2D
+        val scaleX = dw / _sw
+        val scaleY = dh / _sh
+        val gfx = gc as Graphics2D
         val oclip = gfx.clip
         gfx.clipRect(MathUtil.ifloor(dx), MathUtil.ifloor(dy), MathUtil.iceil(dw), MathUtil.iceil(dh))
-        gfx.drawImage(img, AffineTransform(scaleX, 0f, 0f, scaleY, dx - sx * scaleX, dy - sy * scaleY), null)
+        gfx.drawImage(img, AffineTransform(scaleX, 0f, 0f, scaleY, dx - _sx * scaleX, dy - _sy * scaleY), null)
         gfx.clip = oclip
     }
 
@@ -87,13 +83,13 @@ class JavaImage : ImageImpl {
         img = bitmap as BufferedImage
     }
 
-    override fun createErrorBitmap(rawWidth: Int, rawHeight: Int): Any {
-        val img = BufferedImage(rawWidth, rawHeight, BufferedImage.TYPE_INT_ARGB_PRE)
+    override fun createErrorBitmap(pixelWidth: Int, pixelHeight: Int): Any {
+        val img = BufferedImage(pixelWidth, pixelHeight, BufferedImage.TYPE_INT_ARGB_PRE)
         val g = img.createGraphics()
         try {
             g.color = java.awt.Color.red
-            for (yy in 0..rawHeight / 15) {
-                for (xx in 0..rawWidth / 45) {
+            for (yy in 0..pixelHeight / 15) {
+                for (xx in 0..pixelWidth / 45) {
                     g.drawString("ERROR", xx * 45, yy * 15)
                 }
             }
