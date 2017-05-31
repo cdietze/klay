@@ -588,22 +588,22 @@ class JvmGL20 : klay.core.GL20(JvmBuffers(), java.lang.Boolean.getBoolean("klay.
         GL20.glUniform1i(location, x)
     }
 
-    override fun glUniform1iv(location: Int, count: Int, buffer: IntBuffer) {
-        val oldLimit = buffer.limit()
-        buffer.limit(buffer.position() + count)
-        GL20.glUniform1iv(location, (buffer as JvmIntBuffer).nioBuffer)
-        buffer.limit(oldLimit)
+    override fun glUniform1iv(location: Int, count: Int, value: IntBuffer) {
+        val oldLimit = value.limit()
+        value.limit(value.position() + count)
+        GL20.glUniform1iv(location, (value as JvmIntBuffer).nioBuffer)
+        value.limit(oldLimit)
     }
 
     override fun glUniform2f(location: Int, x: Float, y: Float) {
         GL20.glUniform2f(location, x, y)
     }
 
-    override fun glUniform2fv(location: Int, count: Int, buffer: FloatBuffer) {
-        val oldLimit = buffer.limit()
-        buffer.limit(buffer.position() + 2 * count)
-        GL20.glUniform2fv(location, (buffer as JvmFloatBuffer).nioBuffer)
-        buffer.limit(oldLimit)
+    override fun glUniform2fv(location: Int, count: Int, value: FloatBuffer) {
+        val oldLimit = value.limit()
+        value.limit(value.position() + 2 * count)
+        GL20.glUniform2fv(location, (value as JvmFloatBuffer).nioBuffer)
+        value.limit(oldLimit)
     }
 
     override fun glUniform2i(location: Int, x: Int, y: Int) {
@@ -765,8 +765,8 @@ class JvmGL20 : klay.core.GL20(JvmBuffers(), java.lang.Boolean.getBoolean("klay.
 
     override fun glCompressedTexImage2D(target: Int, level: Int, internalformat: Int,
                                         width: Int, height: Int, border: Int,
-                                        data_imageSize: Int, data: Int) {
-        GL13.glCompressedTexImage2D(target, level, internalformat, width, height, border, data_imageSize, data.toLong())
+                                        imageSize: Int, data: Int) {
+        GL13.glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data.toLong())
     }
 
     override fun glCompressedTexImage3D(target: Int, level: Int, internalformat: Int,
@@ -776,18 +776,18 @@ class JvmGL20 : klay.core.GL20(JvmBuffers(), java.lang.Boolean.getBoolean("klay.
                 imageSize, MemoryUtil.memAddress((data as JvmByteBuffer).nioBuffer))
     }
 
-    override fun glCompressedTexImage3D(target: Int, level: Int, internalformat: Int,
+    override fun glCompressedTexImage3D(target: Int, level: Int, internalFormat: Int,
                                         width: Int, height: Int, depth: Int, border: Int,
                                         imageSize: Int, data: Int) {
         GL13.glCompressedTexImage3D(
-                target, level, internalformat, width, height, depth, border, imageSize, data.toLong())
+                target, level, internalFormat, width, height, depth, border, imageSize, data.toLong())
     }
 
     override fun glCompressedTexSubImage2D(target: Int, level: Int, xoffset: Int, yoffset: Int,
-                                           width: Int, height: Int, format: Int, data_imageSize: Int,
+                                           width: Int, height: Int, format: Int, imageSize: Int,
                                            data: Int) {
         GL13.glCompressedTexSubImage2D(
-                target, level, xoffset, yoffset, width, height, format, data_imageSize, data.toLong())
+                target, level, xoffset, yoffset, width, height, format, imageSize, data.toLong())
     }
 
     override fun glCompressedTexSubImage3D(target: Int, level: Int, xoffset: Int, yoffset: Int, zoffset: Int,
@@ -898,7 +898,7 @@ class JvmGL20 : klay.core.GL20(JvmBuffers(), java.lang.Boolean.getBoolean("klay.
         GL11.glGetBooleanv(pname, (params as JvmByteBuffer).nioBuffer)
     }
 
-    override fun glGetBoundBuffer(arg0: Int): Int {
+    override fun glGetBoundBuffer(target: Int): Int {
         throw UnsupportedOperationException("glGetBoundBuffer not supported in GLES 2.0 or LWJGL.")
     }
 
@@ -970,7 +970,7 @@ class JvmGL20 : klay.core.GL20(JvmBuffers(), java.lang.Boolean.getBoolean("klay.
         throw UnsupportedOperationException("NYI")
     }
 
-    override fun glShaderSource(shader: Int, count: Int, strings: Array<String>, length: IntArray, lengthOff: Int) {
+    override fun glShaderSource(shader: Int, count: Int, strings: Array<String>, length: IntArray, lengthOffset: Int) {
         for (str in strings)
             GL20.glShaderSource(shader, str)
     }
@@ -980,21 +980,21 @@ class JvmGL20 : klay.core.GL20(JvmBuffers(), java.lang.Boolean.getBoolean("klay.
             GL20.glShaderSource(shader, str)
     }
 
-    override fun glTexImage2D(target: Int, level: Int, internalformat: Int, width: Int, height: Int,
+    override fun glTexImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int,
                               border: Int, format: Int, type: Int, pixels: Int) {
-        GL11.glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels.toLong())
+        GL11.glTexImage2D(target, level, internalFormat, width, height, border, format, type, pixels.toLong())
     }
 
-    override fun glTexImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int,
-                              arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Buffer) {
-        if (arg9 !is JvmByteBuffer)
+    override fun glTexImage3D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int,
+                              depth: Int, border: Int, format: Int, type: Int, pixels: Buffer) {
+        if (pixels !is JvmByteBuffer)
             throw UnsupportedOperationException("Buffer must be a ByteBuffer.")
-        GL12.glTexImage3D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9.nioBuffer)
+        GL12.glTexImage3D(target, level, internalFormat, width, height, depth, border, format, type, pixels.nioBuffer)
     }
 
-    override fun glTexImage3D(arg0: Int, arg1: Int, arg2: Int, arg3: Int, arg4: Int,
-                              arg5: Int, arg6: Int, arg7: Int, arg8: Int, arg9: Int) {
-        GL12.glTexImage3D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9.toLong())
+    override fun glTexImage3D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int,
+                              depth: Int, border: Int, format: Int, type: Int, pixels: Int) {
+        GL12.glTexImage3D(target, level, internalFormat, width, height, depth, border, format, type, pixels.toLong())
     }
 
     override fun glTexSubImage2D(target: Int, level: Int, xoffset: Int, yoffset: Int, width: Int, height: Int, format: Int,
