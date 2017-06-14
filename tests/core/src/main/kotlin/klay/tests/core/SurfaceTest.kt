@@ -96,7 +96,7 @@ class SurfaceTest(game: TestsGame) : Test(game, "Surface", "Tests various Surfac
                 surf.setFillPattern(ttex).fillRect(10f, 0f, 100f, 100f)
                 // render a sliding window of half of our triangles to test the slice rendering
                 triangleBatch.addTris(ttex, Tint.NOOP_TINT, af,
-                        verts, offset * 4, (hsamples + 1) * 4, ttex.width(), ttex.height(),
+                        verts, offset * 4, (hsamples + 1) * 4, ttex.width, ttex.height,
                         indices, offset * 6, hsamples * 6, offset * 2)
                 offset += doff
                 if (offset == 0)

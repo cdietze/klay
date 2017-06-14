@@ -8,16 +8,16 @@ import react.RFuture
  * which provides the [Texture] or an `Image.Region (TODO)` which provides the
  * [Tile].
  */
-abstract class TileSource {
+interface TileSource {
 
     /** Returns whether this tile source is loaded and ready to provide its tile.  */
-    abstract val isLoaded: Boolean
+    val isLoaded: Boolean
 
     /** Returns the tile provided by this source.
      * @throws IllegalStateException if `!isLoaded()`.
      */
-    abstract fun tile(): Tile
+    fun tile(): Tile
 
     /** Delivers the tile provided by this source once the source is loaded.  */
-    abstract fun tileAsync(): RFuture<Tile>
+    fun tileAsync(): RFuture<Tile>
 }

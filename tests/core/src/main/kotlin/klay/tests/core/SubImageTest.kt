@@ -13,7 +13,7 @@ class SubImageTest(game: TestsGame) : Test(game, "SubImage", "Tests sub-image re
     override fun init() {
         // create a canvas image and draw subimages of that
         val r = 30f
-        val canvas = game.graphics.createCanvas((2 * r).toFloat(), (2 * r).toFloat())
+        val canvas = game.graphics.createCanvas((2 * r), (2 * r))
         canvas.setFillColor(0xFF99CCFF.toInt()).fillCircle(r, r, r)
         fragment("CanvasImage", canvas.toTexture(), 250f, 160f)
 
@@ -30,7 +30,7 @@ class SubImageTest(game: TestsGame) : Test(game, "SubImage", "Tests sub-image re
 
             // create tileable sub-texture
             val subtex = game.graphics.createTexture(
-                    otile.width(), otile.height(), Texture.Config.DEFAULT.repeat(true, true))
+                    otile.width, otile.height, Texture.Config.DEFAULT.repeat(true, true))
             TextureSurface(game.graphics, game.defaultBatch, subtex).begin().clear().draw(otile, 0f, 0f).end().close()
 
             // tile a sub-image, oh my!
@@ -64,7 +64,7 @@ class SubImageTest(game: TestsGame) : Test(game, "SubImage", "Tests sub-image re
             conns.add<Connection>(game.paint.connect { clock: Clock ->
                 val t = clock.tick / 1000f
                 // round the width so that it sometimes goes to zero; just to be sure zero doesn't choke
-                osci.region!!.width = Math.round(Math.abs(MathUtil.sin(t)) * osci.tile()!!.width()).toFloat()
+                osci.region!!.width = Math.round(Math.abs(MathUtil.sin(t)) * osci.tile()!!.width).toFloat()
             })
         }.onFailure(logFailure("Failed to load orange image"))
     }
