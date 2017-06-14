@@ -21,6 +21,7 @@
         <module>scene</module>
         <module>jvm</module>
         <module>tests</module>
+        <module>tripleklay</module>
     </modules>
 
     <profiles>
