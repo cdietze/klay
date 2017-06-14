@@ -25,7 +25,7 @@ class MouseWheelTest(game: TestsGame) : Test(game, "MouseWheel", "Tests mouse wh
         slider.add(il)
         game.rootLayer.addAt(slider, 25f, 25f)
 
-        bg.events().connect(object : Mouse.Listener() {
+        bg.events().connect(object : Mouse.Listener {
             override fun onWheel(event: klay.core.Mouse.WheelEvent, iact: Mouse.Interaction) {
                 var y = il.ty() + event.velocity
                 y = Math.max(0f, Math.min(y, HEIGHT))

@@ -12,19 +12,19 @@ import java.util.*
 class Touch : klay.core.Touch() {
 
     /** A listener for touch events with layer info.  */
-    abstract class Listener : Slot<Any> {
+    interface Listener : Slot<Any> {
 
         /** Notifies listener of a touch start event.  */
-        open fun onStart(iact: Interaction) {}
+        fun onStart(iact: Interaction) {}
 
         /** Notifies listener of a touch move event.  */
-        open fun onMove(iact: Interaction) {}
+        fun onMove(iact: Interaction) {}
 
         /** Notifies listener of a touch end event.  */
-        open fun onEnd(iact: Interaction) {}
+        fun onEnd(iact: Interaction) {}
 
         /** Notifies listener of a touch cancel event.  */
-        open fun onCancel(iact: Interaction) {}
+        fun onCancel(iact: Interaction) {}
 
         override fun invoke(event: Any) {
             if (event is Interaction) {

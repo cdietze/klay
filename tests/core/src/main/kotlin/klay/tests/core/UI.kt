@@ -1,7 +1,7 @@
 package klay.tests.core
 
 import klay.core.*
-import klay.scene.*
+import klay.scene.ImageLayer
 import klay.scene.Pointer
 
 class UI(private val game: TestsGame) {
@@ -41,7 +41,7 @@ class UI(private val game: TestsGame) {
 
     fun createButton(label: String, onClick: Runnable): ImageLayer {
         val layer = ImageLayer(formatButton(label))
-        layer.events().connect(object : Pointer.Listener() {
+        layer.events().connect(object : Pointer.Listener {
             override fun onStart(iact: Pointer.Interaction) {
                 onClick.run()
             }
