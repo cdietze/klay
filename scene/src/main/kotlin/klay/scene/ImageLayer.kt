@@ -80,10 +80,10 @@ open class ImageLayer : Layer {
     open fun setTile(tile: Tile?): ImageLayer {
         // avoid releasing and rereferencing texture if nothing changes
         if (this.tile !== tile) {
-            if (this.tile != null) this.tile!!.texture().release()
+            if (this.tile != null) this.tile!!.texture.release()
             this.tile = tile
             checkOrigin()
-            if (tile != null) tile.texture().reference()
+            if (tile != null) tile.texture.reference()
         }
         return this
     }
@@ -139,13 +139,13 @@ open class ImageLayer : Layer {
     override fun width(): Float {
         if (forceWidth >= 0) return forceWidth
         if (region != null) return region!!.width
-        return if (tile == null) 0f else tile!!.width()
+        return if (tile == null) 0f else tile!!.width
     }
 
     override fun height(): Float {
         if (forceHeight >= 0) return forceHeight
         if (region != null) return region!!.height
-        return if (tile == null) 0f else tile!!.height()
+        return if (tile == null) 0f else tile!!.height
     }
 
     override fun close() {

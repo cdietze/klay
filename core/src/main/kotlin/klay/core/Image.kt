@@ -173,7 +173,7 @@ abstract class Image : TileSource, Canvas.Drawable {
 
     /** A region of an image which can be rendered to [Canvas]es and turned into a texture
      * (which is a [Tile] of the original image's texture).  */
-    abstract class Region : TileSource(), Canvas.Drawable
+    abstract class Region : TileSource, Canvas.Drawable
 
     /** Returns a region of this image which can be drawn independently.  */
     fun region(rx: Float, ry: Float, rwidth: Float, rheight: Float): Region {

@@ -264,7 +264,7 @@ open class Surface
     /**
      * Draws a tile at the specified location `(x, y)` and size `(w x h)`.
      */
-    fun draw(tile: Tile, x: Float, y: Float, w: Float = tile.width(), h: Float = tile.height()): Surface {
+    fun draw(tile: Tile, x: Float, y: Float, w: Float = tile.width, h: Float = tile.height): Surface {
         if (!checkIntersection || intersects(x, y, w, h)) {
             tile.addToBatch(batch, tint, tx(), x, y, w, h)
         }
@@ -312,7 +312,7 @@ open class Surface
      * Draws a texture tile, centered at the specified location.
      */
     fun drawCentered(tile: Tile, x: Float, y: Float): Surface {
-        return draw(tile, x - tile.width() / 2, y - tile.height() / 2)
+        return draw(tile, x - tile.width / 2, y - tile.height / 2)
     }
 
     /**

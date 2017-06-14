@@ -131,43 +131,29 @@ class Texture(// needed to access GL20 and to queue our destruction on finalize
         val tileWidth = width
         val tileHeight = height
         return object : Tile() {
-            override fun texture(): Texture {
-                return this@Texture
-            }
+            override val texture: Texture = this@Texture
 
-            override fun width(): Float {
-                return tileWidth
-            }
+            override val width: Float = tileWidth
 
-            override fun height(): Float {
-                return tileHeight
-            }
+            override val height: Float = tileHeight
 
-            override fun sx(): Float {
-                return tileX / displayWidth
-            }
+            override val sx: Float = tileX / displayWidth
 
-            override fun sy(): Float {
-                return tileY / displayHeight
-            }
+            override val sy: Float = tileY / displayHeight
 
-            override fun tx(): Float {
-                return (tileX + tileWidth) / displayHeight
-            }
+            override val tx: Float = (tileX + tileWidth) / displayHeight
 
-            override fun ty(): Float {
-                return (tileY + tileWidth) / displayHeight
-            }
+            override val ty: Float = (tileY + tileWidth) / displayHeight
 
             override fun addToBatch(batch: QuadBatch, tint: Int, tx: AffineTransform,
                                     x: Float, y: Float, width: Float, height: Float) {
-                batch.addQuad(texture(), tint, tx, x, y, width, height, tileX, tileY, tileWidth, tileHeight)
+                batch.addQuad(texture, tint, tx, x, y, width, height, tileX, tileY, tileWidth, tileHeight)
             }
 
             override fun addToBatch(batch: QuadBatch, tint: Int, tx: AffineTransform,
                                     dx: Float, dy: Float, dw: Float, dh: Float,
                                     sx: Float, sy: Float, sw: Float, sh: Float) {
-                batch.addQuad(texture(), tint, tx, dx, dy, dw, dh, tileX + sx, tileY + sy, sw, sh)
+                batch.addQuad(texture, tint, tx, dx, dy, dw, dh, tileX + sx, tileY + sy, sw, sh)
             }
         }
     }
@@ -187,33 +173,19 @@ class Texture(// needed to access GL20 and to queue our destruction on finalize
         return { close() }
     }
 
-    override fun texture(): Texture {
-        return this
-    }
+    override val texture: Texture = this
 
-    override fun width(): Float {
-        return displayWidth
-    }
+    override val width: Float = displayWidth
 
-    override fun height(): Float {
-        return displayHeight
-    }
+    override val height: Float = displayHeight
 
-    override fun sx(): Float {
-        return 0f
-    }
+    override val sx: Float = 0f
 
-    override fun sy(): Float {
-        return 0f
-    }
+    override val sy: Float = 0f
 
-    override fun tx(): Float {
-        return 1f
-    }
+    override val tx: Float = 1f
 
-    override fun ty(): Float {
-        return 1f
-    }
+    override val ty: Float = 1f
 
     override fun addToBatch(batch: QuadBatch, tint: Int, tx: AffineTransform,
                             x: Float, y: Float, width: Float, height: Float) {
