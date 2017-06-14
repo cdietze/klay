@@ -35,7 +35,7 @@ internal class LayerClickTest(game: TestsGame) : Test(game, "LayerClick", "Tests
         }
 
         fun pointer(): Pointer.Listener {
-            return object : Pointer.Listener() {
+            return object : Pointer.Listener {
                 override fun onStart(event: Pointer.Interaction) {
                     doStart(event.x, event.y)
                 }
@@ -47,7 +47,7 @@ internal class LayerClickTest(game: TestsGame) : Test(game, "LayerClick", "Tests
         }
 
         fun touch(): Touch.Listener {
-            return object : Touch.Listener() {
+            return object : Touch.Listener {
                 override fun onStart(event: Touch.Interaction) {
                     doStart(event.x, event.y)
                 }

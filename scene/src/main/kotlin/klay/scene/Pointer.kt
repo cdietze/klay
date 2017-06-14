@@ -21,19 +21,19 @@ class Pointer
 (plat: Platform, root: Layer, bubble: Boolean) : klay.core.Pointer(plat) {
 
     /** A listener for pointer events with layer info.  */
-    abstract class Listener : Slot<Any> {
+    interface Listener : Slot<Any> {
 
         /** Notifies listener of a pointer start event.  */
-        open fun onStart(iact: Interaction) {}
+        fun onStart(iact: Interaction) {}
 
         /** Notifies listener of a pointer drag (move) event.  */
-        open fun onDrag(iact: Interaction) {}
+        fun onDrag(iact: Interaction) {}
 
         /** Notifies listener of a pointer end event.  */
-        open fun onEnd(iact: Interaction) {}
+        fun onEnd(iact: Interaction) {}
 
         /** Notifies listener of a pointer cancel event.  */
-        open fun onCancel(iact: Interaction) {}
+        fun onCancel(iact: Interaction) {}
 
         override fun invoke(event: Any) {
             if (event is Interaction) {

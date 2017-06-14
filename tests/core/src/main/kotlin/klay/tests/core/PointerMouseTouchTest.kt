@@ -77,7 +77,7 @@ internal class PointerMouseTouchTest
         game.rootLayer.add(motionLabel!!.layer)
 
         // add mouse layer listener
-        mouse.label.events().connect(object : Mouse.Listener() {
+        mouse.label.events().connect(object : Mouse.Listener {
             internal var label = mouse.label
 
             override fun onButton(event: klay.core.Mouse.ButtonEvent, iact: Mouse.Interaction) {
@@ -121,7 +121,7 @@ internal class PointerMouseTouchTest
         })
 
         // add mouse layer listener to parent
-        mouse.layer.events().connect(object : Mouse.Listener() {
+        mouse.layer.events().connect(object : Mouse.Listener {
             internal var start: Double = 0.toDouble()
             override fun onButton(event: klay.core.Mouse.ButtonEvent, iact: Mouse.Interaction) {
                 if (event.down) {
@@ -150,7 +150,7 @@ internal class PointerMouseTouchTest
         })
 
         // add pointer layer listener
-        pointer.label.events().connect(object : Pointer.Listener() {
+        pointer.label.events().connect(object : Pointer.Listener {
             internal var label = pointer.label
             override fun onStart(iact: Pointer.Interaction) {
                 val event = iact.event!!
@@ -188,7 +188,7 @@ internal class PointerMouseTouchTest
         })
 
         // add pointer listener for parent layer
-        pointer.layer.events().connect(object : Pointer.Listener() {
+        pointer.layer.events().connect(object : Pointer.Listener {
             internal var start: Double = 0.toDouble()
             override fun onStart(iact: Pointer.Interaction) {
                 val event = iact.event!!
@@ -214,7 +214,7 @@ internal class PointerMouseTouchTest
         })
 
         // add touch layer listener
-        touch.label.events().connect(object : Touch.Listener() {
+        touch.label.events().connect(object : Touch.Listener {
             internal var label = touch.label
             override fun onStart(iact: Touch.Interaction) {
                 val event = iact.event!!
@@ -252,7 +252,7 @@ internal class PointerMouseTouchTest
         })
 
         // add touch parent layer listener
-        touch.layer.events().connect(object : Touch.Listener() {
+        touch.layer.events().connect(object : Touch.Listener {
             override fun onStart(iact: Touch.Interaction) {
                 val event = iact.event!!
                 logger!!.log(describe(event, "parent touch start"))

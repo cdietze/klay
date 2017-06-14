@@ -22,7 +22,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
                 this.values.add(value)
             }
             this.prefix = name + ": "
-            layer.events().connect(object : Pointer.Listener() {
+            layer.events().connect(object : Pointer.Listener {
                 override fun onStart(iact: Pointer.Interaction) {
                     set((valueIdx + 1) % this@NToggle.values.size)
                 }
