@@ -19,13 +19,13 @@
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
-            <groupId>de.cdietze</groupId>
-            <artifactId>pythagoras.kt</artifactId>
+            <groupId>com.github.cdietze</groupId>
+            <artifactId>pythagoras-kt</artifactId>
             <version>${pythagoras.kt.version}</version>
         </dependency>
         <dependency>
-            <groupId>de.cdietze</groupId>
-            <artifactId>react.kt</artifactId>
+            <groupId>com.github.cdietze</groupId>
+            <artifactId>react-kt</artifactId>
             <version>${react.kt.version}</version>
         </dependency>
 
