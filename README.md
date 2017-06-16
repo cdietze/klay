@@ -1,6 +1,8 @@
 Klay
 ===
 
+[![Build Status](https://travis-ci.org/cdietze/klay.svg?branch=master)](https://travis-ci.org/cdietze/klay)
+
 A Kotlin game development framework for multiple platforms
 
 Klay is a port in Kotlin of the [PlayN Project](https://github.com/playn/playn).
