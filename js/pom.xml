@@ -11,6 +11,10 @@
 
     <artifactId>klay-js</artifactId>
 
+    <properties>
+        <kotlin.version>1.1.2-5</kotlin.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>de.cdietze.klay</groupId>
@@ -21,6 +25,17 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-js</artifactId>
             <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jre8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -42,15 +57,15 @@
                     <execution>
                         <configuration>
                             <sourceDirs>
-                                <sourceDir>${project.build.sourceDirectory}</sourceDir>
-                                <sourceDir>../core/src/main/kotlin</sourceDir>
-                                <sourceDir>target/dep-src</sourceDir>
+                                <source>src/main/kotlin</source>
+                                <source>target/dep-src</source>
                             </sourceDirs>
                         </configuration>
                         <id>compile</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>js</goal>
+                            <goal>compile</goal>
                         </goals>
                     </execution>
                     <execution>
@@ -58,6 +73,7 @@
                         <phase>test-compile</phase>
                         <goals>
                             <goal>test-js</goal>
+                            <goal>test-compile</goal>
                         </goals>
                     </execution>
                 </executions>
