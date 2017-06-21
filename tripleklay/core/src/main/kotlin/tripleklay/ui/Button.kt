@@ -1,20 +1,21 @@
 package tripleklay.ui
 
 import react.SignalView
+import react.SignalViewListener
 
 /**
  * A button that displays text, or an icon, or both.
  */
 open class Button
 /** Creates a button with the supplied text and icon.  */
-@JvmOverloads constructor(text: String? = null, icon: Icon = null) : AbstractTextButton<Button>(text, icon), Clickable<Button> {
+@JvmOverloads constructor(text: String? = null, icon: Icon? = null) : AbstractTextButton<Button>(text, icon), Clickable<Button> {
 
     /** Creates a button with the supplied icon.  */
     constructor(icon: Icon) : this(null, icon) {}
 
     /** A convenience method for registering a click handler. Assumes you don't need the result of
      * [SignalView.connect], because it throws it away.  */
-    fun onClick(onClick: SignalView.Listener<in Button>): Button {
+    fun onClick(onClick: SignalViewListener<Button>): Button {
         clicked().connect(onClick)
         return this
     }
@@ -31,7 +32,7 @@ open class Button
         return "Button(" + text() + ")"
     }
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = Button::class.java
 
     override fun createBehavior(): Behavior<Button>? {

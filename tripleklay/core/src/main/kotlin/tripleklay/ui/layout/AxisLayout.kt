@@ -1,7 +1,6 @@
 package tripleklay.ui.layout
 
 import pythagoras.f.Dimension
-import pythagoras.f.IDimension
 import tripleklay.ui.Container
 import tripleklay.ui.Element
 import tripleklay.ui.Layout
@@ -68,20 +67,20 @@ abstract class AxisLayout : Layout() {
 
         override fun layout(elems: Container<*>,
                             left: Float, top: Float, width: Float, height: Float) {
-            val halign = resolveStyle<HAlign>(elems, Style.HALIGN)
-            val valign = resolveStyle<VAlign>(elems, Style.VALIGN)
+            val halign = resolveStyle<Style.HAlign>(elems, Style.HALIGN)
+            val valign = resolveStyle<Style.VAlign>(elems, Style.VALIGN)
             val m = computeMetrics(elems, width, height, true)
             val stretchHeight = Math.max(0f, height - m.gaps(_gap.toFloat()) - m.fixHeight)
-            var y = top + if (m.stretchers > 0)
-                0
+            var y = top + if (m.stretchers > 0f)
+                0f
             else
                 valign.offset(m.fixHeight + m.gaps(_gap.toFloat()), height)
             for (elem in elems) {
                 if (!elem.isVisible) continue
                 val psize = preferredSize(elem, width, height) // will be cached
                 val c = constraint(elem)
-                val ewidth = _offPolicy.computeSize(psize.width(), m.maxWidth, width)
-                val eheight = c.computeSize(psize.height(), m.totalWeight, stretchHeight)
+                val ewidth = _offPolicy.computeSize(psize.width, m.maxWidth, width)
+                val eheight = c.computeSize(psize.height, m.totalWeight, stretchHeight)
                 setBounds(elem, left + halign.offset(ewidth, width), y, ewidth, eheight)
                 y += eheight + _gap
             }
@@ -97,20 +96,20 @@ abstract class AxisLayout : Layout() {
 
         override fun layout(elems: Container<*>,
                             left: Float, top: Float, width: Float, height: Float) {
-            val halign = resolveStyle<HAlign>(elems, Style.HALIGN)
-            val valign = resolveStyle<VAlign>(elems, Style.VALIGN)
+            val halign = resolveStyle<Style.HAlign>(elems, Style.HALIGN)
+            val valign = resolveStyle<Style.VAlign>(elems, Style.VALIGN)
             val m = computeMetrics(elems, width, height, false)
             val stretchWidth = Math.max(0f, width - m.gaps(_gap.toFloat()) - m.fixWidth)
-            var x = left + if (m.stretchers > 0)
-                0
+            var x = left + if (m.stretchers > 0f)
+                0f
             else
                 halign.offset(m.fixWidth + m.gaps(_gap.toFloat()), width)
             for (elem in elems) {
                 if (!elem.isVisible) continue
                 val psize = preferredSize(elem, width, height) // will be cached
                 val c = constraint(elem)
-                val ewidth = c.computeSize(psize.width(), m.totalWeight, stretchWidth)
-                val eheight = _offPolicy.computeSize(psize.height(), m.maxHeight, height)
+                val ewidth = c.computeSize(psize.width, m.totalWeight, stretchWidth)
+                val eheight = _offPolicy.computeSize(psize.height, m.maxHeight, height)
                 setBounds(elem, x, top + valign.offset(eheight, height), ewidth, eheight)
                 x += ewidth + _gap
             }
@@ -177,8 +176,8 @@ abstract class AxisLayout : Layout() {
             val c = constraint(elem)
             if (!c.stretch) {
                 val psize = preferredSize(elem, hintX, hintY)
-                val pwidth = psize.width()
-                val pheight = psize.height()
+                val pwidth = psize.width
+                val pheight = psize.height
                 m.prefWidth += pwidth
                 m.prefHeight += pheight
                 m.maxWidth = Math.max(m.maxWidth, pwidth)
@@ -204,8 +203,8 @@ abstract class AxisLayout : Layout() {
             val ehintX = if (vert) availX else c.computeSize(0f, m.totalWeight, availX - m.fixWidth)
             val ehintY = if (vert) c.computeSize(0f, m.totalWeight, availY - m.fixHeight) else availY
             val psize = preferredSize(elem, ehintX, ehintY)
-            val pwidth = psize.width()
-            val pheight = psize.height()
+            val pwidth = psize.width
+            val pheight = psize.height
             m.unitWidth = Math.max(m.unitWidth, pwidth / c.weight)
             m.unitHeight = Math.max(m.unitHeight, pheight / c.weight)
             m.maxWidth = Math.max(m.maxWidth, pwidth)

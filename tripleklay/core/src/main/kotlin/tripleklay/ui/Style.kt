@@ -4,6 +4,7 @@ import klay.core.Canvas
 import klay.core.Font
 import klay.core.Sound
 import klay.core.TextBlock
+import tripleklay.ui.Style.Binding
 import tripleklay.util.EffectRenderer
 import tripleklay.util.EffectRenderer.Gradient
 import tripleklay.util.TextStyle
@@ -15,7 +16,7 @@ import tripleklay.util.TextStyle
  * used in cases where a leaf element lacks a property. The documentation for each style property
  * indicates whether or not it is inherited.
  */
-abstract class Style<V> protected constructor(
+abstract class Style<out V> protected constructor(
         /** Indicates whether or not this style property is inherited.  */
         val inherited: Boolean) {
     /** Defines element modes which can be used to modify an element's styles.  */
@@ -31,7 +32,7 @@ abstract class Style<V> protected constructor(
     }
 
     /** Used to configure [Styles] instances. See [Styles.add].  */
-    class Binding<V>(
+    class Binding<out V>(
             /** The style being configured.  */
             val style: Style<V>,
             /** The value to be bound for the style.  */
@@ -109,8 +110,8 @@ abstract class Style<V> protected constructor(
                 return EffectRenderer.VectorOutline(
                         Styles.resolveStyle(elem, Style.HIGHLIGHT),
                         Styles.resolveStyle(elem, Style.OUTLINE_WIDTH),
-                        Styles.resolveStyle<LineCap>(elem, Style.OUTLINE_CAP),
-                        Styles.resolveStyle<LineJoin>(elem, Style.OUTLINE_JOIN))
+                        Styles.resolveStyle<Canvas.LineCap>(elem, Style.OUTLINE_CAP),
+                        Styles.resolveStyle<Canvas.LineJoin>(elem, Style.OUTLINE_JOIN))
             }
         },
         /** Draws a shadow below and to the right of the text in the shadow color.  */
@@ -125,7 +126,7 @@ abstract class Style<V> protected constructor(
         GRADIENT {
             override fun createEffectRenderer(elem: Element<*>): EffectRenderer {
                 return Gradient(Styles.resolveStyle(elem, Style.GRADIENT_COLOR),
-                        Styles.resolveStyle<Type>(elem, Style.GRADIENT_TYPE))
+                        Styles.resolveStyle<Gradient.Type>(elem, Style.GRADIENT_TYPE))
             }
         },
         /** No text effect.  */
@@ -197,10 +198,10 @@ abstract class Style<V> protected constructor(
     }
 
     /** A Boolean style, with convenient members for on and off bindings.  */
-    class Flag private constructor(inherited: Boolean, protected val _default: Boolean?) : Style<Boolean>(inherited) {
+    class Flag(inherited: Boolean, protected val _default: Boolean) : Style<Boolean>(inherited) {
         val off = `is`(false)
         val on = `is`(true)
-        override fun getDefault(mode: Element<*>): Boolean? {
+        override fun getDefault(mode: Element<*>): Boolean {
             return _default
         }
     }
@@ -210,25 +211,17 @@ abstract class Style<V> protected constructor(
      */
     abstract fun getDefault(mode: Element<*>): V
 
-    /**
-     * Returns a [Binding] with this style bound to the specified value.
-     */
-    fun `is`(value: V): Binding<V> {
-        return Binding(this, value)
-    }
-
     companion object {
-
         /** The foreground color for an element. Inherited.  */
         val COLOR: Style<Int> = object : Style<Int>(true) {
-            override fun getDefault(elem: Element<*>): Int? {
+            override fun getDefault(elem: Element<*>): Int {
                 return if (elem.isEnabled) 0xFF000000.toInt() else 0xFF666666.toInt()
             }
         }
 
         /** The highlight color for an element. Inherited.  */
         val HIGHLIGHT: Style<Int> = object : Style<Int>(true) {
-            override fun getDefault(elem: Element<*>): Int? {
+            override fun getDefault(elem: Element<*>): Int {
                 return if (elem.isEnabled) 0xAAFFFFFF.toInt() else 0xAACCCCCC.toInt()
             }
         }
@@ -252,10 +245,10 @@ abstract class Style<V> protected constructor(
         val OUTLINE_WIDTH = newStyle(true, 1f)
 
         /** The line cap for the outline, when using a vector outline.  */
-        val OUTLINE_CAP: Style<Canvas.LineCap> = newStyle<LineCap>(true, Canvas.LineCap.ROUND)
+        val OUTLINE_CAP: Style<Canvas.LineCap> = newStyle<Canvas.LineCap>(true, Canvas.LineCap.ROUND)
 
         /** The line join for the outline, when using a vector outline.  */
-        val OUTLINE_JOIN: Style<Canvas.LineJoin> = newStyle<LineJoin>(true, Canvas.LineJoin.ROUND)
+        val OUTLINE_JOIN: Style<Canvas.LineJoin> = newStyle<Canvas.LineJoin>(true, Canvas.LineJoin.ROUND)
 
         /** The horizontal alignment of an element. Not inherited.  */
         val HALIGN = HAlignStyle()
@@ -298,7 +291,7 @@ abstract class Style<V> protected constructor(
         val ICON_EFFECT = newStyle(false, IconEffect.NONE)
 
         /** The sound to be played when this element's action is triggered.  */
-        val ACTION_SOUND = newStyle<Sound>(false, null as Sound?)
+        val ACTION_SOUND = newStyle<Sound?>(false, null as Sound?)
 
         /**
          * Creates a text style instance based on the supplied element's stylings.
@@ -332,10 +325,18 @@ abstract class Style<V> protected constructor(
 
         fun toAlignment(align: HAlign): TextBlock.Align {
             when (align) {
-                else, Style.HAlign.LEFT -> return TextBlock.Align.LEFT
+                Style.HAlign.LEFT -> return TextBlock.Align.LEFT
                 Style.HAlign.RIGHT -> return TextBlock.Align.RIGHT
                 Style.HAlign.CENTER -> return TextBlock.Align.CENTER
             }
         }
     }
+}
+
+/**
+ * Returns a [Binding] with this style bound to the specified value.
+ * This is an extension function to support V's out variance.
+ */
+fun <V> Style<V>.`is`(value: V): Binding<V> {
+    return Binding(this, value)
 }

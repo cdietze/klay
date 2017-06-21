@@ -9,6 +9,7 @@ import react.RFuture
 interface Icon {
     /**
      * Returns the width of this icon. If the icon is not yet loaded, this should return zero.
+     * TODO(cdi) make this into a get-only property (as well as the other funs)
      */
     fun width(): Float
 

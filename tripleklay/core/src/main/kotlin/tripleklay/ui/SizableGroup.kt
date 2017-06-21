@@ -15,16 +15,16 @@ class SizableGroup
     val preferredSize = DimensionValue(0f, 0f)
 
     /** Creates the sizable group with the given preferred size.  */
-    constructor(layout: Layout, size: IDimension) : this(layout, size.width(), size.height()) {}
+    constructor(layout: Layout, size: IDimension) : this(layout, size.width, size.height) {}
 
     init {
         preferredSize.update(wid, hei)
         preferredSize.connect(invalidateSlot())
     }
 
-    override fun createLayoutData(hintX: Float, hintY: Float): Element.LayoutData {
+    override fun createLayoutData(hintX: Float, hintY: Float): LayoutData {
         // use a sizable layout data with the usual layout and hybrid size
-        return Element.SizableLayoutData(super.createLayoutData(hintX, hintY), preferredSize.get())
+        return SizableLayoutData(super.createLayoutData(hintX, hintY), preferredSize.get())
     }
 }
 /** Creates the sizable group with preferred width and height of 0. Note that this will

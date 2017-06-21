@@ -3,7 +3,6 @@ package tripleklay.ui
 import pythagoras.f.IDimension
 import react.Closeable
 import react.Signal
-import react.SignalView
 
 /**
  * The root of a display hierarchy. An application can have one or more roots, but they should not
@@ -16,7 +15,7 @@ open class Root
         val iface: Interface, layout: Layout, sheet: Stylesheet) : Elements<Root>(layout), Closeable {
 
     /** A signal emitted when this root is validated.  */
-    val validated = Signal.create()
+    val validated = Signal<Root>()
 
     init {
         setStylesheet(sheet)
@@ -27,21 +26,21 @@ open class Root
     /** Sizes this element to its preferred size, computed using the supplied hints.  */
     @JvmOverloads fun pack(widthHint: Float = 0f, heightHint: Float = 0f): Root {
         val psize = preferredSize(widthHint, heightHint)
-        setSize(psize.width(), psize.height())
+        setSize(psize.width, psize.height)
         return this
     }
 
     /** Sizes this root element to the specified width and its preferred height.  */
     fun packToWidth(width: Float): Root {
         val psize = preferredSize(width, 0f)
-        setSize(width, psize.height())
+        setSize(width, psize.height)
         return this
     }
 
     /** Sizes this root element to the specified height and its preferred width.  */
     fun packToHeight(height: Float): Root {
         val psize = preferredSize(0f, height)
-        setSize(psize.width(), height)
+        setSize(psize.width, height)
         return this
     }
 
@@ -54,7 +53,7 @@ open class Root
 
     /** Sets the size of this root element.  */
     fun setSize(size: IDimension): Root {
-        return setSize(size.width(), size.height())
+        return setSize(size.width, size.height)
     }
 
     /** Sets the size of this root element and its translation from its parent.  */
@@ -118,22 +117,23 @@ open class Root
     /**
      * Sets this Root's menu host, allowing an application to more manage multiple roots with
      * a single menu host.
+     * TODO(cdi) re-add once MenuHost is ported
      */
-    var menuHost: MenuHost
-        get() {
-            if (_menuHost == null) {
-                _menuHost = MenuHost(iface, this)
-            }
-            return _menuHost
-        }
-        set(host) {
-            if (_menuHost != null) {
-                _menuHost!!.deactivate()
-            }
-            _menuHost = host
-        }
+    //    var menuHost: MenuHost
+//        get() {
+//            if (_menuHost == null) {
+//                _menuHost = MenuHost(iface, this)
+//            }
+//            return _menuHost
+//        }
+//        set(host) {
+//            if (_menuHost != null) {
+//                _menuHost!!.deactivate()
+//            }
+//            _menuHost = host
+//        }
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = Root::class.java
 
     override fun root(): Root? {
@@ -146,6 +146,6 @@ open class Root
     }
 
     protected var _active: Element<*>? = null
-    protected var _menuHost: MenuHost? = null
+//    protected var _menuHost: MenuHost? = null
 }
 /** Sizes this root element to its preferred size.  */

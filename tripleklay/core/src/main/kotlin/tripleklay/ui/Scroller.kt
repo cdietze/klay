@@ -2,19 +2,21 @@ package tripleklay.ui
 
 import klay.core.Clock
 import klay.core.Color
+import klay.core.Pointer
 import klay.core.Surface
 import klay.scene.*
 import pythagoras.f.Dimension
 import pythagoras.f.IDimension
-import pythagoras.f.IPoint
 import pythagoras.f.Point
-import react.*
+import react.Closeable
+import react.Connection
+import react.Signal
+import tripleklay.ui.Scroller.Clippable
 import tripleklay.ui.layout.AxisLayout
 import tripleklay.ui.util.XYFlicker
 import tripleklay.util.Colors
 import tripleklay.util.Layers
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * A composite element that manages horizontal and vertical scrolling of a single content element.
@@ -211,7 +213,7 @@ class Scroller
         fun set(cpos: Float): Boolean {
             if (cpos == _cpos) return false
             _cpos = cpos
-            _pos = if (_max == 0f) 0 else cpos / _max * (_size - _extent)
+            _pos = if (_max == 0f) 0f else cpos / _max * (_size - _extent)
             return true
         }
 
@@ -219,7 +221,7 @@ class Scroller
         fun extendHint(hint: Float): Float {
             // we want the content to take up as much space as it wants if this bar is on
             // TODO: use Float.MAX? that may cause trouble in other layout code
-            return if (_on) 100000 else hint
+            return if (_on) 100000f else hint
         }
 
         /** If this range is in use. Set according to [Scroller.Behavior].  */
@@ -295,6 +297,9 @@ class Scroller
      */
     class TouchBars(scroller: Scroller, protected var _color: Int, protected var _size: Float,
                     protected var _topAlpha: Float, protected var _fadeSpeed: Float) : Bars(scroller) {
+        protected var _alpha: Float = 0.toFloat()
+        protected var _layer: Layer
+
         init {
             _layer = object : Layer() {
                 override fun paintImpl(surface: Surface) {
@@ -332,9 +337,6 @@ class Scroller
         protected fun drawBar(surface: Surface, x: Float, y: Float, w: Float, h: Float) {
             surface.fillRect(x, y, w, h)
         }
-
-        protected var _alpha: Float = 0.toFloat()
-        protected var _layer: Layer
     }
 
     /** The content contained in the scroller.  */
@@ -344,10 +346,27 @@ class Scroller
     val hrange = createRange()
     val vrange = createRange()
 
+    protected val _scroller: Group
+    protected val _flicker: XYFlicker
+    protected val _clippable: Clippable
+    protected val _contentSize = Dimension()
+    protected var _upconn: Connection? = null
+    protected var _queuedScroll: Point? = null
+    protected var _lners: MutableList<Listener>? = null
+
+    /** Scroll bar type, used to determine if the bars need to be recreated.  */
+    protected var _barType: BarType? = null
+
+    /** Scroll bars, created during layout, based on the [BarType].  */
+    protected var _bars: Bars? = null
+
+    /** Region around elements when updating visibility.  */
+    protected var _elementBuffer: IDimension? = null
+
     init {
         layout = AxisLayout.horizontal().stretchByDefault().offStretch().gap(0)
         // our only immediate child is the _scroller, and that contains the content
-        initChildren(_scroller = object : Group(ScrollLayout()) {
+        _scroller = object : Group(ScrollLayout()) {
             override fun createLayer(): GroupLayer {
                 // use 1, 1 so we don't crash. the real size is set on validation
                 return GroupLayer(1f, 1f)
@@ -358,9 +377,11 @@ class Scroller
                 // do this after children have validated their bounding boxes
                 updateVisibility()
             }
-        })
+        }
+        initChildren(_scroller)
 
-        _scroller.add(this.content = content)
+        this.content = content
+        _scroller.add(this.content)
 
         // use the content's clipping method if it is Clippable
         if (content is Clippable) {
@@ -383,18 +404,19 @@ class Scroller
 
         // handle mouse wheel
         layer.events().connect(object : Mouse.Listener {
-            override fun onWheel(event: Mouse.WheelEvent, iact: Mouse.Interaction) {
+            override fun onWheel(event: klay.core.Mouse.WheelEvent, iact: Mouse.Interaction) {
                 // scale so each wheel notch is 1/4 the screen dimension
                 val delta = event.velocity * .25f
                 if (vrange.active())
-                    scrollY(ypos() + (delta * viewSize().height()) as Int)
+                    scrollY(ypos() + (delta * viewSize().height) as Int)
                 else
-                    scrollX(xpos() + (delta * viewSize().width()) as Int)
+                    scrollX(xpos() + (delta * viewSize().width) as Int)
             }
         })
 
         // handle drag scrolling
-        layer.events().connect(_flicker = XYFlicker())
+        _flicker = XYFlicker()
+        layer.events().connect(_flicker)
     }
 
     /**
@@ -507,10 +529,10 @@ class Scroller
      * relevant values will be updated even if there was no change.  */
     protected fun update(force: Boolean) {
         val pos = _flicker.position()
-        val dx = hrange.set(pos.x())
-        val dy = vrange.set(pos.y())
+        val dx = hrange.set(pos.x)
+        val dy = vrange.set(pos.y)
         if (dx || dy || force) {
-            _clippable.setPosition(-pos.x(), -pos.y())
+            _clippable.setPosition(-pos.x, -pos.y)
 
             // now check the child elements for visibility
             if (!force) updateVisibility()
@@ -529,29 +551,27 @@ class Scroller
     }
 
     /** Extends the usual layout with scroll bar setup.  */
-    protected inner class BarsLayoutData : Element.LayoutData() {
+    protected inner class BarsLayoutData : LayoutData() {
         val barType = resolveStyle(BAR_TYPE)
     }
 
-    override fun createLayoutData(hintX: Float, hintY: Float): Element.LayoutData {
+    override fun createLayoutData(hintX: Float, hintY: Float): LayoutData {
         return BarsLayoutData()
     }
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = Scroller::class.java
 
     override fun wasAdded() {
         super.wasAdded()
-        _upconn = root()!!.iface.frame.connect(object : Slot<Clock>() {
-            fun onEmit(clock: Clock) {
-                update(clock.dt.toFloat())
-            }
+        _upconn = root()!!.iface.frame.connect({ clock: Clock ->
+            update(clock.dt.toFloat())
         })
         invalidate()
     }
 
     override fun wasRemoved() {
-        _upconn.close()
+        _upconn?.close()
         updateBars(null) // make sure bars get destroyed in case we don't get added again
         super.wasRemoved()
     }
@@ -570,14 +590,14 @@ class Scroller
         val y = vrange._cpos
         val wid = hrange._size
         val hei = vrange._size
-        val bx = _elementBuffer.width()
-        val by = _elementBuffer.height()
+        val bx = _elementBuffer!!.width
+        val by = _elementBuffer!!.height
         for (child in content) {
             val size = child.size()
             if (child.isVisible)
                 child.layer.setVisible(
-                        child.x() - bx < x + wid && child.x() + size.width() + bx > x &&
-                                child.y() - by < y + hei && child.y() + size.height() + by > y)
+                        child.x() - bx < x + wid && child.x() + size.width + bx > x &&
+                                child.y() - by < y + hei && child.y() + size.height + by > y)
         }
     }
 
@@ -609,7 +629,7 @@ class Scroller
         if (_barType != null) _bars = _barType!!.createBars(this)
     }
 
-    override fun layout(ldata: Element.LayoutData, left: Float, top: Float,
+    override fun layout(ldata: LayoutData, left: Float, top: Float,
                         width: Float, height: Float) {
         // set the bars and element buffer first so the ScrollLayout can use them
         _elementBuffer = resolveStyle(ELEMENT_BUFFER)
@@ -622,6 +642,7 @@ class Scroller
      * pokery necessary to make the content think it is in a large area and update the outer
      * `Scroller` instance.  */
     protected inner class ScrollLayout : Layout() {
+
         override fun computeSize(elems: Container<*>, hintX: Float, hintY: Float): Dimension {
             // the content is always the 1st child, get the preferred size with extended hints
             assert(elems.childCount() == 1 && elems.childAt(0) === content)
@@ -677,23 +698,6 @@ class Scroller
         }
     }
 
-    protected val _scroller: Group
-    protected val _flicker: XYFlicker
-    protected val _clippable: Clippable
-    protected val _contentSize = Dimension()
-    protected var _upconn: Connection
-    protected var _queuedScroll: Point? = null
-    protected var _lners: MutableList<Listener>? = null
-
-    /** Scroll bar type, used to determine if the bars need to be recreated.  */
-    protected var _barType: BarType? = null
-
-    /** Scroll bars, created during layout, based on the [BarType].  */
-    protected var _bars: Bars? = null
-
-    /** Region around elements when updating visibility.  */
-    protected var _elementBuffer: IDimension
-
     companion object {
         /** The type of bars to use. By default, uses an instance of [TouchBars].  */
         val BAR_TYPE = Style.newStyle<BarType>(true, object : BarType() {
@@ -731,10 +735,8 @@ class Scroller
             // means it hasn't been laid out yet and does not have its proper position; in that case
             // defer this process a tick to allow it to be laid out
             if (!scroller.isSet(Element.Flag.VALID)) {
-                elem.root()!!.iface.frame.connect(object : UnitSlot() {
-                    fun onEmit() {
-                        makeVisible(elem)
-                    }
+                elem.root()!!.iface.frame.connect({
+                    makeVisible(elem)
                 }).once()
                 return true
             }

@@ -41,13 +41,7 @@ abstract class GlyphWidget<T : GlyphWidget<T>> : SizableWidget<T> {
      * Returns a slot that calls render. Useful if your [.paint] method uses a react
      * value.
      */
-    protected fun renderSlot(): UnitSlot {
-        return object : UnitSlot() {
-            fun onEmit() {
-                render()
-            }
-        }
-    }
+    protected fun renderSlot(): UnitSlot = { render() }
 
     /**
      * Paints this widget onto the given canvas. This is called by render. The canvas is from
@@ -55,7 +49,7 @@ abstract class GlyphWidget<T : GlyphWidget<T>> : SizableWidget<T> {
      */
     protected abstract fun paint(canvas: Canvas)
 
-    override fun layout(ldata: Element.LayoutData, left: Float, top: Float,
+    override fun layout(ldata: LayoutData, left: Float, top: Float,
                         width: Float, height: Float) {
         super.layout(ldata, left, top, width, height)
 
@@ -65,7 +59,7 @@ abstract class GlyphWidget<T : GlyphWidget<T>> : SizableWidget<T> {
             return
         }
 
-        _glyph.prepare(root()!!.iface.plat.graphics(), width, height)
+        _glyph.prepare(root()!!.iface.plat.graphics, width, height)
         _glyph.layer()!!.setTranslation(left, top)
         render()
     }

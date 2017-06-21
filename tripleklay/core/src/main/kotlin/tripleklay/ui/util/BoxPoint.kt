@@ -86,7 +86,7 @@ class BoxPoint
     /** Finds the screen coordinates of the point, using the given element as the box.  */
     fun resolve(elem: Element<*>, dest: Point): Point {
         LayerUtil.layerToScreen(elem.layer, dest.set(0f, 0f), dest)
-        return resolve(dest.x, dest.y, elem.size().width(), elem.size().height(), dest)
+        return resolve(dest.x, dest.y, elem.size().width, elem.size().height, dest)
     }
 
     /** Finds the coordinates of the point, using the box defined by the given coordinates.  */
@@ -97,7 +97,7 @@ class BoxPoint
     /** Finds the coordinates of the point, using the box with top left of 0, 0 and the given
      * dimension.  */
     fun resolve(size: IDimension, dest: Point): Point {
-        return resolve(0f, 0f, size.width(), size.height(), dest)
+        return resolve(0f, 0f, size.width, size.height, dest)
     }
 
     companion object {

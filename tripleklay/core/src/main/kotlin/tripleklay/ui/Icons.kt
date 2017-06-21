@@ -5,7 +5,6 @@ import klay.core.TileSource
 import klay.scene.GroupLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import react.Functions
 import react.RFuture
 
 /**
@@ -44,11 +43,11 @@ object Icons {
     fun image(source: TileSource): Icon {
         return object : Icon {
             override fun width(): Float {
-                return (if (source.isLoaded) source.tile().width() else 0).toFloat()
+                return (if (source.isLoaded) source.tile().width else 0f).toFloat()
             }
 
             override fun height(): Float {
-                return (if (source.isLoaded) source.tile().height() else 0).toFloat()
+                return (if (source.isLoaded) source.tile().height else 0f).toFloat()
             }
 
             override fun render(): Layer {
@@ -56,7 +55,7 @@ object Icons {
             }
 
             override fun state(): RFuture<Icon> {
-                return source.tileAsync().map(Functions.constant(this as Icon))
+                return source.tileAsync().map({ this })
             }
         }
     }

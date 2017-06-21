@@ -8,7 +8,7 @@ import java.util.*
  * or server. A useful usage pattern is for a library or game to define a shared `Log` class
  * like so:
 
- * <pre>`import tripleplay.util.Logger;
+ * <pre>`import tripleklay.util.Logger;
  * public class Log {
  * public static final Logger log = new Logger("libident");
  * }

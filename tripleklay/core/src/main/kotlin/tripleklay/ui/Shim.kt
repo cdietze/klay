@@ -9,6 +9,6 @@ import pythagoras.f.IDimension
 class Shim(size: IDimension) : SizableWidget<Shim>(size) {
     constructor(width: Float, height: Float) : this(Dimension(width, height)) {}
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = Shim::class.java
 }

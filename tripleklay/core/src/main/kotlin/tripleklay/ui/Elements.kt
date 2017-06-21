@@ -30,7 +30,7 @@ abstract class Elements<T : Elements<T>>
     /**
      * Returns the stylesheet configured for this group, or null.
      */
-    override fun stylesheet(): Stylesheet {
+    override fun stylesheet(): Stylesheet? {
         return _sheet
     }
 
@@ -130,8 +130,8 @@ abstract class Elements<T : Elements<T>>
 
     protected val _children: MutableList<Element<*>> = ArrayList()
 
-    protected val _childAdded = Signal.create()
-    protected val _childRemoved = Signal.create()
+    protected val _childAdded = Signal<Element<*>>()
+    protected val _childRemoved = Signal<Element<*>>()
 
-    protected var _sheet: Stylesheet
+    protected var _sheet: Stylesheet? = null
 }

@@ -45,7 +45,7 @@ open class Tapper : Pointer.Listener {
         _tracking!!.drag(iact.event!!)
     }
 
-    override fun onCancel(iact: Pointer.Interaction) {
+    override fun onCancel(iact: Pointer.Interaction?) {
         _tracking = null
     }
 

@@ -1,7 +1,6 @@
 package tripleklay.ui
 
-import java.util.Arrays
-import java.util.Collections
+import java.util.*
 
 /**
  * A container with a fixed list of children, which client code must assume is immutable.
@@ -25,7 +24,7 @@ protected constructor() : Container<T>() {
         return asT()
     }
 
-    override fun stylesheet(): Stylesheet {
+    override fun stylesheet(): Stylesheet? {
         return _stylesheet
     }
 
@@ -81,7 +80,8 @@ protected constructor() : Container<T>() {
      */
     protected fun setChildren(children: List<Element<*>>, destroy: Boolean) {
         for (child in _children) didRemove(child, destroy)
-        for (child in _children = children) didAdd(child)
+        _children = children
+        for (child in _children) didAdd(child)
         invalidate()
     }
 
@@ -93,7 +93,7 @@ protected constructor() : Container<T>() {
     protected override var layout: Layout
         get() {
             if (_layout == null) throw IllegalStateException()
-            return _layout
+            return _layout!!
         }
         set(layout) {
             _layout = layout
@@ -107,5 +107,5 @@ protected constructor() : Container<T>() {
     protected var _layout: Layout? = null
 
     /** Optional stylesheet.  */
-    protected var _stylesheet: Stylesheet
+    protected var _stylesheet: Stylesheet? = null
 }

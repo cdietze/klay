@@ -176,8 +176,8 @@ internal class PointerMouseTouchTest
                 logger!!.log(describe(event, "pointer end"))
             }
 
-            override fun onCancel(iact: Pointer.Interaction) {
-                val event = iact.event!!
+            override fun onCancel(iact: Pointer.Interaction?) {
+                val event = iact!!.event!!
                 label.setAlpha(1.0f)
                 modify(event)
                 logger!!.log(describe(event, "pointer cancel"))
@@ -207,8 +207,8 @@ internal class PointerMouseTouchTest
                 logger!!.log(describe(event, "parent pointer end"))
             }
 
-            override fun onCancel(iact: Pointer.Interaction) {
-                val event = iact.event!!
+            override fun onCancel(iact: Pointer.Interaction?) {
+                val event = iact!!.event!!
                 logger!!.log(describe(event, "parent pointer cancel"))
             }
         })

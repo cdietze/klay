@@ -1,7 +1,6 @@
 package tripleklay.ui
 
 import react.SignalView
-import react.Slot
 import react.Value
 
 /**
@@ -9,6 +8,7 @@ import react.Value
  * font-based checkmark, or a checkmark icon, which will be shown when it is checked.
  */
 class CheckBox protected constructor(checkChar: Char, protected val _checkIcon: Icon?) : TextWidget<CheckBox>(), Togglable<CheckBox> {
+    protected val _checkStr: String
 
     /** Creates a checkbox with the supplied check character.  */
     @JvmOverloads constructor(checkChar: Char = '\u2713') : this(checkChar, null as Icon?) {}
@@ -43,14 +43,10 @@ class CheckBox protected constructor(checkChar: Char, protected val _checkIcon: 
 
     init {
         _checkStr = checkChar.toString()
-        selected().connect(object : Slot<Boolean>() {
-            fun onEmit(checked: Boolean?) {
-                updateCheckViz(checked!!)
-            }
-        })
+        selected().connect({ checked: Boolean -> updateCheckViz(checked) })
     }
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = CheckBox::class.java
 
     override fun text(): String? {
@@ -74,7 +70,5 @@ class CheckBox protected constructor(checkChar: Char, protected val _checkIcon: 
         if (_tglyph.layer() != null) _tglyph.layer()!!.setVisible(isChecked)
         if (_ilayer != null) _ilayer!!.setVisible(isChecked)
     }
-
-    protected val _checkStr: String
 }
 /** Creates a checkbox using the default check glyph: U+2713.  */

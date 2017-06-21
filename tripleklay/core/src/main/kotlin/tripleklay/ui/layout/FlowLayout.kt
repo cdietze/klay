@@ -1,9 +1,7 @@
 package tripleklay.ui.layout
 
 import pythagoras.f.Dimension
-import pythagoras.f.IDimension
 import tripleklay.ui.Container
-import tripleklay.ui.Element
 import tripleklay.ui.Layout
 import tripleklay.ui.Style
 
@@ -73,9 +71,9 @@ class FlowLayout : Layout() {
 
     override fun layout(elems: Container<*>,
                         left: Float, top: Float, width: Float, height: Float) {
-        val halign = resolveStyle<HAlign>(elems, Style.HALIGN)
+        val halign = resolveStyle<Style.HAlign>(elems, Style.HALIGN)
         val m = computeMetrics(elems, width, height)
-        var y = top + resolveStyle<VAlign>(elems, Style.VALIGN).offset(m.size.height, height)
+        var y = top + resolveStyle<Style.VAlign>(elems, Style.VALIGN).offset(m.size.height, height)
         var elemIdx = 0
         var row = 0
         val size = m.rowBreaks.size
@@ -90,12 +88,12 @@ class FlowLayout : Layout() {
                 }
                 val esize = preferredSize(elem, width, height)
                 if (_valign == null) {
-                    setBounds(elem, x, y, esize.width(), rowSize.height())
+                    setBounds(elem, x, y, esize.width, rowSize.height)
                 } else {
-                    setBounds(elem, x, y + _valign!!.offset(esize.height(), rowSize.height()),
-                            esize.width(), esize.height())
+                    setBounds(elem, x, y + _valign!!.offset(esize.height, rowSize.height),
+                            esize.width, esize.height)
                 }
-                x += esize.width() + _hgap
+                x += esize.width + _hgap
                 ++elemIdx
             }
             y += _vgap + rowSize.height
@@ -121,12 +119,12 @@ class FlowLayout : Layout() {
                 continue
             }
             val esize = preferredSize(elem, width, height)
-            if (rowSize.width > 0 && width > 0 && rowSize.width + _hgap + esize.width() > width) {
+            if (rowSize.width > 0f && width > 0f && rowSize.width + _hgap + esize.width > width) {
                 m.addBreak(ii, rowSize)
                 rowSize = Dimension(esize)
             } else {
-                rowSize.width += (if (rowSize.width > 0) _hgap else 0) + esize.width()
-                rowSize.height = Math.max(esize.height(), rowSize.height)
+                rowSize.width += (if (rowSize.width > 0f) _hgap else 0f) + esize.width
+                rowSize.height = Math.max(esize.height, rowSize.height)
             }
             ++ii
         }
@@ -143,7 +141,7 @@ class FlowLayout : Layout() {
             if (lastRowSize.height == 0f && lastRowSize.width == 0f) return
             rowBreaks.add(idx)
             rows.add(lastRowSize)
-            size.height += (if (size.height > 0) _vgap else 0) + lastRowSize.height
+            size.height += (if (size.height > 0f) _vgap else 0f) + lastRowSize.height
             size.width = Math.max(size.width, lastRowSize.width)
         }
     }

@@ -1,6 +1,6 @@
 package tripleklay.ui
 
-import java.util.HashMap
+import java.util.*
 
 /**
  * Provides style defaults per element type for a sub-tree of the interface hierarchy.
@@ -35,7 +35,7 @@ class Stylesheet private constructor(protected val _styles: Map<Class<*>, Styles
 
         /** Creates a stylesheet with the previously configured style mappings.  */
         fun create(): Stylesheet {
-            val sheet = Stylesheet(_styles)
+            val sheet = Stylesheet(_styles!!)
             _styles = null // prevent further modification
             return sheet
         }
@@ -55,7 +55,7 @@ class Stylesheet private constructor(protected val _styles: Map<Class<*>, Styles
 
         // if the style is not inherited, or we're already checking for Element.class, then we've
         // done all the searching we can
-        if (!style.inherited || eclass == Element<*>::class.java) return null
+        if (!style.inherited || eclass == Element::class.java) return null
 
         // otherwise check our parent class
         val parent = eclass.superclass ?: // TEMP: avoid confusion while PlayN POM disables class metadata by default

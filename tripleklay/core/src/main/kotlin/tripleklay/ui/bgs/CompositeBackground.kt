@@ -19,6 +19,10 @@ class CompositeBackground
  * are set to the sum of the insets of the constituents.
  */
 (vararg constituents: Background) : Background() {
+
+    protected val _constituents: Array<out Background>
+    protected var _reverseDepth: Boolean = false
+
     init {
         _constituents = constituents
         for (bg in constituents) {
@@ -52,7 +56,7 @@ class CompositeBackground
                 instances[ii] = Background.instantiate(bg, current.subtractFrom(Dimension(size)))
 
                 // add to our composite layer and translate the layers added
-                instances[ii].addTo(layer, current.left(), current.top(), 0f)
+                instances[ii]!!.addTo(layer, current.left(), current.top(), 0f)
 
                 // adjust the bounds
                 current = current.mutable().add(bg.insets)
@@ -72,19 +76,16 @@ class CompositeBackground
             }
             var depth = 0f
             for (l in temp) {
-                l.setDepth(depth)
+                l!!.setDepth(depth)
                 depth -= 1f
             }
         }
 
         return object : Background.LayerInstance(size, layer) {
             override fun close() {
-                for (i in instances) i.close()
+                for (i in instances) i!!.close()
                 super.close()
             }
         }
     }
-
-    protected val _constituents: Array<Background>
-    protected var _reverseDepth: Boolean = false
 }

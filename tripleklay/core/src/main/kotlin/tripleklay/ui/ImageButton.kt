@@ -4,7 +4,7 @@ import klay.core.TileSource
 import klay.scene.ImageLayer
 import pythagoras.f.Dimension
 import react.SignalView
-import react.UnitSlot
+import react.SignalViewListener
 
 /**
  * A button that uses images for its different states.
@@ -13,31 +13,29 @@ class ImageButton
 /** Creates a button with the supplied up and down images.  */
 @JvmOverloads constructor(up: TileSource, down: TileSource = up) : Widget<ImageButton>(), Clickable<ImageButton> {
 
+    protected val _ilayer = ImageLayer()
+    protected var _up: TileSource
+    protected var _down: TileSource
+
     init {
         layer.add(_ilayer)
-        setUp(up)
-        setDown(down)
+        _up = up
+        _up.tileAsync().onSuccess({ invalidate() })
+        _down = down
+        _down.tileAsync().onSuccess({ invalidate() })
     }
 
     /** Configures the image used in our up state.  */
     fun setUp(up: TileSource): ImageButton {
         _up = up
-        _up.tileAsync().onSuccess(object : UnitSlot() {
-            fun onEmit() {
-                invalidate()
-            }
-        })
+        _up.tileAsync().onSuccess({ invalidate() })
         return this
     }
 
     /** Configures the image used in our down state.  */
     fun setDown(down: TileSource): ImageButton {
         _down = down
-        _down.tileAsync().onSuccess(object : UnitSlot() {
-            fun onEmit() {
-                invalidate()
-            }
-        })
+        _down.tileAsync().onSuccess({ invalidate() })
         return this
     }
 
@@ -50,7 +48,7 @@ class ImageButton
 
     /** A convenience method for registering a click handler. Assumes you don't need the result of
      * [SignalView.connect], because it throws it away.  */
-    fun onClick(onClick: SignalView.Listener<in ImageButton>): ImageButton {
+    fun onClick(onClick: SignalViewListener<ImageButton>): ImageButton {
         clicked().connect(onClick)
         return this
     }
@@ -63,28 +61,24 @@ class ImageButton
         return "ImageButton(" + size() + ")"
     }
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = ImageButton::class.java
 
     override fun createBehavior(): Behavior<ImageButton>? {
         return Behavior.Click(this)
     }
 
-    override fun computeSize(ldata: Element.LayoutData, hintX: Float, hintY: Float): Dimension {
+    override fun computeSize(ldata: LayoutData, hintX: Float, hintY: Float): Dimension {
         return if (_up.isLoaded)
-            Dimension(_up.tile().width(), _up.tile().height())
+            Dimension(_up.tile().width, _up.tile().height)
         else
             Dimension()
     }
 
-    override fun layout(ldata: Element.LayoutData, left: Float, top: Float,
+    override fun layout(ldata: LayoutData, left: Float, top: Float,
                         width: Float, height: Float) {
         _ilayer.setTile(if (isSelected) _down.tile() else _up.tile())
         _ilayer.setTranslation(left, top)
     }
-
-    protected val _ilayer = ImageLayer()
-    protected var _up: TileSource
-    protected var _down: TileSource
 }
 /** Creates a button with the supplied image for use in up and down states.  */

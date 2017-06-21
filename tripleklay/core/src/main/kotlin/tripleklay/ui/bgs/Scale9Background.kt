@@ -17,8 +17,13 @@ class Scale9Background
  * aa 3x3 grid of 9 equal pieces.
  */
 (protected var _tile: Tile) : Background() {
+
+    protected var _s9: Scale9
+    protected var _destScale = 1f
+    protected var _tint = Tint.NOOP_TINT
+
     init {
-        _s9 = Scale9(_tile.width(), _tile.height())
+        _s9 = Scale9(_tile.width, _tile.height)
     }
 
     /** Returns the scale 9 instance for mutation. Be sure to finish mutation prior to binding.  */
@@ -62,9 +67,9 @@ class Scale9Background
     }
 
     override fun instantiate(size: IDimension): Background.Instance {
-        return Background.LayerInstance(size, object : Layer() {
+        return LayerInstance(size, object : Layer() {
             // The destination scale 9.
-            internal var dest = Scale9(size.width() / _destScale, size.height() / _destScale, _s9)
+            internal var dest = Scale9(size.width / _destScale, size.height / _destScale, _s9)
 
             override fun paintImpl(surf: Surface) {
                 surf.saveTx()
@@ -109,8 +114,4 @@ class Scale9Background
         this.alpha = (tint shr 24 and 0xFF) / 255f
         return this
     }
-
-    protected var _s9: Scale9
-    protected var _destScale = 1f
-    protected var _tint = Tint.NOOP_TINT
 }
