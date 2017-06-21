@@ -1,15 +1,11 @@
 package tripleklay.ui
 
 import pythagoras.f.Dimension
-import pythagoras.f.IRectangle
 import pythagoras.f.Rectangle
 import react.Closeable
-import react.UnitSlot
+import tripleklay.ui.Log.log
 import tripleklay.ui.layout.AxisLayout
-
-import java.util.ArrayList
-
-import tripleplay.ui.Log.log
+import java.util.*
 
 /**
  * A scrolling vertical display, optimized for showing potentially very long lists such as a chat
@@ -61,6 +57,44 @@ protected constructor() : Composite<HistoryGroup<T, W>>() {
             entry.size = entry.element!!.calcSize(_entriesWidth)
         }
     }
+
+    /** The scrollable area, our only proper child.  */
+    protected var _scroller: Scroller
+
+    /** The rendered items contained in the scrollable area.  */
+    protected var _entriesGroup: EntriesGroup
+
+    /** A frame tick registration, or NOOP if we're not updating.  */
+    protected var _conn = Closeable.Util.NOOP
+
+    /** The list of history entries.  */
+    protected var _entries: MutableList<Entry> = ArrayList()
+
+    /** The current width of the rendered items group, or 0 prior to layout.  */
+    protected var _entriesWidth: Float = 0.toFloat()
+
+    /** The vertical gap between history items.  */
+    protected var _vgap = 1
+
+    /** The current height of the view area (this can be different from _scroller.size() if it
+     * is ever given an inset background.  */
+    protected var _viewHeight: Float = 0.toFloat()
+
+    /** Set if we discover a change to the width during layout that needs to update UI on the
+     * next update.  */
+    protected var _widthUpdated: Boolean = false
+
+    /** Set if we should automatically scroll to show newly added items.  */
+    protected var _atBottom = true
+
+    /** Tracks isAdded(), for faster testing.  */
+    protected var _added: Boolean = false
+
+    /** The unique index of the 0th entry in the history.  */
+    protected var _baseIndex: Int = 0
+
+    /** The size to use for new, unrendered, history entries.  */
+    protected var _estimatedSize = Dimension(1f, 18f)
 
     /** Tests if the history is currently at the bottom. If the history is at the bottom, then
      * subsequent additions will cause automatic scrolling. By default, new groups are at the
@@ -143,7 +177,7 @@ protected constructor() : Composite<HistoryGroup<T, W>>() {
         var top = bottom
         while (top >= 0) {
             val e = _entries[top]
-            if (e.ypos + e.size.height() < _scroller.ypos()) {
+            if (e.ypos + e.size.height < _scroller.ypos()) {
                 break
             }
             if (e.element == null) {
@@ -184,7 +218,9 @@ protected constructor() : Composite<HistoryGroup<T, W>>() {
 
     init {
         layout = AxisLayout.horizontal().stretchByDefault().offStretch()
-        initChildren(_scroller = Scroller(_entriesGroup = EntriesGroup()).setBehavior(Scroller.Behavior.VERTICAL))
+        _entriesGroup = EntriesGroup()
+        _scroller = Scroller(_entriesGroup).setBehavior(Scroller.Behavior.VERTICAL)
+        initChildren(_scroller)
     }
 
     /** Sets up the [Entry.element] member. After this call, the element will be added to
@@ -253,16 +289,12 @@ protected constructor() : Composite<HistoryGroup<T, W>>() {
         super.wasRemoved()
     }
 
-    protected override val styleClass: Class<*>
-        get() = HistoryGroup<*, *>::class.java
+    override val styleClass: Class<*>
+        get() = HistoryGroup::class.java
 
     protected fun schedule() {
         if (_conn === Closeable.Util.NOOP && _added) {
-            _conn = root()!!.iface.frame.connect(object : UnitSlot() {
-                fun onEmit() {
-                    update()
-                }
-            })
+            _conn = root()!!.iface.frame.connect({ update() })
         }
     }
 
@@ -314,15 +346,15 @@ protected constructor() : Composite<HistoryGroup<T, W>>() {
         /** Do the full on render of everything, if needed.  */
         fun render(): W {
             if (element != null) {
-                return element
+                return element!!
             }
 
             this@HistoryGroup.render(this)
-            return element
+            return element!!
         }
 
         fun bottom(): Float {
-            return ypos + size.height()
+            return ypos + size.height
         }
     }
 
@@ -336,13 +368,13 @@ protected constructor() : Composite<HistoryGroup<T, W>>() {
 
         override fun setPosition(x: Float, y: Float) {
             val bounds = bounds(Rectangle())
-            if (_viewHeight > bounds.height()) {
+            if (_viewHeight > bounds.height) {
                 // nail the group to the bottom of the scroll area.
-                layer.setTranslation(x, _viewHeight - bounds.height())
+                layer.setTranslation(x, _viewHeight - bounds.height)
                 _atBottom = true
             } else {
                 layer.setTranslation(x, Math.floor(y.toDouble()).toFloat())
-                _atBottom = -y == bounds.height() - _viewHeight
+                _atBottom = -y == bounds.height - _viewHeight
             }
             schedule()
         }
@@ -419,7 +451,7 @@ protected constructor() : Composite<HistoryGroup<T, W>>() {
             if (!_entries.isEmpty()) {
                 size.height += (_vgap * (_entries.size - 1)).toFloat()
                 for (e in _entries) {
-                    size.height += e.size.height()
+                    size.height += e.size.height
                 }
             }
             return size
@@ -442,51 +474,13 @@ protected constructor() : Composite<HistoryGroup<T, W>>() {
 
             // update all entries so they have a sensible ypos when needed
             for (e in _entries) {
-                val eheight = e.size.height()
+                val eheight = e.size.height
                 if (e.element != null) {
-                    setBounds(e.element, left, top, e.size.width(), eheight)
+                    setBounds(e.element!!, left, top, e.size.width, eheight)
                 }
                 e.ypos = top
                 top += eheight + _vgap
             }
         }
     }
-
-    /** The scrollable area, our only proper child.  */
-    protected var _scroller: Scroller
-
-    /** The rendered items contained in the scrollable area.  */
-    protected var _entriesGroup: EntriesGroup
-
-    /** A frame tick registration, or NOOP if we're not updating.  */
-    protected var _conn = Closeable.Util.NOOP
-
-    /** The list of history entries.  */
-    protected var _entries: MutableList<Entry> = ArrayList()
-
-    /** The current width of the rendered items group, or 0 prior to layout.  */
-    protected var _entriesWidth: Float = 0.toFloat()
-
-    /** The vertical gap between history items.  */
-    protected var _vgap = 1
-
-    /** The current height of the view area (this can be different from _scroller.size() if it
-     * is ever given an inset background.  */
-    protected var _viewHeight: Float = 0.toFloat()
-
-    /** Set if we discover a change to the width during layout that needs to update UI on the
-     * next update.  */
-    protected var _widthUpdated: Boolean = false
-
-    /** Set if we should automatically scroll to show newly added items.  */
-    protected var _atBottom = true
-
-    /** Tracks isAdded(), for faster testing.  */
-    protected var _added: Boolean = false
-
-    /** The unique index of the 0th entry in the history.  */
-    protected var _baseIndex: Int = 0
-
-    /** The size to use for new, unrendered, history entries.  */
-    protected var _estimatedSize = Dimension(1f, 18f)
 }

@@ -5,7 +5,7 @@ import klay.scene.Pointer
 import react.Closeable
 import react.Signal
 import react.SignalView
-import react.Slot
+import react.SignalViewListener
 
 /**
  * A button that supports an action on a "long press". A long press is when the user holds the
@@ -14,7 +14,7 @@ import react.Slot
  */
 class LongPressButton
 /** Creates a button with the supplied text and icon.  */
-@JvmOverloads constructor(text: String? = null, icon: Icon = null) : Button(text, icon) {
+@JvmOverloads constructor(text: String? = null, icon: Icon? = null) : Button(text, icon) {
 
     /** Creates a button with the supplied icon.  */
     constructor(icon: Icon) : this(null, icon) {}
@@ -35,13 +35,13 @@ class LongPressButton
 
     /** A convenience method for registering a long press handler. Assumes you don't need the
      * result of [SignalView.connect], because it throws it away.  */
-    fun onLongPress(onLongPress: SignalView.Listener<in Button>): LongPressButton {
+    fun onLongPress(onLongPress: SignalViewListener<Button>): LongPressButton {
         longPressed().connect(onLongPress)
         return this
     }
 
     override fun createBehavior(): Behavior<Button>? {
-        return object : Behavior.Click<Button>(this) {
+        return object : Behavior.Click<Button>(this@LongPressButton) {
             override fun layout() {
                 super.layout()
                 _longPressInterval = resolveStyle(LONG_PRESS_INTERVAL)
@@ -68,13 +68,10 @@ class LongPressButton
 
             protected fun startLongPressTimer() {
                 if (_longPressInterval > 0 && _timerReg === Closeable.Util.NOOP) {
-                    _timerReg = root().iface.frame.connect(object : Slot<Clock>() {
-                        fun onEmit(clock: Clock) {
-                            _accum += clock.dt
-                            if (_accum > _longPressInterval) fireLongPress()
-                        }
-
-                        protected var _accum: Int = 0
+                    var _accum: Int = 0
+                    _timerReg = root()!!.iface.frame.connect({ clock: Clock ->
+                        _accum += clock.dt
+                        if (_accum > _longPressInterval) fireLongPress()
                     })
                 }
             }
@@ -85,7 +82,7 @@ class LongPressButton
 
             protected fun fireLongPress() {
                 // cancel the current interaction which will disarm the button
-                onCancel(null!!)
+                onCancel(null)
                 cancelLongPressTimer()
                 longPress()
             }
@@ -95,7 +92,7 @@ class LongPressButton
         }
     }
 
-    protected val _longPressed = Signal.create()
+    protected val _longPressed = Signal<Button>()
 
     companion object {
         /** An interval (in milliseconds) after which pressing and holding on a button will be

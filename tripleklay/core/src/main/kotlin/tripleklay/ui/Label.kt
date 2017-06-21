@@ -1,7 +1,6 @@
 package tripleklay.ui
 
 import react.Closeable
-import react.Functions
 import react.Value
 import react.ValueView
 
@@ -12,10 +11,10 @@ open class Label
 /** Creates a label with the supplied text and icon.  */
 @JvmOverloads constructor(text: String? = null, icon: Icon? = null) : TextWidget<Label>() {
     /** The text displayed by this widget, or null.  */
-    val text = Value.create(null)
+    val text = Value<String?>(null)
 
     /** The icon displayed by this widget, or null.  */
-    val icon = Value.create(null)
+    val icon = Value<Icon?>(null)
 
     /** Creates a label with the supplied icon.  */
     constructor(icon: Icon) : this(null, icon) {}
@@ -40,7 +39,7 @@ open class Label
     fun bindText(textV: ValueView<*>): Label {
         return addBinding(object : Element.Binding(_bindings) {
             override fun connect(): Closeable {
-                return textV.map(Functions.TO_STRING).connectNotify(text.slot())
+                return textV.map { it.toString() }.connectNotify(text.slot())
             }
 
             override fun toString(): String {
@@ -81,7 +80,7 @@ open class Label
         return "Label(" + text.get() + ")"
     }
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = Label::class.java
 
     override fun text(): String? {

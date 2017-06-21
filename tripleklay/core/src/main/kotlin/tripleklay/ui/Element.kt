@@ -4,7 +4,6 @@ import klay.scene.GroupLayer
 import klay.scene.Layer
 import pythagoras.f.*
 import react.*
-import tripleklay.ui.util.Insets
 import tripleklay.util.Ref
 
 /**
@@ -80,7 +79,7 @@ abstract class Element<T : Element<T>> protected constructor() {
     /**
      * Returns the parent of this element, or null.
      */
-    fun parent(): Container<*> {
+    fun parent(): Container<*>? {
         return _parent
     }
 
@@ -91,7 +90,7 @@ abstract class Element<T : Element<T>> protected constructor() {
      */
     fun hierarchyChanged(): SignalView<Boolean> {
         if (_hierarchyChanged == null) _hierarchyChanged = Signal.create()
-        return _hierarchyChanged
+        return _hierarchyChanged!!
     }
 
     /**
@@ -173,10 +172,8 @@ abstract class Element<T : Element<T>> protected constructor() {
      * Returns a slot which can be used to wire the enabled status of this element to a [ ] or [react.Value].
      */
     fun enabledSlot(): Slot<Boolean> {
-        return object : Slot<Boolean>() {
-            fun onEmit(value: Boolean?) {
-                setEnabled(value!!)
-            }
+        return { value: Boolean? ->
+            setEnabled(value!!)
         }
     }
 
@@ -219,10 +216,8 @@ abstract class Element<T : Element<T>> protected constructor() {
      * Returns a slot which can be used to wire the visible status of this element to a [ ] or [react.Value].
      */
     fun visibleSlot(): Slot<Boolean> {
-        return object : Slot<Boolean>() {
-            fun onEmit(value: Boolean?) {
-                setVisible(value!!)
-            }
+        return { value: Boolean? ->
+            setVisible(value!!)
         }
     }
 
@@ -245,16 +240,17 @@ abstract class Element<T : Element<T>> protected constructor() {
     /**
      * Returns true only if this element and all its parents' [.isVisible] return true.
      */
-    val isShowing: Boolean
+    open val isShowing: Boolean
         get() {
-            val parent: Container<*>
-            return isVisible && (parent = parent()) != null && parent.isShowing
+            if (!isVisible) return false
+            val parent: Container<*>? = parent()
+            return parent != null && parent.isShowing
         }
 
     /**
      * Returns the layout constraint configured on this element, or null.
      */
-    fun constraint(): Layout.Constraint {
+    fun constraint(): Layout.Constraint? {
         return _constraint
     }
 
@@ -319,7 +315,7 @@ abstract class Element<T : Element<T>> protected constructor() {
         var b = _bindings
         while (b !== Binding.NONE) {
             b.bind()
-            b = b.next
+            b = b.next!!
         }
     }
 
@@ -341,7 +337,7 @@ abstract class Element<T : Element<T>> protected constructor() {
         var b = _bindings
         while (b !== Binding.NONE) {
             b.close()
-            b = b.next
+            b = b.next!!
         }
     }
 
@@ -384,11 +380,9 @@ abstract class Element<T : Element<T>> protected constructor() {
      * @param styles if set, the slot will also call [.clearLayoutData] when emitted
      */
     @JvmOverloads protected fun invalidateSlot(styles: Boolean = false): UnitSlot {
-        return object : UnitSlot() {
-            fun onEmit() {
-                invalidate()
-                if (styles) clearLayoutData()
-            }
+        return {
+            invalidate()
+            if (styles) clearLayoutData()
         }
     }
 
@@ -448,7 +442,7 @@ abstract class Element<T : Element<T>> protected constructor() {
      */
     open fun preferredSize(hintX: Float, hintY: Float): IDimension {
         if (_preferredSize == null) _preferredSize = computeSize(hintX, hintY)
-        return _preferredSize
+        return _preferredSize!!
     }
 
     /**
@@ -501,7 +495,7 @@ abstract class Element<T : Element<T>> protected constructor() {
         // insets in the process)
         _ldata = createLayoutData(hintX, hintY)
         val ldata = _ldata
-        val insets = ldata.bg.insets
+        val insets = ldata!!.bg.insets
         val size = computeSize(ldata, hintX - insets.width(), hintY - insets.height())
         insets.addTo(size)
 
@@ -543,17 +537,17 @@ abstract class Element<T : Element<T>> protected constructor() {
         // if we have a non-matching background, dispose it (note that if we don't want a bg, any
         // existing bg will necessarily be invalid)
         var bginst: Background.Instance? = _bginst.get()
-        val bgok = bginst != null && bginst.owner() === ldata.bg &&
+        val bgok = bginst != null && bginst.owner() === ldata!!.bg &&
                 bginst.size == _size
         if (!bgok) _bginst.clear()
         // if we want a background and don't already have one, create it
         if (width > 0 && height > 0 && !bgok) {
-            bginst = _bginst.set(ldata.bg.instantiate(_size))
-            bginst.addTo(layer, 0f, 0f, 0f)
+            bginst = _bginst.set(ldata!!.bg.instantiate(_size))
+            bginst!!.addTo(layer, 0f, 0f, 0f)
         }
 
         // do our actual layout
-        val insets = ldata.bg.insets
+        val insets = ldata!!.bg.insets
         layout(ldata, insets.left(), insets.top(),
                 width - insets.width(), height - insets.height())
 
@@ -631,7 +625,7 @@ abstract class Element<T : Element<T>> protected constructor() {
     }
 
     /** Resolves style and other information needed to layout this element.  */
-    protected open inner class LayoutData {
+    open inner class LayoutData {
         /** This element's background style.  */
         val bg = resolveStyle(Style.BACKGROUND)
 
@@ -696,13 +690,13 @@ abstract class Element<T : Element<T>> protected constructor() {
          * * which indicates the `sizeDelegate`'s result should be used for that axis. Passing
          * * `null` is equivalent to passing a 0x0 dimension
          */
-        constructor(layoutDelegate: LayoutData, sizeDelegate: LayoutData,
+        constructor(layoutDelegate: LayoutData?, sizeDelegate: LayoutData?,
                     prefSize: IDimension?) {
             this.layoutDelegate = layoutDelegate
             this.sizeDelegate = sizeDelegate
             if (prefSize != null) {
-                prefWidth = prefSize.width()
-                prefHeight = prefSize.height()
+                prefWidth = prefSize.width
+                prefHeight = prefSize.height
             } else {
                 prefHeight = 0f
                 prefWidth = prefHeight
@@ -718,8 +712,8 @@ abstract class Element<T : Element<T>> protected constructor() {
             this.layoutDelegate = delegate
             this.sizeDelegate = delegate
             if (prefSize != null) {
-                prefWidth = prefSize.width()
-                prefHeight = prefSize.height()
+                prefWidth = prefSize.width
+                prefHeight = prefSize.height
             } else {
                 prefHeight = 0f
                 prefWidth = prefHeight
@@ -816,8 +810,9 @@ abstract class Element<T : Element<T>> protected constructor() {
      * to the UI hierarchy and closed when the element is removed. This allows us to provide
      * bindFoo() methods which neither leak connections to reactive values whose lifetimes may
      * exceed that of the element that is displaying them, nor burdens the caller with thinking
-     * about and managing this.  */
-    protected abstract class Binding(val next: Binding) {
+     * about and managing this.
+     * TODO(cdi) i guess we should use a ADT here (NoneBinding vs SomeBinding) to get rid of nullable type */
+    protected abstract class Binding(val next: Binding?) {
 
         abstract fun connect(): Closeable
 
@@ -853,7 +848,7 @@ abstract class Element<T : Element<T>> protected constructor() {
     protected var _ldata: LayoutData? = null
     protected val _bginst = Ref.create<Background.Instance>(null)
 
-    protected enum class Flag private constructor(val mask: Int) {
+    enum class Flag private constructor(val mask: Int) {
         VALID(1 shl 0), ENABLED(1 shl 1), VISIBLE(1 shl 2), SELECTED(1 shl 3), WILL_DISPOSE(1 shl 4),
         HIT_DESCEND(1 shl 5), HIT_ABSORB(1 shl 6), IS_REMOVING(1 shl 7), IS_ADDING(1 shl 8)
     }

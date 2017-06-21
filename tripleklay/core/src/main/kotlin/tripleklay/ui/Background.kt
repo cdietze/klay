@@ -138,10 +138,10 @@ abstract class Background {
         /** Creates a solid background of the specified color.  */
         fun solid(color: Int): Background {
             return object : Background() {
-                protected override fun instantiate(size: IDimension): Instance {
+                override fun instantiate(size: IDimension): Instance {
                     return LayerInstance(size, object : Layer() {
                         override fun paintImpl(surf: Surface) {
-                            surf.setFillColor(color).fillRect(0f, 0f, size.width(), size.height())
+                            surf.setFillColor(color).fillRect(0f, 0f, size.width, size.height)
                         }
                     })
                 }
@@ -151,11 +151,11 @@ abstract class Background {
         /** Creates a beveled background with the specified colors.  */
         fun beveled(bgColor: Int, ulColor: Int, brColor: Int): Background {
             return object : Background() {
-                protected override fun instantiate(size: IDimension): Instance {
+                override fun instantiate(size: IDimension): Instance {
                     return LayerInstance(size, object : Layer() {
                         override fun paintImpl(surf: Surface) {
-                            val width = size.width()
-                            val height = size.height()
+                            val width = size.width
+                            val height = size.height
                             val bot = height
                             val right = width
                             surf.setFillColor(bgColor).fillRect(0f, 0f, width, height)
@@ -170,11 +170,11 @@ abstract class Background {
         /** Creates a bordered background with the specified colors and thickness.  */
         fun bordered(bgColor: Int, color: Int, thickness: Float): Background {
             return object : Background() {
-                protected override fun instantiate(size: IDimension): Instance {
+                override fun instantiate(size: IDimension): Instance {
                     return LayerInstance(size, object : Layer() {
                         override fun paintImpl(surf: Surface) {
-                            val width = size.width()
-                            val height = size.height()
+                            val width = size.width
+                            val height = size.height
                             surf.setFillColor(bgColor).fillRect(0f, 0f, width, height)
                             surf.setFillColor(color).fillRect(0f, 0f, width, thickness).fillRect(0f, 0f, thickness, height).fillRect(width - thickness, 0f, thickness, height).fillRect(0f, height - thickness, width, thickness)
                         }
@@ -197,9 +197,9 @@ abstract class Background {
         /** Creates a background with the specified source.  */
         fun image(source: TileSource): Background {
             return object : Background() {
-                protected override fun instantiate(size: IDimension): Instance {
+                override fun instantiate(size: IDimension): Instance {
                     val layer = ImageLayer(source)
-                    layer.setSize(size.width(), size.height())
+                    layer.setSize(size.width, size.height)
                     return LayerInstance(size, layer)
                 }
             }
@@ -208,9 +208,9 @@ abstract class Background {
         /** Creates a centered background with the specified texture tile.  */
         fun centered(tile: Tile): Background {
             return object : Background() {
-                protected override fun instantiate(size: IDimension): Instance {
-                    val x = MathUtil.ifloor((size.width() - tile.width()) / 2).toFloat()
-                    val y = MathUtil.ifloor((size.height() - tile.height()) / 2).toFloat()
+                override fun instantiate(size: IDimension): Instance {
+                    val x = MathUtil.ifloor((size.width - tile.width) / 2).toFloat()
+                    val y = MathUtil.ifloor((size.height - tile.height) / 2).toFloat()
                     return LayerInstance(size, object : Layer() {
                         override fun paintImpl(surf: Surface) {
                             surf.draw(tile, x, y)
@@ -223,15 +223,15 @@ abstract class Background {
         /** Creates a cropped centered background with the specified texture tile.  */
         fun cropped(tile: Tile): Background {
             return object : Background() {
-                protected override fun instantiate(size: IDimension): Instance {
-                    val swidth = size.width()
-                    val sheight = size.height()
-                    val iwidth = tile.width()
-                    val iheight = tile.height()
+                override fun instantiate(size: IDimension): Instance {
+                    val swidth = size.width
+                    val sheight = size.height
+                    val iwidth = tile.width
+                    val iheight = tile.height
                     val cwidth = Math.min(swidth, iwidth)
                     val cheight = Math.min(sheight, iheight)
-                    val sx = if (swidth > iwidth) 0 else (iwidth - swidth) / 2
-                    val sy = if (sheight > iheight) 0 else (iheight - sheight) / 2
+                    val sx = if (swidth > iwidth) 0f else (iwidth - swidth) / 2f
+                    val sy = if (sheight > iheight) 0f else (iheight - sheight) / 2f
                     return LayerInstance(size, object : Layer() {
                         override fun paintImpl(surf: Surface) {
                             var dy = 0f
@@ -254,11 +254,11 @@ abstract class Background {
         /** Creates a tiled background with the specified texture.  */
         fun tiled(tex: Texture): Background {
             return object : Background() {
-                protected override fun instantiate(size: IDimension): Instance {
+                override fun instantiate(size: IDimension): Instance {
                     return LayerInstance(size, object : Layer() {
                         override fun paintImpl(surf: Surface) {
-                            val width = size.width()
-                            val height = size.height()
+                            val width = size.width
+                            val height = size.height
                             val twidth = tex.displayWidth
                             val theight = tex.displayHeight
                             var y = 0f

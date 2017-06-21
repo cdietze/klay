@@ -1,17 +1,13 @@
 package tripleklay.ui
 
-import klay.core.Canvas
-import klay.core.Graphics
 import klay.core.TextWrap
 import klay.scene.Layer
 import pythagoras.f.Dimension
-import pythagoras.f.FloatMath
 import pythagoras.f.MathUtil
 import react.Slot
 import react.UnitSlot
 import tripleklay.util.Glyph
 import tripleklay.util.StyledText
-import tripleklay.util.TextStyle
 
 /**
  * An abstract base class for widgets that contain text.
@@ -37,23 +33,20 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
     /**
      * Returns a slot that subclasses should wire up to their icon `Value`.
      */
-    protected fun iconDidChange(): Slot<Icon> {
-        return object : Slot<Icon>() {
-            fun onEmit(icon: Icon?) {
-                if (icon == null) {
+    protected fun iconDidChange(): Slot<Icon?> {
+        return {
+            icon: Icon? ->
+            if (icon == null) {
+                clearLayoutData()
+                invalidate()
+            } else {
+                icon.state().onSuccess({ resource: Icon ->
+                    // clear out the rendered icon in case we got laid out before the async
+                    // load finished
+                    _renderedIcon = null
                     clearLayoutData()
                     invalidate()
-                } else {
-                    icon.state().onSuccess(object : Slot<Icon>() {
-                        fun onEmit(resource: Icon) {
-                            // clear out the rendered icon in case we got laid out before the async
-                            // load finished
-                            _renderedIcon = null
-                            clearLayoutData()
-                            invalidate()
-                        }
-                    })
-                }
+                })
             }
         }
     }
@@ -68,21 +61,21 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
         _renderedIcon = null
     }
 
-    override fun createLayoutData(hintX: Float, hintY: Float): Element.LayoutData {
+    override fun createLayoutData(hintX: Float, hintY: Float): LayoutData {
         return TextLayoutData(hintX, hintY)
     }
 
-    protected open inner class TextLayoutData(hintX: Float, hintY: Float) : Element.LayoutData() {
-        val halign: Style.HAlign = resolveStyle<HAlign>(Style.HALIGN)
-        val valign: Style.VAlign = resolveStyle<VAlign>(Style.VALIGN)
-        val iconPos: Style.Pos? = resolveStyle<Pos>(Style.ICON_POS)
+    protected open inner class TextLayoutData(hintX: Float, hintY: Float) : LayoutData() {
+        val halign: Style.HAlign = resolveStyle<Style.HAlign>(Style.HALIGN)
+        val valign: Style.VAlign = resolveStyle<Style.VAlign>(Style.VALIGN)
+        val iconPos: Style.Pos? = resolveStyle<Style.Pos>(Style.ICON_POS)
         val iconGap = resolveStyle(Style.ICON_GAP)
         val iconCuddle = resolveStyle(Style.ICON_CUDDLE)
         val iconEffect = resolveStyle(Style.ICON_EFFECT)
         val wrap = resolveStyle(Style.TEXT_WRAP)
         val autoShrink = resolveStyle(Style.AUTO_SHRINK)
 
-        val gfx = root()!!.iface.plat.graphics()
+        val gfx = root()!!.iface.plat.graphics
         var text: StyledText.Plain? = null // mostly final, only changed by autoShrink
         val icon: Icon?
 
@@ -106,7 +99,7 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
                 // TODO: should we do something with a y-hint?
                 if (hints.width > 0 && wrap) {
                     text = StyledText.Block(gfx, curtext!!, style, TextWrap(hints.width),
-                            Style.toAlignment(resolveStyle<HAlign>(Style.HALIGN)))
+                            Style.toAlignment(resolveStyle<Style.HAlign>(Style.HALIGN)))
                 } else {
                     text = StyledText.Span(gfx, curtext!!, style)
                 }
@@ -125,7 +118,7 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
                 if (twidth > availWidth) {
                     while (twidth > availWidth && text!!.style.font!!.size > MIN_FONT_SIZE) {
                         text = text!!.resize(text!!.style.font!!.size - 1)
-                        twidth = FloatMath.ceil(textWidth())
+                        twidth = MathUtil.ceil(textWidth())
                     }
                 }
             }
@@ -186,7 +179,8 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
                 } else {
                     // Otherwise, dispose and recreate
                     if (_ilayer != null) _ilayer!!.close()
-                    layer.addAt(_ilayer = icon.render(), ix, iy)
+                    _ilayer = icon.render()
+                    layer.addAt(_ilayer!!, ix, iy)
                 }
 
             } else if (icon == null && _ilayer != null) {
@@ -202,8 +196,8 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
                 // if we're cuddling, adjust icon position based on the now known tex position
                 if (_ilayer != null && iconCuddle) {
                     val tlayer = _tglyph.layer()
-                    val ctx = tlayer?.tx() ?: 0
-                    val cty = tlayer?.ty() ?: 0
+                    val ctx = tlayer?.tx() ?: 0f
+                    val cty = tlayer?.ty() ?: 0f
                     var ix = _ilayer!!.tx()
                     var iy = _ilayer!!.ty()
                     val iwid = icon!!.width()
@@ -250,10 +244,10 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
 
         // this is broken out so that subclasses can extend this action
         protected fun updateTextGlyph(tx: Float, ty: Float, availWidth: Float, availHeight: Float) {
-            var twidth = FloatMath.ceil(textWidth())
-            var theight = FloatMath.ceil(textHeight())
-            val awidth = FloatMath.ceil(availWidth)
-            val aheight = FloatMath.ceil(availHeight)
+            var twidth = MathUtil.ceil(textWidth())
+            var theight = MathUtil.ceil(textHeight())
+            val awidth = MathUtil.ceil(availWidth)
+            val aheight = MathUtil.ceil(availHeight)
             if (twidth <= 0 || theight <= 0 || awidth <= 0 || aheight <= 0) return
 
             // if autoShrink is enabled, and our text is too wide, re-lay it out with successively
@@ -261,9 +255,9 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
             if (autoShrink && twidth > availWidth) {
                 while (twidth > availWidth && text!!.style.font!!.size > MIN_FONT_SIZE) {
                     text = text!!.resize(text!!.style.font!!.size - 1)
-                    twidth = FloatMath.ceil(textWidth())
+                    twidth = MathUtil.ceil(textWidth())
                 }
-                theight = FloatMath.ceil(textHeight())
+                theight = MathUtil.ceil(textHeight())
             }
 
             // create a canvas no larger than the text, constrained to the available size
@@ -280,11 +274,11 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
             // only re-render our text if something actually changed
             if (text != _renderedText || tgwidth != _tglyph.preparedWidth() ||
                     tgheight != _tglyph.preparedHeight()) {
-                _tglyph.prepare(root()!!.iface.plat.graphics(), tgwidth, tgheight)
+                _tglyph.prepare(root()!!.iface.plat.graphics, tgwidth, tgheight)
                 val canvas = _tglyph.begin()
                 text!!.render(canvas, Math.min(ox, 0f), Math.min(oy, 0f))
                 _tglyph.end()
-                _renderedText = text
+                _renderedText = text!!
             }
 
             // always set the translation since other non-text style changes can affect it
@@ -302,7 +296,7 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
     }
 
     protected val _tglyph = Glyph(layer)
-    protected var _renderedText: StyledText.Plain
+    protected var _renderedText: StyledText.Plain? = null
     protected var _ilayer: Layer? = null
     protected var _renderedIcon: Icon? = null
 

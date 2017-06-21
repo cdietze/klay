@@ -11,7 +11,7 @@ open class Insets
         protected var _top: Float, protected var _right: Float, protected var _bottom: Float, protected var _left: Float) {
 
     /** Insets with changeable values.  */
-    class Mutable private constructor(i: Insets) : Insets(i.top(), i.right(), i.bottom(), i.left()) {
+    class Mutable(i: Insets) : Insets(i.top(), i.right(), i.bottom(), i.left()) {
 
         override fun mutable(): Mutable {
             return this

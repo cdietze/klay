@@ -4,15 +4,12 @@ import klay.core.Input
 import klay.core.Keyboard
 import klay.scene.LayerUtil
 import klay.scene.Pointer
-import pythagoras.f.Point
 import pythagoras.f.Rectangle
 import react.Signal
 import react.SignalView
-import react.Slot
 import react.Value
 import tripleklay.platform.NativeTextField
 import tripleklay.platform.TPPlatform
-import tripleklay.ui.util.Insets
 
 /**
  * Displays text which can be edited via the [Input.getText] popup.
@@ -78,6 +75,16 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
     /** The text displayed by this widget.  */
     val text: Value<String>
 
+    protected var _nativeField: NativeTextField? = null
+    protected var _validator: Validator? = null
+    protected var _transformer: Transformer? = null
+    protected var _textType: Keyboard.TextType? = null
+    protected var _fullTimeNative: Boolean = false
+    protected val _finishedEditing: Signal<Boolean>
+
+    // used when popping up a text entry interface on mobile platforms
+    protected var _popupLabel: String? = null
+
     constructor(styles: Styles) : this("", styles) {}
 
     init {
@@ -87,11 +94,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
         _finishedEditing = Signal.create()
 
         if (hasNative()) {
-            _finishedEditing.connect(object : Slot<Boolean>() {
-                fun onEmit(event: Boolean?) {
-                    if (!_fullTimeNative) updateMode(false)
-                }
-            })
+            _finishedEditing.connect({ if (!_fullTimeNative) updateMode(false) })
         }
 
         this.text.update(initialText)
@@ -140,7 +143,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
     }
 
     /** Returns this field's native text field, if it has one, otherwise null.  */
-    fun exposeNativeField(): NativeTextField {
+    fun exposeNativeField(): NativeTextField? {
         return _nativeField
     }
 
@@ -161,7 +164,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
         return if (_transformer == null) text else _transformer!!.transform(text)
     }
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = Field::class.java
 
     override fun text(): String? {
@@ -189,7 +192,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
         }
     }
 
-    override fun createLayoutData(hintX: Float, hintY: Float): Element.LayoutData {
+    override fun createLayoutData(hintX: Float, hintY: Float): LayoutData {
         return FieldLayoutData(hintX, hintY)
     }
 
@@ -200,12 +203,10 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
 
         } else {
             // TODO: multi-line keyboard.getText
-            root()!!.iface.plat.input().getText(_textType, _popupLabel, text.get()).onSuccess(object : Slot<String>() {
-                fun onEmit(result: String?) {
-                    // null result is a canceled entry dialog
-                    if (result != null) text.update(result)
-                    _finishedEditing.emit(result != null)
-                }
+            root()!!.iface.plat.input.getText(_textType!!, _popupLabel!!, text.get()).onSuccess({ result: String? ->
+                // null result is a canceled entry dialog
+                if (result != null) text.update(result)
+                _finishedEditing.emit(result != null)
             })
         }
     }
@@ -224,7 +225,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
             _nativeField = if (_nativeField == null)
                 TPPlatform.instance().createNativeTextField(Native())
             else
-                TPPlatform.instance().refresh(_nativeField)
+                TPPlatform.instance().refresh(_nativeField!!)
 
             _nativeField!!.setEnabled(isEnabled)
             updateNativeFieldBounds()
@@ -240,7 +241,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
         if (_tglyph.layer() != null) _tglyph.layer()!!.setVisible(visible)
     }
 
-    protected inner class FieldLayoutData(hintX: Float, hintY: Float) : TextWidget.TextLayoutData(hintX, hintY) {
+    protected inner class FieldLayoutData(hintX: Float, hintY: Float) : TextWidget<Field>.TextLayoutData(hintX, hintY) {
 
         override fun layout(left: Float, top: Float, width: Float, height: Float) {
             super.layout(left, top, width, height)
@@ -250,23 +251,13 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
             // make sure our cached bits are up to date
             _validator = resolveStyle(VALIDATOR)
             _transformer = resolveStyle(TRANSFORMER)
-            _textType = resolveStyle<TextType>(TEXT_TYPE)
+            _textType = resolveStyle<Keyboard.TextType>(TEXT_TYPE)
         }
     }
 
-    protected var _nativeField: NativeTextField? = null
-    protected var _validator: Validator? = null
-    protected var _transformer: Transformer? = null
-    protected var _textType: Keyboard.TextType
-    protected var _fullTimeNative: Boolean = false
-    protected val _finishedEditing: Signal<Boolean>
-
-    // used when popping up a text entry interface on mobile platforms
-    protected var _popupLabel: String
-
     companion object {
         /** Creates a style binding for the given maximum length.  */
-        fun maxLength(max: Int): Style.Binding<Validator> {
+        fun maxLength(max: Int): Style.Binding<Validator?> {
             return VALIDATOR.`is`(MaxLength(max))
         }
 
@@ -295,22 +286,22 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
         val SECURE_TEXT_ENTRY: Style.Flag = Style.newFlag(false, false)
 
         /** Sets the Keyboard.TextType in use by this Field.  */
-        val TEXT_TYPE: Style<Keyboard.TextType> = Style.newStyle<TextType>(
+        val TEXT_TYPE: Style<Keyboard.TextType> = Style.newStyle(
                 false, Keyboard.TextType.DEFAULT)
 
         /** Sets the validator to use when censoring keypresses into native text fields.
          * @see MaxLength
          */
-        val VALIDATOR = Style.newStyle<Validator>(true, null)
+        val VALIDATOR = Style.newStyle<Validator?>(true, null)
 
         /** Sets the transformner to use when updating native text fields while being typed into.  */
-        val TRANSFORMER = Style.newStyle<Transformer>(true, null)
+        val TRANSFORMER = Style.newStyle<Transformer?>(true, null)
 
         /** Sets the label used on the "return" key of the virtual keyboard on native keyboards. Be
          * aware that some platforms (such as iOS) have a limited number of options. The underlying
          * native implementation is responsible for attempting to match this style, but may be unable
          * to do so. Defaults to null (uses platform default).  */
-        val RETURN_KEY_LABEL = Style.newStyle<String>(false, null)
+        val RETURN_KEY_LABEL = Style.newStyle<String?>(false, null)
 
         /** Sets the field to allow the return key to insert a line break in the text.  */
         val MULTILINE: Style.Flag = Style.newFlag(false, false)

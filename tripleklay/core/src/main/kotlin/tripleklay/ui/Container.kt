@@ -33,7 +33,7 @@ abstract class Container<T : Container<T>> : Element<T>(), Iterable<Element<*>> 
      * searching up the container hierarchy. Only [Container] actually provides styles to its
      * children.
      */
-    abstract fun stylesheet(): Stylesheet
+    abstract fun stylesheet(): Stylesheet?
 
     /** Returns the number of children contained by this container.  */
     abstract fun childCount(): Int
@@ -93,11 +93,11 @@ abstract class Container<T : Container<T>> : Element<T>(), Iterable<Element<*>> 
         // if we're added again, we'll be re-laid-out
     }
 
-    override fun computeSize(ldata: Element.LayoutData, hintX: Float, hintY: Float): Dimension {
+    override fun computeSize(ldata: LayoutData, hintX: Float, hintY: Float): Dimension {
         return layout.computeSize(this, hintX, hintY)
     }
 
-    override fun layout(ldata: Element.LayoutData, left: Float, top: Float,
+    override fun layout(ldata: LayoutData, left: Float, top: Float,
                         width: Float, height: Float) {
         // layout our children
         layout.layout(this, left, top, width, height)

@@ -7,8 +7,7 @@ import tripleklay.ui.Container
 import tripleklay.ui.Element
 import tripleklay.ui.Layout
 import tripleklay.ui.Style
-
-import java.util.HashMap
+import java.util.*
 
 /**
  * Arranges up to 5 elements, one central and one on each edge. Added elements must have a
@@ -98,8 +97,8 @@ class BorderLayout
     }
 
     override fun layout(elems: Container<*>, left: Float, top: Float, width: Float, height: Float) {
-        val halign = resolveStyle<HAlign>(elems, Style.HALIGN)
-        val valign = resolveStyle<VAlign>(elems, Style.VALIGN)
+        val halign = resolveStyle<Style.HAlign>(elems, Style.HALIGN)
+        val valign = resolveStyle<Style.VAlign>(elems, Style.VALIGN)
         val slots = Slots(elems)
         val bounds = Rectangle(left, top, width, height)
         slots.layoutNs(Position.NORTH, halign, bounds)
@@ -108,13 +107,13 @@ class BorderLayout
         slots.layoutWe(Position.EAST, valign, bounds)
 
         val p = Position.CENTER
-        var dim: IDimension? = slots.size(p, bounds.width, bounds.height) ?: return
+        var dim: IDimension = slots.size(p, bounds.width, bounds.height) ?: return
 
         val c = slots.constraint(p)
         dim = c.adjust(dim, bounds)
         slots.setBounds(p,
-                c.align(bounds.x, halign.offset(dim.width(), bounds.width)),
-                c.align(bounds.y, valign.offset(dim.height(), bounds.height)), dim)
+                c.align(bounds.x, halign.offset(dim.width, bounds.width)),
+                c.align(bounds.y, valign.offset(dim.height, bounds.height)), dim)
     }
 
     protected inner class Slots internal constructor(elems: Container<*>) {
@@ -123,7 +122,7 @@ class BorderLayout
         init {
             for (elem in elems) {
                 if (!elem.isVisible) continue
-                val p = Position.positionOf(elem.constraint()) ?: throw IllegalStateException(
+                val p = Position.positionOf(elem.constraint()!!) ?: throw IllegalStateException(
                         "Element with a non-BorderLayout constraint: " + elem)
                 val existing = elements.put(p, elem)
                 if (existing != null) {
@@ -139,8 +138,8 @@ class BorderLayout
             val nsSize = Dimension()
             for (pos in NS) {
                 val dim = size(pos, hintX, 0f) ?: continue
-                nsSize.height += dim.height()
-                nsSize.width = Math.max(nsSize.width, dim.width())
+                nsSize.height += dim.height
+                nsSize.width = Math.max(nsSize.width, dim.width)
                 if (wce > 0) {
                     nsSize.height += vgap
                 }
@@ -150,8 +149,8 @@ class BorderLayout
             val weSize = Dimension()
             for (pos in WE) {
                 val dim = size(pos, 0f, ehintY) ?: continue
-                weSize.width += dim.width()
-                weSize.height = Math.max(weSize.height, dim.height())
+                weSize.width += dim.width
+                weSize.height = Math.max(weSize.height, dim.height)
             }
 
             weSize.width += Math.max(wce - 1, 0) * hgap
@@ -159,8 +158,8 @@ class BorderLayout
 
             val csize = size(Position.CENTER, ehintX, ehintY)
             if (csize != null) {
-                weSize.width += csize.width()
-                nsSize.height += csize.height()
+                weSize.width += csize.width
+                nsSize.height += csize.height
             }
             return Dimension(
                     Math.max(weSize.width, nsSize.width),
@@ -168,35 +167,35 @@ class BorderLayout
         }
 
         internal fun layoutNs(p: Position, halign: Style.HAlign, bounds: Rectangle) {
-            var dim: IDimension? = size(p, bounds.width, 0f) ?: return
+            var dim: IDimension = size(p, bounds.width, 0f) ?: return
             val c = constraint(p)
             dim = c.adjust(dim, bounds)
             var y = bounds.y
             if (p == Position.NORTH) {
-                bounds.y += dim.height() + vgap
+                bounds.y += dim.height + vgap
             } else {
-                y += bounds.height - dim.height()
+                y += bounds.height - dim.height
             }
-            bounds.height -= dim.height() + vgap
-            setBounds(p, c.align(bounds.x, halign.offset(dim.width(), bounds.width)), y, dim)
+            bounds.height -= dim.height + vgap
+            setBounds(p, c.align(bounds.x, halign.offset(dim.width, bounds.width)), y, dim)
         }
 
         internal fun layoutWe(p: Position, valign: Style.VAlign, bounds: Rectangle) {
-            var dim: IDimension? = size(p, 0f, bounds.height) ?: return
+            var dim: IDimension = size(p, 0f, bounds.height) ?: return
             val c = constraint(p)
             dim = c.adjust(dim, bounds)
             var x = bounds.x
             if (p == Position.WEST) {
-                bounds.x += dim.width() + hgap
+                bounds.x += dim.width + hgap
             } else {
-                x += bounds.width - dim.width()
+                x += bounds.width - dim.width
             }
-            bounds.width -= dim.width() + hgap
-            setBounds(p, x, c.align(bounds.y, valign.offset(dim.height(), bounds.height)), dim)
+            bounds.width -= dim.width + hgap
+            setBounds(p, x, c.align(bounds.y, valign.offset(dim.height, bounds.height)), dim)
         }
 
         internal fun setBounds(p: Position, x: Float, y: Float, dim: IDimension) {
-            this@BorderLayout.setBounds(get(p), x, y, dim.width(), dim.height())
+            this@BorderLayout.setBounds(get(p), x, y, dim.width, dim.height)
         }
 
         internal fun count(vararg ps: Position): Int {
@@ -214,7 +213,7 @@ class BorderLayout
         }
 
         internal operator fun get(p: Position): Element<*> {
-            return elements[p]
+            return elements[p]!!
         }
 
         internal fun constraint(p: Position): Constraint {
@@ -227,7 +226,7 @@ class BorderLayout
         }
     }
 
-    protected enum class Position private constructor(internal val orient: Int) {
+    enum class Position(internal val orient: Int) {
         CENTER(3), NORTH(1), SOUTH(1), EAST(2), WEST(2);
 
         internal val unstretched: Constraint
@@ -281,9 +280,9 @@ class BorderLayout
          * [tripleplay.ui.Style.VAlign] binding.  */
         val WEST = Position.WEST.stretched
 
-        protected val NS = arrayOf(Position.NORTH, Position.SOUTH)
-        protected val WE = arrayOf(Position.WEST, Position.EAST)
-        protected val WCE = arrayOf(Position.WEST, Position.CENTER, Position.EAST)
+        private val NS = arrayOf(Position.NORTH, Position.SOUTH)
+        private val WE = arrayOf(Position.WEST, Position.EAST)
+        private val WCE = arrayOf(Position.WEST, Position.CENTER, Position.EAST)
     }
 }
 /**

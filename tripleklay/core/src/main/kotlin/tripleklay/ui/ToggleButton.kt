@@ -30,7 +30,7 @@ class ToggleButton
         return "ToggleButton(" + text() + ")"
     }
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = ToggleButton::class.java
 
     override fun createBehavior(): Behavior<ToggleButton>? {

@@ -1,13 +1,10 @@
 package tripleklay.ui
 
-import react.Slot
 import react.Value
-import react.ValueView
 import tripleklay.ui.layout.AxisLayout
 import tripleklay.ui.layout.FlowLayout
 import tripleklay.ui.util.Supplier
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * A `Composite` that implements tabbing. Has a horizontal row of buttons along
@@ -81,7 +78,7 @@ class Tabs : Composite<Tabs>() {
          */
         fun content(): Element<*> {
             if (_content == null) _content = _generator.get()
-            return _content
+            return _content!!
         }
 
         fun index(): Int {
@@ -92,7 +89,7 @@ class Tabs : Composite<Tabs>() {
             get() = button.isVisible
             set(visible) {
                 if (!visible && selected.get() === this) selected.update(null)
-                button.isVisible = visible
+                button.setVisible(visible)
             }
 
         fun parent(): Tabs {
@@ -102,7 +99,7 @@ class Tabs : Composite<Tabs>() {
         /** Gets the displayed name of the tab. This is a convenience for accessing the text of
          * the [.button].  */
         fun name(): String {
-            return button.text.get()
+            return button.text.get()!!
         }
 
         /** The index of this tab in the parent [Tabs] instance.  */
@@ -119,7 +116,7 @@ class Tabs : Composite<Tabs>() {
     val contentArea: Group
 
     /** The value containing the currently selected tab.  */
-    val selected = Value.create(null)
+    val selected = Value<Tab?>(null)
 
     /**
      * Creates a new tabbed container.
@@ -127,33 +124,31 @@ class Tabs : Composite<Tabs>() {
     init {
         // use a simple vertical layout
         layout = AxisLayout.vertical().gap(0).offStretch()
+        buttons = Group(FlowLayout().gaps(3f))
+        contentArea = Group(AxisLayout.horizontal().stretchByDefault().offStretch()).setConstraint(AxisLayout.stretched())
         initChildren(
-                buttons = Group(FlowLayout().gaps(3f)),
-                contentArea = Group(AxisLayout.horizontal().stretchByDefault().offStretch()).setConstraint(AxisLayout.stretched()))
+                buttons,
+                contentArea)
 
         val tabButtonSelector = Selector(buttons, null).preventDeselection()
-        tabButtonSelector.selected.connect(object : Slot<Element<*>>() {
-            fun onEmit(button: Element<*>) {
-                selected.update(forWidget(button))
-            }
+        tabButtonSelector.selected.connect({ button: Element<*>? ->
+            selected.update(forWidget(button!!))
         })
 
-        selected.connect(object : ValueView.Listener<Tab>() {
-            fun onChange(selected: Tab?, deselected: Tab?) {
-                // remove the deselected content
-                if (deselected != null) contentArea.remove(deselected.content())
+        selected.connect({ selected: Tab?, deselected: Tab? ->
+            // remove the deselected content
+            if (deselected != null) contentArea.remove(deselected.content())
 
-                // show the new content, creating if necessary
-                if (selected != null) {
-                    // own it baby
-                    if (selected.content().parent() !== contentArea)
-                        contentArea.add(selected.content())
-                    // unhighlight
-                    highlighter().highlight(selected, false)
-                }
-                // now update the button (will noop if we're called from above slot)
-                tabButtonSelector.selected.update(selected?.button)
+            // show the new content, creating if necessary
+            if (selected != null) {
+                // own it baby
+                if (selected.content().parent() !== contentArea)
+                    contentArea.add(selected.content())
+                // unhighlight
+                highlighter().highlight(selected, false)
             }
+            // now update the button (will noop if we're called from above slot)
+            tabButtonSelector.selected.update(selected?.button)
         })
     }
 
@@ -235,7 +230,7 @@ class Tabs : Composite<Tabs>() {
         if (tab === selected.get()) selected.update(null)
         _tabs.removeAt(tab.index())
         buttons.destroy(tab.button)
-        if (tab._content != null) contentArea.destroy(tab._content)
+        if (tab._content != null) contentArea.destroy(tab._content!!)
         tab._generator.close()
         tab._index = -1
         resetIndices()
@@ -247,7 +242,7 @@ class Tabs : Composite<Tabs>() {
      */
     fun highlighter(): Highlighter {
         if (_highlighter == null) _highlighter = resolveStyle(HIGHLIGHTER)
-        return _highlighter
+        return _highlighter!!
     }
 
     override fun clearLayoutData() {
@@ -255,7 +250,7 @@ class Tabs : Composite<Tabs>() {
         _highlighter = null
     }
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = Tabs::class.java
 
     override fun wasAdded() {

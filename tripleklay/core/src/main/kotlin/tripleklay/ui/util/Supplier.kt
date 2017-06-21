@@ -34,7 +34,7 @@ abstract class Supplier : Closeable {
                 override fun get(): Element<*> {
                     val ret = element
                     element = null
-                    return ret
+                    return ret!!
                 }
 
                 override fun close() {
@@ -50,9 +50,10 @@ abstract class Supplier : Closeable {
          */
         fun withDispose(other: Supplier): Supplier {
             return object : Supplier() {
-                internal var created: Element<*>
+                internal var created: Element<*>? = null
                 override fun get(): Element<*> {
-                    return created = other.get()
+                    created = other.get()
+                    return created!!
                 }
 
                 override fun close() {

@@ -125,8 +125,10 @@ class Scale9 {
     /** Creates a new scale to render the given scale onto a target of the given width and
      * height.  */
     constructor(width: Float, height: Float, source: Scale9) {
-        clamp(xaxis = Axis(width, source.xaxis), width)
-        clamp(yaxis = Axis(height, source.yaxis), height)
+        xaxis = Axis(width, source.xaxis)
+        clamp(xaxis, width)
+        yaxis = Axis(height, source.yaxis)
+        clamp(yaxis, height)
     }
 
     companion object {

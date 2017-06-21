@@ -29,9 +29,9 @@ import react.Signal
  * TODO: figure out how to implement with two Flickers. could require some changes therein since
  * you probably don't want them to have differing states, plus 2x clicked signals is wasteful
  */
-class XYFlicker : Pointer.Listener() {
+class XYFlicker : Pointer.Listener {
     /** Signal dispatched when a pointer usage did not end up being a flick.  */
-    var clicked = Signal.create()
+    var clicked = Signal<klay.core.Pointer.Event>()
 
     /**
      * Gets the current position.
@@ -44,7 +44,7 @@ class XYFlicker : Pointer.Listener() {
         _vel[0f] = 0f
         _maxDeltaSq = 0f
         _origPos.set(_position)
-        getPosition(iact.event, _start)
+        getPosition(iact.event!!, _start)
         _prev.set(_start)
         _cur.set(_start)
         _prevStamp = 0.0
@@ -54,7 +54,7 @@ class XYFlicker : Pointer.Listener() {
     override fun onDrag(iact: Pointer.Interaction) {
         _prev.set(_cur)
         _prevStamp = _curStamp
-        getPosition(iact.event, _cur)
+        getPosition(iact.event!!, _cur)
         _curStamp = iact.event!!.time
         var dx = _cur.x - _start.x
         var dy = _cur.y - _start.y
@@ -70,7 +70,7 @@ class XYFlicker : Pointer.Listener() {
     override fun onEnd(iact: Pointer.Interaction) {
         // just dispatch a click if the pointer didn't move very far
         if (_maxDeltaSq < maxClickDeltaSq()) {
-            clicked.emit(iact.event)
+            clicked.emit(iact.event!!)
             return
         }
         // if not, maybe impart some velocity
@@ -92,7 +92,7 @@ class XYFlicker : Pointer.Listener() {
         }
     }
 
-    override fun onCancel(iact: Pointer.Interaction) {
+    override fun onCancel(iact: Pointer.Interaction?) {
         _vel[0f] = 0f
         _accel[0f] = 0f
     }
@@ -134,8 +134,8 @@ class XYFlicker : Pointer.Listener() {
     }
 
     /** Translates a pointer event into a position.  */
-    protected fun getPosition(event: Pointer.Event, dest: Point) {
-        dest[-event.x()] = -event.y()
+    protected fun getPosition(event: klay.core.Pointer.Event, dest: Point) {
+        dest[-event.x] = -event.y
     }
 
     /** Sets the current position, clamping the values between min and max.  */
@@ -198,7 +198,7 @@ class XYFlicker : Pointer.Listener() {
             val prev = v
             v += a * dt
             // if we decelerate past zero velocity, stop
-            return if (Math.signum(prev) == Math.signum(v)) v else 0
+            return if (Math.signum(prev) == Math.signum(v)) v else 0f
         }
     }
 }

@@ -33,7 +33,7 @@ class Pointer
         fun onEnd(iact: Interaction) {}
 
         /** Notifies listener of a pointer cancel event.  */
-        fun onCancel(iact: Interaction) {}
+        fun onCancel(iact: Interaction?) {}
 
         override fun invoke(event: Any) {
             if (event is Interaction) {

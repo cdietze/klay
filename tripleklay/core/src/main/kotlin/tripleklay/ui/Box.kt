@@ -1,19 +1,15 @@
 package tripleklay.ui
 
 import klay.core.Clock
-import klay.core.Graphics
 import klay.scene.GroupLayer
 import klay.scene.LayerUtil
 import pythagoras.f.Dimension
-import pythagoras.f.FloatMath
-import pythagoras.f.Point
+import pythagoras.f.MathUtil
 import react.Closeable
 import react.Slot
 import react.Value
 import tripleklay.shaders.RotateYBatch
 import tripleklay.util.Interpolator
-
-import java.util.Collections
 
 /**
  * A container that holds zero or one widget. The box delegates everything to its current contents
@@ -37,16 +33,25 @@ open class Box
         }
 
         override fun wasValidated() {
-            layer.setSize(size().width(), size().height())
+            layer.setSize(size().width, size().height)
         }
     }
     /** Creates an empty clipped box.  */
 
     /** Manages transitions for [.transition].  */
-    abstract class Trans protected constructor(duration: Int) : Slot<Clock>() {
+    abstract class Trans protected constructor(duration: Int) : Slot<Clock> {
 
         /** Indicates whether this transition is in process.  */
         var active = Value.create(false)
+
+        protected var _ocontents: Element<*>? = null
+        protected var _ncontents: Element<*>? = null
+
+        private val _duration: Float // ms
+        private var _elapsed: Float = 0.toFloat()
+        private var _box: Box? = null
+        private var _interp = Interpolator.LINEAR
+        private var _conn: Closeable? = null
 
         /** Configures the interpolator to use for the transition.  */
         fun interp(interp: Interpolator): Trans {
@@ -66,9 +71,9 @@ open class Box
             _box = box
             _ocontents = box.contents()
             _ncontents = ncontents
-            _box!!.didAdd(_ncontents)
+            _box!!.didAdd(_ncontents!!)
             _ncontents!!.setLocation(_ocontents!!.x(), _ocontents!!.y())
-            _ncontents!!.setSize(_ocontents!!.size().width(), _ocontents!!.size().height())
+            _ncontents!!.setSize(_ocontents!!.size().width, _ocontents!!.size().height)
             _ncontents!!.validate()
 
             _conn = box.root()!!.iface.frame.connect(this)
@@ -78,7 +83,7 @@ open class Box
             active.update(true)
         }
 
-        fun onEmit(clock: Clock) {
+        override fun invoke(clock: Clock) {
             // a minor hack which causes us to skip the frame on which we validated the new
             // contents and generally did potentially expensive things; that keeps us from jumping
             // into the transition with a big first time step
@@ -104,15 +109,6 @@ open class Box
         protected open fun init() {}
         protected abstract fun update(pct: Float)
         protected open fun cleanup() {}
-
-        protected var _ocontents: Element<*>? = null
-        protected var _ncontents: Element<*>? = null
-
-        private val _duration: Float // ms
-        private var _elapsed: Float = 0.toFloat()
-        private var _box: Box? = null
-        private var _interp = Interpolator.LINEAR
-        private var _conn: Closeable? = null
     }
 
     /** A transition that fades from the old contents to the new.  */
@@ -130,14 +126,17 @@ open class Box
 
     class Flip(duration: Int) : Trans(duration) {
 
+        protected lateinit var _obatch: RotateYBatch
+        protected lateinit var _nbatch: RotateYBatch
+
         override fun init() {
             // TODO: compute the location of the center of the box in screen coordinates, place
             // the eye there in [0, 1] coords
-            val gfx = _ocontents!!.root()!!.iface.plat.graphics()
+            val gfx = _ocontents!!.root()!!.iface.plat.graphics
             val eye = LayerUtil.layerToScreen(
-                    _ocontents!!.layer, _ocontents!!.size().width() / 2, _ocontents!!.size().height() / 2)
-            eye.x /= gfx.viewSize.width()
-            eye.y /= gfx.viewSize.height()
+                    _ocontents!!.layer, _ocontents!!.size().width / 2, _ocontents!!.size().height / 2)
+            eye.x /= gfx.viewSize.width
+            eye.y /= gfx.viewSize.height
             _obatch = RotateYBatch(gfx.gl, eye.x, eye.y, 1f)
             _nbatch = RotateYBatch(gfx.gl, eye.x, eye.y, 1f)
             _ocontents!!.layer.setBatch(_obatch)
@@ -145,8 +144,8 @@ open class Box
         }
 
         override fun update(pct: Float) {
-            _obatch.angle = FloatMath.PI * pct
-            _nbatch.angle = -FloatMath.PI * (1 - pct)
+            _obatch.angle = MathUtil.PI * pct
+            _nbatch.angle = -MathUtil.PI * (1 - pct)
             _ocontents!!.layer.setVisible(pct < 0.5f)
             _ncontents!!.layer.setVisible(pct >= 0.5f)
         }
@@ -155,9 +154,6 @@ open class Box
             _ocontents!!.layer.setBatch(null)
             _ncontents!!.layer.setBatch(null)
         }
-
-        protected var _obatch: RotateYBatch
-        protected var _nbatch: RotateYBatch
     }
 
     init {
@@ -165,7 +161,7 @@ open class Box
     }
 
     /** Returns the box's current contents.  */
-    fun contents(): Element<*> {
+    fun contents(): Element<*>? {
         return _contents
     }
 
@@ -204,14 +200,14 @@ open class Box
 
     override fun childAt(index: Int): Element<*> {
         if (_contents == null || index != 0) throw IndexOutOfBoundsException()
-        return _contents
+        return _contents!!
     }
 
     override fun iterator(): Iterator<Element<*>> {
         return if (_contents == null)
             emptyList<Element<*>>().iterator()
         else
-            setOf<Element<*>>(_contents).iterator()
+            setOf<Element<*>>(_contents!!).iterator()
     }
 
     override fun remove(child: Element<*>) {
@@ -240,14 +236,14 @@ open class Box
         destroyContents()
     }
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = Box::class.java
 
-    override fun computeSize(ldata: Element.LayoutData, hintX: Float, hintY: Float): Dimension {
+    override fun computeSize(ldata: LayoutData, hintX: Float, hintY: Float): Dimension {
         return if (_contents == null) Dimension() else _contents!!.computeSize(hintX, hintY)
     }
 
-    override fun layout(ldata: Element.LayoutData, left: Float, top: Float,
+    override fun layout(ldata: LayoutData, left: Float, top: Float,
                         width: Float, height: Float) {
         if (_contents != null) {
             _contents!!.setSize(width, height)
@@ -256,13 +252,13 @@ open class Box
         }
     }
 
-    protected override // not used
+    override // not used
     val layout: Layout
         get() = throw UnsupportedOperationException()
 
     protected operator fun set(contents: Element<*>?, destroy: Boolean): Box {
         if (_contents != null) {
-            didRemove(_contents, destroy)
+            didRemove(_contents!!, destroy)
         }
         _contents = contents
         if (contents != null) {

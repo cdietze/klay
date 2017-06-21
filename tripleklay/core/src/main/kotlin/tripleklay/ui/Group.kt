@@ -23,6 +23,6 @@ open class Group : Elements<Group> {
      */
     constructor(layout: Layout) : super(layout) {}
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = Group::class.java
 }

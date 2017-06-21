@@ -5,6 +5,8 @@ package tripleklay.ui
  * into which a widget is rendered when its state changes.
  */
 abstract class Widget<T : Widget<T>> protected constructor() : Element<T>() {
+    protected val _behave: Behavior<T>?
+
     init {
         _behave = createBehavior()
         if (_behave != null) {
@@ -28,6 +30,4 @@ abstract class Widget<T : Widget<T>> protected constructor() : Element<T>() {
     protected open fun createBehavior(): Behavior<T>? {
         return null
     }
-
-    protected val _behave: Behavior<T>?
 }

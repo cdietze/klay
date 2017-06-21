@@ -1,13 +1,13 @@
 package tripleklay.ui
 
-import java.util.Arrays
+import java.util.*
 
 /**
  * An immutable collection of styles. Used in builder-style to add, replace or remove styles.
  * Configure a group of styles and then apply them to an element via [Element.setStyles] or
  * [Element.addStyles].
  */
-class Styles private constructor(protected var _bindings: Array<Binding<*>>) {
+class Styles private constructor(protected val _bindings: List<Binding<*>>) {
 
     /**
      * Returns a new instance where the supplied bindings overwrite any previous bindings for the
@@ -47,10 +47,8 @@ class Styles private constructor(protected var _bindings: Array<Binding<*>>) {
      */
     fun add(mode: Style.Mode, vararg bindings: Style.Binding<*>): Styles {
         if (bindings.size == 0) return this // optimization
-        val nbindings = arrayOfNulls<Binding<*>>(bindings.size)
-        for (ii in bindings.indices) {
-            nbindings[ii] = newBinding<*>(bindings[ii], mode)
-        }
+        bindings.map { }
+        val nbindings = bindings.map { newBinding(it, mode) }
         // note that we take advantage of the fact that merge can handle unsorted bindings
         return merge(nbindings)
     }
@@ -60,13 +58,13 @@ class Styles private constructor(protected var _bindings: Array<Binding<*>>) {
      * state. The receiver is not modified.
      */
     fun <V> clear(mode: Style.Mode, style: Style<V>): Styles {
-        val index = Arrays.binarySearch(_bindings, Binding(style))
+        val index = _bindings.binarySearch(Binding(style), bindingComparator)
         if (index < 0) return this
         val binding = _bindings[index] as Binding<V>
         val nbindings = arrayOfNulls<Binding<*>>(_bindings.size)
         System.arraycopy(_bindings, 0, nbindings, 0, nbindings.size)
         nbindings[index] = binding.clear(mode)
-        return Styles(nbindings)
+        return Styles((nbindings as Array<Binding<*>>).toList())
     }
 
     /**
@@ -97,14 +95,14 @@ class Styles private constructor(protected var _bindings: Array<Binding<*>>) {
         return null
     }
 
-    private fun merge(obindings: Array<Binding<*>>): Styles {
+    private fun merge(obindings: List<Binding<*>>): Styles {
         if (obindings.size == 0) return this // optimization
 
         // determine which of the to-be-merged styles also exist in our styles
         val dupidx = IntArray(obindings.size)
         var dups = 0
         for (ii in obindings.indices) {
-            val idx = Arrays.binarySearch(_bindings, obindings[ii])
+            val idx = _bindings.binarySearch(obindings[ii], bindingComparator)
             if (idx >= 0) dups++
             dupidx[ii] = idx
         }
@@ -124,62 +122,53 @@ class Styles private constructor(protected var _bindings: Array<Binding<*>>) {
         }
         Arrays.sort(nbindings)
 
-        return Styles(nbindings)
+        return Styles((nbindings as Array<Binding<*>>).toList())
     }
 
-    internal class Binding<V>(val style: Style<V>) : Comparable<Binding<V>> {
+    data class Binding<V>(
+            val style: Style<V>,
+            private val defaultV: V? = null,
+            private val disabledV: V? = null,
+            private val selectedV: V? = null,
+            private val disSelectedV: V? = null) {
 
-        constructor(binding: Style.Binding<V>, mode: Style.Mode) : this(binding.style) {
-            when (mode) {
-                Style.Mode.DEFAULT -> _defaultV = binding.value
-                Style.Mode.DISABLED -> _disabledV = binding.value
-                Style.Mode.SELECTED -> _selectedV = binding.value
-                Style.Mode.DISABLED_SELECTED -> _disSelectedV = binding.value
-            }
-        }
-
-        constructor(style: Style<V>, defaultV: V, disabledV: V, selectedV: V, disSelectedV: V) : this(style) {
-            _defaultV = defaultV
-            _disabledV = disabledV
-            _selectedV = selectedV
-            _disSelectedV = disSelectedV
+        constructor(binding: Style.Binding<V>, mode: Style.Mode) :
+                this(
+                        binding.style,
+                        if (mode == Style.Mode.DEFAULT) binding.value else null,
+                        if (mode == Style.Mode.DISABLED) binding.value else null,
+                        if (mode == Style.Mode.SELECTED) binding.value else null,
+                        if (mode == Style.Mode.DISABLED_SELECTED) binding.value else null
+                ) {
         }
 
         operator fun get(elem: Element<*>): V {
             // prioritize as: disabled_selected, disabled, selected, default
             if (elem.isEnabled) {
-                if (elem.isSelected && _selectedV != null) return _selectedV
+                if (elem.isSelected && selectedV != null) return selectedV!!
             } else {
-                if (elem.isSelected && _disSelectedV != null) return _disSelectedV
-                if (_disabledV != null) return _disabledV
+                if (elem.isSelected && disSelectedV != null) return disSelectedV!!
+                if (disabledV != null) return disabledV!!
             }
-            return _defaultV
+            return defaultV!!
         }
 
         fun merge(other: Binding<V>): Binding<V> {
-            return Binding(style,
-                    merge(_defaultV, other._defaultV),
-                    merge(_disabledV, other._disabledV),
-                    merge(_selectedV, other._selectedV),
-                    merge(_disSelectedV, other._disSelectedV))
+            return Binding<V>(style,
+                    merge(defaultV, other.defaultV),
+                    merge(disabledV, other.disabledV),
+                    merge(selectedV, other.selectedV),
+                    merge(disSelectedV, other.disSelectedV))
         }
 
         fun clear(mode: Style.Mode): Binding<V> {
             when (mode) {
-                Style.Mode.DEFAULT -> return Binding<V>(style, null, _disabledV, _selectedV, _disSelectedV)
-                Style.Mode.DISABLED -> return Binding<V>(style, _defaultV, null, _selectedV, _disSelectedV)
-                Style.Mode.SELECTED -> return Binding<V>(style, _defaultV, _disabledV, null, _disSelectedV)
-                Style.Mode.DISABLED_SELECTED -> return Binding<V>(style, _defaultV, _disabledV, _selectedV, null)
+                Style.Mode.DEFAULT -> return this.copy(defaultV = null)
+                Style.Mode.DISABLED -> return this.copy(disabledV = null)
+                Style.Mode.SELECTED -> return this.copy(selectedV = null)
+                Style.Mode.DISABLED_SELECTED -> return this.copy(disSelectedV = null)
                 else -> return this
             }
-        }
-
-        override fun compareTo(other: Binding<V>): Int {
-            if (this.style === other.style) return 0
-            val hc = this.style.hashCode()
-            val ohc = other.style.hashCode()
-            assert(hc != ohc)
-            return if (hc < ohc) -1 else 1
         }
 
         fun compareToStyle(style: Style<V>): Int {
@@ -190,17 +179,23 @@ class Styles private constructor(protected var _bindings: Array<Binding<*>>) {
             return if (hc < ohc) -1 else 1
         }
 
-        private fun merge(ours: V, theirs: V?): V {
+        private fun merge(ours: V?, theirs: V?): V? {
             return theirs ?: ours
         }
-
-        protected var _defaultV: V
-        protected var _disabledV: V? = null
-        protected var _selectedV: V? = null
-        protected var _disSelectedV: V? = null
     }
 
     companion object {
+
+        val bindingComparator: Comparator<Binding<*>> = object : Comparator<Binding<*>> {
+            override fun compare(o1: Binding<*>, o2: Binding<*>): Int {
+                if (o1.style === o2.style) return 0
+                val hc = o1.style.hashCode()
+                val ohc = o2.style.hashCode()
+                assert(hc != ohc)
+                return if (hc < ohc) -1 else 1
+            }
+        }
+
         /**
          * Returns the empty styles instance.
          */
@@ -240,6 +235,6 @@ class Styles private constructor(protected var _bindings: Array<Binding<*>>) {
             return Binding(binding, mode)
         }
 
-        protected val _noneSingleton = Styles(arrayOfNulls<Binding<*>>(0))
+        protected val _noneSingleton = Styles(listOf())
     }
 }

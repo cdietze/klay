@@ -16,7 +16,7 @@ abstract class Ref<T> {
     /** Sets the current value of this reference, clearing any previously referenced object.
      * @return `target` to enabled code like: `F foo = fooref.set(new F())`.
      */
-    fun set(target: T): T {
+    fun set(target: T?): T? {
         clear()
         _target = target
         return target
@@ -39,7 +39,7 @@ abstract class Ref<T> {
 
     companion object {
         /** Creates a reference to a [Closeable] target.  */
-        fun <T : Closeable> create(target: T): Ref<T> {
+        fun <T : Closeable> create(target: T?): Ref<T> {
             val ref = object : Ref<T>() {
                 override fun onClear(target: T) {
                     target.close()

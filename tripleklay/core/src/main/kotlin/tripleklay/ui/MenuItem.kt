@@ -14,17 +14,17 @@ class MenuItem
 /**
  * Creates a new menu item with the given label and icon.
  */
-@JvmOverloads constructor(label: String, icon: Icon = null) : TextWidget<MenuItem>(), Togglable<MenuItem> {
+@JvmOverloads constructor(label: String, icon: Icon? = null) : TextWidget<MenuItem>(), Togglable<MenuItem> {
     /** Modes of text display.  */
     enum class ShowText {
         ALWAYS, NEVER, WHEN_ACTIVE
     }
 
     /** The text shown.  */
-    val text = Value.create(null)
+    val text = Value<String?>(null)
 
     /** The icon shown.  */
-    val icon = Value.create(null)
+    val icon = Value<Icon?>(null)
 
     init {
         this.text.update(label)
@@ -62,7 +62,7 @@ class MenuItem
      * Sets the preferred size of the menu item.
      */
     fun setPreferredSize(wid: Float, hei: Float): MenuItem {
-        _preferredSize.setSize(wid, hei)
+        _localPreferredSize.setSize(wid, hei)
         invalidate()
         return this
     }
@@ -101,7 +101,7 @@ class MenuItem
         return _behave as Behavior.Toggle<MenuItem>
     }
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = MenuItem::class.java
 
     override fun icon(): Icon? {
@@ -123,19 +123,19 @@ class MenuItem
         when (_showText) {
             MenuItem.ShowText.NEVER -> return ""
             MenuItem.ShowText.WHEN_ACTIVE -> return if (isSelected) text.get() else ""
-            MenuItem.ShowText.ALWAYS,
-            else -> return text.get()
+            MenuItem.ShowText.ALWAYS -> return text.get()
         }
     }
 
-    override fun createLayoutData(hintX: Float, hintY: Float): Element.LayoutData {
-        return Element.SizableLayoutData(super.createLayoutData(hintX, hintY), _preferredSize)
+    override fun createLayoutData(hintX: Float, hintY: Float): LayoutData {
+        return SizableLayoutData(super.createLayoutData(hintX, hintY), _localPreferredSize)
     }
 
     protected var _relay = Closeable.Util.NOOP
 
     /** Size override.  */
-    protected val _preferredSize = Dimension(0f, 0f)
+    // TODO(cdi) clarify if we really cannot use the property Element#_preferredSize
+    protected val _localPreferredSize = Dimension(0f, 0f)
     /** Text display mode.  */
     protected var _showText = ShowText.ALWAYS
 }

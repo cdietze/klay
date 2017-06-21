@@ -1,13 +1,10 @@
 package tripleklay.ui.layout
 
 import pythagoras.f.Dimension
-import pythagoras.f.IDimension
 import tripleklay.ui.Container
 import tripleklay.ui.Element
 import tripleklay.ui.Layout
 import tripleklay.ui.Style
-
-import java.util.Arrays
 
 /**
  * Lays out elements in a simple tabular form, where each row has uniform height.
@@ -61,9 +58,7 @@ class TableLayout
 
         /** Returns `count` copies of this column.  */
         fun copy(count: Int): Array<Column> {
-            val cols = arrayOfNulls<Column>(count)
-            Arrays.fill(cols, this)
-            return cols
+            return Array(count, { this })
         }
     }
 
@@ -76,6 +71,12 @@ class TableLayout
             assert(colspan >= 1) { "Colspan must be >= 1" }
         }
     }
+
+    protected val _columns: Array<out Column>
+    protected var _rowgap: Int = 0
+    protected var _colgap: Int = 0
+    protected var _vstretch: Boolean = false
+    protected var _rowVAlign: Style.VAlign = Style.VAlign.CENTER
 
     /**
      * Creates a table layout with the specified number of columns, each with the default
@@ -144,11 +145,11 @@ class TableLayout
         val freeExtra = (width - naturalWidth) / freeWeight
         // freeExtra may end up negative; if our natural width is too wide
 
-        val halign = resolveStyle<HAlign>(elems, Style.HALIGN)
-        val startX = left + if (freeWeight == 0f) halign.offset(naturalWidth, width) else 0
+        val halign = resolveStyle<Style.HAlign>(elems, Style.HALIGN)
+        val startX = left + if (freeWeight == 0f) halign.offset(naturalWidth, width) else 0f
         var x = startX
 
-        val valign = resolveStyle<VAlign>(elems, Style.VALIGN)
+        val valign = resolveStyle<Style.VAlign>(elems, Style.VALIGN)
         var y = top + valign.offset(m.totalHeight(_rowgap.toFloat()), height)
 
         for (elem in elems) {
@@ -157,7 +158,7 @@ class TableLayout
 
             var colWidth = 0f
             for (ii in 0..colspan - 1) {
-                colWidth += Math.max(0f, m.columnWidths!![col + ii] + if (freeWeight == 0f) 0 else freeExtra * _columns[col + ii]._weight)
+                colWidth += Math.max(0f, m.columnWidths!![col + ii] + if (freeWeight == 0f) 0f else freeExtra * _columns[col + ii]._weight)
             }
             colWidth += ((colspan - 1) * _colgap).toFloat()
 
@@ -168,13 +169,14 @@ class TableLayout
                 val elemWidth = if (colspan > 1 || ccfg._stretch)
                     colWidth
                 else
-                    Math.min(psize.width(), colWidth)
-                val elemHeight = if (_vstretch) rowHeight else Math.min(psize.height(), rowHeight)
+                    Math.min(psize.width, colWidth)
+                val elemHeight = if (_vstretch) rowHeight else Math.min(psize.height, rowHeight)
                 setBounds(elem, x + ccfg._halign.offset(elemWidth, colWidth),
                         y + _rowVAlign.offset(elemHeight, rowHeight), elemWidth, elemHeight)
             }
             x += colWidth + _colgap
-            if ((col += colspan) == columns) {
+            col += colspan
+            if (col == columns) {
                 col = 0
                 x = startX
                 if (rowHeight > 0) y += rowHeight + _rowgap
@@ -201,7 +203,7 @@ class TableLayout
         metrics.rowHeights = FloatArray(rows)
 
         // note the minimum width constraints
-        for (cc in 0..columns - 1) metrics.columnWidths[cc] = _columns[cc]._minWidth
+        for (cc in 0..columns - 1) metrics.columnWidths!![cc] = _columns[cc]._minWidth
 
         // compute the preferred size of the fixed columns
         var ii = 0
@@ -210,13 +212,13 @@ class TableLayout
             val row = ii / columns
             if (elem.isVisible && _columns[col]._weight == 0f) {
                 val psize = preferredSize(elem, hintX, hintY)
-                metrics.rowHeights[row] = Math.max(metrics.rowHeights!![row], psize.height())
+                metrics.rowHeights!![row] = Math.max(metrics.rowHeights!![row], psize.height)
 
                 // Elements which stretch across multiple columns shouldn't force their first column
                 //  to have a large size. Ideally, this should somehow force the sum of the columns
                 //  to be as wide as itself.
                 if (colspan(elem) == 1) {
-                    metrics.columnWidths[col] = Math.max(metrics.columnWidths!![col], psize.width())
+                    metrics.columnWidths!![col] = Math.max(metrics.columnWidths!![col], psize.width)
                 }
             }
             ii += colspan(elem)
@@ -235,8 +237,8 @@ class TableLayout
             if (elem.isVisible && _columns[col]._weight > 0) {
                 // TODO: supply sane y hint?
                 val psize = preferredSize(elem, freeHintX, hintY)
-                metrics.rowHeights[row] = Math.max(metrics.rowHeights!![row], psize.height())
-                metrics.columnWidths[col] = Math.max(metrics.columnWidths!![col], psize.width())
+                metrics.rowHeights!![row] = Math.max(metrics.rowHeights!![row], psize.height)
+                metrics.columnWidths!![col] = Math.max(metrics.columnWidths!![col], psize.width)
             }
             ii += colspan(elem)
         }
@@ -257,19 +259,13 @@ class TableLayout
         }
 
         fun totalWidth(gap: Float): Float {
-            return sum(columnWidths) + gap * (columns() - 1)
+            return Companion.sum(columnWidths!!) + gap * (columns() - 1)
         }
 
         fun totalHeight(gap: Float): Float {
-            return sum(rowHeights) + gap * (rows() - 1)
+            return Companion.sum(rowHeights!!) + gap * (rows() - 1)
         }
     }
-
-    protected val _columns: Array<Column>
-    protected var _rowgap: Int = 0
-    protected var _colgap: Int = 0
-    protected var _vstretch: Boolean = false
-    protected var _rowVAlign: Style.VAlign = Style.VAlign.CENTER
 
     companion object {
         /** The default column configuration.  */

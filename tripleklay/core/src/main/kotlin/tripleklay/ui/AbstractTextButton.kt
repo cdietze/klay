@@ -7,12 +7,12 @@ import react.ValueView
 /**
  * An abstract base class for buttons with text labels.
  */
-abstract class AbstractTextButton<T : AbstractTextButton<T>> protected constructor(text: String, icon: Icon) : TextWidget<T>() {
+abstract class AbstractTextButton<T : AbstractTextButton<T>> protected constructor(text: String?, icon: Icon?) : TextWidget<T>() {
     /** The text displayed by this button, or null.  */
-    val text = Value.create(null as String?)
+    val text = Value<String?>(null)
 
     /** The icon displayed by this button, or null.  */
-    val icon = Value.create<Icon>(null)
+    val icon = Value.create<Icon?>(null)
 
     /**
      * Binds the text of this button to the supplied reactive value. The current text will be

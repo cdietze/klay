@@ -28,11 +28,11 @@ object Layers {
             stop(iact)
         }
 
-        override fun onCancel(iact: Pointer.Interaction) {
+        override fun onCancel(iact: Pointer.Interaction?) {
             stop(iact)
         }
 
-        internal fun stop(iact: Pointer.Interaction) {
+        internal fun stop(iact: Pointer.Interaction?) {
             // TODO: event.flags().setPropagationStopped(true);
         }
     }

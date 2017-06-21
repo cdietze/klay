@@ -8,7 +8,6 @@ import klay.scene.Layer
 import pythagoras.f.Dimension
 import pythagoras.f.Point
 import react.Closeable
-import react.Slot
 import react.Value
 import react.ValueView
 
@@ -32,7 +31,7 @@ class CapturedRoot
      * Gets the texture into which the root is rendered. This may be null if no validation has yet
      * occurred and may change value when the root's size changes.
      */
-    fun texture(): ValueView<Texture> {
+    fun texture(): ValueView<Texture?> {
         return _texture
     }
 
@@ -50,7 +49,7 @@ class CapturedRoot
         // update the image to the new size, if it's changed
         val old = _texture.get()
         if (old == null || old!!.displayWidth != width || old!!.displayHeight != height) {
-            _texture.update(iface.plat.graphics().createTexture(width, height, textureConfig()))
+            _texture.update(iface.plat.graphics.createTexture(width, height, textureConfig()))
         }
         return this
     }
@@ -58,7 +57,7 @@ class CapturedRoot
     public override fun layout() {
         super.layout()
         val texture = _texture.get()
-        val surf = TextureSurface(iface.plat.graphics(), _defaultBatch, texture)
+        val surf = TextureSurface(iface.plat.graphics, _defaultBatch, texture!!)
         surf.begin().clear()
         layer.paint(surf)
         surf.end().close()
@@ -85,18 +84,18 @@ class CapturedRoot
             layer.setInteractive(true)
         }
 
-        protected override val styleClass: Class<*>
+        override val styleClass: Class<*>
             get() = Embedded::class.java
 
-        override fun createLayoutData(hintX: Float, hintY: Float): Element.LayoutData {
-            return object : Element.LayoutData() {
+        override fun createLayoutData(hintX: Float, hintY: Float): LayoutData {
+            return object : LayoutData() {
                 override fun computeSize(hintX: Float, hintY: Float): Dimension {
                     val tex = _texture.get()
                     return if (tex == null)
                         Dimension(0f, 0f)
                     else
                         Dimension(
-                                tex!!.displayWidth, tex!!.displayHeight)
+                                tex.displayWidth, tex.displayHeight)
                 }
             }
         }
@@ -104,11 +103,9 @@ class CapturedRoot
         override fun wasAdded() {
             super.wasAdded()
             // update our layer when the texture is regenerated
-            _conn = _texture.connectNotify(object : Slot<Texture>() {
-                fun onEmit(tex: Texture) {
-                    update(tex)
-                    invalidate()
-                }
+            _conn = _texture.connectNotify({ tex: Texture? ->
+                update(tex)
+                invalidate()
             })
         }
 
@@ -125,7 +122,10 @@ class CapturedRoot
                 _ilayer = null
                 return
             }
-            if (_ilayer == null) layer.add(_ilayer = ImageLayer())
+            if (_ilayer == null) {
+                _ilayer = ImageLayer()
+                layer.add(_ilayer!!)
+            }
             _ilayer!!.setTile(tex)
         }
 
@@ -137,5 +137,5 @@ class CapturedRoot
     }
 
     /** The texure to with the layer is rendered.  */
-    protected var _texture = Value.create(null)
+    protected var _texture = Value<Texture?>(null)
 }

@@ -30,13 +30,12 @@ class Interface
     /** An animator that can be used to animate things in this interface.  */
     val anim = Animator()
 
+    protected val _onFrame: Closeable
+    protected val _roots: MutableList<Root> = ArrayList()
+
     init {
         _onFrame = Closeable.Util.join(
-                frame.connect(object : Slot<Clock>() {
-                    fun onEmit(clock: Clock) {
-                        paint(clock)
-                    }
-                }),
+                frame.connect({ paint(it) }),
                 frame.connect(anim.onPaint))
     }
 
@@ -123,7 +122,4 @@ class Interface
             ii++
         }
     }
-
-    protected val _onFrame: Closeable
-    protected val _roots: MutableList<Root> = ArrayList()
 }

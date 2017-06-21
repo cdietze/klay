@@ -21,20 +21,20 @@ class AbsoluteLayout : Layout() {
     /** Defines absolute layout constraints.  */
     class Constraint(val position: BoxPoint, val origin: BoxPoint, val size: IDimension) : Layout.Constraint() {
 
-        constructor(position: IPoint, size: IDimension, halign: HAlign, valign: VAlign) : this(BoxPoint.TL.offset(position.x(), position.y()),
+        constructor(position: IPoint, size: IDimension, halign: HAlign, valign: VAlign) : this(BoxPoint.TL.offset(position.x, position.y),
                 BoxPoint.TL.align(halign, valign), size) {
         }
 
         fun psize(layout: AbsoluteLayout, elem: Element<*>): IDimension {
-            val fwidth = size.width()
-            val fheight = size.height()
+            val fwidth = size.width
+            val fheight = size.height
             if (fwidth > 0 && fheight > 0) return size
             // if either forced width or height is zero, use preferred size in that dimension
             val psize = layout.preferredSize(elem, fwidth, fheight)
             if (fwidth > 0)
-                return Dimension(fwidth, psize.height())
+                return Dimension(fwidth, psize.height)
             else if (fheight > 0)
-                return Dimension(psize.width(), fheight)
+                return Dimension(psize.width, fheight)
             else
                 return psize
         }
@@ -67,7 +67,7 @@ class AbsoluteLayout : Layout() {
             val c = constraint(elem)
             val psize = c.psize(this, elem) // this should return a cached size
             val pos = c.pos(width, height, psize)
-            setBounds(elem, left + pos.x(), top + pos.y(), psize.width(), psize.height())
+            setBounds(elem, left + pos.x, top + pos.y, psize.width, psize.height)
         }
     }
 

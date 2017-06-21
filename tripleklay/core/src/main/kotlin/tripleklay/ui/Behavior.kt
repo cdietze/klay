@@ -3,7 +3,6 @@ package tripleklay.ui
 import klay.core.Clock
 import klay.core.Sound
 import klay.scene.Pointer
-import pythagoras.f.IDimension
 import pythagoras.f.Point
 import react.Closeable
 import react.Signal
@@ -13,7 +12,7 @@ import react.Value
 /**
  * Controls the behavior of a widget (how it responds to pointer events).
  */
-abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Listener() {
+abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Listener {
 
     /** Implements button-like behavior: selects the element when the pointer is in bounds, and
      * deselects on release. This is a pretty common case and inherited by [Click].  */
@@ -32,7 +31,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
             return updateSelected(false)
         }
 
-        override fun onCancel(iact: Pointer.Interaction) {
+        override fun onCancel(iact: Pointer.Interaction?) {
             updateSelected(false)
         }
 
@@ -50,7 +49,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
             return false
         }
 
-        override fun onCancel(iact: Pointer.Interaction) {}
+        override fun onCancel(iact: Pointer.Interaction?) {}
         override fun onClick(iact: Pointer.Interaction) {}
     }
 
@@ -58,7 +57,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
     open class Click<T : Element<T>>(owner: T) : Select<T>(owner) {
 
         /** A signal emitted with our owner when clicked.  */
-        var clicked = Signal.create()
+        var clicked = Signal<T>()
 
         /** Triggers a click.  */
         fun click() {
@@ -95,7 +94,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
     /** Implements toggling behavior.  */
     open class Toggle<T : Element<T>>(owner: T) : Behavior<T>(owner) {
         /** A signal emitted with our owner when clicked.  */
-        val clicked = Signal.create()
+        val clicked = Signal<T>()
 
         /** Indicates whether our owner is selected. It may be listened to, and updated.  */
         val selected = Value.create(false)
@@ -123,7 +122,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
             return _anchorState != _owner.isSelected
         }
 
-        override fun onCancel(iact: Pointer.Interaction) {
+        override fun onCancel(iact: Pointer.Interaction?) {
             selected.update(_anchorState)
         }
 
@@ -157,7 +156,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
 
             init {
                 pressTime = iact.event!!.time
-                toPoint(iact, press = Point())
+                press = iact.local.clone()
                 drag = Point(press)
             }
 
@@ -169,7 +168,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
                     val lim = _hoverLimit!!
                     val size = _owner.size()
                     cancel = drag.x + lim < 0 || drag.y + lim < 0 ||
-                            drag.x - lim >= size.width() || drag.y - lim >= size.height()
+                            drag.x - lim >= size.width || drag.y - lim >= size.height
                 }
                 maxDistanceSq = Math.max(maxDistanceSq, press.distanceSq(drag))
                 onTrack(press, if (cancel) press else drag)
@@ -198,7 +197,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
          * the local x, y.
          */
         protected fun toPoint(iact: Pointer.Interaction, dest: Point) {
-            dest[iact.local.x] = iact.local.y
+            dest.set(iact.local)
         }
 
         override fun onPress(iact: Pointer.Interaction) {
@@ -214,7 +213,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
             return false
         }
 
-        override fun onCancel(iact: Pointer.Interaction) {
+        override fun onCancel(iact: Pointer.Interaction?) {
             // track to the press position to cancel
             if (_state != null) onTrack(_state!!.press, _state!!.press)
             _state = null
@@ -245,11 +244,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
         override fun onPress(iact: Pointer.Interaction) {
             super.onPress(iact)
             iact.capture()
-            _conn = _owner.root()!!.iface.frame.connect(object : Slot<Clock>() {
-                fun onEmit(clock: Clock) {
-                    update(clock)
-                }
-            })
+            _conn = _owner.root()!!.iface.frame.connect({ update(it) })
         }
 
         override fun onRelease(iact: Pointer.Interaction): Boolean {
@@ -258,7 +253,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
             return false
         }
 
-        override fun onCancel(iact: Pointer.Interaction) {
+        override fun onCancel(iact: Pointer.Interaction?) {
             super.onCancel(iact)
             cancel()
         }
@@ -371,7 +366,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
     }
 
     /** Returns the [Root] to which our owning element is added, or null.  */
-    protected fun root(): Root {
+    protected fun root(): Root? {
         return _owner.root()
     }
 
@@ -389,11 +384,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
 
     /** Slot for calling [.updateSelected].  */
     protected fun selectedDidChange(): Slot<Boolean> {
-        return object : Slot<Boolean>() {
-            fun onEmit(selected: Boolean?) {
-                updateSelected(selected!!)
-            }
-        }
+        return { updateSelected(it) }
     }
 
     protected var _actionSound: Sound? = null

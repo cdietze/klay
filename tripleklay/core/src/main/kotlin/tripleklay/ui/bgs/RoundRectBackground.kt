@@ -1,6 +1,5 @@
 package tripleklay.ui.bgs
 
-import klay.core.Canvas
 import klay.core.Graphics
 import klay.scene.ImageLayer
 import pythagoras.f.IDimension
@@ -16,18 +15,18 @@ class RoundRectBackground @JvmOverloads constructor(protected val _gfx: Graphics
         val canvas = _gfx.createCanvas(size)
         if (_borderWidth > 0) {
             canvas.setFillColor(_borderColor).fillRoundRect(
-                    0f, 0f, size.width(), size.height(), _radius)
+                    0f, 0f, size.width, size.height, _radius)
             // scale the inner radius based on the ratio of the inner height to the full height;
             // this improves the uniformity of the border substantially
-            val iwidth = size.width() - 2 * _borderWidth
-            val iheight = size.height() - 2 * _borderWidth
-            val iradius = _borderRadius * (iheight / size.height())
+            val iwidth = size.width - 2 * _borderWidth
+            val iheight = size.height - 2 * _borderWidth
+            val iradius = _borderRadius * (iheight / size.height)
             canvas.setFillColor(_bgColor).fillRoundRect(
                     _borderWidth, _borderWidth, iwidth, iheight, iradius)
         } else {
-            canvas.setFillColor(_bgColor).fillRoundRect(0f, 0f, size.width(), size.height(), _radius)
+            canvas.setFillColor(_bgColor).fillRoundRect(0f, 0f, size.width, size.height, _radius)
         }
         val layer = ImageLayer(canvas.toTexture())
-        return Background.LayerInstance(size, layer)
+        return LayerInstance(size, layer)
     }
 }

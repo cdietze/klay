@@ -35,11 +35,7 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
         this.value = Value.create(value)
         range = Value.create(Range(min, max))
         // update our display if the slider value is changed externally
-        val updateThumb = object : UnitSlot() {
-            fun onEmit() {
-                updateThumb()
-            }
-        }
+        val updateThumb: UnitSlot = { updateThumb() }
         this.value.connect(updateThumb)
         range.connect(updateThumb)
     }
@@ -79,7 +75,7 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
         return range.get().min
     }
 
-    protected override val styleClass: Class<*>
+    override val styleClass: Class<*>
         get() = Slider::class.java
 
     override fun wasRemoved() {
@@ -91,12 +87,12 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
         // the thumb is just an image layer and will be destroyed when we are
     }
 
-    override fun createLayoutData(hintX: Float, hintY: Float): Element.LayoutData {
+    override fun createLayoutData(hintX: Float, hintY: Float): LayoutData {
         return SliderLayoutData()
     }
 
     override fun createBehavior(): Behavior<Slider>? {
-        return object : Behavior.Track<Slider>(this) {
+        return object : Behavior.Track<Slider>(this@Slider) {
             public override fun onTrack(anchor: Point, drag: Point) {
                 setValueFromPointer(drag.x)
             }
@@ -133,7 +129,7 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
         value.update(r.min + pos)
     }
 
-    protected inner class SliderLayoutData : Element.LayoutData() {
+    protected inner class SliderLayoutData : LayoutData() {
         val barWidth = resolveStyle(BAR_WIDTH)
         val barHeight = resolveStyle(BAR_HEIGHT)
         val barBG = resolveStyle(BAR_BACKGROUND)
@@ -155,11 +151,12 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
 
             // configure our thumb layer
             if (_thumb != null) _thumb!!.close()
-            layer.add(_thumb = thumbImage.render().setDepth(1f))
+            _thumb = thumbImage.render().setDepth(1f)
+            layer.add(_thumb!!)
             if (thumbOrigin == null) {
                 _thumb!!.setOrigin(thumbWidth / 2, thumbHeight / 2)
             } else {
-                _thumb!!.setOrigin(thumbOrigin.x(), thumbOrigin.y())
+                _thumb!!.setOrigin(thumbOrigin.x, thumbOrigin.y)
             }
 
             // configure our bar background instance
@@ -174,7 +171,7 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
         }
     }
 
-    protected val _clicked = Signal.create()
+    protected val _clicked = Signal<Slider>()
 
     protected var _thumb: Layer? = null
     protected var _barInst: Background.Instance? = null
@@ -202,7 +199,7 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
 
         /** The origin of the thumb image (used to center the thumb image over the tray). If left as
          * the default (null), the center of the thumb image will be used as its origin. Inherited.  */
-        var THUMB_ORIGIN = Style.newStyle<IPoint>(false, null as IPoint?)
+        var THUMB_ORIGIN = Style.newStyle<IPoint?>(false, null)
 
         protected fun createDefaultThumbImage(): Icon {
             return Icons.solid(0xFF000000.toInt(), 24f)

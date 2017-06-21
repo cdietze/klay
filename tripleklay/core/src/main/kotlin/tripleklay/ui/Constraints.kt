@@ -4,7 +4,6 @@ import klay.core.Graphics
 import klay.core.TextLayout
 import pythagoras.f.Dimension
 import pythagoras.f.IDimension
-import tripleklay.util.TextStyle
 
 /**
  * Provides various user interface constraints.
@@ -20,7 +19,7 @@ object Constraints {
          * *
          * @param lsize the size of the currently laid out text, may be null.
          */
-        abstract fun addTextSize(into: Dimension, lsize: IDimension)
+        abstract fun addTextSize(into: Dimension, lsize: IDimension?)
     }
 
     /**
@@ -171,12 +170,12 @@ object Constraints {
      */
     fun minSize(gfx: Graphics, text: String): Layout.Constraint {
         return object : TemplateTextConstraint(gfx, text) {
-            protected override fun addTextSize(
+            override fun addTextSize(
                     into: Dimension, lsize: IDimension?, tmplLayout: TextLayout) {
-                val lwidth = (lsize?.width() ?: 0).toFloat()
-                val lheight = (lsize?.height() ?: 0).toFloat()
-                into.width += Math.max(lwidth, tmplLayout.size.width())
-                into.height += Math.max(lheight, tmplLayout.size.height())
+                val lwidth = lsize?.width ?: 0f
+                val lheight = lsize?.height ?: 0f
+                into.width += Math.max(lwidth, tmplLayout.size.width)
+                into.height += Math.max(lheight, tmplLayout.size.height)
             }
         }
     }
@@ -189,27 +188,27 @@ object Constraints {
     fun fixedSize(gfx: Graphics, text: String): Layout.Constraint {
         return object : TemplateTextConstraint(gfx, text) {
             override fun addTextSize(
-                    into: Dimension, lsize: IDimension, tmplLayout: TextLayout) {
-                into.width += tmplLayout.size.width()
-                into.height += tmplLayout.size.height()
+                    into: Dimension, lsize: IDimension?, tmplLayout: TextLayout) {
+                into.width += tmplLayout.size.width
+                into.height += tmplLayout.size.height
             }
         }
     }
 
-    protected abstract class TemplateTextConstraint(protected val _gfx: Graphics, protected val _tmpl: String) : TextConstraint() {
+    abstract class TemplateTextConstraint(protected val _gfx: Graphics, protected val _tmpl: String) : TextConstraint() {
 
         override fun setElement(elem: Element<*>) {
             _elem = elem
         }
 
-        override fun addTextSize(into: Dimension, lsize: IDimension) {
-            val style = Style.createTextStyle(_elem)
+        override fun addTextSize(into: Dimension, lsize: IDimension?) {
+            val style = Style.createTextStyle(_elem!!)
             addTextSize(into, lsize, _gfx.layoutText(_tmpl, style))
         }
 
         protected abstract fun addTextSize(
-                into: Dimension, lsize: IDimension, tmplLayout: TextLayout)
+                into: Dimension, lsize: IDimension?, tmplLayout: TextLayout)
 
-        protected var _elem: Element<*>
+        protected var _elem: Element<*>? = null
     }
 }

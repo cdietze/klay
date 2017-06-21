@@ -2,7 +2,7 @@ package tripleklay.ui
 
 import react.Slot
 import react.Value
-import react.ValueView
+import react.ValueViewListener
 
 /**
  * Maintains a single selected item among a specified set of `Element` instances. The
@@ -17,11 +17,11 @@ class Selector
 /** Create a selector with a null initial selection.  */
 () {
     /** The selected item. May be updated to set the selection manually.  */
-    val selected = Value.create(null)
+    val selected = Value<Element<*>?>(null)
 
     init {
-        selected.connect(object : ValueView.Listener<Element<*>>() {
-            fun onChange(selected: Element<*>?, deselected: Element<*>?) {
+        selected.connect(object : ValueViewListener<Element<*>?> {
+            override fun invoke(selected: Element<*>?, deselected: Element<*>?) {
                 if (deselected != null) get(deselected).update(false)
                 if (selected != null) get(selected).update(true)
             }
@@ -29,7 +29,7 @@ class Selector
     }
 
     /** Creates a selector containing the children of elements with initialSelection selected.  */
-    constructor(elements: Elements<*>, initialSelection: Element<*>) : this() {
+    constructor(elements: Elements<*>, initialSelection: Element<*>?) : this() {
         add(elements)
         if (initialSelection is Togglable<*>) {
             selected.update(initialSelection)
@@ -42,7 +42,7 @@ class Selector
      */
     fun add(elements: Elements<*>): Selector {
         for (child in elements) {
-            _addSlot.onEmit(child)
+            _addSlot.invoke(child)
         }
         elements.childAdded().connect(_addSlot)
         elements.childRemoved().connect(_removeSlot)
@@ -61,7 +61,7 @@ class Selector
      */
     fun remove(elements: Elements<*>): Selector {
         for (child in elements) {
-            _removeSlot.onEmit(child)
+            _removeSlot.invoke(child)
         }
         elements.childAdded().disconnect(_addSlot)
         elements.childRemoved().disconnect(_removeSlot)
@@ -72,9 +72,9 @@ class Selector
      * Tracks one or more elements.
      */
     fun add(elem: Element<*>, vararg more: Element<*>): Selector {
-        _addSlot.onEmit(elem)
+        _addSlot.invoke(elem)
         for (e in more) {
-            _addSlot.onEmit(e)
+            _addSlot.invoke(e)
         }
         return this
     }
@@ -83,9 +83,9 @@ class Selector
      * Stops tracking one or more elements.
      */
     fun remove(elem: Element<*>, vararg more: Element<*>): Selector {
-        _removeSlot.onEmit(elem)
+        _removeSlot.invoke(elem)
         for (e in more) {
-            _removeSlot.onEmit(e)
+            _removeSlot.invoke(e)
         }
         return this
     }
@@ -97,32 +97,24 @@ class Selector
         return (elem as Togglable<*>).selected()
     }
 
-    protected val _addSlot: Slot<Element<*>> = object : Slot<Element<*>>() {
-        fun onEmit(child: Element<*>) {
-            if (child is Togglable<*>) {
-                (child as Togglable<*>).clicked().connect(_clickSlot)
-            }
+    protected val _addSlot: Slot<Element<*>> = { child: Element<*> ->
+        if (child is Togglable<*>) {
+            (child as Togglable<*>).clicked().connect(_clickSlot)
         }
     }
 
-    protected val _removeSlot: Slot<Element<*>> = object : Slot<Element<*>>() {
-        fun onEmit(removed: Element<*>) {
-            if (removed is Togglable<*>) {
-                (removed as Togglable<*>).clicked().disconnect(_clickSlot)
-            }
-            if (selected.get() === removed) selected.update(null)
+    protected val _removeSlot: Slot<Element<*>> = { removed: Element<*> ->
+        if (removed is Togglable<*>) {
+            (removed as Togglable<*>).clicked().disconnect(_clickSlot)
         }
+        if (selected.get() === removed) selected.update(null)
     }
 
-    protected val _clickSlot: Slot<Element<*>> = object : Slot<Element<*>>() {
-        fun onEmit(clicked: Element<*>) {
-            val sel = get(clicked)
-            if (_preventDeselection) {
-                if (!sel.get()) {
-                    sel.update(true)
-                    return
-                }
-            }
+    protected val _clickSlot: Slot<Element<*>> = { clicked: Element<*> ->
+        val sel = get(clicked)
+        if (_preventDeselection && !sel.get()) {
+            sel.update(true)
+        } else {
             selected.update(if (sel.get()) clicked else null)
         }
     }

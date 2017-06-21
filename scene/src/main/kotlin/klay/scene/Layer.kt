@@ -166,7 +166,7 @@ abstract class Layer : Closeable {
 
     /** Returns the name of this layer. This defaults to the simple name of the class, but can be set
      * programmatically to aid in debugging. See [.setName].  */
-    fun name(): String {
+    open fun name(): String {
         // lazily init name if it's not been set
         if (name == null) {
             name = javaClass.name

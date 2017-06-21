@@ -29,16 +29,12 @@ class Hierarchy
         }
 
         override fun next(): Element<*> {
-            val next = current
             if (!hasNext()) {
                 throw IllegalStateException()
             }
+            val next = current
             current = current!!.parent()
-            return next
-        }
-
-        override fun remove() {
-            throw UnsupportedOperationException()
+            return next!!
         }
     }
 
