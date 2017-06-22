@@ -7,7 +7,7 @@ import java.util.*
  * Configure a group of styles and then apply them to an element via [Element.setStyles] or
  * [Element.addStyles].
  */
-class Styles private constructor(protected val _bindings: List<Binding<*>>) {
+class Styles private constructor(protected val _bindings: Array<Binding<*>>) {
 
     /**
      * Returns a new instance where the supplied bindings overwrite any previous bindings for the
@@ -47,10 +47,12 @@ class Styles private constructor(protected val _bindings: List<Binding<*>>) {
      */
     fun add(mode: Style.Mode, vararg bindings: Style.Binding<*>): Styles {
         if (bindings.size == 0) return this // optimization
-        bindings.map { }
-        val nbindings = bindings.map { newBinding(it, mode) }
+        val nbindings = arrayOfNulls<Binding<*>>(bindings.size)
+        for (ii in bindings.indices) {
+            nbindings[ii] = newBinding<Any?>(bindings[ii], mode)
+        }
         // note that we take advantage of the fact that merge can handle unsorted bindings
-        return merge(nbindings)
+        return merge(nbindings as Array<Binding<*>>)
     }
 
     /**
@@ -64,7 +66,7 @@ class Styles private constructor(protected val _bindings: List<Binding<*>>) {
         val nbindings = arrayOfNulls<Binding<*>>(_bindings.size)
         System.arraycopy(_bindings, 0, nbindings, 0, nbindings.size)
         nbindings[index] = binding.clear(mode)
-        return Styles((nbindings as Array<Binding<*>>).toList())
+        return Styles(nbindings as Array<Binding<*>>)
     }
 
     /**
@@ -95,7 +97,7 @@ class Styles private constructor(protected val _bindings: List<Binding<*>>) {
         return null
     }
 
-    private fun merge(obindings: List<Binding<*>>): Styles {
+    private fun merge(obindings: Array<Binding<*>>): Styles {
         if (obindings.size == 0) return this // optimization
 
         // determine which of the to-be-merged styles also exist in our styles
@@ -122,7 +124,7 @@ class Styles private constructor(protected val _bindings: List<Binding<*>>) {
         }
         Arrays.sort(nbindings)
 
-        return Styles((nbindings as Array<Binding<*>>).toList())
+        return Styles(nbindings as Array<Binding<*>>)
     }
 
     data class Binding<V>(
@@ -130,7 +132,7 @@ class Styles private constructor(protected val _bindings: List<Binding<*>>) {
             private val defaultV: V? = null,
             private val disabledV: V? = null,
             private val selectedV: V? = null,
-            private val disSelectedV: V? = null) {
+            private val disSelectedV: V? = null) : Comparable<Binding<V>> {
 
         constructor(binding: Style.Binding<V>, mode: Style.Mode) :
                 this(
@@ -142,15 +144,15 @@ class Styles private constructor(protected val _bindings: List<Binding<*>>) {
                 ) {
         }
 
-        operator fun get(elem: Element<*>): V {
+        operator fun get(elem: Element<*>): V? {
             // prioritize as: disabled_selected, disabled, selected, default
             if (elem.isEnabled) {
-                if (elem.isSelected && selectedV != null) return selectedV!!
+                if (elem.isSelected && selectedV != null) return selectedV
             } else {
-                if (elem.isSelected && disSelectedV != null) return disSelectedV!!
-                if (disabledV != null) return disabledV!!
+                if (elem.isSelected && disSelectedV != null) return disSelectedV
+                if (disabledV != null) return disabledV
             }
-            return defaultV!!
+            return defaultV
         }
 
         fun merge(other: Binding<V>): Binding<V> {
@@ -181,6 +183,14 @@ class Styles private constructor(protected val _bindings: List<Binding<*>>) {
 
         private fun merge(ours: V?, theirs: V?): V? {
             return theirs ?: ours
+        }
+
+        override fun compareTo(other: Binding<V>): Int {
+            if (this.style === other.style) return 0
+            val hc = this.style.hashCode()
+            val ohc = other.style.hashCode()
+            assert(hc != ohc)
+            return if (hc < ohc) -1 else 1
         }
     }
 
@@ -235,6 +245,6 @@ class Styles private constructor(protected val _bindings: List<Binding<*>>) {
             return Binding(binding, mode)
         }
 
-        protected val _noneSingleton = Styles(listOf())
+        protected val _noneSingleton = Styles(arrayOf())
     }
 }
