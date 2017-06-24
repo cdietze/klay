@@ -25,7 +25,7 @@ import java.util.*
  * log the error, or rethrow it if they would prefer that a screen failure render their entire
  * screen stack unusable.
  */
-class ScreenStack
+open class ScreenStack
 /**
  * Creates a screen stack that manages screens for `game` on `rootLayer`.
  */
@@ -54,10 +54,10 @@ class ScreenStack
         }
 
         /** Called when a screen is added to the screen stack for the first time.  */
-        fun wasAdded() {}
+        open fun wasAdded() {}
 
         /** Called when a screen becomes the top screen, and is therefore made visible.  */
-        fun wasShown() {
+        open fun wasShown() {
             closeOnHide(game().update.connect(update.slot()))
             closeOnHide(game().paint.connect(paint.slot()))
         }
@@ -70,16 +70,16 @@ class ScreenStack
 
         /** Called when a screen has been removed from the stack. This will always be preceeded by
          * a call to [.wasHidden], though not always immediately.  */
-        fun wasRemoved() {}
+        open fun wasRemoved() {}
 
         /** Called when this screen's transition into view has completed. [.wasShown] is
          * called immediately before the transition begins, and this method is called when it
          * ends.  */
-        fun showTransitionCompleted() {}
+        open fun showTransitionCompleted() {}
 
         /** Called when this screen's transition out of view has started. [.wasHidden] is
          * called when the hide transition completes.  */
-        fun hideTransitionStarted() {}
+        open fun hideTransitionStarted() {}
 
         /** Adds `ac` to a set to be closed when this screen is hidden.  */
         fun closeOnHide(ac: AutoCloseable) {
@@ -318,11 +318,11 @@ class ScreenStack
         return _screens.size
     }
 
-    protected fun defaultPushTransition(): Transition {
+    protected open fun defaultPushTransition(): Transition {
         return NOOP
     }
 
-    protected fun defaultPopTransition(): Transition {
+    protected open fun defaultPopTransition(): Transition {
         return NOOP
     }
 

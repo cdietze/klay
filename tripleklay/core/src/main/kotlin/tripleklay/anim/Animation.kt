@@ -427,7 +427,7 @@ abstract class Animation protected constructor() {
         _current = this
     }
 
-    open fun apply(animator: Animator, time: Float): Float {
+    open fun apply(animator: Animator?, time: Float): Float {
         // if we're canceled, abandon ship now
         if (_canceled) return 0f
 

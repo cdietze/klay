@@ -31,7 +31,7 @@ abstract class SizableWidget<T : SizableWidget<T>>
 
     override fun createLayoutData(hintX: Float, hintY: Float): LayoutData {
         // use a sizable layout data with our preferred size and delegate to the base, if any
-        return SizableLayoutData(createBaseLayoutData(hintX, hintY)!!, null, preferredSize.get())
+        return SizableLayoutData(createBaseLayoutData(hintX, hintY), null, preferredSize.get())
     }
 
     /**
