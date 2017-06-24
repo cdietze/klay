@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.cdietze.klay</groupId>
+        <artifactId>tripleklay-demo</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>tripleklay-demo-jvm</artifactId>
+
+    <properties>
+        <mainClass>tripleklay.demo.jvm.TripleDemoJvm</mainClass>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.cdietze.klay</groupId>
+            <artifactId>tripleklay-demo-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.cdietze.klay</groupId>
+            <artifactId>klay-jvm</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <sourceDirectory>src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>src/test/kotlin</testSourceDirectory>
+
+        <plugins>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>jvm</id>
+            <build>
+                <plugins>
+                    <!-- allows testing of jvm backend via: `mvn test -Pjvm` -->
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <phase>test</phase>
+                                <configuration>
+                                    <target>
+                                        <!-- these shenanigans are needed to pass -XstartOnFirstThread on Mac OS
+                                             but not on other OSes where they would cause the JVM to fail, yay -->
+                                        <condition property="jvmarg" value="-XstartOnFirstThread" else="-Dfoo=bar">
+                                            <os family="mac"/>
+                                        </condition>
+                                        <java fork="true" classname="${mainClass}" classpathref="maven.test.classpath">
+                                            <jvmarg value="${jvmarg}"/>
+                                        </java>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

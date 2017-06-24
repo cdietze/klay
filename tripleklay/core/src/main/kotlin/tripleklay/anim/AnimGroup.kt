@@ -76,7 +76,7 @@ class AnimGroup : AnimBuilder() {
                 }
             }
 
-            override fun apply(animator: Animator, time: Float): Float {
+            override fun apply(animator: Animator?, time: Float): Float {
                 _animator = animator
                 return super.apply(animator, time)
             }
@@ -86,7 +86,7 @@ class AnimGroup : AnimBuilder() {
                 var processed = 0
                 for (ii in _curAnims.indices) {
                     val anim = _curAnims[ii] ?: continue
-                    val aremain = anim.apply(_animator!!, time)
+                    val aremain = anim.apply(_animator, time)
                     // if this animation is now complete, remove it from the array
                     if (aremain <= 0) _curAnims[ii] = null
                     // note this animation's leftover time, we want our remaining time to be the

@@ -24,7 +24,7 @@ import tripleklay.util.Interpolator
  * Various flick parameters can be customized by overriding the appropriate method:
  * [.friction], [.maxFlickVel], etc.
  */
-class Flicker
+open class Flicker
 /**
  * Creates a flicker with the specified initial, minimum and maximum values.
  */
@@ -184,7 +184,7 @@ class Flicker
     /**
      * Returns the deceleration (in pixels per ms per ms) applied to non-zero velocity.
      */
-    protected fun friction(): Float {
+    protected open fun friction(): Float {
         return 0.0015f
     }
 

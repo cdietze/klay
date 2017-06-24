@@ -6,16 +6,15 @@
 
     <parent>
         <groupId>de.cdietze.klay</groupId>
-        <artifactId>klay</artifactId>
+        <artifactId>tripleklay</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>tripleklay</artifactId>
+    <artifactId>tripleklay-demo</artifactId>
     <packaging>pom</packaging>
 
     <modules>
         <module>core</module>
-        <module>demo</module>
+        <module>jvm</module>
     </modules>
-
 </project>
