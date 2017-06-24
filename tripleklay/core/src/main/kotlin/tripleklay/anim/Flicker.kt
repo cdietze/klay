@@ -29,15 +29,16 @@ open class Flicker
  * Creates a flicker with the specified initial, minimum and maximum values.
  */
 (
-        /** The current position value.  */
-        position: Float,
+        /** The initial position value.  */
+        initialPosition: Float,
         /** This flicker's bounds.  */
         var min: Float, var max: Float) : Pointer.Listener {
 
-    var position: Float = position
+    /** The current position value.  */
+    var position: Float = initialPosition
         set(value) {
             if (value != this.position) {
-                this.position = value
+                field = value
                 changed.emit(this)
             }
         }
@@ -380,7 +381,7 @@ open class Flicker
 
     protected val STOPPED: State = object : State() {
         override fun becameActive() {
-            this@Flicker.position = MathUtil.clamp(position, min, max)
+            position = MathUtil.clamp(this@Flicker.position, min, max)
             _vel = 0f
         }
 
