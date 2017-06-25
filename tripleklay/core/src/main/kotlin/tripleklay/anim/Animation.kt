@@ -28,7 +28,7 @@ abstract class Animation protected constructor() {
         fun initialY(): Float
 
         /** Updates the x/y value.  */
-        operator fun set(x: Float, y: Float)
+        fun set(x: Float, y: Float)
     }
 
     /** Used to cancel animations after they've been started. See [.handle]. *Note:*
@@ -211,14 +211,14 @@ abstract class Animation protected constructor() {
         override fun apply(time: Float): Float {
             val dt = time - _start
             if (dt >= _duration)
-                _value[_tox] = _toy
+                _value.set(_tox, _toy)
             else
-                _value[_interp.apply(_fromx, _tox - _fromx, dt, _duration)] = _interp.apply(_fromy, _toy - _fromy, dt, _duration)
+                _value.set(_interp.apply(_fromx, _tox - _fromx, dt, _duration), _interp.apply(_fromy, _toy - _fromy, dt, _duration))
             return _duration - dt
         }
 
         override fun makeComplete() {
-            _value[_tox] = _toy
+            _value.set(_tox, _toy)
         }
 
         private var _fromx = java.lang.Float.MIN_VALUE

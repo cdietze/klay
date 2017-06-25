@@ -67,11 +67,11 @@ class StylesTest {
     companion object {
 
         protected fun <V> checkIsNull(s: Styles, style: Style<V>) {
-            assertNull(s[style, Label()])
+            assertNull(s.get(style, Label()))
         }
 
         protected fun <V> checkEquals(value: V?, s: Styles, style: Style<V>) {
-            assertEquals(value, s[style, Label()])
+            assertEquals(value, s.get(style, Label()))
         }
     }
 }

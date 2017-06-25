@@ -252,7 +252,7 @@ open class Box
     val layout: Layout
         get() = throw UnsupportedOperationException()
 
-    protected operator fun set(contents: Element<*>?, destroy: Boolean): Box {
+    protected fun set(contents: Element<*>?, destroy: Boolean): Box {
         if (_contents != null) {
             didRemove(_contents!!, destroy)
         }

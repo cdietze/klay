@@ -423,7 +423,7 @@ abstract class Element<T : Element<T>> protected constructor() {
     /**
      * Sets or clears the specified flag.
      */
-    operator fun set(flag: Flag, on: Boolean) {
+    fun set(flag: Flag, on: Boolean) {
         if (on) {
             _flags = _flags or flag.mask
         } else {
