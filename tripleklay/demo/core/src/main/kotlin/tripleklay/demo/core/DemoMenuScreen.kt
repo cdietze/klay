@@ -4,6 +4,8 @@ import klay.core.Game
 import tripleklay.demo.core.anim.AnimDemo
 import tripleklay.demo.core.anim.FlickerDemo
 import tripleklay.demo.core.ui.*
+import tripleklay.demo.util.ColorsDemo
+import tripleklay.demo.util.InterpDemo
 import tripleklay.game.ScreenStack
 import tripleklay.ui.*
 import tripleklay.ui.layout.AxisLayout
@@ -23,7 +25,7 @@ class DemoMenuScreen(protected val _stack: ScreenStack) : ScreenStack.UIScreen(T
                 MiscDemo(), LabelDemo(), /* TODO(cdi) MenuDemo(), */ SliderDemo(), SelectorDemo(), BackgroundDemo(), ScrollerDemo(), TabsDemo(), HistoryGroupDemo(), LayoutDemo(), FlowLayoutDemo(), BorderLayoutDemo(), TableLayoutDemo(), AbsoluteLayoutDemo(), null,
                 // tripleplay.anim
                 null, // TODO(cdi) readd when ported: FramesDemo(),
-                AnimDemo(), FlickerDemo()
+                AnimDemo(), FlickerDemo(),
                 // tripleplay.game
                 // TODO(cdi) ScreensDemo(_stack), ScreenSpaceDemo(), null,
                 // tripleplay.entity
@@ -36,7 +38,7 @@ class DemoMenuScreen(protected val _stack: ScreenStack) : ScreenStack.UIScreen(T
                 // TODO(cdi) reactivate after port of tripleplay.flump
                 // new FlumpDemo(), null, null,
                 // tripleplay.util
-                // TODO(cdi) ColorsDemo(), InterpDemo(), null
+                ColorsDemo(), InterpDemo(), null
         )
     }
 
