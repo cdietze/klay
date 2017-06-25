@@ -17,7 +17,7 @@ class TableLayout
 (vararg columns: Column) : Layout() {
 
     /** A configurator for a table column. Instances are immutable; all methods return a copy. */
-    class Column(val _halign: Style.HAlign, val _stretch: Boolean, val _weight: Float, val _minWidth: Float) {
+    open class Column(val _halign: Style.HAlign, val _stretch: Boolean, val _weight: Float, val _minWidth: Float) {
 
         /** Left aligns cells.  */
         fun alignLeft(): Column {
