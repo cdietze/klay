@@ -21,7 +21,7 @@ open class Group : Elements<Group> {
     /**
      * Creates a group with the specified layout.
      */
-    constructor(layout: Layout) : super(layout) {}
+    constructor(layout: Layout) : super(layout)
 
     override val styleClass: Class<*>
         get() = Group::class.java

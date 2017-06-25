@@ -83,7 +83,7 @@ open class ImageLayer : Layer {
             if (this.tile != null) this.tile!!.texture.release()
             this.tile = tile
             checkOrigin()
-            if (tile != null) tile.texture.reference()
+            tile?.texture?.reference()
         }
         return this
     }

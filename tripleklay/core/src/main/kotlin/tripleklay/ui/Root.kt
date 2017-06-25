@@ -45,7 +45,7 @@ open class Root
     }
 
     /** Sets the size of this root element.  */
-    public override fun setSize(width: Float, height: Float): Root {
+    override fun setSize(width: Float, height: Float): Root {
         _size.setSize(width, height)
         invalidate()
         return this
@@ -64,7 +64,7 @@ open class Root
     }
 
     /** Configures the location of this root, relative to its parent layer.  */
-    public override fun setLocation(x: Float, y: Float) {
+    override fun setLocation(x: Float, y: Float) {
         super.setLocation(x, y)
     }
 
@@ -87,7 +87,7 @@ open class Root
      * @param hintY the height hint (a height in which the layout will attempt to fit itself), or 0
      * * to allow the layout to use unlimited height.
      */
-    public override fun preferredSize(hintX: Float, hintY: Float): IDimension {
+    override fun preferredSize(hintX: Float, hintY: Float): IDimension {
         return super.preferredSize(hintX, hintY)
     }
 
@@ -96,7 +96,7 @@ open class Root
      * [.pack] or a related method. Validation is performed automatically by
      * [Interface.paint] if the root is created via [Interface].
      */
-    public override fun validate() {
+    override fun validate() {
         super.validate()
     }
 
@@ -142,7 +142,7 @@ open class Root
 
     override fun wasValidated() {
         super.wasValidated()
-        (validated as Signal<Root>).emit(this)
+        validated.emit(this)
     }
 
     protected var _active: Element<*>? = null

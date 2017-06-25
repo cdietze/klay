@@ -3,7 +3,6 @@ package klay.tests.core
 import klay.core.Platform
 import klay.core.TextFormat
 import klay.scene.ImageLayer
-import react.Connection
 import react.Slot
 import java.util.*
 
@@ -16,7 +15,7 @@ class PauseResumeTest(game: TestsGame) : Test(game, "PauseResume", "Tests pause/
     private var layer: ImageLayer? = null
 
     override fun init() {
-        conns.add<Connection>(game.plat.lifecycle.connect(object : Slot<Platform.Lifecycle> {
+        conns.add(game.plat.lifecycle.connect(object : Slot<Platform.Lifecycle> {
             private val start = game.plat.time()
             private fun elapsed(): Int {
                 return Math.round((game.plat.time() - start) / 1000).toInt()
@@ -44,7 +43,7 @@ class PauseResumeTest(game: TestsGame) : Test(game, "PauseResume", "Tests pause/
         updateDisplay()
     }
 
-    protected fun updateDisplay() {
+    private fun updateDisplay() {
         val buf = StringBuffer()
         if (notifications.isEmpty()) {
             buf.append("No notifications. Pause and resume the game to generate some.")

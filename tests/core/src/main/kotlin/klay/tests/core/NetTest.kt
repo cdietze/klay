@@ -114,11 +114,11 @@ class NetTest(game: TestsGame) : Test(game, "Net", "Tests network support.") {
         }, x, 10f)
     }
 
-    protected fun getText(label: String): RFuture<String> {
+    private fun getText(label: String): RFuture<String> {
         return game.input.getText(Keyboard.TextType.DEFAULT, label, "")
     }
 
-    protected fun loadURL(url: String) {
+    private fun loadURL(url: String) {
         displayText("Loading: " + url)
         try {
             game.net.req(url).execute().onSuccess(displayResult).onFailure(displayError)
@@ -128,11 +128,11 @@ class NetTest(game: TestsGame) : Test(game, "Net", "Tests network support.") {
 
     }
 
-    protected fun displayText(text: String) {
+    private fun displayText(text: String) {
         output!!.setTile(game.ui.wrapText(text, game.graphics.viewSize.width - 20, TextBlock.Align.LEFT))
     }
 
-    protected val displayResult: Slot<Net.Response> = { rsp: Net.Response ->
+    private val displayResult: Slot<Net.Response> = { rsp: Net.Response ->
         val buf = StringBuilder()
         buf.append("Response code: ").append(rsp.responseCode())
         buf.append("\n\nHeaders:\n")
@@ -153,7 +153,7 @@ class NetTest(game: TestsGame) : Test(game, "Net", "Tests network support.") {
         displayText(buf.toString())
     }
 
-    protected val displayError: Slot<Throwable> = { error: Throwable -> displayText(error.toString()) }
+    private val displayError: Slot<Throwable> = { error: Throwable -> displayText(error.toString()) }
 
     private abstract inner class TextCB : Slot<String?> {
         override fun invoke(text: String?) {

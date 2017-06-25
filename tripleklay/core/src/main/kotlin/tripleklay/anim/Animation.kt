@@ -44,7 +44,7 @@ abstract class Animation protected constructor() {
     }
 
     /** Processes a [Flipbook].  */
-    class Flip(protected val _target: ImageLayer, protected val _book: Flipbook) : Animation() {
+    class Flip(private val _target: ImageLayer, private val _book: Flipbook) : Animation() {
 
         override fun init(time: Float) {
             super.init(time)
@@ -66,16 +66,16 @@ abstract class Animation protected constructor() {
             setFrame(_book.frameIndexes.size - 1)
         }
 
-        protected fun setFrame(idx: Int) {
+        private fun setFrame(idx: Int) {
             _book.frames.apply(_book.frameIndexes[idx], _target)
             _curIdx = idx
         }
 
-        protected var _curIdx: Int = 0
+        private var _curIdx: Int = 0
     }
 
     /** A base class for animations that interpolate values.  */
-    abstract class Interped<R> : Animation() {
+    abstract class Interped<out R> : Animation() {
         /** Uses the supplied interpolator for this animation.  */
         fun using(interp: Interpolator): R {
             _interp = interp
@@ -135,7 +135,7 @@ abstract class Animation protected constructor() {
     }
 
     /** Animates a single scalar value.  */
-    class One(protected val _target: Value) : Interped<One>() {
+    class One(private val _target: Value) : Interped<One>() {
 
         /** Configures the starting value. Default: the value of the scalar at the time that the
          * animation begins.  */
@@ -169,12 +169,12 @@ abstract class Animation protected constructor() {
             return javaClass.name + " start:" + _start + " to " + _to
         }
 
-        protected var _from = java.lang.Float.MIN_VALUE
-        protected var _to: Float = 0.toFloat()
+        private var _from = java.lang.Float.MIN_VALUE
+        private var _to: Float = 0.toFloat()
     }
 
     /** Animates a pair of scalar values (usually a position).  */
-    class Two(protected val _value: XYValue) : Interped<Two>() {
+    class Two(private val _value: XYValue) : Interped<Two>() {
 
         /** Configures the starting values. Default: the values of the scalar at the time that the
          * animation begins.  */
@@ -221,14 +221,14 @@ abstract class Animation protected constructor() {
             _value[_tox] = _toy
         }
 
-        protected var _fromx = java.lang.Float.MIN_VALUE
-        protected var _fromy = java.lang.Float.MIN_VALUE
-        protected var _tox: Float = 0.toFloat()
-        protected var _toy: Float = 0.toFloat()
+        private var _fromx = java.lang.Float.MIN_VALUE
+        private var _fromy = java.lang.Float.MIN_VALUE
+        private var _tox: Float = 0.toFloat()
+        private var _toy: Float = 0.toFloat()
     }
 
     /** Delays a specified number of milliseconds.  */
-    class Delay(protected val _duration: Float) : Animation() {
+    class Delay(private val _duration: Float) : Animation() {
 
         override fun apply(time: Float): Float {
             return _start + _duration - time
@@ -236,7 +236,7 @@ abstract class Animation protected constructor() {
     }
 
     /** Executes an action and completes immediately.  */
-    class Action(protected val _action: Runnable) : Animation() {
+    class Action(private val _action: Runnable) : Animation() {
 
         override fun init(time: Float) {
             super.init(time)
@@ -255,11 +255,11 @@ abstract class Animation protected constructor() {
             }
         }
 
-        protected var _complete: Boolean = false
+        private var _complete: Boolean = false
     }
 
     /** Repeats its underlying animation over and over again (until removed).  */
-    class Repeat(protected var _layer: Layer) : Animation() {
+    class Repeat(private var _layer: Layer) : Animation() {
 
         override fun then(): AnimBuilder {
             return object : ChainBuilder() {
@@ -281,7 +281,7 @@ abstract class Animation protected constructor() {
     }
 
     /** An animation that shakes a layer randomly in the x and y directions.  */
-    class Shake(protected val _layer: Layer) : Animation.Interped<Shake>() {
+    class Shake(private val _layer: Layer) : Animation.Interped<Shake>() {
 
         /** Configures the amount under and over the starting x and y allowed when shaking. The
          * animation will shake the layer in the range `x + underX` to `x + overX` and
@@ -366,22 +366,22 @@ abstract class Animation protected constructor() {
         }
 
         // parameters initialized by setters or in init()
-        protected var _underX = -2f
-        protected var _overX = 2f
-        protected var _underY = -2f
-        protected var _overY = 2f
-        protected var _cycleTimeX = 100f
-        protected var _cycleTimeY = 100f
-        protected var _startX: Float = 0.toFloat()
-        protected var _startY: Float = 0.toFloat()
+        private var _underX = -2f
+        private var _overX = 2f
+        private var _underY = -2f
+        private var _overY = 2f
+        private var _cycleTimeX = 100f
+        private var _cycleTimeY = 100f
+        private var _startX: Float = 0.toFloat()
+        private var _startY: Float = 0.toFloat()
 
         // parameters used during animation
-        protected var _timeX: Float = 0.toFloat()
-        protected var _timeY: Float = 0.toFloat()
-        protected var _curMinX: Float = 0.toFloat()
-        protected var _curRangeX: Float = 0.toFloat()
-        protected var _curMinY: Float = 0.toFloat()
-        protected var _curRangeY: Float = 0.toFloat()
+        private var _timeX: Float = 0.toFloat()
+        private var _timeY: Float = 0.toFloat()
+        private var _curMinX: Float = 0.toFloat()
+        private var _curRangeX: Float = 0.toFloat()
+        private var _curMinY: Float = 0.toFloat()
+        private var _curRangeY: Float = 0.toFloat()
     }
 
     /**

@@ -1,10 +1,8 @@
 package klay.tests.core
 
 import klay.core.*
-import klay.scene.*
-import pythagoras.f.IRectangle
+import klay.scene.ImageLayer
 import pythagoras.f.Rectangle
-import react.Slot
 
 class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text rendering features.") {
 
@@ -29,7 +27,7 @@ class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text renderi
 
     override fun init() {
         row = Rectangle(5f, 5f, 0f, 0f)
-        style = NToggle<Font.Style>("Style", *Font.Style.values())
+        style = NToggle("Style", *Font.Style.values())
         addToRow(style!!.layer)
         draw = NToggle("Draw", "Fill", "Stroke")
         addToRow(draw!!.layer)
@@ -38,7 +36,7 @@ class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text renderi
         addToRow(effect!!.layer)
         wrap = NToggle("Wrap", 0, 20, 50, 100)
         addToRow(wrap!!.layer)
-        align = NToggle<TextBlock.Align>(
+        align = NToggle(
                 "Align", TextBlock.Align.LEFT, TextBlock.Align.CENTER, TextBlock.Align.RIGHT)
         addToRow(align!!.layer)
         font = NToggle("Font", "Times New Roman", "Helvetica")
@@ -48,7 +46,7 @@ class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text renderi
             game.input.getText(Keyboard.TextType.DEFAULT, "Test text", sample.replace("\n", "\\n")).onSuccess { text: String? ->
                 if (text == null) return@onSuccess
                 // parse \n to allow testing line breaks
-                sample = text!!.replace("\\n", "\n")
+                sample = text.replace("\\n", "\n")
                 update()
             }
         })
@@ -69,33 +67,33 @@ class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text renderi
         addToRow(text!!)
     }
 
-    protected fun addToRow(layer: ImageLayer) {
+    private fun addToRow(layer: ImageLayer) {
         game.rootLayer.add(layer.setTranslation(row!!.x + row!!.width, row!!.y))
         row!!.width += layer.width() + 45
         row!!.height = Math.max(row!!.height, layer.height())
         if (row!!.width > game.graphics.viewSize.width * .6f) newRow()
     }
 
-    protected fun newRow() {
+    private fun newRow() {
         row!!.x = 5f
         row!!.y += row!!.height + 5
         row!!.height = 0f
         row!!.width = row!!.height
     }
 
-    protected fun update() {
+    private fun update() {
         if (text == null) return
         text!!.setTile(makeTextImage())
     }
 
-    protected fun makeLabel(label: String): Texture {
+    private fun makeLabel(label: String): Texture {
         val layout = game.graphics.layoutText(label, TextFormat())
         val canvas = game.graphics.createCanvas(layout.size)
         canvas.setFillColor(0xFF000000.toInt()).fillText(layout, 0f, 0f)
         return canvas.toTexture()
     }
 
-    protected fun makeTextImage(): Texture {
+    private fun makeTextImage(): Texture {
         val format = TextFormat(Font(font!!.value(), style!!.value(), 24f))
         val wrapWidth = if (wrap!!.value() == 0)
             java.lang.Float.MAX_VALUE
@@ -113,7 +111,7 @@ class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text renderi
         return canvas.toTexture()
     }
 
-    protected fun adjustDim(value: Float): Float {
+    private fun adjustDim(value: Float): Float {
         var value = value
         val effect = this.effect!!.value()
         if (effect.startsWith("Shadow")) {
@@ -124,16 +122,16 @@ class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text renderi
         return value
     }
 
-    protected fun adjustWidth(width: Float): Float {
+    private fun adjustWidth(width: Float): Float {
         return adjustDim(width)
     }
 
-    protected fun adjustHeight(height: Float): Float {
+    private fun adjustHeight(height: Float): Float {
         return adjustDim(height)
     }
 
-    protected fun render(canvas: Canvas, strokeFill: String, block: TextBlock, align: TextBlock.Align,
-                         color: Int, x: Float, y: Float, showBounds: Boolean) {
+    private fun render(canvas: Canvas, strokeFill: String, block: TextBlock, align: TextBlock.Align,
+                       color: Int, x: Float, y: Float, showBounds: Boolean) {
         var sy = y + block.bounds.y
         for (layout in block.lines) {
             val sx = x + block.bounds.x + align.getX(
@@ -152,7 +150,7 @@ class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text renderi
         }
     }
 
-    protected fun render(canvas: Canvas, block: TextBlock, align: TextBlock.Align, showBounds: Boolean) {
+    private fun render(canvas: Canvas, block: TextBlock, align: TextBlock.Align, showBounds: Boolean) {
         val effect = this.effect!!.value()
         val strokeFill = draw!!.value()
         if (effect == "ShadowUL") {

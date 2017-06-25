@@ -1,7 +1,5 @@
 package klay.tests.jvm
 
-import klay.core.Game
-import klay.core.Platform
 import klay.jvm.JavaPlatform
 import klay.jvm.LWJGLPlatform
 import klay.tests.core.TestsGame

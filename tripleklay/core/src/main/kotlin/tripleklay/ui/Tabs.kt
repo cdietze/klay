@@ -284,14 +284,14 @@ class Tabs : Composite<Tabs>() {
     }
 
     /** Sets the [Tab._index] field of our tabs, after a change to ordering.  */
-    protected fun resetIndices() {
+    private fun resetIndices() {
         for (ii in _tabs.indices) {
             _tabs[ii]._index = ii
         }
     }
 
     /** Looks up a tab with the given button.  */
-    protected fun forWidget(widget: Element<*>): Tab? {
+    private fun forWidget(widget: Element<*>): Tab? {
         for (tab in _tabs) {
             if (tab.button === widget) {
                 return tab
@@ -300,8 +300,8 @@ class Tabs : Composite<Tabs>() {
         return null
     }
 
-    protected var _tabs: MutableList<Tab> = ArrayList()
-    protected var _highlighter: Highlighter? = null
+    private var _tabs: MutableList<Tab> = ArrayList()
+    private var _highlighter: Highlighter? = null
 
     companion object {
 

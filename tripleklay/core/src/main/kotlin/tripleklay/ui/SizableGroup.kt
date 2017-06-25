@@ -15,7 +15,7 @@ class SizableGroup
     val preferredSize = DimensionValue(0f, 0f)
 
     /** Creates the sizable group with the given preferred size.  */
-    constructor(layout: Layout, size: IDimension) : this(layout, size.width, size.height) {}
+    constructor(layout: Layout, size: IDimension) : this(layout, size.width, size.height)
 
     init {
         preferredSize.update(wid, hei)

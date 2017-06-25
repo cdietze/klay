@@ -7,13 +7,13 @@ import react.Value
  * Displays a checkbox which can be toggled. The checkbox must be configured with either a
  * font-based checkmark, or a checkmark icon, which will be shown when it is checked.
  */
-class CheckBox protected constructor(checkChar: Char, protected val _checkIcon: Icon?) : TextWidget<CheckBox>(), Togglable<CheckBox> {
-    protected val _checkStr: String
+class CheckBox private constructor(checkChar: Char, private val _checkIcon: Icon?) : TextWidget<CheckBox>(), Togglable<CheckBox> {
+    private val _checkStr: String = checkChar.toString()
 
     /** Creates a checkbox with the supplied check character.  */
-    @JvmOverloads constructor(checkChar: Char = '\u2713') : this(checkChar, null as Icon?) {}
+    @JvmOverloads constructor(checkChar: Char = '\u2713') : this(checkChar, null as Icon?)
 
-    constructor(checkIcon: Icon) : this(0.toChar(), checkIcon) {}
+    constructor(checkIcon: Icon) : this(0.toChar(), checkIcon)
 
     /**
      * Updates the selected state of this checkbox. This method is called when the user taps and
@@ -42,7 +42,6 @@ class CheckBox protected constructor(checkChar: Char, protected val _checkIcon: 
     }
 
     init {
-        _checkStr = checkChar.toString()
         selected().connect({ checked: Boolean -> updateCheckViz(checked) })
     }
 
@@ -66,7 +65,7 @@ class CheckBox protected constructor(checkChar: Char, protected val _checkIcon: 
         updateCheckViz(selected().get())
     }
 
-    protected fun updateCheckViz(isChecked: Boolean) {
+    private fun updateCheckViz(isChecked: Boolean) {
         if (_tglyph.layer() != null) _tglyph.layer()!!.setVisible(isChecked)
         if (_ilayer != null) _ilayer!!.setVisible(isChecked)
     }

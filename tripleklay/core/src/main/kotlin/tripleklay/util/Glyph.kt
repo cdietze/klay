@@ -35,12 +35,12 @@ class Glyph : Closeable {
         var layer = _layer
         if (layer == null) {
             layer = CanvasLayer(gfx, width, height)
-            if (_depth != null) layer!!.setDepth(_depth)
+            if (_depth != null) layer.setDepth(_depth)
             _parent.add(layer)
             _layer = layer
-        } else if (layer!!.width() < width || layer!!.height() < height) {
+        } else if (layer.width() < width || layer.height() < height) {
             // TODO: should we ever shrink it?
-            layer!!.resize(width, height)
+            layer.resize(width, height)
         }
         _preparedWidth = width
         _preparedHeight = height
@@ -99,11 +99,11 @@ class Glyph : Closeable {
         _layer!!.setTranslation(text.style.effect.offsetX(), text.style.effect.offsetY())
     }
 
-    protected val _parent: GroupLayer
-    protected val _depth: Float?
-    protected var _layer: CanvasLayer? = null
-    protected var _preparedWidth: Float = 0.toFloat()
-    protected var _preparedHeight: Float = 0.toFloat()
+    private val _parent: GroupLayer
+    private val _depth: Float?
+    private var _layer: CanvasLayer? = null
+    private var _preparedWidth: Float = 0.toFloat()
+    private var _preparedHeight: Float = 0.toFloat()
 }
 /**
  * Prepares the canvas and renders the supplied text at 0, 0 using the given config.

@@ -72,21 +72,17 @@ class TableLayout
         }
     }
 
-    protected val _columns: Array<out Column>
-    protected var _rowgap: Int = 0
-    protected var _colgap: Int = 0
-    protected var _vstretch: Boolean = false
-    protected var _rowVAlign: Style.VAlign = Style.VAlign.CENTER
+    private val _columns: Array<out Column> = columns
+    private var _rowgap: Int = 0
+    private var _colgap: Int = 0
+    private var _vstretch: Boolean = false
+    private var _rowVAlign: Style.VAlign = Style.VAlign.CENTER
 
     /**
      * Creates a table layout with the specified number of columns, each with the default
      * configuration.
      */
-    constructor(columns: Int) : this(*columns(columns)) {}
-
-    init {
-        _columns = columns
-    }
+    constructor(columns: Int) : this(*columns(columns))
 
     /**
      * Configures the gap between successive rows and successive columns. The default gap is zero.
@@ -145,11 +141,11 @@ class TableLayout
         val freeExtra = (width - naturalWidth) / freeWeight
         // freeExtra may end up negative; if our natural width is too wide
 
-        val halign = resolveStyle<Style.HAlign>(elems, Style.HALIGN)
+        val halign = resolveStyle(elems, Style.HALIGN)
         val startX = left + if (freeWeight == 0f) halign.offset(naturalWidth, width) else 0f
         var x = startX
 
-        val valign = resolveStyle<Style.VAlign>(elems, Style.VALIGN)
+        val valign = resolveStyle(elems, Style.VALIGN)
         var y = top + valign.offset(m.totalHeight(_rowgap.toFloat()), height)
 
         for (elem in elems) {
@@ -185,13 +181,13 @@ class TableLayout
         }
     }
 
-    protected fun freeWeight(): Float {
+    private fun freeWeight(): Float {
         var freeWeight = 0f
         for (ii in _columns.indices) freeWeight += _columns[ii]._weight
         return freeWeight
     }
 
-    protected fun computeMetrics(elems: Container<*>, hintX: Float, hintY: Float): Metrics {
+    private fun computeMetrics(elems: Container<*>, hintX: Float, hintY: Float): Metrics {
         val columns = _columns.size
         var cells = 0
         for (elem in elems) cells += colspan(elem)
@@ -246,7 +242,7 @@ class TableLayout
         return metrics
     }
 
-    protected class Metrics {
+    private class Metrics {
         var columnWidths: FloatArray? = null
         var rowHeights: FloatArray? = null
 
@@ -286,12 +282,12 @@ class TableLayout
             return elem
         }
 
-        protected fun colspan(elem: Element<*>): Int {
+        private fun colspan(elem: Element<*>): Int {
             val constraint = elem.constraint()
             return (constraint as? Colspan)?.colspan ?: 1
         }
 
-        protected fun sum(values: FloatArray): Float {
+        private fun sum(values: FloatArray): Float {
             var total = 0f
             for (value in values) {
                 total += value

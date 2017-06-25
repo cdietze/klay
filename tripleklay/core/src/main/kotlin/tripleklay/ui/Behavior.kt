@@ -145,18 +145,16 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
         /** Creates a new tracking state with the given starting press event.  */
         (iact: Pointer.Interaction) {
             /** Time the press started.  */
-            val pressTime: Double
+            val pressTime: Double = iact.event!!.time
 
             /** The press and drag positions.  */
-            val press: Point
+            val press: Point = iact.local.clone()
             val drag: Point
 
             /** How far the pointer strayed from the starting point, squared.  */
             var maxDistanceSq: Float = 0.toFloat()
 
             init {
-                pressTime = iact.event!!.time
-                press = iact.local.clone()
                 drag = Point(press)
             }
 
@@ -299,7 +297,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
                 _initDelay
             else
                 _initDelay + _repDelay * ((was - _initDelay) / _repDelay + 1)
-            if (was < limit && _timeInBounds >= limit) click()
+            if (limit in (was + 1).._timeInBounds) click()
         }
 
         override fun layout() {
@@ -308,9 +306,9 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
             _repDelay = _owner.resolveStyle(REPEAT_DELAY)
         }
 
-        protected var _initDelay: Int = 0
-        protected var _repDelay: Int = 0
-        protected var _timeInBounds: Int = 0
+        private var _initDelay: Int = 0
+        private var _repDelay: Int = 0
+        private var _timeInBounds: Int = 0
 
         companion object {
             /** Milliseconds after the first click that the second click is dispatched.  */

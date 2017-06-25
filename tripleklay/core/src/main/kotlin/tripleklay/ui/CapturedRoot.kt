@@ -25,7 +25,7 @@ class CapturedRoot
  * @param defaultBatch the quad batch to use when capturing the UI scene graph. This is
  * * usually your game's default quad batch.
  */
-(iface: Interface, layout: Layout, sheet: Stylesheet, protected val _defaultBatch: QuadBatch) : Root(iface, layout, sheet) {
+(iface: Interface, layout: Layout, sheet: Stylesheet, private val _defaultBatch: QuadBatch) : Root(iface, layout, sheet) {
 
     /**
      * Gets the texture into which the root is rendered. This may be null if no validation has yet
@@ -48,7 +48,7 @@ class CapturedRoot
         super.setSize(width, height)
         // update the image to the new size, if it's changed
         val old = _texture.get()
-        if (old == null || old!!.displayWidth != width || old!!.displayHeight != height) {
+        if (old == null || old.displayWidth != width || old.displayHeight != height) {
             _texture.update(iface.plat.graphics.createTexture(width, height, textureConfig()))
         }
         return this
@@ -66,7 +66,7 @@ class CapturedRoot
     /**
      * Returns the configuration to use when creating our backing texture.
      */
-    protected fun textureConfig(): Texture.Config {
+    private fun textureConfig(): Texture.Config {
         return Texture.Config.DEFAULT
     }
 
@@ -74,7 +74,7 @@ class CapturedRoot
      * Wraps this captured root in a Widget, using the root's image for size computation and
      * displaying the root's image on its layer.
      */
-    protected inner class Embedded : Widget<Embedded>() {
+    private inner class Embedded : Widget<Embedded>() {
         init {
             layer.setHitTester(object : Layer.HitTester {
                 override fun hitTest(layer: Layer, point: Point): Layer? {
@@ -115,7 +115,7 @@ class CapturedRoot
             _conn = Closeable.Util.close(_conn)
         }
 
-        protected fun update(tex: Texture?) {
+        private fun update(tex: Texture?) {
             if (tex == null) {
                 // we should never be going back to null but handle it anyway
                 if (_ilayer != null) _ilayer!!.close()
@@ -130,12 +130,12 @@ class CapturedRoot
         }
 
         /** The captured root image layer, if set.  */
-        protected var _ilayer: ImageLayer? = null
+        private var _ilayer: ImageLayer? = null
 
         /** The connection to the captured root's image, or null if we're not added.  */
-        protected var _conn = Closeable.Util.NOOP
+        private var _conn = Closeable.Util.NOOP
     }
 
     /** The texure to with the layer is rendered.  */
-    protected var _texture = Value<Texture?>(null)
+    private var _texture = Value<Texture?>(null)
 }

@@ -12,7 +12,7 @@ abstract class Elements<T : Elements<T>>
 /**
  * Creates a collection with the specified layout.
  */
-(protected override val layout: Layout) : Container.Mutable<T>() {
+(override val layout: Layout) : Container.Mutable<T>() {
     init {
         set(Element.Flag.HIT_DESCEND, true)
     }

@@ -28,7 +28,7 @@ abstract class GlyphWidget<T : GlyphWidget<T>> : SizableWidget<T> {
      * Creates a new glyph widget with no initial size and optionally interactive. The widget will
      * not be functional until one of the sizing methods is called (in [SizableWidget].
      */
-    protected constructor() {}
+    protected constructor()
 
     /**
      * Creates a new glyph widget with the given preferred size.

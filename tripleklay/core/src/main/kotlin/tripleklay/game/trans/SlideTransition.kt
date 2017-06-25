@@ -9,15 +9,15 @@ import tripleklay.game.ScreenStack.Screen
  */
 class SlideTransition(stack: ScreenStack) : InterpedTransition<SlideTransition>() {
 
-    protected val _originX: Float = stack.originX
-    protected val _originY: Float = stack.originY
-    protected var _dir: ScreenStack.Transition.Dir = ScreenStack.Transition.Dir.LEFT
-    protected var _osx: Float = 0.toFloat()
-    protected var _osy: Float = 0.toFloat()
-    protected var _odx: Float = 0.toFloat()
-    protected var _ody: Float = 0.toFloat()
-    protected var _nsx: Float = 0.toFloat()
-    protected var _nsy: Float = 0.toFloat()
+    private val _originX: Float = stack.originX
+    private val _originY: Float = stack.originY
+    private var _dir: ScreenStack.Transition.Dir = ScreenStack.Transition.Dir.LEFT
+    private var _osx: Float = 0.toFloat()
+    private var _osy: Float = 0.toFloat()
+    private var _odx: Float = 0.toFloat()
+    private var _ody: Float = 0.toFloat()
+    private var _nsx: Float = 0.toFloat()
+    private var _nsy: Float = 0.toFloat()
 
     fun up(): SlideTransition {
         return dir(ScreenStack.Transition.Dir.UP)

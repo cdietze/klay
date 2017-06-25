@@ -12,7 +12,7 @@ class ToggleButton
 @JvmOverloads constructor(text: String? = null, icon: Icon? = null) : AbstractTextButton<ToggleButton>(text, icon), Togglable<ToggleButton> {
 
     /** Creates a button with the supplied icon.  */
-    constructor(icon: Icon) : this(null, icon) {}
+    constructor(icon: Icon) : this(null, icon)
 
     override fun selected(): Value<Boolean> {
         return (_behave as Behavior.Toggle<ToggleButton>).selected

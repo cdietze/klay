@@ -21,7 +21,7 @@ class Animator : AnimBuilder {
 
     /** Creates an animator which is not connected to a frame signal. You must manually connect
      * [.onPaint] to a frame signal to drive this animator.  */
-    constructor() {}
+    constructor()
 
     /** Creates an animator which is permanently connected to `paint`. This is useful when
      * you are connecting to a paint signal whose lifetime is the same as this animator because
@@ -65,7 +65,7 @@ class Animator : AnimBuilder {
         return anim
     }
 
-    protected fun onPaint(clock: Clock) {
+    private fun onPaint(clock: Clock) {
         val time = clock.tick.toFloat()
 
         // if we have any animations queued up to be added, add those now
@@ -107,7 +107,7 @@ class Animator : AnimBuilder {
     }
 
     /** Implementation details, avert your eyes.  */
-    protected class Barrier(val expireDelay: Float) {
+    private class Barrier(val expireDelay: Float) {
         val accum: MutableList<Animation> = ArrayList()
         var absoluteExpireTime: Float = 0.toFloat()
 
@@ -119,10 +119,10 @@ class Animator : AnimBuilder {
         }
     }
 
-    protected var _anims: MutableList<Animation> = ArrayList()
-    protected var _nanims: MutableList<Animation> = ArrayList()
-    protected var _accum: MutableList<Animation> = _nanims
-    protected var _barriers: MutableList<Barrier> = ArrayList()
+    private var _anims: MutableList<Animation> = ArrayList()
+    private var _nanims: MutableList<Animation> = ArrayList()
+    private var _accum: MutableList<Animation> = _nanims
+    private var _barriers: MutableList<Barrier> = ArrayList()
 }
 /**
  * Causes this animator to delay the start of any subsequently registered animations until all

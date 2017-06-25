@@ -134,66 +134,66 @@ class XYFlicker : Pointer.Listener {
     }
 
     /** Translates a pointer event into a position.  */
-    protected fun getPosition(event: klay.core.Pointer.Event, dest: Point) {
+    private fun getPosition(event: klay.core.Pointer.Event, dest: Point) {
         dest[-event.x] = -event.y
     }
 
     /** Sets the current position, clamping the values between min and max.  */
-    protected fun setPosition(x: Float, y: Float) {
+    private fun setPosition(x: Float, y: Float) {
         _position[MathUtil.clamp(x, _min.x, _max.x)] = MathUtil.clamp(y, _min.y, _max.y)
     }
 
     /** Returns the minimum distance (in pixels) the pointer must have moved to register as a
      * flick.  */
-    protected fun minFlickDelta(): Float {
+    private fun minFlickDelta(): Float {
         return 10f
     }
 
     /** Returns the deceleration (in pixels per ms per ms) applied to non-zero velocity.  */
-    protected fun friction(): Float {
+    private fun friction(): Float {
         return 0.0015f
     }
 
     /** Returns the minimum (positive) speed (in pixels per millisecond) at time of touch release
      * required to initiate a flick (i.e. transfer the flick velocity to the entity).  */
-    protected fun flickSpeedThresh(): Float {
+    private fun flickSpeedThresh(): Float {
         return 0.5f
     }
 
     /** Returns the fraction of flick speed that is transfered to the entity (a value between 0
      * and 1).  */
-    protected fun flickXfer(): Float {
+    private fun flickXfer(): Float {
         return 0.95f
     }
 
     /** Returns the maximum flick speed that will be transfered to the entity; limits the actual
      * flick speed at time of release. This value is not adjusted by [.flickXfer].  */
-    protected fun maxFlickSpeed(): Float {
+    private fun maxFlickSpeed(): Float {
         return 1.4f // pixels/ms
     }
 
     /** Returns the square of the maximum distance (in pixels) the pointer is allowed to travel
      * while pressed and still register as a click.  */
-    protected fun maxClickDeltaSq(): Float {
+    private fun maxClickDeltaSq(): Float {
         return 225f
     }
 
-    protected var _maxDeltaSq: Float = 0.toFloat()
-    protected val _position = Point()
-    protected val _vel = Point()
-    protected val _accel = Point()
-    protected val _origPos = Point()
-    protected val _start = Point()
-    protected val _cur = Point()
-    protected val _prev = Point()
-    protected val _max = Point()
-    protected val _min = Point()
-    protected var _prevStamp: Double = 0.toDouble()
-    protected var _curStamp: Double = 0.toDouble()
+    private var _maxDeltaSq: Float = 0.toFloat()
+    private val _position = Point()
+    private val _vel = Point()
+    private val _accel = Point()
+    private val _origPos = Point()
+    private val _start = Point()
+    private val _cur = Point()
+    private val _prev = Point()
+    private val _max = Point()
+    private val _min = Point()
+    private var _prevStamp: Double = 0.toDouble()
+    private var _curStamp: Double = 0.toDouble()
 
     companion object {
 
-        protected fun applyAccelertion(v: Float, a: Float, dt: Float): Float {
+        private fun applyAccelertion(v: Float, a: Float, dt: Float): Float {
             var v = v
             val prev = v
             v += a * dt

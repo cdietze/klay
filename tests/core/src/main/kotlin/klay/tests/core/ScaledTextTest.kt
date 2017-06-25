@@ -25,7 +25,7 @@ class ScaledTextTest(game: TestsGame) : Test(game, "ScaledText", "Tests that tex
         }
     }
 
-    protected fun addInfo(canvas: Canvas, cx: Float, y: Float) {
+    private fun addInfo(canvas: Canvas, cx: Float, y: Float) {
         val infoFormat = TextFormat(Font("Helvetica", 12f))
         val ilayout = game.graphics.layoutText("${canvas.width}x${canvas.height}", infoFormat)
         val iimage = game.graphics.createCanvas(ilayout.size)

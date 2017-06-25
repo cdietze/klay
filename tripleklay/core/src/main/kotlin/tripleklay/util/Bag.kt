@@ -149,7 +149,7 @@ class Bag<E>
                 this@Bag.removeAt(--_pos)
             }
 
-            protected var _pos: Int = 0
+            private var _pos: Int = 0
         }
     }
 

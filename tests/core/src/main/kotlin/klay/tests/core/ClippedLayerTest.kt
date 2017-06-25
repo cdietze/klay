@@ -20,7 +20,7 @@ class ClippedLayerTest(game: TestsGame) : Test(game, "ClippedLayer", "Tests rend
         addClippedGroupLayers()
     }
 
-    protected fun addClippedLayers() {
+    private fun addClippedLayers() {
         val circle = game.graphics.createCanvas(100f, 100f)
         circle.setFillColor(0xFFCC99FF.toInt()).fillCircle(50f, 50f, 50f)
         val cirtex = circle.toTexture()
@@ -76,13 +76,13 @@ class ClippedLayerTest(game: TestsGame) : Test(game, "ClippedLayer", "Tests rend
             }
         }, 390f, 30f)
 
-        conns.add<Connection>(game.paint.connect { clock: Clock ->
+        conns.add(game.paint.connect { clock: Clock ->
             elapsed = clock.tick / 1000f
             rotation = elapsed * MathUtil.PI / 2
         })
     }
 
-    protected fun addClippedGroupLayers() {
+    private fun addClippedGroupLayers() {
         val iwidth = 100f
         val iheight = 50f
         val img = game.graphics.createCanvas(iwidth, iheight)
@@ -139,11 +139,11 @@ class ClippedLayerTest(game: TestsGame) : Test(game, "ClippedLayer", "Tests rend
                 outline(surf, g5)
             }
 
-            protected fun outline(surf: Surface, gl: GroupLayer) {
+            private fun outline(surf: Surface, gl: GroupLayer) {
                 drawRect(surf, gl.tx() - gl.originX(), gl.ty() - gl.originY(), gl.width(), gl.height())
             }
 
-            protected fun drawRect(surf: Surface, x: Float, y: Float, w: Float, h: Float) {
+            private fun drawRect(surf: Surface, x: Float, y: Float, w: Float, h: Float) {
                 val left = x - 1
                 val top = y - 1
                 val right = x + w + 2f
@@ -160,7 +160,7 @@ class ClippedLayerTest(game: TestsGame) : Test(game, "ClippedLayer", "Tests rend
         game.rootLayer.addAt(g4, 400f, 225f)
         game.rootLayer.addAt(g5, 525f, 225f)
 
-        conns.add<Connection>(game.paint.connect { clock: Clock ->
+        conns.add(game.paint.connect { clock: Clock ->
             val elapsed = clock.tick / 1000f
             i1.setRotation(elapsed * MathUtil.PI / 2)
             s1.setRotation(elapsed * MathUtil.PI / 2)

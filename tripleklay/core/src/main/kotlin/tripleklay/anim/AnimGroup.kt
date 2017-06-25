@@ -108,10 +108,10 @@ class AnimGroup : AnimBuilder() {
                 }
             }
 
-            protected var _animator: Animator? = null
-            protected var _curAnims = arrayOfNulls<Animation>(groupAnims.size)
+            private var _animator: Animator? = null
+            private var _curAnims = arrayOfNulls<Animation>(groupAnims.size)
         }
     }
 
-    protected var _anims: MutableList<Animation>? = ArrayList()
+    private var _anims: MutableList<Animation>? = ArrayList()
 }

@@ -31,14 +31,14 @@ class SoundTest(game: TestsGame) : Test(game, "Sound", "Tests playing and loopin
         game.rootLayer.addAt(actions, 50f, 150f)
     }
 
-    protected fun loadSound(path: String): Sound {
+    private fun loadSound(path: String): Sound {
         val sound = game.assets.getSound(path)
         sound.state.onFailure(logFailure("Sound loading error: " + path))
         return sound
     }
 
-    protected fun addLoopButtons(actions: CanvasLayer, name: String, sound: Sound,
-                                 x: Float): Float {
+    private fun addLoopButtons(actions: CanvasLayer, name: String, sound: Sound,
+                               x: Float): Float {
         var x = x
         x = addButton("Loop " + name, Runnable {
             if (!sound.isPlaying) {
@@ -55,7 +55,7 @@ class SoundTest(game: TestsGame) : Test(game, "Sound", "Tests playing and loopin
         return x
     }
 
-    protected fun addAction(actions: CanvasLayer, action: String) {
+    private fun addAction(actions: CanvasLayer, action: String) {
         _actions.add(0, action)
         if (_actions.size > 10)
             _actions.subList(10, _actions.size).clear()
@@ -64,7 +64,7 @@ class SoundTest(game: TestsGame) : Test(game, "Sound", "Tests playing and loopin
         canvas.clear()
         val buf = StringBuilder()
         for (a in _actions) {
-            if (buf.length > 0) buf.append("\n")
+            if (buf.isNotEmpty()) buf.append("\n")
             buf.append(a)
         }
         canvas.setFillColor(0xFF000000.toInt())
@@ -78,5 +78,5 @@ class SoundTest(game: TestsGame) : Test(game, "Sound", "Tests playing and loopin
         actions.end()
     }
 
-    protected val _actions: MutableList<String> = ArrayList()
+    private val _actions: MutableList<String> = ArrayList()
 }

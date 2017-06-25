@@ -8,8 +8,8 @@ import tripleklay.ui.Background
 /**
  * Draws a rounded rectangle with optional border as a background.
  */
-class RoundRectBackground @JvmOverloads constructor(protected val _gfx: Graphics, protected val _bgColor: Int, protected val _radius: Float,
-                                                    protected val _borderColor: Int = 0, protected val _borderWidth: Float = 0f, protected val _borderRadius: Float = _radius) : Background() {
+class RoundRectBackground @JvmOverloads constructor(private val _gfx: Graphics, private val _bgColor: Int, private val _radius: Float,
+                                                    private val _borderColor: Int = 0, private val _borderWidth: Float = 0f, private val _borderRadius: Float = _radius) : Background() {
 
     override fun instantiate(size: IDimension): Background.Instance {
         val canvas = _gfx.createCanvas(size)

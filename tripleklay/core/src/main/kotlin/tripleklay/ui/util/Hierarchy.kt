@@ -76,7 +76,7 @@ class Hierarchy
             return Hierarchy(elem)
         }
 
-        protected fun forEachDescendant(root: Element<*>, op: ElementOp<Element<*>>) {
+        private fun forEachDescendant(root: Element<*>, op: ElementOp<Element<*>>) {
             op.apply(root)
             if (root is Container<*>) {
                 val es = root

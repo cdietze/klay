@@ -4,8 +4,7 @@ import pythagoras.f.Dimension
 import tripleklay.ui.Container
 import tripleklay.ui.Layout
 import tripleklay.ui.Style
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Lays out elements in horizontal rows, starting a new row when a width limit is reached. By
@@ -71,16 +70,16 @@ class FlowLayout : Layout() {
 
     override fun layout(elems: Container<*>,
                         left: Float, top: Float, width: Float, height: Float) {
-        val halign = resolveStyle<Style.HAlign>(elems, Style.HALIGN)
+        val halign = resolveStyle(elems, Style.HALIGN)
         val m = computeMetrics(elems, width, height)
-        var y = top + resolveStyle<Style.VAlign>(elems, Style.VALIGN).offset(m.size.height, height)
+        var y = top + resolveStyle(elems, Style.VALIGN).offset(m.size.height, height)
         var elemIdx = 0
         var row = 0
         val size = m.rowBreaks.size
         while (row < size) {
             val rowSize = m.rows[row]
             var x = left + halign.offset(rowSize.width, width)
-            while (elemIdx < m.rowBreaks[row].toInt()) {
+            while (elemIdx < m.rowBreaks[row]) {
                 val elem = elems.childAt(elemIdx)
                 if (!elem.isVisible) {
                     ++elemIdx
@@ -101,7 +100,7 @@ class FlowLayout : Layout() {
         }
     }
 
-    protected fun computeMetrics(elems: Container<*>, width: Float, height: Float): Metrics {
+    private fun computeMetrics(elems: Container<*>, width: Float, height: Float): Metrics {
         var width = width
         val m = Metrics()
 
@@ -146,10 +145,10 @@ class FlowLayout : Layout() {
         }
     }
 
-    protected var _hgap = DEFAULT_GAP
-    protected var _vgap = DEFAULT_GAP
-    protected var _wrapWidth: Float? = null
-    protected var _valign: Style.VAlign? = Style.VAlign.CENTER
+    private var _hgap = DEFAULT_GAP
+    private var _vgap = DEFAULT_GAP
+    private var _wrapWidth: Float? = null
+    private var _valign: Style.VAlign? = Style.VAlign.CENTER
 
     companion object {
         /** The default gap between rows and elements in a row.  */

@@ -78,7 +78,7 @@ abstract class Container<T : Container<T>> : Element<T>(), Iterable<Element<*>> 
         }
     }
 
-    public override fun wasRemoved() {
+    override fun wasRemoved() {
         super.wasRemoved()
         val willDispose = isSet(Element.Flag.WILL_DISPOSE)
         var ii = 0

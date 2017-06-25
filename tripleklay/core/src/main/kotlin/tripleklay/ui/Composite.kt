@@ -90,7 +90,7 @@ protected constructor() : Container<T>() {
      * delegation to it. If null or not called, subclasses must override
      * [.createLayoutData].
      */
-    protected override var layout: Layout
+    override var layout: Layout
         get() {
             if (_layout == null) throw IllegalStateException()
             return _layout!!

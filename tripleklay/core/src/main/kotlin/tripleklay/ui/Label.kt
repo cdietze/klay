@@ -17,7 +17,7 @@ open class Label
     val icon = Value<Icon?>(null)
 
     /** Creates a label with the supplied icon.  */
-    constructor(icon: Icon) : this(null, icon) {}
+    constructor(icon: Icon) : this(null, icon)
 
     init {
         this.text.update(text)

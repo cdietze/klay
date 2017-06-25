@@ -17,7 +17,7 @@ internal class DialogTest(game: TestsGame) : Test(game, "Dialog", "Tests system 
         var last = game.storage.getItem("last_text")
         if (last == null || last.isEmpty()) last = "..."
 
-        val outputLayer = ImageLayer(game.ui.formatText(last!!, false))
+        val outputLayer = ImageLayer(game.ui.formatText(last, false))
         val onDialogResult = { result: Any? ->
             val text = result?.toString() ?: "canceled"
             if (text.isNotEmpty()) outputLayer.setTile(game.ui.formatText(text, false))

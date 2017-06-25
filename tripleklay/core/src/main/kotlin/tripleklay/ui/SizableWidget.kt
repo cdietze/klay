@@ -17,7 +17,7 @@ abstract class SizableWidget<T : SizableWidget<T>>
     val preferredSize = DimensionValue(0f, 0f)
 
     /** Creates the sizable widget with the given preferred size.  */
-    constructor(size: IDimension) : this(size.width, size.height) {}
+    constructor(size: IDimension) : this(size.width, size.height)
 
     init {
         preferredSize.update(width, height)

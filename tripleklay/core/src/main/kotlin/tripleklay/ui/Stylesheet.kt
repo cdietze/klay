@@ -5,7 +5,7 @@ import java.util.*
 /**
  * Provides style defaults per element type for a sub-tree of the interface hierarchy.
  */
-class Stylesheet private constructor(protected val _styles: Map<Class<*>, Styles>) {
+class Stylesheet private constructor(private val _styles: Map<Class<*>, Styles>) {
     /** Builds stylesheets, obtain via [.builder].  */
     class Builder {
         /** Adds styles for the supplied element class. If styles exist for said class, the
@@ -15,7 +15,7 @@ class Stylesheet private constructor(protected val _styles: Map<Class<*>, Styles
          */
         fun add(eclass: Class<*>, styles: Styles): Builder {
             val ostyles = _styles!![eclass]
-            _styles!!.put(eclass, if (ostyles == null) styles else ostyles.merge(styles))
+            _styles!!.put(eclass, ostyles?.merge(styles) ?: styles)
             return this
         }
 
@@ -40,7 +40,7 @@ class Stylesheet private constructor(protected val _styles: Map<Class<*>, Styles
             return sheet
         }
 
-        protected var _styles: MutableMap<Class<*>, Styles>? = HashMap()
+        private var _styles: MutableMap<Class<*>, Styles>? = HashMap()
     }
 
     /**

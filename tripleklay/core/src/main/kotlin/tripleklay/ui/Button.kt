@@ -11,7 +11,7 @@ open class Button
 @JvmOverloads constructor(text: String? = null, icon: Icon? = null) : AbstractTextButton<Button>(text, icon), Clickable<Button> {
 
     /** Creates a button with the supplied icon.  */
-    constructor(icon: Icon) : this(null, icon) {}
+    constructor(icon: Icon) : this(null, icon)
 
     /** A convenience method for registering a click handler. Assumes you don't need the result of
      * [SignalView.connect], because it throws it away.  */

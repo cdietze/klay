@@ -48,19 +48,19 @@ class ShaderTest(game: TestsGame) : Test(game, "Shader", "Tests custom shader su
                 irotlayer.setBatch(rotBatch)
                 game.rootLayer.addAt(irotlayer, 25 + 3 * dx + orange.width, 25f)
 
-                conns.add<Connection>(game.paint.connect { clock: Clock ->
+                conns.add(game.paint.connect { clock: Clock ->
                     rotBatch.elapsed = clock.tick / 1000f
                 })
             }
         })
     }
 
-    protected fun createRotBatch(): RotYBatch {
+    private fun createRotBatch(): RotYBatch {
         return RotYBatch(game.graphics.gl)
     }
 
     // a batch with a shader that rotates things around the (3D) y axis
-    protected class RotYBatch(gl: GL20) : TriangleBatch(gl, RotYBatch.Source()) {
+    private class RotYBatch(gl: GL20) : TriangleBatch(gl, RotYBatch.Source()) {
         class Source : TriangleBatch.Source() {
             override fun vertex(): String {
                 return VERT_UNIFS +
@@ -78,7 +78,7 @@ class ShaderTest(game: TestsGame) : Test(game, "Shader", "Tests custom shader su
 
             companion object {
 
-                protected val VERT_ROTSETPOS =
+                private val VERT_ROTSETPOS =
                         // Rotate the vertex per our 3D rotation
                         "  float cosa = cos(u_Angle);\n" +
                                 "  float sina = sin(u_Angle);\n" +
@@ -118,13 +118,8 @@ class ShaderTest(game: TestsGame) : Test(game, "Shader", "Tests custom shader su
         var eyeX: Float = 0.toFloat()
         var eyeY: Float = 0.toFloat()
 
-        val uAngle: Int
-        val uEye: Int
-
-        init {
-            uAngle = program.getUniformLocation("u_Angle")
-            uEye = program.getUniformLocation("u_Eye")
-        }
+        val uAngle: Int = program.getUniformLocation("u_Angle")
+        val uEye: Int = program.getUniformLocation("u_Eye")
 
         override fun begin(fbufWidth: Float, fbufHeight: Float, flip: Boolean) {
             super.begin(fbufWidth, fbufHeight, flip)

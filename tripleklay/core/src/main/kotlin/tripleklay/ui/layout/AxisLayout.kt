@@ -67,8 +67,8 @@ abstract class AxisLayout : Layout() {
 
         override fun layout(elems: Container<*>,
                             left: Float, top: Float, width: Float, height: Float) {
-            val halign = resolveStyle<Style.HAlign>(elems, Style.HALIGN)
-            val valign = resolveStyle<Style.VAlign>(elems, Style.VALIGN)
+            val halign = resolveStyle(elems, Style.HALIGN)
+            val valign = resolveStyle(elems, Style.VALIGN)
             val m = computeMetrics(elems, width, height, true)
             val stretchHeight = Math.max(0f, height - m.gaps(_gap.toFloat()) - m.fixHeight)
             var y = top + if (m.stretchers > 0f)
@@ -96,8 +96,8 @@ abstract class AxisLayout : Layout() {
 
         override fun layout(elems: Container<*>,
                             left: Float, top: Float, width: Float, height: Float) {
-            val halign = resolveStyle<Style.HAlign>(elems, Style.HALIGN)
-            val valign = resolveStyle<Style.VAlign>(elems, Style.VALIGN)
+            val halign = resolveStyle(elems, Style.HALIGN)
+            val valign = resolveStyle(elems, Style.VALIGN)
             val m = computeMetrics(elems, width, height, false)
             val stretchWidth = Math.max(0f, width - m.gaps(_gap.toFloat()) - m.fixWidth)
             var x = left + if (m.stretchers > 0f)

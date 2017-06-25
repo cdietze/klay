@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentLinkedDeque
 
 open class JavaInput(plat: JavaPlatform) : Input(plat) {
 
+    @Suppress("CanBePrimaryConstructorProperty")
     override val plat: JavaPlatform = plat
 
     // used for injecting keyboard evnets
