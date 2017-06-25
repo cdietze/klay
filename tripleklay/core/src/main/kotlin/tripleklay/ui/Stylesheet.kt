@@ -48,7 +48,7 @@ class Stylesheet private constructor(private val _styles: Map<Class<*>, Styles>)
      * inherited, the style may be fetched from the configuration for a supertype of the supplied
      * element type. Returns null if no configuration can be found.
      */
-    internal operator fun <V> get(style: Style<V>, eclass: Class<*>, elem: Element<*>): V? {
+    internal fun <V> get(style: Style<V>, eclass: Class<*>, elem: Element<*>): V? {
         val styles = _styles[eclass]
         val value = styles?.get(style, elem)
         if (value != null) return value
@@ -61,7 +61,7 @@ class Stylesheet private constructor(private val _styles: Map<Class<*>, Styles>)
         val parent = eclass.superclass ?: // TEMP: avoid confusion while PlayN POM disables class metadata by default
                 throw RuntimeException(
                         "Your Klay application must not be compiled with -XdisableClassMetadata. " + "It breaks TripleKlay stylesheets.")
-        return this[style, parent, elem]
+        return get(style, parent, elem)
     }
 
     companion object {

@@ -78,7 +78,7 @@ class Styles private constructor(private val _bindings: Array<Binding<*>>) {
         return merge(styles._bindings)
     }
 
-    internal operator fun <V> get(key: Style<V>, elem: Element<*>): V? {
+    internal fun <V> get(key: Style<V>, elem: Element<*>): V? {
         // we replicate Arrays.binarySearch here because we want to find the Binding with the
         // specified Style without creating a temporary garbage instance of Style.Binding
         var low = 0

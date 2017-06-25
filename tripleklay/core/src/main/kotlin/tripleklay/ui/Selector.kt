@@ -93,7 +93,7 @@ class Selector
     /**
      * Internal method to get the selection value of an element (non-null).
      */
-    private operator fun get(elem: Element<*>): Value<Boolean> {
+    private fun get(elem: Element<*>): Value<Boolean> {
         return (elem as Togglable<*>).selected()
     }
 

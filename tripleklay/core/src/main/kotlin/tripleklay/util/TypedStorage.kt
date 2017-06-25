@@ -31,7 +31,7 @@ class TypedStorage(protected val _log: Log, protected val _storage: Storage) {
      * Returns the specified property as a string, returning the supplied defautl value if the
      * property does not exist.
      */
-    operator fun get(key: String, defval: String): String {
+    fun get(key: String, defval: String): String {
         val value = _storage.getItem(key)
         return value ?: defval
     }
@@ -48,7 +48,7 @@ class TypedStorage(protected val _log: Log, protected val _storage: Storage) {
      * will be returned. If the property cannot be parsed as an int, an error will be logged and
      * the default value will be returned.
      */
-    operator fun get(key: String, defval: Int): Int {
+    fun get(key: String, defval: Int): Int {
         var value: String? = null
         try {
             value = _storage.getItem(key)
@@ -72,7 +72,7 @@ class TypedStorage(protected val _log: Log, protected val _storage: Storage) {
      * will be returned. If the property cannot be parsed as a long, an error will be logged and
      * the default value will be returned.
      */
-    operator fun get(key: String, defval: Long): Long {
+    fun get(key: String, defval: Long): Long {
         var value: String? = null
         try {
             value = _storage.getItem(key)
@@ -96,7 +96,7 @@ class TypedStorage(protected val _log: Log, protected val _storage: Storage) {
      * value will be returned. If the property cannot be parsed as a double, an error will be
      * logged and the default value will be returned.
      */
-    operator fun get(key: String, defval: Double): Double {
+    fun get(key: String, defval: Double): Double {
         var value: String? = null
         try {
             value = _storage.getItem(key)
@@ -120,7 +120,7 @@ class TypedStorage(protected val _log: Log, protected val _storage: Storage) {
      * value will be returned. Any existing value equal to `t` (ignoring case) will be
      * considered true; all others, false.
      */
-    operator fun get(key: String, defval: Boolean): Boolean {
+    fun get(key: String, defval: Boolean): Boolean {
         val value = _storage.getItem(key)
         return if (value == null) defval else value!!.equals("t", ignoreCase = true)
     }
@@ -137,7 +137,7 @@ class TypedStorage(protected val _log: Log, protected val _storage: Storage) {
      * will be returned.
      * @throws NullPointerException if `defval` is null.
      */
-    inline operator fun <reified E : Enum<E>> get(key: String, defval: E): E {
+    inline fun <reified E : Enum<E>> get(key: String, defval: E): E {
         var value: String? = null
         try {
             value = _storage.getItem(key)

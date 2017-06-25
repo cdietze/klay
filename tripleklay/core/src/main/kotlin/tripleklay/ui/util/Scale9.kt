@@ -74,7 +74,7 @@ class Scale9 {
         }
 
         /** Sets the size and location of the given chunk, 0 - 2.  */
-        operator fun set(idx: Int, coord: Float, size: Float): Axis {
+        fun set(idx: Int, coord: Float, size: Float): Axis {
             _offsets[idx] = coord
             _lengths[idx] = size
             return this
@@ -145,14 +145,14 @@ class Scale9 {
             if (left + middle + right > length && middle > 0 && left + right < length) {
                 // the special case where for some reason the total is too wide, but the middle is non
                 // zero, and it can absorb the extra all on its own.
-                axis[1, left] = length - left - right
-                axis[2, length - right] = right
+                axis.set(1, left, length - left - right)
+                axis.set(2, length - right, right)
             } else if (left + right > length) {
                 // eat equal chunks out of each end so that we don't end up overlapping
                 val remove = (left + right - length) / 2
-                axis[0, 0f] = left - remove
-                axis[1, left - remove] = 0f
-                axis[2, left - remove] = right - remove
+                axis.set(0, 0f, left - remove)
+                axis.set(1, left - remove, 0f)
+                axis.set(2, left - remove, right - remove)
             }
             return axis
         }
