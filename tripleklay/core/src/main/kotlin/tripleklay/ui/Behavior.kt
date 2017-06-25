@@ -233,7 +233,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
              * bounds, the tracking will revert to the anchor position, just like when the pointer is
              * cancelled. A null value indicates that the tracking will be unconfined in this way.
              * TODO: default to 35 if no Slider uses are relying on lack of hover limit.  */
-            var HOVER_LIMIT = Style.newStyle(true, null!!.toFloat())
+            var HOVER_LIMIT: Style<Float?> = Style.newStyle(true, null)
         }
     }
 

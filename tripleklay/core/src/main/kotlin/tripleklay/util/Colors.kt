@@ -50,9 +50,9 @@ object Colors {
      */
     @JvmOverloads fun darker(color: Int, darkFactor: Float = DARK_FACTOR): Int {
         return Color.argb(Color.alpha(color),
-                Math.max((Color.red(color) * darkFactor) as Int, 0),
-                Math.max((Color.green(color) * darkFactor) as Int, 0),
-                Math.max((Color.blue(color) * darkFactor) as Int, 0))
+                Math.max((Color.red(color) * darkFactor).toInt(), 0),
+                Math.max((Color.green(color) * darkFactor).toInt(), 0),
+                Math.max((Color.blue(color) * darkFactor).toInt(), 0))
     }
 
     /**

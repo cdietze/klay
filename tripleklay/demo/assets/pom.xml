@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>de.cdietze.klay</groupId>
+        <artifactId>tripleklay-demo</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>tripleklay-demo-assets</artifactId>
+    
+    <!--<dependencies>-->
+    <!--&lt;!&ndash; we need this to run exec-maven-plugin below but don't want to export it as a-->
+    <!--transitive dependency to the other modules so we mark it optional &ndash;&gt;-->
+    <!--<dependency>-->
+    <!--<groupId>com.threerings</groupId>-->
+    <!--<artifactId>tripleplay-tools</artifactId>-->
+    <!--<version>${project.version}</version>-->
+    <!--<optional>true</optional>-->
+    <!--</dependency>-->
+    <!--</dependencies>-->
+
+    <build>
+        <plugins>
+            <!--<plugin>-->
+            <!--<groupId>org.codehaus.mojo</groupId>-->
+            <!--<artifactId>exec-maven-plugin</artifactId>-->
+            <!--<version>1.4.0</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<phase>process-resources</phase>-->
+            <!--<goals>-->
+            <!--<goal>java</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--<configuration>-->
+            <!--<mainClass>tripleplay.tools.FramePacker</mainClass>-->
+            <!--<arguments>-->
+            <!--<argument>${basedir}/src/main/unpacked/assets/images/orb_burst_202x204.png</argument>-->
+            <!--<argument>${project.build.outputDirectory}/assets/images</argument>-->
+            <!--</arguments>-->
+            <!--</configuration>-->
+            <!--</plugin>-->
+        </plugins>
+    </build>
+</project>
