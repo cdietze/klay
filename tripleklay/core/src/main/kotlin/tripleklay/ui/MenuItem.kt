@@ -88,16 +88,16 @@ class MenuItem
         toToggle().click()
     }
 
-    protected fun trigger() {
+    private fun trigger() {
         toToggle().click()
     }
 
-    protected fun setRelay(relay: Closeable) {
+    private fun setRelay(relay: Closeable) {
         _relay.close()
         _relay = relay
     }
 
-    protected fun toToggle(): Behavior.Toggle<MenuItem> {
+    private fun toToggle(): Behavior.Toggle<MenuItem> {
         return _behave as Behavior.Toggle<MenuItem>
     }
 
@@ -131,13 +131,13 @@ class MenuItem
         return SizableLayoutData(super.createLayoutData(hintX, hintY), _localPreferredSize)
     }
 
-    protected var _relay = Closeable.Util.NOOP
+    private var _relay = Closeable.Util.NOOP
 
     /** Size override.  */
     // TODO(cdi) clarify if we really cannot use the property Element#_preferredSize
-    protected val _localPreferredSize = Dimension(0f, 0f)
+    private val _localPreferredSize = Dimension(0f, 0f)
     /** Text display mode.  */
-    protected var _showText = ShowText.ALWAYS
+    private var _showText = ShowText.ALWAYS
 }
 /**
  * Creates a new menu item with the given label.

@@ -3,7 +3,6 @@ package klay.tests.core
 import klay.core.Clock
 import klay.scene.CanvasLayer
 import pythagoras.f.MathUtil
-import react.Connection
 
 class CanvasStressTest(game: TestsGame) : Test(game, "Canvas Stress", "Animates a full-screen sized canvas, forcing a massive reupload of image data to " + "the GPU on every frame.") {
 
@@ -13,7 +12,7 @@ class CanvasStressTest(game: TestsGame) : Test(game, "Canvas Stress", "Animates 
 
         var noSegs = 30
         var direction = 1
-        conns.add<Connection>(game.update.connect { clock: Clock ->
+        conns.add(game.update.connect { clock: Clock ->
             val canvas = clayer.begin()
             canvas.clear()
             canvas.setStrokeWidth(3f)

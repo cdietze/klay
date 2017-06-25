@@ -17,7 +17,7 @@ class LongPressButton
 @JvmOverloads constructor(text: String? = null, icon: Icon? = null) : Button(text, icon) {
 
     /** Creates a button with the supplied icon.  */
-    constructor(icon: Icon) : this(null, icon) {}
+    constructor(icon: Icon) : this(null, icon)
 
     /** A signal that is emitted when this button is long pressed.
      * See [.LONG_PRESS_INTERVAL].  */
@@ -66,7 +66,7 @@ class LongPressButton
                 return click
             }
 
-            protected fun startLongPressTimer() {
+            private fun startLongPressTimer() {
                 if (_longPressInterval > 0 && _timerReg === Closeable.Util.NOOP) {
                     var _accum: Int = 0
                     _timerReg = root()!!.iface.frame.connect({ clock: Clock ->
@@ -76,23 +76,23 @@ class LongPressButton
                 }
             }
 
-            protected fun cancelLongPressTimer() {
+            private fun cancelLongPressTimer() {
                 _timerReg = Closeable.Util.close(_timerReg)
             }
 
-            protected fun fireLongPress() {
+            private fun fireLongPress() {
                 // cancel the current interaction which will disarm the button
                 onCancel(null)
                 cancelLongPressTimer()
                 longPress()
             }
 
-            protected var _longPressInterval: Int = 0
-            protected var _timerReg = Closeable.Util.NOOP
+            private var _longPressInterval: Int = 0
+            private var _timerReg = Closeable.Util.NOOP
         }
     }
 
-    protected val _longPressed = Signal<Button>()
+    private val _longPressed = Signal<Button>()
 
     companion object {
         /** An interval (in milliseconds) after which pressing and holding on a button will be

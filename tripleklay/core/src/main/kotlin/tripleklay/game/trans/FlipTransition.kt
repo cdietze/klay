@@ -12,10 +12,10 @@ import tripleklay.util.Interpolator
  */
 class FlipTransition : InterpedTransition<FlipTransition>() {
 
-    protected var _flipped: Boolean = false
-    protected var _unflip: Boolean = false
-    protected lateinit var _obatch: RotateYBatch
-    protected lateinit var _nbatch: RotateYBatch
+    private var _flipped: Boolean = false
+    private var _unflip: Boolean = false
+    private lateinit var _obatch: RotateYBatch
+    private lateinit var _nbatch: RotateYBatch
 
     /** Reverses this transition, making it flip the other direction.  */
     fun unflip(): FlipTransition {

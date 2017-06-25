@@ -5,7 +5,6 @@ import klay.core.Platform
 import klay.scene.GroupLayer
 import react.Closeable
 import react.Signal
-import react.Slot
 import tripleklay.anim.Animator
 
 import java.util.ArrayList
@@ -30,8 +29,8 @@ class Interface
     /** An animator that can be used to animate things in this interface.  */
     val anim = Animator()
 
-    protected val _onFrame: Closeable
-    protected val _roots: MutableList<Root> = ArrayList()
+    private val _onFrame: Closeable
+    private val _roots: MutableList<Root> = ArrayList()
 
     init {
         _onFrame = Closeable.Util.join(

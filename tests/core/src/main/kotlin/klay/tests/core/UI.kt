@@ -5,13 +5,8 @@ import klay.scene.ImageLayer
 import klay.scene.Pointer
 
 class UI(private val game: TestsGame) {
-    val BUTTON_FMT: TextFormat
-    val TEXT_FMT: TextFormat
-
-    init {
-        BUTTON_FMT = TextFormat(Font("Helvetica", 24f))
-        TEXT_FMT = TextFormat(Font("Helvetica", 12f))
-    }
+    val BUTTON_FMT: TextFormat = TextFormat(Font("Helvetica", 24f))
+    val TEXT_FMT: TextFormat = TextFormat(Font("Helvetica", 12f))
 
     fun formatText(format: TextFormat, text: String, border: Boolean): Texture {
         val layout = game.graphics.layoutText(text, format)

@@ -26,13 +26,12 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
     }
 
     /** The value of the slider.  */
-    val value: Value<Float>
+    val value: Value<Float> = Value.create(value)
 
     /** The range of the slider.  */
     val range: Value<Range>
 
     init {
-        this.value = Value.create(value)
         range = Value.create(Range(min, max))
         // update our display if the slider value is changed externally
         val updateThumb: UnitSlot = { updateThumb() }
@@ -108,7 +107,7 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
         }
     }
 
-    protected fun updateThumb() {
+    private fun updateThumb() {
         // bail if not laid out yet, we'll get called again layer
         if (_thumb == null) return
         val r = range.get()
@@ -116,7 +115,7 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
         _thumb!!.setTranslation(_thumbLeft + _thumbRange * thumbPct, _thumbY)
     }
 
-    protected fun setValueFromPointer(x: Float) {
+    private fun setValueFromPointer(x: Float) {
         var x = x
         val r = range.get()
         val width = _thumbRange
@@ -129,7 +128,7 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
         value.update(r.min + pos)
     }
 
-    protected inner class SliderLayoutData : LayoutData() {
+    private inner class SliderLayoutData : LayoutData() {
         val barWidth = resolveStyle(BAR_WIDTH)
         val barHeight = resolveStyle(BAR_HEIGHT)
         val barBG = resolveStyle(BAR_BACKGROUND)
@@ -171,14 +170,14 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
         }
     }
 
-    protected val _clicked = Signal<Slider>()
+    private val _clicked = Signal<Slider>()
 
-    protected var _thumb: Layer? = null
-    protected var _barInst: Background.Instance? = null
-    protected var _thumbLeft: Float = 0.toFloat()
-    protected var _thumbRange: Float = 0.toFloat()
-    protected var _thumbY: Float = 0.toFloat()
-    protected var _increment: Float? = null
+    private var _thumb: Layer? = null
+    private var _barInst: Background.Instance? = null
+    private var _thumbLeft: Float = 0.toFloat()
+    private var _thumbRange: Float = 0.toFloat()
+    private var _thumbY: Float = 0.toFloat()
+    private var _increment: Float? = null
 
     companion object {
 
@@ -201,7 +200,7 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
          * the default (null), the center of the thumb image will be used as its origin. Inherited.  */
         var THUMB_ORIGIN = Style.newStyle<IPoint?>(false, null)
 
-        protected fun createDefaultThumbImage(): Icon {
+        private fun createDefaultThumbImage(): Icon {
             return Icons.solid(0xFF000000.toInt(), 24f)
         }
     }

@@ -66,9 +66,9 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
     }
 
     protected open inner class TextLayoutData(hintX: Float, hintY: Float) : LayoutData() {
-        val halign: Style.HAlign = resolveStyle<Style.HAlign>(Style.HALIGN)
-        val valign: Style.VAlign = resolveStyle<Style.VAlign>(Style.VALIGN)
-        val iconPos: Style.Pos? = resolveStyle<Style.Pos>(Style.ICON_POS)
+        val halign: Style.HAlign = resolveStyle(Style.HALIGN)
+        val valign: Style.VAlign = resolveStyle(Style.VALIGN)
+        val iconPos: Style.Pos? = resolveStyle(Style.ICON_POS)
         val iconGap = resolveStyle(Style.ICON_GAP)
         val iconCuddle = resolveStyle(Style.ICON_CUDDLE)
         val iconEffect = resolveStyle(Style.ICON_EFFECT)
@@ -81,7 +81,7 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
 
         init {
             val curtext = text()
-            val haveText = curtext != null && curtext.length > 0
+            val haveText = curtext != null && curtext.isNotEmpty()
 
             // start with hints minus background insets
             val hints = bg.insets.subtractFrom(Dimension(hintX, hintY))
@@ -99,7 +99,7 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
                 // TODO: should we do something with a y-hint?
                 if (hints.width > 0 && wrap) {
                     text = StyledText.Block(gfx, curtext!!, style, TextWrap(hints.width),
-                            Style.toAlignment(resolveStyle<Style.HAlign>(Style.HALIGN)))
+                            Style.toAlignment(resolveStyle(Style.HALIGN)))
                 } else {
                     text = StyledText.Span(gfx, curtext!!, style)
                 }

@@ -35,7 +35,7 @@ internal constructor(
 
     /** Creates a timer instance that can be used to schedule actions. Connect this timer to the
      * frame signal to make it operable. */
-    constructor() : this(System.currentTimeMillis()) {}
+    constructor() : this(System.currentTimeMillis())
 
     /** Executes the supplied action after the specified number of milliseconds have elapsed.
      * @return a handle that can be used to cancel the execution of the action.
@@ -82,7 +82,7 @@ internal constructor(
         }
     }
 
-    protected fun execute(plat: Platform, runnable: Runnable) {
+    private fun execute(plat: Platform, runnable: Runnable) {
         try {
             runnable.run()
         } catch (e: Exception) {
@@ -91,13 +91,13 @@ internal constructor(
 
     }
 
-    protected fun add(initialMillis: Int, repeatMillis: Int, action: Runnable): Handle {
+    private fun add(initialMillis: Int, repeatMillis: Int, action: Runnable): Handle {
         val act = Action(initialMillis, repeatMillis, action)
         _root.next = insert(act, _root.next)
         return act
     }
 
-    protected fun insert(target: Action, tail: Action?): Action {
+    private fun insert(target: Action, tail: Action?): Action {
         if (tail == null || tail.nextExpire > target.nextExpire) {
             target.next = tail
             return target
@@ -107,7 +107,7 @@ internal constructor(
         }
     }
 
-    protected fun remove(target: Action, tail: Action?): Action? {
+    private fun remove(target: Action, tail: Action?): Action? {
         if (target === tail)
             return tail.next
         else if (tail == null)
@@ -118,7 +118,7 @@ internal constructor(
         }
     }
 
-    protected inner class Action(initialMillis: Int, val repeatMillis: Int, val action: Runnable?) : Handle {
+    private inner class Action(initialMillis: Int, val repeatMillis: Int, val action: Runnable?) : Handle {
 
         var nextExpire: Long = 0
         var next: Action? = null
@@ -144,5 +144,5 @@ internal constructor(
         }
     }
 
-    protected val _root = Action(0, 0, null)
+    private val _root = Action(0, 0, null)
 }

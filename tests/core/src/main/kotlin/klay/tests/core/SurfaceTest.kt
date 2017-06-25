@@ -8,7 +8,6 @@ import klay.scene.Layer
 import pythagoras.f.AffineTransform
 import pythagoras.f.MathUtil
 import pythagoras.f.Rectangle
-import react.Connection
 import react.RFuture
 import react.Slot
 import java.util.*
@@ -38,7 +37,7 @@ class SurfaceTest(game: TestsGame) : Test(game, "Surface", "Tests various Surfac
         }
     }
 
-    protected fun addTests(orange: Image, tile: Image) {
+    private fun addTests(orange: Image, tile: Image) {
         val otex = orange.texture()
         val ttex = tile.createTexture(Texture.Config.DEFAULT.repeat(true, true))
 
@@ -119,7 +118,7 @@ class SurfaceTest(game: TestsGame) : Test(game, "Surface", "Tests various Surfac
         val twidth = 150f
         val theight = 75f
         val group = GroupLayer()
-        ypos = ygap + addTest(315f, 10f, group, twidth.toFloat(), theight.toFloat(),
+        ypos = ygap + addTest(315f, 10f, group, twidth, theight,
                 "Clipped pattern should not exceed grey rectangle")
         group.add(object : Layer() {
             override fun paintImpl(surf: Surface) {
@@ -157,7 +156,7 @@ class SurfaceTest(game: TestsGame) : Test(game, "Surface", "Tests various Surfac
             game.rootLayer.add(dotl)
         }
 
-        conns.add<Connection>(game.paint.connect { clock: Clock ->
+        conns.add(game.paint.connect { clock: Clock ->
             for (dot in dots) {
                 if (Math.random() > 0.95) {
                     dot.setTranslation(dotBox.x + Math.random().toFloat() * (dotBox.width - 10),

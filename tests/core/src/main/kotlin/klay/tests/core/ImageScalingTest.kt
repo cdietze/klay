@@ -6,7 +6,6 @@ import klay.core.Pointer
 import klay.core.Texture
 import klay.scene.ImageLayer
 import pythagoras.f.MathUtil
-import react.Connection
 import react.RFuture
 import java.util.*
 
@@ -38,7 +37,7 @@ class ImageScalingTest(game: TestsGame) : Test(game, "ImageScaling", "Tests use 
             slayer2.setOrigin(shwidth, shheight)
             game.rootLayer.addAt(slayer2, 250f, 250f)
 
-            conns.add<Connection>(game.pointer.events.connect { event: Pointer.Event ->
+            conns.add(game.pointer.events.connect { event: Pointer.Event ->
                 when (event.kind) {
                     Pointer.Event.Kind.START -> paused = true
                     Pointer.Event.Kind.END, Pointer.Event.Kind.CANCEL -> paused = false
@@ -46,7 +45,7 @@ class ImageScalingTest(game: TestsGame) : Test(game, "ImageScaling", "Tests use 
             })
 
             var elapsed: Float = 0.toFloat()
-            conns.add<Connection>(game.paint.connect { clock: Clock ->
+            conns.add(game.paint.connect { clock: Clock ->
                 if (!paused) {
                     elapsed += clock.dt / 1000f
                     val scale = Math.abs(MathUtil.sin(elapsed))

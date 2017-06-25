@@ -105,10 +105,10 @@ class Scale9 {
         }
 
         /** The positions of the 3 chunks.  */
-        protected val _offsets: FloatArray
+        private val _offsets: FloatArray
 
         /** The lengths of the 3 chunks.  */
-        protected val _lengths: FloatArray
+        private val _lengths: FloatArray
     }
 
     /** The axes of the 3x3 grid.  */

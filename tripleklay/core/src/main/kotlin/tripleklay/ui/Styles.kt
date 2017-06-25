@@ -7,7 +7,7 @@ import java.util.*
  * Configure a group of styles and then apply them to an element via [Element.setStyles] or
  * [Element.addStyles].
  */
-class Styles private constructor(protected val _bindings: Array<Binding<*>>) {
+class Styles private constructor(private val _bindings: Array<Binding<*>>) {
 
     /**
      * Returns a new instance where the supplied bindings overwrite any previous bindings for the
@@ -46,10 +46,10 @@ class Styles private constructor(protected val _bindings: Array<Binding<*>>) {
      * specified styles (in the specified mode). The receiver is not modified.
      */
     fun add(mode: Style.Mode, vararg bindings: Style.Binding<*>): Styles {
-        if (bindings.size == 0) return this // optimization
+        if (bindings.isEmpty()) return this // optimization
         val nbindings = arrayOfNulls<Binding<*>>(bindings.size)
         for (ii in bindings.indices) {
-            nbindings[ii] = newBinding<Any?>(bindings[ii], mode)
+            nbindings[ii] = newBinding(bindings[ii], mode)
         }
         // note that we take advantage of the fact that merge can handle unsorted bindings
         return merge(nbindings as Array<Binding<*>>)
@@ -74,7 +74,7 @@ class Styles private constructor(protected val _bindings: Array<Binding<*>>) {
      * instances define a particular style, the supplied `styles` will take precedence.
      */
     fun merge(styles: Styles): Styles {
-        if (_bindings.size == 0) return styles
+        if (_bindings.isEmpty()) return styles
         return merge(styles._bindings)
     }
 
@@ -98,7 +98,7 @@ class Styles private constructor(protected val _bindings: Array<Binding<*>>) {
     }
 
     private fun merge(obindings: Array<Binding<*>>): Styles {
-        if (obindings.size == 0) return this // optimization
+        if (obindings.isEmpty()) return this // optimization
 
         // determine which of the to-be-merged styles also exist in our styles
         val dupidx = IntArray(obindings.size)
@@ -141,8 +141,7 @@ class Styles private constructor(protected val _bindings: Array<Binding<*>>) {
                         if (mode == Style.Mode.DISABLED) binding.value else null,
                         if (mode == Style.Mode.SELECTED) binding.value else null,
                         if (mode == Style.Mode.DISABLED_SELECTED) binding.value else null
-                ) {
-        }
+                )
 
         operator fun get(elem: Element<*>): V? {
             // prioritize as: disabled_selected, disabled, selected, default
@@ -156,7 +155,7 @@ class Styles private constructor(protected val _bindings: Array<Binding<*>>) {
         }
 
         fun merge(other: Binding<V>): Binding<V> {
-            return Binding<V>(style,
+            return Binding(style,
                     merge(defaultV, other.defaultV),
                     merge(disabledV, other.disabledV),
                     merge(selectedV, other.selectedV),
@@ -245,6 +244,6 @@ class Styles private constructor(protected val _bindings: Array<Binding<*>>) {
             return Binding(binding, mode)
         }
 
-        protected val _noneSingleton = Styles(arrayOf())
+        private val _noneSingleton = Styles(arrayOf())
     }
 }

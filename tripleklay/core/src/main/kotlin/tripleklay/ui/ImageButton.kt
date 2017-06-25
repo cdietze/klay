@@ -13,9 +13,9 @@ class ImageButton
 /** Creates a button with the supplied up and down images.  */
 @JvmOverloads constructor(up: TileSource, down: TileSource = up) : Widget<ImageButton>(), Clickable<ImageButton> {
 
-    protected val _ilayer = ImageLayer()
-    protected var _up: TileSource
-    protected var _down: TileSource
+    private val _ilayer = ImageLayer()
+    private var _up: TileSource
+    private var _down: TileSource
 
     init {
         layer.add(_ilayer)

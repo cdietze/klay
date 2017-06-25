@@ -30,7 +30,7 @@ class Flipbook
 
      * @param secsPerFrame the number of seconds to display each frame.
      */
-    constructor(frames: Frames, secsPerFrame: Float) : this(frames, uniformTimes(frames, secsPerFrame)) {}
+    constructor(frames: Frames, secsPerFrame: Float) : this(frames, uniformTimes(frames, secsPerFrame))
 
     /**
      * Creates a flipbook with the specified frames. The frames will be played in order, each for
@@ -39,11 +39,11 @@ class Flipbook
      * @param frameEnds the time (in seconds since animation start) at which each frame ends. The
      * * values must be monotonically increasing (e.g. `(1.5f, 2f, 2.5f, 4f)`.
      */
-    constructor(frames: Frames, frameEnds: FloatArray) : this(frames, uniformOrder(frames), frameEnds) {}
+    constructor(frames: Frames, frameEnds: FloatArray) : this(frames, uniformOrder(frames), frameEnds)
 
     companion object {
 
-        protected fun uniformTimes(frames: Frames, secsPerFrame: Float): FloatArray {
+        private fun uniformTimes(frames: Frames, secsPerFrame: Float): FloatArray {
             val times = FloatArray(frames.count())
             times[0] = secsPerFrame
             var ii = 1
@@ -55,7 +55,7 @@ class Flipbook
             return times
         }
 
-        protected fun uniformOrder(frames: Frames): IntArray {
+        private fun uniformOrder(frames: Frames): IntArray {
             val indexes = IntArray(frames.count())
             var ii = 1
             val ll = indexes.size

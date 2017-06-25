@@ -75,17 +75,17 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
     /** The text displayed by this widget.  */
     val text: Value<String>
 
-    protected var _nativeField: NativeTextField? = null
-    protected var _validator: Validator? = null
-    protected var _transformer: Transformer? = null
-    protected var _textType: Keyboard.TextType? = null
-    protected var _fullTimeNative: Boolean = false
-    protected val _finishedEditing: Signal<Boolean>
+    private var _nativeField: NativeTextField? = null
+    private var _validator: Validator? = null
+    private var _transformer: Transformer? = null
+    private var _textType: Keyboard.TextType? = null
+    private var _fullTimeNative: Boolean = false
+    private val _finishedEditing: Signal<Boolean>
 
     // used when popping up a text entry interface on mobile platforms
-    protected var _popupLabel: String? = null
+    private var _popupLabel: String? = null
 
-    constructor(styles: Styles) : this("", styles) {}
+    constructor(styles: Styles) : this("", styles)
 
     init {
         setStyles(styles)
@@ -151,7 +151,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
      * Main entry point for deciding whether to reject keypresses on a native field. By default,
      * consults the current validator instance, set up by [.VALIDATOR].
      */
-    protected fun textIsValid(text: String): Boolean {
+    private fun textIsValid(text: String): Boolean {
         return _validator == null || _validator!!.isValid(text)
     }
 
@@ -160,7 +160,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
      * perform text transformation while the user is editing the field. By default, consults
      * the current transformer instance, set up by [.TRANSFORMER].
      */
-    protected fun transformText(text: String): String {
+    private fun transformText(text: String): String {
         return if (_transformer == null) text else _transformer!!.transform(text)
     }
 
@@ -171,7 +171,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
         val ctext = text.get()
         // we always want non-empty text so that we force ourselves to always have a text layer and
         // sane dimensions even if the text field contains no text
-        return if (ctext == null || ctext.length == 0) " " else ctext
+        return if (ctext == null || ctext.isEmpty()) " " else ctext
     }
 
     override fun icon(): Icon? {
@@ -196,7 +196,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
         return FieldLayoutData(hintX, hintY)
     }
 
-    protected fun startEdit() {
+    private fun startEdit() {
         if (hasNative()) {
             updateMode(true)
             _nativeField!!.focus()
@@ -211,7 +211,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
         }
     }
 
-    protected val nativeFieldBounds: Rectangle
+    private val nativeFieldBounds: Rectangle
         get() {
             val insets = resolveStyle(Style.BACKGROUND).insets
             val screenCoords = LayerUtil.layerToScreen(layer, insets.left(), insets.top())
@@ -219,7 +219,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
                     _size.width - insets.width(), _size.height - insets.height())
         }
 
-    protected fun updateMode(nativeField: Boolean) {
+    private fun updateMode(nativeField: Boolean) {
         if (!hasNative()) return
         if (nativeField) {
             _nativeField = if (_nativeField == null)
@@ -237,11 +237,11 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
         }
     }
 
-    protected fun setGlyphLayerVisible(visible: Boolean) {
+    private fun setGlyphLayerVisible(visible: Boolean) {
         if (_tglyph.layer() != null) _tglyph.layer()!!.setVisible(visible)
     }
 
-    protected inner class FieldLayoutData(hintX: Float, hintY: Float) : TextWidget<Field>.TextLayoutData(hintX, hintY) {
+    private inner class FieldLayoutData(hintX: Float, hintY: Float) : TextWidget<Field>.TextLayoutData(hintX, hintY) {
 
         override fun layout(left: Float, top: Float, width: Float, height: Float) {
             super.layout(left, top, width, height)
@@ -251,7 +251,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
             // make sure our cached bits are up to date
             _validator = resolveStyle(VALIDATOR)
             _transformer = resolveStyle(TRANSFORMER)
-            _textType = resolveStyle<Keyboard.TextType>(TEXT_TYPE)
+            _textType = resolveStyle(TEXT_TYPE)
         }
     }
 

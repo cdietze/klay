@@ -772,7 +772,7 @@ abstract class Element<T : Element<T>> protected constructor() {
          * Refines the given x hint for the delegate to consume. By default uses our configured
          * preferred width if not zero, otherwise the passed-in x hint.
          */
-        protected fun resolveHintX(hintX: Float): Float {
+        private fun resolveHintX(hintX: Float): Float {
             return select(prefWidth, hintX)
         }
 
@@ -780,7 +780,7 @@ abstract class Element<T : Element<T>> protected constructor() {
          * Refines the given y hint for the delegate to consume. By default uses our configured
          * preferred height if not zero, otherwise the passed-in y hint.
          */
-        protected fun resolveHintY(hintY: Float): Float {
+        private fun resolveHintY(hintY: Float): Float {
             return select(prefHeight, hintY)
         }
 
@@ -788,22 +788,22 @@ abstract class Element<T : Element<T>> protected constructor() {
          * Adjusts the dimension computed by the delegate to get the final preferred size. By
          * default, uses the previously configured [Take] values.
          */
-        protected fun adjustSize(dim: Dimension): Dimension {
+        private fun adjustSize(dim: Dimension): Dimension {
             dim.width = widthFn.apply(prefWidth, dim.width)
             dim.height = heightFn.apply(prefHeight, dim.height)
             return dim
         }
 
-        protected fun select(pref: Float, base: Float): Float {
+        private fun select(pref: Float, base: Float): Float {
             return if (pref == 0f) base else pref
         }
 
-        protected val layoutDelegate: LayoutData?
-        protected val sizeDelegate: LayoutData?
-        protected var prefWidth: Float = 0.toFloat()
-        protected var prefHeight: Float = 0.toFloat()
-        protected var widthFn = Take.PREFERRED_IF_SET
-        protected var heightFn = Take.PREFERRED_IF_SET
+        private val layoutDelegate: LayoutData?
+        private val sizeDelegate: LayoutData?
+        private var prefWidth: Float = 0.toFloat()
+        private var prefHeight: Float = 0.toFloat()
+        private var widthFn = Take.PREFERRED_IF_SET
+        private var heightFn = Take.PREFERRED_IF_SET
     }
 
     /** Used to track bindings to reactive values, which are established when this element is added
@@ -848,7 +848,7 @@ abstract class Element<T : Element<T>> protected constructor() {
     protected var _ldata: LayoutData? = null
     protected val _bginst = Ref.create<Background.Instance>(null)
 
-    enum class Flag private constructor(val mask: Int) {
+    enum class Flag(val mask: Int) {
         VALID(1 shl 0), ENABLED(1 shl 1), VISIBLE(1 shl 2), SELECTED(1 shl 3), WILL_DISPOSE(1 shl 4),
         HIT_DESCEND(1 shl 5), HIT_ABSORB(1 shl 6), IS_REMOVING(1 shl 7), IS_ADDING(1 shl 8)
     }

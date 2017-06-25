@@ -13,12 +13,12 @@ import tripleklay.util.Interpolator
  */
 class PageTurnTransition : InterpedTransition<PageTurnTransition>() {
 
-    protected var _alpha: Float = 0.toFloat()
-    protected var _close: Boolean = false
+    private var _alpha: Float = 0.toFloat()
+    private var _close: Boolean = false
 
-    protected lateinit var _toflip: Screen
-    protected lateinit var _shadow: Layer
-    protected lateinit var _batch: RotateYBatch
+    private lateinit var _toflip: Screen
+    private lateinit var _shadow: Layer
+    private lateinit var _batch: RotateYBatch
 
     /**
      * Reverses this transition, making it a page close instead of open. Note that this changes the
@@ -68,7 +68,7 @@ class PageTurnTransition : InterpedTransition<PageTurnTransition>() {
         return Interpolator.EASE_IN
     }
 
-    protected fun updateAngle(elapsed: Float) {
+    private fun updateAngle(elapsed: Float) {
         var pct = _interp.applyClamp(0f, 0.5f, elapsed, _duration)
         if (_close) pct = 0.5f - pct
         _alpha = pct

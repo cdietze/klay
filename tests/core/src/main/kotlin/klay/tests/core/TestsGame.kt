@@ -71,7 +71,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
         input.touchEvents.connect(klay.scene.Touch.Dispatcher(rootLayer, true))
         input.mouseEvents.connect(klay.scene.Mouse.Dispatcher(rootLayer, true))
 
-        tests = arrayOf<Test>(
+        tests = arrayOf(
                 CanvasTest(this),
                 SurfaceTest(this),
                 SubImageTest(this),
@@ -103,7 +103,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
             if (currentTest != null && currentTest!!.usesPositionalInputs()) return@buttonSlot
             if (event.button === Mouse.ButtonEvent.Id.RIGHT) displayMenuLater()
         })
-        var _active: MutableSet<Int> = HashSet()
+        val _active: MutableSet<Int> = HashSet()
         input.touchEvents.connect({ events: Array<Touch.Event> ->
             if (currentTest != null && currentTest!!.usesPositionalInputs()) return@connect
             when (events[0].kind) {
@@ -204,7 +204,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
         }
     }
 
-    protected fun createWhiteBackground(): Layer {
+    private fun createWhiteBackground(): Layer {
         val bg = object : Layer() {
             override fun paintImpl(surf: Surface) {
                 surf.setFillColor(0xFFFFFFFF.toInt()).fillRect(

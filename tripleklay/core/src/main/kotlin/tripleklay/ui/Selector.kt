@@ -93,24 +93,24 @@ class Selector
     /**
      * Internal method to get the selection value of an element (non-null).
      */
-    protected operator fun get(elem: Element<*>): Value<Boolean> {
+    private operator fun get(elem: Element<*>): Value<Boolean> {
         return (elem as Togglable<*>).selected()
     }
 
-    protected val _addSlot: Slot<Element<*>> = { child: Element<*> ->
+    private val _addSlot: Slot<Element<*>> = { child: Element<*> ->
         if (child is Togglable<*>) {
             (child as Togglable<*>).clicked().connect(_clickSlot)
         }
     }
 
-    protected val _removeSlot: Slot<Element<*>> = { removed: Element<*> ->
+    private val _removeSlot: Slot<Element<*>> = { removed: Element<*> ->
         if (removed is Togglable<*>) {
             (removed as Togglable<*>).clicked().disconnect(_clickSlot)
         }
         if (selected.get() === removed) selected.update(null)
     }
 
-    protected val _clickSlot: Slot<Element<*>> = { clicked: Element<*> ->
+    private val _clickSlot: Slot<Element<*>> = { clicked: Element<*> ->
         val sel = get(clicked)
         if (_preventDeselection && !sel.get()) {
             sel.update(true)
@@ -119,5 +119,5 @@ class Selector
         }
     }
 
-    protected var _preventDeselection: Boolean = false
+    private var _preventDeselection: Boolean = false
 }

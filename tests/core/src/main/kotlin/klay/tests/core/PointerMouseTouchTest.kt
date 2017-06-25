@@ -116,8 +116,8 @@ internal class PointerMouseTouchTest
                 logger!!.log(describe(event, "mouse wheel"))
             }
 
-            protected var _lstart: Vector? = null
-            protected var _pstart: Vector? = null
+            private var _lstart: Vector? = null
+            private var _pstart: Vector? = null
         })
 
         // add mouse layer listener to parent
@@ -183,8 +183,8 @@ internal class PointerMouseTouchTest
                 logger!!.log(describe(event, "pointer cancel"))
             }
 
-            protected var _lstart: Vector? = null
-            protected var _pstart: Vector? = null
+            private var _lstart: Vector? = null
+            private var _pstart: Vector? = null
         })
 
         // add pointer listener for parent layer
@@ -247,8 +247,8 @@ internal class PointerMouseTouchTest
                 logger!!.log(describe(event, "touch cancel"))
             }
 
-            protected var _lstart: Vector? = null
-            protected var _pstart: Vector? = null
+            private var _lstart: Vector? = null
+            private var _pstart: Vector? = null
         })
 
         // add touch parent layer listener
@@ -274,7 +274,7 @@ internal class PointerMouseTouchTest
             }
         })
 
-        conns.add<Connection>(game.plat.frame.connect { _ ->
+        conns.add(game.plat.frame.connect { _ ->
             logger!!.paint()
             motionLabel!!.paint()
         })
@@ -284,12 +284,12 @@ internal class PointerMouseTouchTest
         return true
     }
 
-    protected fun createLabel(text: String, bg: Int, x: Float, y: Float): ImageLayer {
+    private fun createLabel(text: String, bg: Int, x: Float, y: Float): ImageLayer {
         return createLabel(text, game.rootLayer, 0xFF202020.toInt(), bg, x, y, 0f)
     }
 
-    protected fun createLabel(text: String, parent: GroupLayer,
-                              fg: Int, bg: Int, x: Float, y: Float, padding: Float): ImageLayer {
+    private fun createLabel(text: String, parent: GroupLayer,
+                            fg: Int, bg: Int, x: Float, y: Float, padding: Float): ImageLayer {
         val layout = game.graphics.layoutText(text, baseFormat)
         val twidth = layout.size.width + padding * 2
         val theight = layout.size.height + padding * 2
@@ -301,13 +301,13 @@ internal class PointerMouseTouchTest
         return imageLayer
     }
 
-    protected fun modify(event: Event.XY) {
+    private fun modify(event: Event.XY) {
         event.updateFlag(Event.F_PREVENT_DEFAULT, preventDefault!!.value())
         // TODO
         // event.flags().setPropagationStopped(propagate.valueIdx() == 2);
     }
 
-    protected fun describe(event: Event.XY, handler: String): String {
+    private fun describe(event: Event.XY, handler: String): String {
         val sb = StringBuilder()
         sb.append("@").append(event.time.toLong() % 10000).append(" ")
         sb.append(if (event.isSet(Event.F_PREVENT_DEFAULT)) "pd " else "")
@@ -331,15 +331,11 @@ internal class PointerMouseTouchTest
         return sb.toString()
     }
 
-    protected open inner class Label(wid: Float, hei: Float, private val format: TextFormat) {
-        val layer: CanvasLayer
+    private open inner class Label(wid: Float, hei: Float, private val format: TextFormat) {
+        val layer: CanvasLayer = CanvasLayer(game.graphics, wid, hei)
         private var layout: Array<out TextLayout>? = null
         private var text: String? = null
         private var dirty: Boolean = false
-
-        init {
-            layer = CanvasLayer(game.graphics, wid, hei)
-        }
 
         fun set(text: String) {
             this.text = text
@@ -368,7 +364,7 @@ internal class PointerMouseTouchTest
         }
     }
 
-    protected inner class TextMapper(wid: Float, lines: Int, format: TextFormat) : Label(wid, game.graphics.layoutText(".", format).size.height * lines, format) {
+    private inner class TextMapper(wid: Float, lines: Int, format: TextFormat) : Label(wid, game.graphics.layoutText(".", format).size.height * lines, format) {
         var values: MutableMap<String, String> = TreeMap()
 
         operator fun set(name: String, value: String) {
@@ -389,7 +385,7 @@ internal class PointerMouseTouchTest
         }
     }
 
-    protected inner class TextLogger(wid: Float, private val lineCount: Int, format: TextFormat) : Label(wid, game.graphics.layoutText(".", format).size.height * lineCount, format) {
+    private inner class TextLogger(wid: Float, private val lineCount: Int, format: TextFormat) : Label(wid, game.graphics.layoutText(".", format).size.height * lineCount, format) {
         private val entries = ArrayList<String>()
 
         fun log(text: String) {
@@ -407,12 +403,11 @@ internal class PointerMouseTouchTest
         }
     }
 
-    protected inner class Box internal constructor(text: String, color: Int, wid: Float, hei: Float) : Layer.HitTester {
-        internal val layer: GroupLayer
+    private inner class Box internal constructor(text: String, color: Int, wid: Float, hei: Float) : Layer.HitTester {
+        internal val layer: GroupLayer = GroupLayer(wid, hei)
         internal val label: ImageLayer
 
         init {
-            layer = GroupLayer(wid, hei)
             layer.add(object : Layer() {
                 override fun paintImpl(surface: Surface) {
                     surface.setFillColor(0xff000000.toInt())

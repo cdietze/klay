@@ -21,7 +21,7 @@ object Base90 {
     fun decodeInt(data: String): Int {
         var data = data
         var neg = false
-        if (data.length > 0 && data[0] == NEG_MARKER) {
+        if (data.isNotEmpty() && data[0] == NEG_MARKER) {
             neg = true
             data = data.substring(1)
         }
@@ -51,7 +51,7 @@ object Base90 {
     fun decodeLong(data: String): Long {
         var data = data
         var neg = false
-        if (data.length > 0 && data[0] == NEG_MARKER) {
+        if (data.isNotEmpty() && data[0] == NEG_MARKER) {
             neg = true
             data = data.substring(1)
         }

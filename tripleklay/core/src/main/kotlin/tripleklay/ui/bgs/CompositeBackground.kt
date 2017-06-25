@@ -20,11 +20,10 @@ class CompositeBackground
  */
 (vararg constituents: Background) : Background() {
 
-    protected val _constituents: Array<out Background>
-    protected var _reverseDepth: Boolean = false
+    private val _constituents: Array<out Background> = constituents
+    private var _reverseDepth: Boolean = false
 
     init {
-        _constituents = constituents
         for (bg in constituents) {
             insets = insets.mutable().add(bg.insets)
         }

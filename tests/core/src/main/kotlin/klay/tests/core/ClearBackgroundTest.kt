@@ -18,7 +18,7 @@ class ClearBackgroundTest(game: TestsGame) : Test(game, "ClearBackground", "Test
         val square = ImageLayer(surf.texture)
         game.rootLayer.add(square)
 
-        conns.add<Connection>(game.paint.connect { clock: Clock ->
+        conns.add(game.paint.connect { clock: Clock ->
             val t = clock.tick / 1000f
             val vsize = game.plat.graphics.viewSize
             square.setTranslation((MathUtil.cos(t) + 1) * (vsize.width - width) / 2,

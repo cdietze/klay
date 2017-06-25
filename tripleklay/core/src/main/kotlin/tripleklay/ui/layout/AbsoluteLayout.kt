@@ -22,8 +22,7 @@ class AbsoluteLayout : Layout() {
     class Constraint(val position: BoxPoint, val origin: BoxPoint, val size: IDimension) : Layout.Constraint() {
 
         constructor(position: IPoint, size: IDimension, halign: HAlign, valign: VAlign) : this(BoxPoint.TL.offset(position.x, position.y),
-                BoxPoint.TL.align(halign, valign), size) {
-        }
+                BoxPoint.TL.align(halign, valign), size)
 
         fun psize(layout: AbsoluteLayout, elem: Element<*>): IDimension {
             val fwidth = size.width
@@ -162,11 +161,11 @@ class AbsoluteLayout : Layout() {
             return elem
         }
 
-        protected fun constraint(elem: Element<*>): Constraint {
+        private fun constraint(elem: Element<*>): Constraint {
             assert(elem.constraint() != null) { "Elements in AbsoluteLayout must have a constraint." }
             return elem.constraint() as Constraint
         }
 
-        protected val ZERO = Dimension(0f, 0f)
+        private val ZERO = Dimension(0f, 0f)
     }
 }

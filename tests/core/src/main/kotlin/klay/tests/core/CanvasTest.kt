@@ -200,7 +200,7 @@ class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas r
         val tileLayer = ImageLayer(
                 game.assets.getImage("images/tile.png").setConfig(repeat))
         addTestLayer("img layer anim setWidth", 100, 100, tileLayer.setSize(0f, 100f))
-        conns.add<Connection>(game.paint.connect({ clock: Clock ->
+        conns.add(game.paint.connect({ clock: Clock ->
             val curSecs = clock.tick / 1000
             if (curSecs != lastSecs) {
                 val tcanvas = time!!.begin()

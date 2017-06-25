@@ -429,7 +429,7 @@ protected constructor() : Composite<HistoryGroup<T, W>>() {
             }
         }
 
-        protected fun removeUI(index: Int) {
+        private fun removeUI(index: Int) {
             if (childAt(index) !== _renderedEntries[index].element)
                 throw IllegalArgumentException("Mismatched entry and element")
             destroyAt(index)
@@ -438,7 +438,7 @@ protected constructor() : Composite<HistoryGroup<T, W>>() {
         }
 
         /** List of entries in exact correspondence with _children.  */
-        protected var _renderedEntries: MutableList<Entry> = ArrayList()
+        private var _renderedEntries: MutableList<Entry> = ArrayList()
     }
 
     /**

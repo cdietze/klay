@@ -28,7 +28,7 @@ internal class LayerClickTest(game: TestsGame) : Test(game, "LayerClick", "Tests
         l3.events().connect(Mover(l3).listener(game.input))
     }
 
-    protected class Mover(private val layer: Layer) {
+    private class Mover(private val layer: Layer) {
 
         fun listener(input: Input): Slot<Any> {
             return if (input.hasTouch) touch() else pointer()
@@ -58,17 +58,17 @@ internal class LayerClickTest(game: TestsGame) : Test(game, "LayerClick", "Tests
             }
         }
 
-        protected fun doStart(x: Float, y: Float) {
+        private fun doStart(x: Float, y: Float) {
             _lstart = layer.transform().translation
             _pstart = Vector(x, y)
         }
 
-        protected fun doMove(x: Float, y: Float) {
+        private fun doMove(x: Float, y: Float) {
             val delta = Vector(x, y).subtractLocal(_pstart!!)
             layer.setTranslation(_lstart!!.x + delta.x, _lstart!!.y + delta.y)
         }
 
-        protected var _lstart: Vector? = null
-        protected var _pstart: Vector? = null
+        private var _lstart: Vector? = null
+        private var _pstart: Vector? = null
     }
 }

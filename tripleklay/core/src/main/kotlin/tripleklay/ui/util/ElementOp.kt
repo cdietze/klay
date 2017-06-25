@@ -6,7 +6,7 @@ import tripleklay.ui.Element
  * Defines a method that applies an operation to an element.
  * @param <T> the leaf type of Element.
 </T> */
-abstract class ElementOp<T : Element<*>> {
+abstract class ElementOp<in T : Element<*>> {
 
     /**
      * Applies an arbitrary operation to the given element.

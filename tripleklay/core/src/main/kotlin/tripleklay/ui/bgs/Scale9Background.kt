@@ -16,15 +16,11 @@ class Scale9Background
 /** Creates a new background using the given texture. The texture is assumed to be divided into
  * aa 3x3 grid of 9 equal pieces.
  */
-(protected var _tile: Tile) : Background() {
+(private var _tile: Tile) : Background() {
 
-    protected var _s9: Scale9
-    protected var _destScale = 1f
-    protected var _tint = Tint.NOOP_TINT
-
-    init {
-        _s9 = Scale9(_tile.width, _tile.height)
-    }
+    private var _s9: Scale9 = Scale9(_tile.width, _tile.height)
+    private var _destScale = 1f
+    private var _tint = Tint.NOOP_TINT
 
     /** Returns the scale 9 instance for mutation. Be sure to finish mutation prior to binding.  */
     fun scale9(): Scale9 {
@@ -86,7 +82,7 @@ class Scale9Background
                 surf.restoreTx()
             }
 
-            protected fun drawPart(surf: Surface, x: Int, y: Int) {
+            private fun drawPart(surf: Surface, x: Int, y: Int) {
                 val dw = dest.xaxis.size(x)
                 val dh = dest.yaxis.size(y)
                 if (dw == 0f || dh == 0f) return

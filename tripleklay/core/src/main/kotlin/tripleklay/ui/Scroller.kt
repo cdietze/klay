@@ -225,13 +225,13 @@ class Scroller
         }
 
         /** If this range is in use. Set according to [Scroller.Behavior].  */
-        protected var _on = true
+        private var _on = true
 
         /** View size.  */
         var _size: Float = 0.toFloat()
 
         /** Content size.  */
-        protected var _csize: Float = 0.toFloat()
+        private var _csize: Float = 0.toFloat()
 
         /** Bar offset.  */
         var _pos: Float = 0.toFloat()
@@ -295,10 +295,10 @@ class Scroller
      * Plain rectangle scroll bars that overlay the content area, consume no additional screen
      * space, and fade out after inactivity. Ideal for drag scrolling on a mobile device.
      */
-    class TouchBars(scroller: Scroller, protected var _color: Int, protected var _size: Float,
-                    protected var _topAlpha: Float, protected var _fadeSpeed: Float) : Bars(scroller) {
-        protected var _alpha: Float = 0.toFloat()
-        protected var _layer: Layer
+    class TouchBars(scroller: Scroller, private var _color: Int, private var _size: Float,
+                    private var _topAlpha: Float, private var _fadeSpeed: Float) : Bars(scroller) {
+        private var _alpha: Float = 0.toFloat()
+        private var _layer: Layer
 
         init {
             _layer = object : Layer() {
@@ -328,13 +328,13 @@ class Scroller
             return _layer
         }
 
-        protected fun setBarAlpha(alpha: Float) {
+        private fun setBarAlpha(alpha: Float) {
             _alpha = Math.min(_topAlpha, Math.max(0f, alpha))
             _layer.setAlpha(Math.min(_alpha, 1f))
             _layer.setVisible(_alpha > 0)
         }
 
-        protected fun drawBar(surface: Surface, x: Float, y: Float, w: Float, h: Float) {
+        private fun drawBar(surface: Surface, x: Float, y: Float, w: Float, h: Float) {
             surface.fillRect(x, y, w, h)
         }
     }
@@ -346,22 +346,22 @@ class Scroller
     val hrange = createRange()
     val vrange = createRange()
 
-    protected val _scroller: Group
-    protected val _flicker: XYFlicker
-    protected val _clippable: Clippable
-    protected val _contentSize = Dimension()
-    protected var _upconn: Connection? = null
-    protected var _queuedScroll: Point? = null
-    protected var _lners: MutableList<Listener>? = null
+    private val _scroller: Group
+    private val _flicker: XYFlicker
+    private val _clippable: Clippable
+    private val _contentSize = Dimension()
+    private var _upconn: Connection? = null
+    private var _queuedScroll: Point? = null
+    private var _lners: MutableList<Listener>? = null
 
     /** Scroll bar type, used to determine if the bars need to be recreated.  */
-    protected var _barType: BarType? = null
+    private var _barType: BarType? = null
 
     /** Scroll bars, created during layout, based on the [BarType].  */
-    protected var _bars: Bars? = null
+    private var _bars: Bars? = null
 
     /** Region around elements when updating visibility.  */
-    protected var _elementBuffer: IDimension? = null
+    private var _elementBuffer: IDimension? = null
 
     init {
         layout = AxisLayout.horizontal().stretchByDefault().offStretch().gap(0)
@@ -519,7 +519,7 @@ class Scroller
     }
 
     /** Prepares the scroller for the next frame, at t = t + delta.  */
-    protected fun update(delta: Float) {
+    private fun update(delta: Float) {
         _flicker.update(delta)
         update(false)
         if (_bars != null) _bars!!.update(delta)
@@ -527,7 +527,7 @@ class Scroller
 
     /** Updates the position of the content to match the flicker. If force is set, then the
      * relevant values will be updated even if there was no change.  */
-    protected fun update(force: Boolean) {
+    private fun update(force: Boolean) {
         val pos = _flicker.position()
         val dx = hrange.set(pos.x)
         val dy = vrange.set(pos.y)
@@ -546,12 +546,12 @@ class Scroller
      * A method for creating our `Range` instances. This is called once each for `hrange` and `vrange` at creation time. Overriding this method will allow subclasses
      * to customize `Range` behavior.
      */
-    protected fun createRange(): Range {
+    private fun createRange(): Range {
         return Range()
     }
 
     /** Extends the usual layout with scroll bar setup.  */
-    protected inner class BarsLayoutData : LayoutData() {
+    private inner class BarsLayoutData : LayoutData() {
         val barType = resolveStyle(BAR_TYPE)
     }
 
@@ -579,7 +579,7 @@ class Scroller
     /** Hides the layers of any children of the content that are currently visible but outside
      * the clipping area.  */
     // TODO: can we get the performance win without being so intrusive?
-    protected fun updateVisibility() {
+    private fun updateVisibility() {
         // only Container can participate, others must implement Clippable and do something else
         if (content !is Container<*>) {
             return
@@ -602,7 +602,7 @@ class Scroller
     }
 
     /** Dispatches a [Listener.viewChanged] to listeners.  */
-    protected fun fireViewChanged() {
+    private fun fireViewChanged() {
         if (_lners == null) return
         val csize = contentSize()
         val ssize = viewSize()
@@ -612,14 +612,14 @@ class Scroller
     }
 
     /** Dispatches a [Listener.positionChanged] to listeners.  */
-    protected fun firePositionChange() {
+    private fun firePositionChange() {
         if (_lners == null) return
         for (lner in _lners!!) {
             lner.positionChanged(xpos(), ypos())
         }
     }
 
-    protected fun updateBars(barType: BarType?) {
+    private fun updateBars(barType: BarType?) {
         if (_bars != null) {
             if (_barType === barType) return
             _bars!!.close()
@@ -641,7 +641,7 @@ class Scroller
     /** Lays out the internal scroller group that contains the content. Performs all the jiggery
      * pokery necessary to make the content think it is in a large area and update the outer
      * `Scroller` instance.  */
-    protected inner class ScrollLayout : Layout() {
+    private inner class ScrollLayout : Layout() {
 
         override fun computeSize(elems: Container<*>, hintX: Float, hintY: Float): Dimension {
             // the content is always the 1st child, get the preferred size with extended hints

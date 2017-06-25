@@ -50,7 +50,7 @@ class BorderLayout
      * Implements the constraints. Callers do not need to construct instances, but instead use the
      * declared constants and select or deselect the stretching option.
      */
-    class Constraint(protected val _pos: Position, val _stretch: Boolean) : Layout.Constraint() {
+    class Constraint(private val _pos: Position, val _stretch: Boolean) : Layout.Constraint() {
 
         /**
          * Returns a new constraint specifying the same position as this, and with stretching.
@@ -90,15 +90,15 @@ class BorderLayout
     /**
      * Constructs a new border layout with the specified gap between components.
      */
-    @JvmOverloads constructor(gaps: Float = 0f) : this(gaps, gaps) {}
+    @JvmOverloads constructor(gaps: Float = 0f) : this(gaps, gaps)
 
     override fun computeSize(elems: Container<*>, hintX: Float, hintY: Float): Dimension {
         return Slots(elems).computeSize(hintX, hintY)
     }
 
     override fun layout(elems: Container<*>, left: Float, top: Float, width: Float, height: Float) {
-        val halign = resolveStyle<Style.HAlign>(elems, Style.HALIGN)
-        val valign = resolveStyle<Style.VAlign>(elems, Style.VALIGN)
+        val halign = resolveStyle(elems, Style.HALIGN)
+        val valign = resolveStyle(elems, Style.VALIGN)
         val slots = Slots(elems)
         val bounds = Rectangle(left, top, width, height)
         slots.layoutNs(Position.NORTH, halign, bounds)
@@ -116,7 +116,7 @@ class BorderLayout
                 c.align(bounds.y, valign.offset(dim.height, bounds.height)), dim)
     }
 
-    protected inner class Slots internal constructor(elems: Container<*>) {
+    private inner class Slots internal constructor(elems: Container<*>) {
         internal val elements: MutableMap<Position, Element<*>> = HashMap()
 
         init {
@@ -229,13 +229,8 @@ class BorderLayout
     enum class Position(internal val orient: Int) {
         CENTER(3), NORTH(1), SOUTH(1), EAST(2), WEST(2);
 
-        internal val unstretched: Constraint
-        internal val stretched: Constraint
-
-        init {
-            unstretched = Constraint(this, false)
-            stretched = Constraint(this, true)
-        }
+        internal val unstretched: Constraint = Constraint(this, false)
+        internal val stretched: Constraint = Constraint(this, true)
 
         companion object {
 

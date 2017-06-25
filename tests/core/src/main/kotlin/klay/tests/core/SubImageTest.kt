@@ -6,7 +6,6 @@ import klay.scene.ImageLayer
 import klay.scene.Layer
 import pythagoras.f.MathUtil
 import pythagoras.f.Rectangle
-import react.Connection
 
 class SubImageTest(game: TestsGame) : Test(game, "SubImage", "Tests sub-image rendering in various circumstances.") {
 
@@ -61,7 +60,7 @@ class SubImageTest(game: TestsGame) : Test(game, "SubImage", "Tests sub-image re
             osci.region = Rectangle(0f, 0f, orange.width, orange.height)
             addTest(10f, 150f, osci, "ImageLayer with changing width", 100f)
 
-            conns.add<Connection>(game.paint.connect { clock: Clock ->
+            conns.add(game.paint.connect { clock: Clock ->
                 val t = clock.tick / 1000f
                 // round the width so that it sometimes goes to zero; just to be sure zero doesn't choke
                 osci.region!!.width = Math.round(Math.abs(MathUtil.sin(t)) * osci.tile()!!.width).toFloat()
@@ -69,7 +68,7 @@ class SubImageTest(game: TestsGame) : Test(game, "SubImage", "Tests sub-image re
         }.onFailure(logFailure("Failed to load orange image"))
     }
 
-    protected fun fragment(source: String, tex: Texture, ox: Float, oy: Float) {
+    private fun fragment(source: String, tex: Texture, ox: Float, oy: Float) {
         val hw = tex.displayWidth / 2f
         val hh = tex.displayHeight / 2f
         val ul = tex.tile(0f, 0f, hw, hh)

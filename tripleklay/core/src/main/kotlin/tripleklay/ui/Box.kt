@@ -47,7 +47,7 @@ open class Box
         protected var _ocontents: Element<*>? = null
         protected var _ncontents: Element<*>? = null
 
-        private val _duration: Float // ms
+        private val _duration: Float = duration.toFloat() // ms
         private var _elapsed: Float = 0.toFloat()
         private var _box: Box? = null
         private var _interp = Interpolator.LINEAR
@@ -57,10 +57,6 @@ open class Box
         fun interp(interp: Interpolator): Trans {
             _interp = interp
             return this
-        }
-
-        init {
-            _duration = duration.toFloat()
         }
 
         internal fun start(box: Box, ncontents: Element<*>) {
@@ -126,8 +122,8 @@ open class Box
 
     class Flip(duration: Int) : Trans(duration) {
 
-        protected lateinit var _obatch: RotateYBatch
-        protected lateinit var _nbatch: RotateYBatch
+        private lateinit var _obatch: RotateYBatch
+        private lateinit var _nbatch: RotateYBatch
 
         override fun init() {
             // TODO: compute the location of the center of the box in screen coordinates, place
@@ -207,7 +203,7 @@ open class Box
         return if (_contents == null)
             emptyList<Element<*>>().iterator()
         else
-            setOf<Element<*>>(_contents!!).iterator()
+            setOf(_contents!!).iterator()
     }
 
     override fun remove(child: Element<*>) {

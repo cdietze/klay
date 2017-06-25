@@ -20,7 +20,7 @@ abstract class Style<out V> protected constructor(
         /** Indicates whether or not this style property is inherited.  */
         val inherited: Boolean) {
     /** Defines element modes which can be used to modify an element's styles.  */
-    enum class Mode private constructor(
+    enum class Mode(
             /** Whether the element is enabled in this mode.  */
             val enabled: Boolean,
             /** Whether the element is selected in this mode.  */
@@ -110,8 +110,8 @@ abstract class Style<out V> protected constructor(
                 return EffectRenderer.VectorOutline(
                         Styles.resolveStyle(elem, Style.HIGHLIGHT),
                         Styles.resolveStyle(elem, Style.OUTLINE_WIDTH),
-                        Styles.resolveStyle<Canvas.LineCap>(elem, Style.OUTLINE_CAP),
-                        Styles.resolveStyle<Canvas.LineJoin>(elem, Style.OUTLINE_JOIN))
+                        Styles.resolveStyle(elem, Style.OUTLINE_CAP),
+                        Styles.resolveStyle(elem, Style.OUTLINE_JOIN))
             }
         },
         /** Draws a shadow below and to the right of the text in the shadow color.  */
@@ -126,7 +126,7 @@ abstract class Style<out V> protected constructor(
         GRADIENT {
             override fun createEffectRenderer(elem: Element<*>): EffectRenderer {
                 return Gradient(Styles.resolveStyle(elem, Style.GRADIENT_COLOR),
-                        Styles.resolveStyle<Gradient.Type>(elem, Style.GRADIENT_TYPE))
+                        Styles.resolveStyle(elem, Style.GRADIENT_TYPE))
             }
         },
         /** No text effect.  */
@@ -198,7 +198,7 @@ abstract class Style<out V> protected constructor(
     }
 
     /** A Boolean style, with convenient members for on and off bindings.  */
-    class Flag(inherited: Boolean, protected val _default: Boolean) : Style<Boolean>(inherited) {
+    class Flag(inherited: Boolean, private val _default: Boolean) : Style<Boolean>(inherited) {
         val off = `is`(false)
         val on = `is`(true)
         override fun getDefault(mode: Element<*>): Boolean {
@@ -245,10 +245,10 @@ abstract class Style<out V> protected constructor(
         val OUTLINE_WIDTH = newStyle(true, 1f)
 
         /** The line cap for the outline, when using a vector outline.  */
-        val OUTLINE_CAP: Style<Canvas.LineCap> = newStyle<Canvas.LineCap>(true, Canvas.LineCap.ROUND)
+        val OUTLINE_CAP: Style<Canvas.LineCap> = newStyle(true, Canvas.LineCap.ROUND)
 
         /** The line join for the outline, when using a vector outline.  */
-        val OUTLINE_JOIN: Style<Canvas.LineJoin> = newStyle<Canvas.LineJoin>(true, Canvas.LineJoin.ROUND)
+        val OUTLINE_JOIN: Style<Canvas.LineJoin> = newStyle(true, Canvas.LineJoin.ROUND)
 
         /** The horizontal alignment of an element. Not inherited.  */
         val HALIGN = HAlignStyle()
@@ -291,7 +291,7 @@ abstract class Style<out V> protected constructor(
         val ICON_EFFECT = newStyle(false, IconEffect.NONE)
 
         /** The sound to be played when this element's action is triggered.  */
-        val ACTION_SOUND = newStyle<Sound?>(false, null as Sound?)
+        val ACTION_SOUND = newStyle<Sound?>(false, null)
 
         /**
          * Creates a text style instance based on the supplied element's stylings.
