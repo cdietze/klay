@@ -3,9 +3,10 @@ package tripleklay.demo.core
 import klay.core.Game
 import tripleklay.demo.core.anim.AnimDemo
 import tripleklay.demo.core.anim.FlickerDemo
+import tripleklay.demo.core.game.ScreensDemo
 import tripleklay.demo.core.ui.*
-import tripleklay.demo.util.ColorsDemo
-import tripleklay.demo.util.InterpDemo
+import tripleklay.demo.core.util.ColorsDemo
+import tripleklay.demo.core.util.InterpDemo
 import tripleklay.game.ScreenStack
 import tripleklay.ui.*
 import tripleklay.ui.layout.AxisLayout
@@ -22,21 +23,18 @@ class DemoMenuScreen(protected val _stack: ScreenStack) : ScreenStack.UIScreen(T
         _rlabels = arrayOf("tripleplay.ui", "", "", "", "", "tripleplay.anim", "tripleplay.game", "tripleplay.entity", "tripleplay.particle", "tripleplay.flump", "tripleplay.util")
         _screens = arrayOf<DemoScreen?>(
                 // tripleplay.ui
-                MiscDemo(), LabelDemo(), /* TODO(cdi) MenuDemo(), */ SliderDemo(), SelectorDemo(), BackgroundDemo(), ScrollerDemo(), TabsDemo(), HistoryGroupDemo(), LayoutDemo(), FlowLayoutDemo(), BorderLayoutDemo(), TableLayoutDemo(), AbsoluteLayoutDemo(), null,
+                MiscDemo(), LabelDemo(), /* TODO(cdi) re-add MenuDemo(), */ null, SliderDemo(), SelectorDemo(), BackgroundDemo(), ScrollerDemo(), TabsDemo(), HistoryGroupDemo(), LayoutDemo(), FlowLayoutDemo(), BorderLayoutDemo(), TableLayoutDemo(), AbsoluteLayoutDemo(), null,
                 // tripleplay.anim
-                null, // TODO(cdi) readd when ported: FramesDemo(),
+                null, // TODO(cdi) re-add when ported: FramesDemo(),
                 AnimDemo(), FlickerDemo(),
                 // tripleplay.game
-                // TODO(cdi) ScreensDemo(_stack), ScreenSpaceDemo(), null,
+                ScreensDemo(_stack), /* TODO(cdi) re-add ScreenSpaceDemo(), */ null, null,
                 // tripleplay.entity
-                // TODO(cdi) reactivate after port of tripleplay.entity
-                // new AsteroidsDemo(), null, null,
+                /* TODO(cdi) re-add AsteroidsDemo(), */ null, null, null,
                 // tripleplay.particle
-                // TODO(cdi) reactivate after port of tripleplay.particle
-                // new FountainDemo(), new FireworksDemo(), null,
+                /* TODO(cdi) new FountainDemo(), new FireworksDemo(), */ null, null, null,
                 // tripleplay.flump
-                // TODO(cdi) reactivate after port of tripleplay.flump
-                // new FlumpDemo(), null, null,
+                /* TODO(cdi) re-add FlumpDemo(), */ null, null, null,
                 // tripleplay.util
                 ColorsDemo(), InterpDemo(), null
         )
