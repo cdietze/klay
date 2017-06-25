@@ -1,28 +1,21 @@
-package tripleklay.demo.util
+package tripleklay.demo.core.util
 
-import klay.core.Canvas
-
-import tripleklay.demo.DemoScreen
-import tripleklay.ui.Group
-import tripleklay.ui.Icon
-import tripleklay.ui.Icons
-import tripleklay.ui.Label
-import tripleklay.ui.Root
-import tripleklay.ui.Style
+import tripleklay.demo.core.DemoScreen
+import tripleklay.ui.*
 import tripleklay.ui.layout.AxisLayout
 import tripleklay.ui.layout.TableLayout
 import tripleklay.util.Colors
 
 class ColorsDemo : DemoScreen() {
-    protected fun name(): String {
+    override fun name(): String {
         return "Colors"
     }
 
-    protected fun title(): String {
+    override fun title(): String {
         return "Util: Colors"
     }
 
-    protected fun createIface(root: Root): Group {
+    override fun createIface(root: Root): Group {
         return Group(AxisLayout.vertical(), Style.HALIGN.center).add(
                 Group(TableLayout(TableLayout.COL.fixed().alignRight(),
                         TableLayout.COL.fixed().alignLeft()).gaps(1, 5)).add(
@@ -46,23 +39,23 @@ class ColorsDemo : DemoScreen() {
     }
 
     protected fun createSampler(baseColor: Int): Icon {
-        val size = 16
-        val canvas = graphics().createCanvas(size * 17, size)
+        val size = 16f
+        val canvas = graphics().createCanvas(size * 17f, size)
         var lighter = baseColor
         for (ii in 0..8) {
             canvas.setFillColor(lighter)
-            canvas.fillRect((size * (ii + 8)).toFloat(), 0f, size.toFloat(), size.toFloat())
+            canvas.fillRect((size * (ii + 8)), 0f, size, size)
             lighter = Colors.brighter(lighter)
         }
         var darker = baseColor
         for (ii in 0..7) {
             canvas.setFillColor(darker)
-            canvas.fillRect((size * (7 - ii)).toFloat(), 0f, size.toFloat(), size.toFloat())
+            canvas.fillRect((size * (7 - ii)), 0f, size, size)
             darker = Colors.darker(darker)
         }
 
         canvas.setStrokeColor(Colors.BLACK)
-        canvas.strokeRect((size * 8).toFloat(), 0f, (size - 1).toFloat(), (size - 1).toFloat())
+        canvas.strokeRect((size * 8), 0f, (size - 1), (size - 1))
         return Icons.image(canvas.toTexture())
     }
 }

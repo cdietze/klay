@@ -1,38 +1,32 @@
-package tripleklay.demo.util
+package tripleklay.demo.core.util
 
-import react.Slot
-import react.UnitSlot
-
-import klay.core.*
+import klay.core.Clock
 import klay.scene.ImageLayer
 import klay.scene.Layer
-
-import tripleklay.demo.DemoScreen
+import tripleklay.demo.core.DemoScreen
 import tripleklay.ui.*
 import tripleklay.ui.layout.TableLayout
 import tripleklay.util.Interpolator
 
 class InterpDemo : DemoScreen() {
     init {
-        paint.connect(object : Slot<Clock>() {
-            fun onEmit(clock: Clock) {
-                for (driver in _drivers) if (driver.elapsed >= 0) driver.paint(clock)
-            }
+        paint.connect({ clock: Clock ->
+            for (driver in _drivers) if (driver!!.elapsed >= 0) driver.paint(clock)
         })
     }
 
-    protected fun name(): String {
+    override fun name(): String {
         return "Interps"
     }
 
-    protected fun title(): String {
+    override fun title(): String {
         return "Util: Interpolators"
     }
 
-    protected fun createIface(root: Root): Group {
+    override fun createIface(root: Root): Group {
         val grid = Group(TableLayout(TableLayout.COL.stretch().fixed(),
                 TableLayout.COL).gaps(10, 10))
-        val square = graphics().createCanvas(20, 20)
+        val square = graphics().createCanvas(20f, 20f)
         square.setFillColor(0xFFFF0000.toInt()).fillRect(0f, 0f, 20f, 20f)
         val sqtex = square.toTexture()
 
@@ -43,19 +37,15 @@ class InterpDemo : DemoScreen() {
             tray.layer.add(knob)
             val driver = Driver(INTERPS[ii], knob)
             _drivers[ii] = driver
-            grid.add(Button(INTERPS[ii].toString()).onClick(object : UnitSlot() {
-                fun onEmit() {
-                    driver.elapsed = 0f
-                }
+            grid.add(Button(INTERPS[ii].toString()).onClick({
+                driver.elapsed = 0f
             }))
             grid.add(tray)
         }
-        grid.add(Button("ALL").onClick(object : UnitSlot() {
-            fun onEmit() {
-                for (driver in _drivers) driver.elapsed = 0f
-            }
+        grid.add(Button("ALL").onClick({
+            for (driver in _drivers) driver!!.elapsed = 0f
         }))
-        return grid.addStyles(Style.BACKGROUND.`is`(Background.blank().inset(15)))
+        return grid.addStyles(Style.BACKGROUND.`is`(Background.blank().inset(15f)))
     }
 
     protected fun demoInterp(interp: Interpolator, knob: Layer) {
