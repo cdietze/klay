@@ -3,6 +3,7 @@ package tripleklay.demo.core
 import klay.core.Game
 import tripleklay.demo.core.anim.AnimDemo
 import tripleklay.demo.core.anim.FlickerDemo
+import tripleklay.demo.core.anim.FramesDemo
 import tripleklay.demo.core.game.ScreenSpaceDemo
 import tripleklay.demo.core.game.ScreensDemo
 import tripleklay.demo.core.ui.*
@@ -26,8 +27,7 @@ class DemoMenuScreen(protected val _stack: ScreenStack) : ScreenStack.UIScreen(T
                 // tripleplay.ui
                 MiscDemo(), LabelDemo(), MenuDemo(), SliderDemo(), SelectorDemo(), BackgroundDemo(), ScrollerDemo(), TabsDemo(), HistoryGroupDemo(), LayoutDemo(), FlowLayoutDemo(), BorderLayoutDemo(), TableLayoutDemo(), AbsoluteLayoutDemo(), null,
                 // tripleplay.anim
-                null, // TODO(cdi) re-add when ported: FramesDemo(),
-                AnimDemo(), FlickerDemo(),
+                FramesDemo(), AnimDemo(), FlickerDemo(),
                 // tripleplay.game
                 ScreensDemo(_stack), ScreenSpaceDemo(), null,
                 // tripleplay.entity
