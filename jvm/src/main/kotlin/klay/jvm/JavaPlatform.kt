@@ -1,6 +1,7 @@
 package klay.jvm
 
 import klay.core.*
+import klay.core.json.JsonImpl
 import java.awt.Desktop
 import java.net.URI
 import java.util.concurrent.Executors
@@ -73,6 +74,7 @@ abstract class JavaPlatform(val config: JavaPlatform.Config) : Platform() {
     override val audio = JavaAudio(exec)
     override val storage = JavaStorage(log, config.storageFileName)
     override val net = JavaNet(exec)
+    override val json: Json = JsonImpl()
 
     // TODO(cdi) re-add Headless mode. We cannot just pass null for the GL20 reference and making it a GL20?
     // seems too far-ranging for something that is actually just for testing

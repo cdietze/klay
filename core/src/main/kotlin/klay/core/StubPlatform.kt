@@ -1,5 +1,6 @@
 package klay.core
 
+import klay.core.json.JsonImpl
 import java.util.*
 
 /**
@@ -68,6 +69,9 @@ class StubPlatform : Platform() {
             action.run()
         } // now is later!
     }
+
+    override val json: Json = JsonImpl()
+
     private val start = System.currentTimeMillis()
 
     override fun type(): Platform.Type {
