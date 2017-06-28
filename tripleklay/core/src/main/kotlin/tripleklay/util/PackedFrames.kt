@@ -8,7 +8,7 @@ package tripleklay.util
 //class PackedFrames(source: TileSource, protected val _width: Float, protected val _height: Float, protected val _frames: Array<PackedFrames.Frame>) : Frames {
 //    class Frame(val offset: Point, val bounds: Rectangle)
 //
-//    constructor(source: TileSource, meta: Json.Object) : this(source, meta.getNumber("width"), meta.getNumber("height"), parseFrames(meta)) {}
+//    constructor(source: TileSource, meta: Json.Object) : this(source, meta.getFloat("width"), meta.getFloat("height"), parseFrames(meta)) {}
 //
 //    constructor(source: TileSource, meta: Array<FloatArray>) : this(source, meta[0][0], meta[0][1], parseFrames(meta)) {}
 //

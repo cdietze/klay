@@ -135,7 +135,7 @@ interface Json {
          * Gets the float value at the given index, or `null` if there is no value at this
          * index.
          */
-        fun getNumber(index: Int): Float?
+        fun getFloat(index: Int): Float?
 
         /**
          * Gets the double value at the given index, or `null` if there is no value at this
@@ -265,7 +265,7 @@ interface Json {
         /**
          * Gets the float value at the given key, or `null` if there is no value at this key.
          */
-        fun getNumber(key: String): Float?
+        fun getFloat(key: String): Float?
 
         /**
          * Gets the double value at the given key, or `null` if there is no value at this key.

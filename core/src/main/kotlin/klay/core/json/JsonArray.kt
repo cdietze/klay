@@ -56,7 +56,7 @@ internal class JsonArray : Json.Array {
         return (get(index) as? Number?)?.toDouble()
     }
 
-    override fun getNumber(index: Int): Float? {
+    override fun getFloat(index: Int): Float? {
         return (get(index) as? Number?)?.toFloat()
     }
 

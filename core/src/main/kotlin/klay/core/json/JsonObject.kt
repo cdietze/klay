@@ -34,7 +34,7 @@ internal class JsonObject : Json.Object {
         return (get(key) as? Number)?.toDouble()
     }
 
-    override fun getNumber(key: String): Float? {
+    override fun getFloat(key: String): Float? {
         return (get(key) as? Number)?.toFloat()
     }
 

@@ -57,7 +57,7 @@ class JsonTypedArray<T>(private val array: Json.Array, type: Class<T>) : Json.Ty
                 override fun get(array: Json.Array, index: Int): Double? = array.getDouble(index)
             })
             getters.put(Float::class.java, object : Getter<Float> {
-                override fun get(array: Json.Array, index: Int): Float? = array.getNumber(index)
+                override fun get(array: Json.Array, index: Int): Float? = array.getFloat(index)
             })
             getters.put(String::class.java, object : Getter<String> {
                 override fun get(array: Json.Array, index: Int): String? = array.getString(index)
