@@ -117,21 +117,20 @@ open class Root
     /**
      * Sets this Root's menu host, allowing an application to more manage multiple roots with
      * a single menu host.
-     * TODO(cdi) re-add once MenuHost is ported
      */
-    //    var menuHost: MenuHost
-//        get() {
-//            if (_menuHost == null) {
-//                _menuHost = MenuHost(iface, this)
-//            }
-//            return _menuHost
-//        }
-//        set(host) {
-//            if (_menuHost != null) {
-//                _menuHost!!.deactivate()
-//            }
-//            _menuHost = host
-//        }
+    var menuHost: MenuHost
+        get() {
+            if (_menuHost == null) {
+                _menuHost = MenuHost(iface, this)
+            }
+            return _menuHost!!
+        }
+        set(host) {
+            if (_menuHost != null) {
+                _menuHost!!.deactivate()
+            }
+            _menuHost = host
+        }
 
     override val styleClass: Class<*>
         get() = Root::class.java
@@ -146,6 +145,6 @@ open class Root
     }
 
     protected var _active: Element<*>? = null
-//    protected var _menuHost: MenuHost? = null
+    protected var _menuHost: MenuHost? = null
 }
 /** Sizes this root element to its preferred size.  */

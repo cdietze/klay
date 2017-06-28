@@ -786,7 +786,7 @@ abstract class Layer : Closeable {
 
      * @return a reference to this layer for call chaining.
      */
-    fun setHitTester(tester: HitTester): Layer {
+    fun setHitTester(tester: HitTester?): Layer {
         hitTester = tester
         return this
     }

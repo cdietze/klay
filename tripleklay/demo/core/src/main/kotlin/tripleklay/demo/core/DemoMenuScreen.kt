@@ -23,7 +23,7 @@ class DemoMenuScreen(protected val _stack: ScreenStack) : ScreenStack.UIScreen(T
         _rlabels = arrayOf("tripleplay.ui", "", "", "", "", "tripleplay.anim", "tripleplay.game", "tripleplay.entity", "tripleplay.particle", "tripleplay.flump", "tripleplay.util")
         _screens = arrayOf<DemoScreen?>(
                 // tripleplay.ui
-                MiscDemo(), LabelDemo(), /* TODO(cdi) re-add MenuDemo(), */ null, SliderDemo(), SelectorDemo(), BackgroundDemo(), ScrollerDemo(), TabsDemo(), HistoryGroupDemo(), LayoutDemo(), FlowLayoutDemo(), BorderLayoutDemo(), TableLayoutDemo(), AbsoluteLayoutDemo(), null,
+                MiscDemo(), LabelDemo(), MenuDemo(), SliderDemo(), SelectorDemo(), BackgroundDemo(), ScrollerDemo(), TabsDemo(), HistoryGroupDemo(), LayoutDemo(), FlowLayoutDemo(), BorderLayoutDemo(), TableLayoutDemo(), AbsoluteLayoutDemo(), null,
                 // tripleplay.anim
                 null, // TODO(cdi) re-add when ported: FramesDemo(),
                 AnimDemo(), FlickerDemo(),

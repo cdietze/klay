@@ -88,11 +88,11 @@ class MenuItem
         toToggle().click()
     }
 
-    private fun trigger() {
+    internal fun trigger() {
         toToggle().click()
     }
 
-    private fun setRelay(relay: Closeable) {
+    internal fun setRelay(relay: Closeable) {
         _relay.close()
         _relay = relay
     }
@@ -137,7 +137,7 @@ class MenuItem
     // TODO(cdi) clarify if we really cannot use the property Element#_preferredSize
     private val _localPreferredSize = Dimension(0f, 0f)
     /** Text display mode.  */
-    private var _showText = ShowText.ALWAYS
+    internal var _showText = ShowText.ALWAYS
 }
 /**
  * Creates a new menu item with the given label.
