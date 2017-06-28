@@ -62,8 +62,7 @@ abstract class Platform {
     abstract val input: Input
 
     /** Returns the [Json] service.  */
-    val json: Nothing
-        get() = TODO("Json not implemented")
+    abstract val json: Json
 
     /** Returns the [Log] service.  */
     abstract val log: Log

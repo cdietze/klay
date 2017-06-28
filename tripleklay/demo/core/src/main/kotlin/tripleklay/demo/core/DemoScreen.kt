@@ -76,7 +76,7 @@ abstract class DemoScreen : ScreenStack.UIScreen(TripleDemo.game!!.plat) {
         return game().plat.input
     }
 
-    protected fun json(): Nothing {
+    protected fun json(): Json {
         return game().plat.json
     }
 

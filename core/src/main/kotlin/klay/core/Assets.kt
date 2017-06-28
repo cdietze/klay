@@ -71,7 +71,7 @@ abstract class Assets(protected val exec: Exec) {
      * and the sound will be played when loading has completed.
 
      * @param path the path to the sound resource. NOTE: this should not include a file extension,
-     * * PlayN will automatically add `.mp3`, (or `.caf` on iOS).
+     * Klay will automatically add `.mp3`, (or `.caf` on iOS).
      */
     abstract fun getSound(path: String): Sound
 
@@ -85,7 +85,7 @@ abstract class Assets(protected val exec: Exec) {
      * and the sound will be played when loading has completed.
 
      * @param path the path to the sound resource. NOTE: this should not include a file extension,
-     * * PlayN will automatically add `.mp3`, (or `.caf` on iOS).
+     * Klay will automatically add `.mp3`, (or `.caf` on iOS).
      */
     open fun getMusic(path: String): Sound {
         return getSound(path)

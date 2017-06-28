@@ -14,7 +14,7 @@ import react.Signal
  * is updated). The render phase will generally interpolate the values computed in [.update]
  * to provide smooth rendering based on lower-frequency simulation updates.
 
- * @see [Understanding the Game Loop](http://code.google.com/p/playn/wiki/GameLoop)
+ * @see [Understanding the Game Loop](http://playn.io/docs/overview.html#game-loop)
  */
 abstract class Game
 /** Creates a clocked game with the desired simulation update rate, in ms.  */
