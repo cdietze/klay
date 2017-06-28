@@ -53,7 +53,7 @@ object JsonUtil {
     /**
      * @return the float value at the given key, or `null` if the key doesn't exist.
      */
-    fun getFloat(json: Json.Object, key: String): Float? = json.getNumber(key)
+    fun getFloat(json: Json.Object, key: String): Float? = json.getFloat(key)
 
     /**
      * @return the float value at the given key.
@@ -61,7 +61,7 @@ object JsonUtil {
      */
     fun requireFloat(json: Json.Object, key: String): Float {
         requireKey(json, key)
-        return json.getNumber(key)!!
+        return json.getFloat(key)!!
     }
 
     /**

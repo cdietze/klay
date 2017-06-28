@@ -12,8 +12,8 @@ class InternalJsonTypesTest {
         o.put("key", 1)
         assertEquals(1, o.getInt("key"))
         assertEquals(1.0, o.getDouble("key")!!, 0.0001)
-        assertEquals(1.0f, o.getNumber("key")!!, 0.0001f)
-        assertEquals(1f, o.getNumber("key")!!, 0.0001f)
+        assertEquals(1.0f, o.getFloat("key")!!, 0.0001f)
+        assertEquals(1f, o.getFloat("key")!!, 0.0001f)
         assertEquals(1, o["key"])
 
         assertEquals(null, o.getString("key"))
@@ -27,7 +27,7 @@ class InternalJsonTypesTest {
         o.put("key", "1")
         assertEquals(null, o.getInt("key"))
         assertEquals(null, o.getDouble("key"))
-        assertEquals(null, o.getNumber("key"))
+        assertEquals(null, o.getFloat("key"))
         assertEquals("1", o["key"])
         assertFalse(o.isNull("key"))
     }
@@ -38,7 +38,7 @@ class InternalJsonTypesTest {
         o.put("key", null)
         assertEquals(null, o.getInt("key"))
         assertEquals(null, o.getDouble("key"))
-        assertEquals(null, o.getNumber("key"))
+        assertEquals(null, o.getFloat("key"))
         assertEquals(null, o["key"])
         assertTrue(o.isNull("key"))
     }
@@ -49,8 +49,8 @@ class InternalJsonTypesTest {
         o[3] = 1
         assertEquals(1, o.getInt(3))
         assertEquals(1.0, o.getDouble(3)!!, 0.0001)
-        assertEquals(1.0f, o.getNumber(3)!!, 0.0001f)
-        assertEquals(1f, o.getNumber(3)!!, 0.0001f)
+        assertEquals(1.0f, o.getFloat(3)!!, 0.0001f)
+        assertEquals(1f, o.getFloat(3)!!, 0.0001f)
         assertEquals(1, o[3])
 
         assertEquals(null, o.getString(3))
@@ -64,7 +64,7 @@ class InternalJsonTypesTest {
         o[3] = "1"
         assertEquals(null, o.getInt(3))
         assertEquals(null, o.getDouble(3))
-        assertEquals(null, o.getNumber(3))
+        assertEquals(null, o.getFloat(3))
         assertEquals("1", o[3])
         assertFalse(o.isNull(3))
     }
@@ -75,7 +75,7 @@ class InternalJsonTypesTest {
         a[3] = null
         assertEquals(null, a.getInt(3))
         assertEquals(null, a.getDouble(3))
-        assertEquals(null, a.getNumber(3))
+        assertEquals(null, a.getFloat(3))
         assertEquals(null, a[3])
         assertTrue(a.isNull(3))
     }
@@ -85,7 +85,7 @@ class InternalJsonTypesTest {
         val a = JsonArray(Arrays.asList<String>(null as String?, null, null, null))
         assertEquals(null, a.getInt(4))
         assertEquals(null, a.getDouble(4))
-        assertEquals(null, a.getNumber(4))
+        assertEquals(null, a.getFloat(4))
         assertEquals(null, a[4])
         assertTrue(a.isNull(4))
     }
