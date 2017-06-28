@@ -34,9 +34,8 @@ object SimpleStyles {
                 Style.HALIGN.left)// flip ul and br to make Field appear recessed
                 .add(Field::class.java, Style.Mode.DISABLED,
                         Style.BACKGROUND.`is`(Background.beveled(0xFFCCCCCC.toInt(), brColor, ulColor).inset(5f)))
-                //TODO(cdi) re-add once Menu is ported
-//                .add(Menu::class.java,
-//                Style.BACKGROUND.`is`(Background.bordered(0xFFFFFFFF.toInt(), 0x00000000, 1f).inset(6f)))
+                .add(Menu::class.java,
+                        Style.BACKGROUND.`is`(Background.bordered(0xFFFFFFFF.toInt(), 0x00000000, 1f).inset(6f)))
                 .add(MenuItem::class.java,
                         Style.BACKGROUND.`is`(Background.solid(0xFFFFFFFF.toInt())),
                         Style.HALIGN.left).add(MenuItem::class.java, Style.Mode.SELECTED,
