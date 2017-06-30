@@ -5,7 +5,10 @@ import klay.core.*
 /**
  * A simple class for games which wish to use a single scene graph.
  */
-abstract class SceneGame(plat: Platform, updateRate: Int) : Game(plat, updateRate) {
+abstract class SceneGame(plat: Platform,
+                         /** The interval in milliseconds that our game shall update.
+                          * Defaults to 33ms which is 30fps */
+                         updateRate: Int = 33) : Game(plat, updateRate) {
 
     private var cred: Float = 0.toFloat()
     private var cgreen: Float = 0.toFloat()

@@ -21,8 +21,9 @@ abstract class Game
 (
         /** The platform on which this game is running.  */
         val plat: Platform,
-        /** The interval in milliseconds that our game shall update. */
-        private val updateRate: Int) {
+        /** The interval in milliseconds that our game shall update.
+         * Defaults to 33ms which is 30fps */
+        private val updateRate: Int = 33) {
 
     /** A signal emitted on every simulation update.  */
     val update: Signal<Clock> = Signal.create()
