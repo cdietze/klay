@@ -5,21 +5,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>de.cdietze.klay</groupId>
-        <artifactId>tripleklay</artifactId>
+        <groupId>com.github.cdietze</groupId>
+        <artifactId>klay-tripleklay</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>tripleklay-core</artifactId>
+    <artifactId>klay-tripleklay-core</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>de.cdietze.klay</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>klay-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>de.cdietze.klay</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>klay-scene</artifactId>
             <version>${project.version}</version>
         </dependency>

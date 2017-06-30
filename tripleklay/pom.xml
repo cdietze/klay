@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>de.cdietze.klay</groupId>
+        <groupId>com.github.cdietze</groupId>
         <artifactId>klay</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>tripleklay</artifactId>
+    <artifactId>klay-tripleklay</artifactId>
     <packaging>pom</packaging>
 
     <modules>
