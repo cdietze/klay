@@ -81,9 +81,9 @@ open class ScreenStack
          * called when the hide transition completes.  */
         open fun hideTransitionStarted() {}
 
-        /** Adds `ac` to a set to be closed when this screen is hidden.  */
-        fun closeOnHide(ac: AutoCloseable) {
-            _closeOnHide.add(ac)
+        /** Adds `c` to a set to be closed when this screen is hidden.  */
+        fun closeOnHide(c: Closeable) {
+            _closeOnHide.add(c)
         }
 
         protected var _closeOnHide = Closeable.Set()

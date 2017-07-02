@@ -5,12 +5,14 @@ import klay.core.Game
 import klay.scene.GroupLayer
 import klay.scene.Pointer
 import pythagoras.f.IDimension
-import react.*
+import react.Closeable
+import react.Signal
+import react.UnitSignal
+import tripleklay.game.ScreenSpace.Screen
 import tripleklay.ui.Interface
 import tripleklay.ui.Root
 import tripleklay.util.Interpolator
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Maintains a 2D layout of [Screen]s. New screens can be introduced in a direction, and the
@@ -170,8 +172,8 @@ class ScreenSpace
          * Adds `ac` to a list of closeables which will be closed when this screen goes to
          * sleep.
          */
-        fun closeOnSleep(ac: AutoCloseable) {
-            _closeOnSleep.add(ac)
+        fun closeOnSleep(c: Closeable) {
+            _closeOnSleep.add(c)
         }
 
         override fun toString(): String {
