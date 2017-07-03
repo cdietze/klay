@@ -97,7 +97,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
         val clicked = Signal<T>()
 
         /** Indicates whether our owner is selected. It may be listened to, and updated.  */
-        val selected = Value.create(false)
+        val selected = Value(false)
 
         init {
             selected.connect(selectedDidChange())

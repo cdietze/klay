@@ -97,7 +97,7 @@ abstract class TPPlatform {
 
     protected fun updateHidden() {}
 
-    protected var _focus = Value.create<Field?>(null)
+    protected var _focus = Value<Field?>(null)
     protected var _kfc: KeyboardFocusController? = null
     protected var _activity = UnitSignal()
     protected var _hidden: Rectangle? = null

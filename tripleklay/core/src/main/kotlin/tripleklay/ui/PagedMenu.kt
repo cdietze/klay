@@ -114,6 +114,6 @@ class PagedMenu
         }
     }
 
-    protected var _page = Value.create(0)
-    protected var _numPages = Value.create(0)
+    protected var _page = Value(0)
+    protected var _numPages = Value(0)
 }

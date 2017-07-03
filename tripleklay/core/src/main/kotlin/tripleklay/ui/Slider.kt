@@ -26,13 +26,13 @@ class Slider @JvmOverloads constructor(value: Float = 0f, min: Float = 0f, max: 
     }
 
     /** The value of the slider.  */
-    val value: Value<Float> = Value.create(value)
+    val value: Value<Float> = Value(value)
 
     /** The range of the slider.  */
     val range: Value<Range>
 
     init {
-        range = Value.create(Range(min, max))
+        range = Value(Range(min, max))
         // update our display if the slider value is changed externally
         val updateThumb: UnitSlot = { updateThumb() }
         this.value.connect(updateThumb)

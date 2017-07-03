@@ -57,7 +57,7 @@ open class Flicker
      * Note that if a pointer interaction has already started when the flicker is disabled, that
      * interaction will be allowed to complete. Otherwise the flicker would be left in an
      * unpredictable state.  */
-    var enabled = Value.create(true)
+    var enabled = Value(true)
 
     /** This must be connected to a paint signal.  */
     var onPaint: Slot<Clock> = { onPaint(it) }
