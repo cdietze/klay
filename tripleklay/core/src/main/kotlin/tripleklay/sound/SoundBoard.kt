@@ -24,7 +24,6 @@ class SoundBoard
 
     /** Controls the volume of this sound board.  */
     var volume: Value<Float> = object : Value<Float>(1f) {
-        // TODO(cdi) replace override. Maybe with map. And remove `open` from AbstractValue.updateAndNotifyIf afterwards.
         override fun updateAndNotifyIf(value: Float): Float {
             return super.updateAndNotifyIf(MathUtil.clamp(value, 0f, 1f))
         }
