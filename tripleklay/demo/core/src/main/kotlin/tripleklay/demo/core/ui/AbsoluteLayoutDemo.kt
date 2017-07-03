@@ -61,7 +61,7 @@ class AbsoluteLayoutDemo : DemoScreen() {
     }
 
     protected class BoxPointWidget(label: String) : Composite<BoxPointWidget>() {
-        val point = Value.create(BoxPoint.TL)
+        val point = Value(BoxPoint.TL)
         val nx = Slider(0f, 0f, 1f)
         val ny = Slider(0f, 0f, 1f)
         val ox = Slider(0f, 0f, 100f)

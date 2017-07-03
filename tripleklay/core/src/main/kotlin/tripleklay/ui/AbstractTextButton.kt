@@ -12,7 +12,7 @@ abstract class AbstractTextButton<T : AbstractTextButton<T>> protected construct
     val text = Value<String?>(null)
 
     /** The icon displayed by this button, or null.  */
-    val icon = Value.create<Icon?>(null)
+    val icon = Value<Icon?>(null)
 
     /**
      * Binds the text of this button to the supplied reactive value. The current text will be

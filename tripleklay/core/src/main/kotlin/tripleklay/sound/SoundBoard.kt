@@ -30,7 +30,7 @@ class SoundBoard
     }
 
     /** Controls whether this sound board is muted. When muted, no sounds will play.  */
-    var muted = Value.Companion.create(false)
+    var muted = Value(false)
 
     init {
         paint.connect({ clock: Clock ->

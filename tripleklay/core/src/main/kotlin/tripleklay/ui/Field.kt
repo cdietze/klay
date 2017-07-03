@@ -90,7 +90,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
     init {
         setStyles(styles)
 
-        text = Value.create("")
+        text = Value("")
         _finishedEditing = Signal.create()
 
         if (hasNative()) {

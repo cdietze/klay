@@ -157,7 +157,7 @@ abstract class Layer : Closeable {
      * [State.REMOVED] when removed, until it is finally [.close]d at which point it
      * transitions to [State.DISPOSED].
      */
-    val state = Value.create(State.REMOVED)
+    val state = Value(State.REMOVED)
 
     /** Creates an unclipped layer. The [.paint] method must be overridden by the creator.  */
     init {

@@ -28,19 +28,19 @@ open class Hud(protected val _game: SceneGame) {
     /** A stock HUD that provides a bunch of standard PlayN performance info and handles
      * once-per-second updating.  */
     class Stock(game: SceneGame) : Hud(game) {
-        private val _frames = Value.create(0)
-        private val _shaderCreates = Value.create(0)
-        private val _fbCreates = Value.create(0)
-        private val _texCreates = Value.create(0)
-        private val _shaderBinds = Value.create(0)
-        private val _fbBinds = Value.create(0)
-        private val _texBinds = Value.create(0)
-        private val _rQuads = Value.create(0)
-        private val _rTris = Value.create(0)
-        private val _shaderFlushes = Value.create(0)
+        private val _frames = Value(0)
+        private val _shaderCreates = Value(0)
+        private val _fbCreates = Value(0)
+        private val _texCreates = Value(0)
+        private val _shaderBinds = Value(0)
+        private val _fbBinds = Value(0)
+        private val _texBinds = Value(0)
+        private val _rQuads = Value(0)
+        private val _rTris = Value(0)
+        private val _shaderFlushes = Value(0)
 
-        private val _quadShader = Value.create("")
-        private val _trisShader = Value.create("")
+        private val _quadShader = Value("")
+        private val _trisShader = Value("")
 
         init {
             add("Shader info:", true)

@@ -42,7 +42,7 @@ open class Box
     abstract class Trans protected constructor(duration: Int) : Slot<Clock> {
 
         /** Indicates whether this transition is in process.  */
-        var active = Value.create(false)
+        var active = Value(false)
 
         protected var _ocontents: Element<*>? = null
         protected var _ncontents: Element<*>? = null

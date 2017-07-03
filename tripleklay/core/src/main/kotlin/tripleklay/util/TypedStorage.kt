@@ -171,7 +171,7 @@ class TypedStorage(protected val _log: Log, protected val _storage: Storage) {
      * method once for a given property and share that value properly.
      */
     fun valueFor(key: String, defval: String): Value<String> {
-        val value = Value.create(get(key, defval))
+        val value = Value(get(key, defval))
         value.connect(object : Slot<String> {
             override fun invoke(value: String) {
                 set(key, value)
@@ -205,7 +205,7 @@ class TypedStorage(protected val _log: Log, protected val _storage: Storage) {
      * method once for a given property and share that value properly.
      */
     fun valueFor(key: String, defval: Long): Value<Long> {
-        val value = Value.create(get(key, defval))
+        val value = Value(get(key, defval))
         value.connect(object : Slot<Long> {
             override fun invoke(value: Long) {
                 set(key, value)
@@ -222,7 +222,7 @@ class TypedStorage(protected val _log: Log, protected val _storage: Storage) {
      * method once for a given property and share that value properly.
      */
     fun valueFor(key: String, defval: Double): Value<Double> {
-        val value = Value.create(get(key, defval))
+        val value = Value(get(key, defval))
         value.connect(object : Slot<Double> {
             override fun invoke(value: Double) {
                 set(key, value)
@@ -239,7 +239,7 @@ class TypedStorage(protected val _log: Log, protected val _storage: Storage) {
      * method once for a given property and share that value properly.
      */
     fun valueFor(key: String, defval: Boolean): Value<Boolean> {
-        val value = Value.create(get(key, defval))
+        val value = Value(get(key, defval))
         value.connect(object : Slot<Boolean> {
             override fun invoke(value: Boolean) {
                 set(key, value)
@@ -256,7 +256,7 @@ class TypedStorage(protected val _log: Log, protected val _storage: Storage) {
      * method once for a given property and share that value properly.
      */
     inline fun <reified E : Enum<E>> valueFor(key: String, defval: E): Value<E> {
-        val value = Value.create(get(key, defval))
+        val value: Value<E> = Value(get(key, defval))
         value.connect(object : Slot<E> {
             override fun invoke(value: E) {
                 set(key, value)
