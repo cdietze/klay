@@ -42,7 +42,7 @@ class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text renderi
         font = NToggle("Font", "Times New Roman", "Helvetica")
         addToRow(font!!.layer)
 
-        val layer = game.ui.createButton("Set Text", Runnable {
+        val layer = game.ui.createButton("Set Text", {
             game.input.getText(Keyboard.TextType.DEFAULT, "Test text", sample.replace("\n", "\\n")).onSuccess { text: String? ->
                 if (text == null) return@onSuccess
                 // parse \n to allow testing line breaks

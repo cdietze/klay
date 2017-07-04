@@ -21,9 +21,9 @@ class NetTest(game: TestsGame) : Test(game, "Net", "Tests network support.") {
         displayText("HTTP response shown here.")
 
         var x = 10f
-        x = addButton("Google", Runnable { loadURL("http://www.google.com/") }, x, 10f)
+        x = addButton("Google", { loadURL("http://www.google.com/") }, x, 10f)
 
-        x = addButton("Enter URL", Runnable {
+        x = addButton("Enter URL", {
             getText("Enter URL:").onSuccess(object : TextCB() {
                 override fun gotText(url: String) {
                     loadURL(url)
@@ -31,7 +31,7 @@ class NetTest(game: TestsGame) : Test(game, "Net", "Tests network support.") {
             })
         }, x, 10f)
 
-        x = addButton("Post Test", Runnable {
+        x = addButton("Post Test", {
             getText("Enter POST body:").onSuccess(object : TextCB() {
                 override fun gotText(data: String) {
                     val b = game.net.req("http://www.posttestserver.com/post.php").setPayload(data)
@@ -55,14 +55,14 @@ class NetTest(game: TestsGame) : Test(game, "Net", "Tests network support.") {
             })
         }, x, 10f)
 
-        x = addButton("Fetch Posted Body", Runnable {
+        x = addButton("Fetch Posted Body", {
             if (lastPostURL == null)
                 displayText("Click 'Post Test' to post some data first.")
             else
                 game.net.req(lastPostURL!!).execute().onFailure(displayError).onSuccess(displayResult)
         }, x, 10f)
 
-        x = addButton("WS Connect", Runnable {
+        x = addButton("WS Connect", {
             if (_websock != null) displayText("Already connected.")
             _websock = game.net.createWebSocket("ws://echo.websocket.org", object : Net.WebSocket.Listener {
                 override fun onOpen() {
@@ -90,7 +90,7 @@ class NetTest(game: TestsGame) : Test(game, "Net", "Tests network support.") {
             displayText("WebSocket connection started.")
         }, x, 10f)
 
-        x = addButton("WS Send", Runnable {
+        x = addButton("WS Send", {
             if (_websock == null)
                 displayText("WebSocket not open.")
             else
@@ -106,7 +106,7 @@ class NetTest(game: TestsGame) : Test(game, "Net", "Tests network support.") {
                 })
         }, x, 10f)
 
-        x = addButton("WS Close", Runnable {
+        x = addButton("WS Close", {
             if (_websock == null)
                 displayText("WebSocket not open.")
             else

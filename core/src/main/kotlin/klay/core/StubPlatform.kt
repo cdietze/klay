@@ -13,7 +13,7 @@ import java.util.*
  *  The services that are implemented are:
  *  *  [.type] - reports [Platform.Type.STUB]
  *  *  [.time] - returns current time
- *  *  [.invokeLater] - invokes the supplied runnable immediately on the calling thread
+ *  *  [.invokeLater] - invokes the supplied action immediately on the calling thread
  *  *  [.input] - allows listener registration, never generates events
  *  *  [.log] - writes logs to `stderr`
  *  *  [.json] - provides full JSON parsing and formatting
@@ -65,8 +65,8 @@ class StubPlatform : Platform() {
         }
     }
     override val exec = object : Exec.Default(this) {
-        fun invokeLater(action: Runnable) {
-            action.run()
+        override fun invokeLater(action: () -> Unit) {
+            action()
         } // now is later!
     }
 

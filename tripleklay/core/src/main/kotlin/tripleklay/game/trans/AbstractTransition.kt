@@ -16,14 +16,14 @@ abstract class AbstractTransition<T : AbstractTransition<T>> : ScreenStack.Trans
     }
 
     /** Configures an action to be executed when this transition starts.  */
-    fun onStart(action: Runnable): T {
+    fun onStart(action: () -> Unit): T {
         assert(_onStart == null) { "onStart action already configured." }
         _onStart = action
         return asT()
     }
 
     /** Configures an action to be executed when this transition completes.  */
-    fun onComplete(action: Runnable): T {
+    fun onComplete(action: () -> Unit): T {
         assert(_onComplete == null) { "onComplete action already configured." }
         _onComplete = action
         return asT()
@@ -31,13 +31,13 @@ abstract class AbstractTransition<T : AbstractTransition<T>> : ScreenStack.Trans
 
     override fun init(plat: Platform, oscreen: Screen, nscreen: Screen) {
         if (_onStart != null) {
-            _onStart!!.run()
+            _onStart!!()
         }
     }
 
     override fun complete(oscreen: Screen, nscreen: Screen) {
         if (_onComplete != null) {
-            _onComplete!!.run()
+            _onComplete!!()
         }
     }
 
@@ -53,6 +53,6 @@ abstract class AbstractTransition<T : AbstractTransition<T>> : ScreenStack.Trans
     }
 
     protected var _duration = defaultDuration()
-    protected var _onStart: Runnable? = null
-    protected var _onComplete: Runnable? = null
+    protected var _onStart: (() -> Unit)? = null
+    protected var _onComplete: (() -> Unit)? = null
 }

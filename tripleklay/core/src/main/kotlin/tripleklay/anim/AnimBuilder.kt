@@ -211,9 +211,9 @@ abstract class AnimBuilder {
     }
 
     /**
-     * Creates an animation that executes the supplied runnable and immediately completes.
+     * Creates an animation that executes the supplied function and immediately completes.
      */
-    fun action(action: Runnable): Animation.Action {
+    fun action(action: () -> Unit): Animation.Action {
         return add(Animation.Action(action))
     }
 
@@ -222,7 +222,7 @@ abstract class AnimBuilder {
      * chain of animations, which itself may be delayed or subject to animation barriers.
      */
     fun add(parent: GroupLayer, child: Layer): Animation.Action {
-        return action(Runnable { parent.add(child) })
+        return action({ parent.add(child) })
     }
 
     /**
@@ -241,7 +241,7 @@ abstract class AnimBuilder {
      */
     fun addAt(parent: GroupLayer,
               child: Layer, x: Float, y: Float): Animation.Action {
-        return action(Runnable { parent.addAt(child, x, y) })
+        return action({ parent.addAt(child, x, y) })
     }
 
     /**
@@ -252,49 +252,49 @@ abstract class AnimBuilder {
      * likely have changed.
      */
     fun reparent(newParent: GroupLayer, child: Layer): Animation.Action {
-        return action(Runnable { Layers.reparent(child, newParent) })
+        return action({ Layers.reparent(child, newParent) })
     }
 
     /**
      * Disposes the specified disposable.
      */
     fun dispose(dable: Closeable): Animation.Action {
-        return action(Runnable { dable.close() })
+        return action({ dable.close() })
     }
 
     /**
      * Sets the specified layer's depth to the specified value.
      */
     fun setDepth(layer: Layer, depth: Float): Animation.Action {
-        return action(Runnable { layer.setDepth(depth) })
+        return action({ layer.setDepth(depth) })
     }
 
     /**
      * Sets the specified layer to visible or not.
      */
     fun setVisible(layer: Layer, visible: Boolean): Animation.Action {
-        return action(Runnable { layer.setVisible(visible) })
+        return action({ layer.setVisible(visible) })
     }
 
     /**
      * Plays the supplied clip or loop.
      */
     fun play(sound: Playable): Animation.Action {
-        return action(Runnable { sound.play() })
+        return action({ sound.play() })
     }
 
     /**
      * Stops the supplied clip or loop.
      */
     fun stop(sound: Playable): Animation.Action {
-        return action(Runnable { sound.stop() })
+        return action({ sound.stop() })
     }
 
     /**
      * Plays the supplied sound.
      */
     fun play(sound: Sound): Animation.Action {
-        return action(Runnable { sound.play() })
+        return action({ sound.play() })
     }
 
     /**
@@ -335,28 +335,28 @@ abstract class AnimBuilder {
      * Stops the supplied sound from playing.
      */
     fun stop(sound: Sound): Animation.Action {
-        return action(Runnable { sound.stop() })
+        return action({ sound.stop() })
     }
 
     /**
      * Emits `value` on `signal`.
      */
     fun <T> emit(signal: Signal<T>, value: T): Animation.Action {
-        return action(Runnable { signal.emit(value) })
+        return action({ signal.emit(value) })
     }
 
     /**
      * Sets a value to the supplied constant.
      */
     fun <T> setValue(value: Value<T>, newValue: T): Animation.Action {
-        return action(Runnable { value.update(newValue) })
+        return action({ value.update(newValue) })
     }
 
     /**
      * Increments (or decrements if `amount` is negative} an int value.
      */
     fun increment(value: Value<Int>, amount: Int): Animation.Action {
-        return action(Runnable { value.update(value.get() + amount) })
+        return action({ value.update(value.get() + amount) })
     }
 
     companion object {
