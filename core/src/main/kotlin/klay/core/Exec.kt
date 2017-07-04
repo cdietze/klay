@@ -41,7 +41,7 @@ abstract class Exec {
                 try {
                     action()
                 } catch (e: Throwable) {
-                    plat.reportError("invokeLater Runnable failed: " + action, e)
+                    plat.reportError("invokeLater action failed: " + action, e)
                 }
 
                 ii++

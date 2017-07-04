@@ -26,7 +26,7 @@ internal class DialogTest(game: TestsGame) : Test(game, "Dialog", "Tests system 
 
         x = left
         for (type in Keyboard.TextType.values()) {
-            val button = game.ui.createButton(type.toString(), Runnable { game.input.getText(type, "Enter $type text:", "").onSuccess(onDialogResult) })
+            val button = game.ui.createButton(type.toString(), { game.input.getText(type, "Enter $type text:", "").onSuccess(onDialogResult) })
             game.rootLayer.addAt(button, x, y)
             x += button.width() + 10
         }
@@ -40,7 +40,7 @@ internal class DialogTest(game: TestsGame) : Test(game, "Dialog", "Tests system 
         y += 20f
 
         x = left
-        var button = game.ui.createButton("OK Only", Runnable {
+        var button = game.ui.createButton("OK Only", {
             game.input.sysDialog("OK Only Dialog", "This in an OK only dialog.\n" +
                     "With hard line broken text.\n\n" +
                     "And hopefully a blank line before this one.", "Cool!", null).onSuccess(onDialogResult)
@@ -48,7 +48,7 @@ internal class DialogTest(game: TestsGame) : Test(game, "Dialog", "Tests system 
         game.rootLayer.addAt(button, x, y)
         x += button.width() + 10
 
-        button = game.ui.createButton("OK Cancel", Runnable {
+        button = game.ui.createButton("OK Cancel", {
             game.input.sysDialog("OK Cancel Dialog", "This is an OK Cancel dialog.\n" +
                     "With hard line breaks.\n\n" +
                     "And hopefully a blank line before this one.", "Cool!", "Yuck!").onSuccess(onDialogResult)

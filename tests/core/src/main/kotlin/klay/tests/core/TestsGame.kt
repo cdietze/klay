@@ -166,7 +166,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
 
         for (test in tests) {
             if (!test.available()) continue
-            val button = ui.createButton(test.name, Runnable { startTest(test) })
+            val button = ui.createButton(test.name, { startTest(test) })
             if (x + button.width() > graphics.viewSize.width - gap) {
                 x = gap
                 y += maxHeight + gap
@@ -199,7 +199,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
 
         if (currentTest!!.usesPositionalInputs()) {
             // slap on a Back button if the test is testing the usual means of backing out
-            val back = ui.createButton("Back", Runnable { displayMenuLater() })
+            val back = ui.createButton("Back", { displayMenuLater() })
             rootLayer.addAt(back, graphics.viewSize.width - back.width() - 10f, 10f)
         }
     }

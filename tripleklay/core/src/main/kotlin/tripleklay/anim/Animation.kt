@@ -236,7 +236,7 @@ abstract class Animation protected constructor() {
     }
 
     /** Executes an action and completes immediately.  */
-    class Action(private val _action: Runnable) : Animation() {
+    class Action(private val _action: () -> Unit) : Animation() {
 
         override fun init(time: Float) {
             super.init(time)
@@ -250,7 +250,7 @@ abstract class Animation protected constructor() {
 
         override fun makeComplete() {
             if (!_complete) {
-                _action.run()
+                _action()
                 _complete = true
             }
         }

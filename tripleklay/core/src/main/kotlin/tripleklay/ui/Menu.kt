@@ -128,18 +128,18 @@ open class Menu
         // Undefunct
         _defunct = false
 
-        val doActivation = Runnable {
+        val doActivation = {
             // skip to the end!
             fastForward()
 
             // animate the menu opening
-            _complete = Runnable { onOpened() }
+            _complete = { onOpened() }
             _anim = open().then().action(_complete!!).handle()
         }
 
         // postpone the activation if we need validation
         if (isSet(Element.Flag.VALID))
-            doActivation.run()
+            doActivation()
         else
             _postLayout = doActivation
     }
@@ -157,7 +157,7 @@ open class Menu
         // disable input and animate closure
         _active = false
         _defunct = true
-        _complete = Runnable { onClosed() }
+        _complete = { onClosed() }
         _anim = close().then().action(_complete!!).handle()
     }
 
@@ -187,7 +187,7 @@ open class Menu
 
         // and now activate if it was previously requested and we weren't yet valid
         if (_postLayout != null) {
-            _postLayout!!.run()
+            _postLayout!!()
             _postLayout = null
         }
     }
@@ -232,7 +232,7 @@ open class Menu
             // cancel the animation
             _anim!!.cancel()
             // run our complete logic manually (this will always invoke clearAnim too)
-            _complete!!.run()
+            _complete!!()
             assert(_anim == null && _complete == null)
         }
     }
@@ -371,10 +371,10 @@ open class Menu
 
     /** Stash of the last Animation.Action in case we need to cancel it. For example, if the
      * menu is deactivated before it finished opening.  */
-    protected var _complete: Runnable? = null
+    protected var _complete: (() -> Unit)? = null
 
     /** Method to execute after layout, used to activate the menu.  */
-    protected var _postLayout: Runnable? = null
+    protected var _postLayout: (() -> Unit)? = null
 
     /** Whether the menu is ready for user input.  */
     protected var _active: Boolean = false

@@ -113,17 +113,17 @@ class TimerTest {
 
         // make sure that three timers set to expire at the same time go off in the order they were
         // registered
-        timer.every(10, Runnable {
+        timer.every(10, {
             r1[0] += 1
             assertTrue(r1[0] == r2[0] + 1)
             assertTrue(r1[0] == r3[0] + 1)
         })
-        timer.every(10, Runnable {
+        timer.every(10, {
             assertTrue(r1[0] == r2[0] + 1)
             r2[0] += 1
             assertTrue(r2[0] == r3[0] + 1)
         })
-        timer.every(10, Runnable {
+        timer.every(10, {
             assertTrue(r1[0] == r3[0] + 1)
             assertTrue(r2[0] == r3[0] + 1)
             r3[0] += 1
@@ -165,8 +165,8 @@ class TimerTest {
 
         // a timer task that schedules the sub
         val main = object : Counter() {
-            override fun run() {
-                super.run()
+            override fun invoke() {
+                super.invoke()
                 sub.cancel()
                 sub.handle = timer.after(2, sub)
             }
@@ -213,11 +213,11 @@ class TimerTest {
         assertEquals(1, ran1.ranCount.toLong())
     }
 
-    protected open class Counter : Runnable {
+    protected open class Counter : () -> Unit {
         var ranCount: Int = 0
         var handle: Timer.Handle? = null
 
-        override fun run() {
+        override fun invoke() {
             ++ranCount
         }
 
@@ -229,7 +229,7 @@ class TimerTest {
         }
     }
 
-    protected class Rescheduler(var cancelBefore: Boolean) : Runnable {
+    protected class Rescheduler(var cancelBefore: Boolean) : () -> Unit {
         var timer = Timer(0)
         var handle: Timer.Handle
         var ran: Int = 0
@@ -238,7 +238,7 @@ class TimerTest {
             handle = timer.after(1, this)
         }
 
-        override fun run() {
+        override fun invoke() {
             ran++
             val h = handle
             if (cancelBefore) {
@@ -258,8 +258,8 @@ class TimerTest {
     }
 
     protected class InternalCanceler : Counter() {
-        override fun run() {
-            super.run()
+        override fun invoke() {
+            super.invoke()
             cancel()
         }
     }

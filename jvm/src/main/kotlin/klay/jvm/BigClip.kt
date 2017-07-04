@@ -294,7 +294,7 @@ internal class BigClip : Clip, LineListener {
     }
 
     override fun start() {
-        val r = Runnable {
+        val r = {
             dataLine!!.start()
 
             active = true

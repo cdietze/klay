@@ -41,7 +41,7 @@ class AnimDemo : DemoScreen() {
                     _shaker = iface.anim.shake(click).bounds(-3f, 3f, -3f, 0f).cycleTime(25f, 25f).`in`(1000f).then().action(_clear).handle()
             }
 
-            protected val _clear: Runnable = Runnable { _shaker = null }
+            protected val _clear = { _shaker = null }
             protected var _shaker: Animation.Handle? = null
         })
         layer.addAt(click, (width - click.width()) / 2f, 275f)
@@ -72,7 +72,7 @@ class AnimDemo : DemoScreen() {
                 _banim.tweenXY(square).to(50f, 300f)
                 _banim.delay(250f).then().tweenRotation(square).to(0f).`in`(500f)
                 _banim.addBarrier()
-                _banim.action(Runnable { square.setInteractive(true) })
+                _banim.action({ square.setInteractive(true) })
             }
         })
 

@@ -44,7 +44,7 @@ abstract class Test(protected val game: TestsGame, val name: String, val descrip
         return ImageLayer(game.ui.wrapText(descrip, width, TextBlock.Align.CENTER))
     }
 
-    protected fun addButton(text: String, onClick: Runnable, x: Float, y: Float): Float {
+    protected fun addButton(text: String, onClick: () -> Unit, x: Float, y: Float): Float {
         val button = game.ui.createButton(text, onClick)
         game.rootLayer.addAt(button, x, y)
         return x + button.width() + 10

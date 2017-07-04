@@ -6,7 +6,7 @@ import org.junit.Test
 class AnimatorTest {
     @Test fun testAnimDoubleRegisterFreakout() {
         val anim = Animator()
-        val NOOP = Runnable { }
+        val NOOP = { }
         val chain = anim.action(NOOP).then()
         // it's OK to keep chaining animations
         chain.action(NOOP).then().action(NOOP)

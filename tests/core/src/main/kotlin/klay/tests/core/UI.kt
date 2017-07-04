@@ -34,11 +34,11 @@ class UI(private val game: TestsGame) {
         return formatText(BUTTON_FMT, label, true)
     }
 
-    fun createButton(label: String, onClick: Runnable): ImageLayer {
+    fun createButton(label: String, onClick: () -> Unit): ImageLayer {
         val layer = ImageLayer(formatButton(label))
         layer.events().connect(object : Pointer.Listener {
             override fun onStart(iact: Pointer.Interaction) {
-                onClick.run()
+                onClick()
             }
         })
         return layer

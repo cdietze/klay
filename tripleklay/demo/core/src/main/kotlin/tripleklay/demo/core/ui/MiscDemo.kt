@@ -108,9 +108,9 @@ class MiscDemo : DemoScreen() {
         capRoot.add(Group(AxisLayout.vertical()).addStyles(Style.BACKGROUND.`is`(Background.blank().inset(10f))).add(Label("Captured Root!"), Button("Captured Button"))).pack()
 
         // add a style animation to the captured root (clicking on cap roots NYI)
-        this.iface.anim.repeat(root.layer).delay(1000f).then().action(object : Runnable {
+        this.iface.anim.repeat(root.layer).delay(1000f).then().action(object : () -> Unit {
             internal var cycle: Int = 0
-            override fun run() {
+            override fun invoke() {
                 capRoot.addStyles(Style.BACKGROUND.`is`(if (cycle++ % 2 == 0)
                     Background.solid(Colors.WHITE).alpha(.5f)
                 else

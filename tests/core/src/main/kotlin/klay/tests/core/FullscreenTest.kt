@@ -26,7 +26,7 @@ class FullscreenTest(game: TestsGame) : Test(game, "Full Screen", "Tests support
         var x = spacing
         var nextX = spacing
         for (mode in host!!.enumerateModes()) {
-            val button = game.ui.createButton(mode.toString(), Runnable { host!!.setMode(mode) })
+            val button = game.ui.createButton(mode.toString(), { host!!.setMode(mode) })
             game.rootLayer.add(button)
             if (y + button.height() + spacing >= game.graphics.viewSize.height) {
                 x = nextX + spacing

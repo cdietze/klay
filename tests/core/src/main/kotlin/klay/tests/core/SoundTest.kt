@@ -1,9 +1,9 @@
 package klay.tests.core
 
-import klay.core.*
-import klay.scene.*
-
-import java.util.ArrayList
+import klay.core.Sound
+import klay.core.TextWrap
+import klay.scene.CanvasLayer
+import java.util.*
 
 /**
  * Tests sound playback support.
@@ -15,7 +15,7 @@ class SoundTest(game: TestsGame) : Test(game, "Sound", "Tests playing and loopin
         val actions = CanvasLayer(game.graphics, 300f, 300f)
 
         val fanfare = loadSound("sounds/fanfare")
-        x = addButton("Play Fanfare", Runnable {
+        x = addButton("Play Fanfare", {
             fanfare.play()
             addAction(actions, "Played Fanfare.")
         }, x, 100f)
@@ -40,13 +40,13 @@ class SoundTest(game: TestsGame) : Test(game, "Sound", "Tests playing and loopin
     private fun addLoopButtons(actions: CanvasLayer, name: String, sound: Sound,
                                x: Float): Float {
         var x = x
-        x = addButton("Loop " + name, Runnable {
+        x = addButton("Loop " + name, {
             if (!sound.isPlaying) {
                 sound.play()
                 addAction(actions, "Starting looping $name.")
             }
         }, x, 100f)
-        x = addButton("Stop Loop " + name, Runnable {
+        x = addButton("Stop Loop " + name, {
             if (sound.isPlaying) {
                 sound.stop()
                 addAction(actions, "Stopped looping $name.")

@@ -40,7 +40,7 @@ internal constructor(
     /** Executes the supplied action after the specified number of milliseconds have elapsed.
      * @return a handle that can be used to cancel the execution of the action.
      */
-    fun after(millis: Int, action: Runnable): Handle {
+    fun after(millis: Int, action: () -> Unit): Handle {
         return add(millis, 0, action)
     }
 
@@ -48,14 +48,14 @@ internal constructor(
      * thereafter.
      * @return a handle that can be used to cancel the execution of the action.
      */
-    fun every(millis: Int, action: Runnable): Handle {
+    fun every(millis: Int, action: () -> Unit): Handle {
         return atThenEvery(millis, millis, action)
     }
 
     /** Executes the supplied action starting `initialMillis` from now and every `repeatMillis` there after.
      * @return a handle that can be used to cancel the execution of the action.
      */
-    fun atThenEvery(initialMillis: Int, repeatMillis: Int, action: Runnable): Handle {
+    fun atThenEvery(initialMillis: Int, repeatMillis: Int, action: () -> Unit): Handle {
         return add(initialMillis, repeatMillis, action)
     }
 
@@ -82,16 +82,16 @@ internal constructor(
         }
     }
 
-    private fun execute(plat: Platform, runnable: Runnable) {
+    private fun execute(plat: Platform, action: () -> Unit) {
         try {
-            runnable.run()
+            action()
         } catch (e: Exception) {
             plat.log.warn("Action failed", e)
         }
 
     }
 
-    private fun add(initialMillis: Int, repeatMillis: Int, action: Runnable): Handle {
+    private fun add(initialMillis: Int, repeatMillis: Int, action: () -> Unit): Handle {
         val act = Action(initialMillis, repeatMillis, action)
         _root.next = insert(act, _root.next)
         return act
@@ -118,7 +118,7 @@ internal constructor(
         }
     }
 
-    private inner class Action(initialMillis: Int, val repeatMillis: Int, val action: Runnable?) : Handle {
+    private inner class Action(initialMillis: Int, val repeatMillis: Int, val action: (() -> Unit)?) : Handle {
 
         var nextExpire: Long = 0
         var next: Action? = null
