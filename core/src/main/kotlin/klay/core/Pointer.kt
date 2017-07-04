@@ -41,7 +41,7 @@ open class Pointer(private val plat: Platform) {
     var enabled = true
 
     /** A signal which emits pointer events.  */
-    var events: Signal<Event> = Signal.create()
+    var events: Signal<Event> = Signal()
 
     init {
 

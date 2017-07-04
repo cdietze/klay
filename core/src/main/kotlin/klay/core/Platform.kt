@@ -13,11 +13,11 @@ abstract class Platform {
     }
 
     /** A signal emitted with lifecycle events.  */
-    val lifecycle: Signal<Lifecycle> = Signal.create()
+    val lifecycle: Signal<Lifecycle> = Signal()
 
     /** This signal will be emitted at the start of every frame after the platform is started. Games
      * should connect to it to drive their main loop.  */
-    val frame: Signal<Platform> = Signal.create()
+    val frame: Signal<Platform> = Signal()
 
     /** Used by [.reportError].  */
     class Error(val message: String, val cause: Throwable)
@@ -25,7 +25,7 @@ abstract class Platform {
     /** Any errors reported via [.reportError] will be emitted to this signal in addition to
      * being logged. Games can connect to this signal if they wish to capture and record platform
      * errors.  */
-    val errors: Signal<Error> = Signal.create()
+    val errors: Signal<Error> = Signal()
 
     /** Enumerates the supported platform types.  */
     enum class Type {

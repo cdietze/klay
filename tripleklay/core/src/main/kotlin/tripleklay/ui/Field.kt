@@ -91,7 +91,7 @@ class Field @JvmOverloads constructor(initialText: String = "", styles: Styles =
         setStyles(styles)
 
         text = Value("")
-        _finishedEditing = Signal.create()
+        _finishedEditing = Signal()
 
         if (hasNative()) {
             _finishedEditing.connect({ if (!_fullTimeNative) updateMode(false) })
