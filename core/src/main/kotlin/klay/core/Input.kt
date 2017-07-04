@@ -23,13 +23,13 @@ open class Input(open val plat: Platform) {
     var keyboardEnabled = true
 
     /** A signal which emits mouse events.  */
-    var mouseEvents: Signal<Mouse.Event> = Signal.create()
+    var mouseEvents: Signal<Mouse.Event> = Signal()
 
     /** A signal via which touch events are emitted.  */
-    var touchEvents: Signal<Array<Touch.Event>> = Signal.create()
+    var touchEvents: Signal<Array<Touch.Event>> = Signal()
 
     /** A signal via which keyboard events are emitted.  */
-    var keyboardEvents: Signal<Keyboard.Event> = Signal.create()
+    var keyboardEvents: Signal<Keyboard.Event> = Signal()
 
     /** Returns true if this platform has mouse input.  */
     open val hasMouse: Boolean = false

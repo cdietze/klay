@@ -89,7 +89,7 @@ abstract class Element<T : Element<T>> protected constructor() {
      * if removed.
      */
     fun hierarchyChanged(): SignalView<Boolean> {
-        if (_hierarchyChanged == null) _hierarchyChanged = Signal.create()
+        if (_hierarchyChanged == null) _hierarchyChanged = Signal()
         return _hierarchyChanged!!
     }
 

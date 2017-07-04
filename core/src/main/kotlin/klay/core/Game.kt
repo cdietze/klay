@@ -26,10 +26,10 @@ abstract class Game
         private val updateRate: Int = 33) {
 
     /** A signal emitted on every simulation update.  */
-    val update: Signal<Clock> = Signal.create()
+    val update: Signal<Clock> = Signal()
 
     /** A signal emitted on every frame.  */
-    val paint: Signal<Clock> = Signal.create()
+    val paint: Signal<Clock> = Signal()
 
     private val updateClock = Clock()
     private val paintClock = Clock()
