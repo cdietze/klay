@@ -1,0 +1,18 @@
+load("@org_pubref_rules_kotlin//kotlin:rules.bzl", "kotlin_binary", "kotlin_library")
+
+kotlin_binary(
+    name = "jvm",
+    main_class = "klay.tests.jvm.HelloLwjglWorld",
+    srcs = glob(["src/main/kotlin/**/*.kt"]),
+    deps = [
+        # TODO why can I not just use "//tests/core" here?
+        "//tests/core:core",
+        "//core:core",
+        "//scene:scene",
+        "//jvm:jvm",
+    ],
+    java_deps = [
+        "@org_jetbrains_kotlin_kotlin_stdlib_jre8//jar",
+        "@org_jetbrains_kotlin_kotlin_stdlib_jre7//jar",
+    ]
+)
