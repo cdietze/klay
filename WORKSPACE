@@ -24,3 +24,60 @@ http_archive(
     strip_prefix = "react.kt-master",
     urls = ["https://github.com/cdietze/react.kt/archive/master.zip"]
 )
+
+# JVM dependencies
+
+maven_jar(
+	name = "org_jetbrains_kotlin_kotlin_stdlib_jre7",
+	artifact = "org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.2",
+	sha1 = "8fe14858be2d85bb2c8ad1e060f6dafbd45f48f4",
+)
+maven_jar(
+	name = "org_jetbrains_kotlin_kotlin_stdlib_jre8",
+	artifact = "org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.2",
+	sha1 = "cd6d8b7a32971564fab0846009593f3bfabdcac1",
+)
+maven_jar(
+	name = "org_lwjgl_lwjgl",
+	artifact = "org.lwjgl:lwjgl:3.1.1",
+	sha1 = "02b449bd5d8738abb138d6ad89d04b83d4ede504",
+)
+maven_jar(
+	name = "org_lwjgl_lwjgl_glfw",
+	artifact = "org.lwjgl:lwjgl-glfw:3.1.1",
+	sha1 = "292401460b1030da5626c23b9930fef29421d354",
+)
+maven_jar(
+	name = "org_lwjgl_lwjgl_jemalloc",
+	artifact = "org.lwjgl:lwjgl-jemalloc:3.1.1",
+	sha1 = "22d6f36387dbe8b13a419a8f8202b615144c7c49",
+)
+maven_jar(
+	name = "org_lwjgl_lwjgl_opengl",
+	artifact = "org.lwjgl:lwjgl-opengl:3.1.1",
+	sha1 = "bf95209b5d3d484871812b5a7f5d8a9a147bdd0e",
+)
+maven_jar(
+	name = "org_java_websocket_Java_WebSocket",
+	artifact = "org.java-websocket:Java-WebSocket:1.3.0",
+	sha1 = "db2658f013fb163de4a99274c2eb9e17efe535d2",
+)
+maven_jar(
+	name = "com_googlecode_soundlibs_mp3spi",
+	artifact = "com.googlecode.soundlibs:mp3spi:1.9.5.4",
+	sha1 = "3bdf9ffd65c157daec8735e127c3705513bd384d",
+)
+maven_jar(
+	name = "com_googlecode_soundlibs_jlayer",
+	artifact = "com.googlecode.soundlibs:jlayer:1.0.1.4",
+	sha1 = "b8df07ad72b482f7d6e6dee7fed669385e8dd92f",
+)
+maven_jar(
+	name = "com_googlecode_soundlibs_tritonus_share",
+	artifact = "com.googlecode.soundlibs:tritonus-share:0.3.7.4",
+	sha1 = "bdddc55194f9cf7b970dd5f3affcbacb88342b0b",
+)
+#maven_jar(
+#	name = "org_lwjgl_lwjgl_natives_macos",
+#	artifact = "org.lwjgl:lwjgl:3.1.1:jar:natives-macos",
+#)
