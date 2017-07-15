@@ -4,13 +4,10 @@ language: java
 env:
   - V=0.5.2
 before_install:
-  - wget https://github.com/bazelbuild/bazel/archive/$V.zip
-  - unzip $V.zip
-  - cd bazel-$V
-  - ./compile.sh
-  - sudo cp output/bazel /usr/bin/bazel
-  - cd ..
-  - rm -rf bazel-$V
+  - wget https://github.com/bazelbuild/bazel/releases/download/$V/bazel-$V-installer-linux-x86_64.sh -O install.sh
+  - chmod +x install.sh
+  - ./install.sh --user
+  - rm -f install.sh
 script:
   - bazel build //...
   - bazel test //...
