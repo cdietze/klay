@@ -6,11 +6,13 @@ git_repository(
 
 load("@org_pubref_rules_kotlin//kotlin:rules.bzl", "kotlin_repositories")
 
+load("@bazel_tools//tools/build_defs/repo:maven_rules.bzl", "maven_jar")
+
 kotlin_repositories()
 
 maven_jar(
     name = "junit4",
-    artifact = "junit:junit:jar:4.12",
+    artifact = "junit:junit:4.12",
 )
 
 http_archive(
@@ -18,12 +20,22 @@ http_archive(
     strip_prefix = "pythagoras.kt-master",
     urls = ["https://github.com/cdietze/pythagoras.kt/archive/master.zip"]
 )
+# Uncomment for local development
+#local_repository(
+#    name = "pythagoras_kt",
+#    path = "../pythagoras.kt",
+#)
 
 http_archive(
     name = "react_kt",
     strip_prefix = "react.kt-master",
     urls = ["https://github.com/cdietze/react.kt/archive/master.zip"]
 )
+# Uncomment for local development
+#local_repository(
+#    name = "react_kt",
+#    path = "../react.kt",
+#)
 
 # JVM dependencies
 
@@ -77,7 +89,19 @@ maven_jar(
 	artifact = "com.googlecode.soundlibs:tritonus-share:0.3.7.4",
 	sha1 = "bdddc55194f9cf7b970dd5f3affcbacb88342b0b",
 )
-#maven_jar(
-#	name = "org_lwjgl_lwjgl_natives_macos",
-#	artifact = "org.lwjgl:lwjgl:3.1.1:jar:natives-macos",
-#)
+maven_jar(
+	name = "org_lwjgl_lwjgl_natives_macos",
+	artifact = "org.lwjgl:lwjgl:3.1.1:jar:natives-macos",
+)
+maven_jar(
+	name = "org_lwjgl_lwjgl_glfw_natives_macos",
+	artifact = "org.lwjgl:lwjgl-glfw:3.1.1:jar:natives-macos",
+)
+maven_jar(
+	name = "org_lwjgl_lwjgl_jemalloc_natives_macos",
+	artifact = "org.lwjgl:lwjgl-jemalloc:3.1.1:jar:natives-macos",
+)
+maven_jar(
+	name = "org_lwjgl_lwjgl_opengl_natives_macos",
+	artifact = "org.lwjgl:lwjgl-opengl:3.1.1:jar:natives-macos",
+)
