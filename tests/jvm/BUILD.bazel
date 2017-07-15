@@ -1,8 +1,8 @@
 load("@org_pubref_rules_kotlin//kotlin:rules.bzl", "kotlin_binary", "kotlin_library")
 
 kotlin_binary(
-    name = "jvm",
-    main_class = "klay.tests.jvm.HelloLwjglWorld",
+    name = "jvm_macos",
+    main_class = "klay.tests.jvm.JvmTestsMain",
     srcs = glob(["src/main/kotlin/**/*.kt"]),
     deps = [
         # TODO why can I not just use "//tests/core" here?
@@ -10,9 +10,15 @@ kotlin_binary(
         "//core:core",
         "//scene:scene",
         "//jvm:jvm",
+        "@pythagoras_kt//:pythagoras_kt",
+        "@react_kt//:react_kt",
     ],
     java_deps = [
         "@org_jetbrains_kotlin_kotlin_stdlib_jre8//jar",
         "@org_jetbrains_kotlin_kotlin_stdlib_jre7//jar",
+        "@org_lwjgl_lwjgl_natives_macos//jar",
+        "@org_lwjgl_lwjgl_glfw_natives_macos//jar",
+        "@org_lwjgl_lwjgl_jemalloc_natives_macos//jar",
+        "@org_lwjgl_lwjgl_opengl_natives_macos//jar",
     ]
 )
