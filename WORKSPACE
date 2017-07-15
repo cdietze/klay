@@ -6,8 +6,6 @@ git_repository(
 
 load("@org_pubref_rules_kotlin//kotlin:rules.bzl", "kotlin_repositories")
 
-load("@bazel_tools//tools/build_defs/repo:maven_rules.bzl", "maven_jar")
-
 kotlin_repositories()
 
 maven_jar(
@@ -89,19 +87,23 @@ maven_jar(
 	artifact = "com.googlecode.soundlibs:tritonus-share:0.3.7.4",
 	sha1 = "bdddc55194f9cf7b970dd5f3affcbacb88342b0b",
 )
-maven_jar(
-	name = "org_lwjgl_lwjgl_natives_macos",
-	artifact = "org.lwjgl:lwjgl:3.1.1:jar:natives-macos",
+
+http_jar(
+    name = "org_lwjgl_lwjgl_natives_macos",
+    url = "http://repo1.maven.org/maven2/org/lwjgl/lwjgl/3.1.1/lwjgl-3.1.1-natives-macos.jar",
 )
-maven_jar(
-	name = "org_lwjgl_lwjgl_glfw_natives_macos",
-	artifact = "org.lwjgl:lwjgl-glfw:3.1.1:jar:natives-macos",
+
+http_jar(
+    name = "org_lwjgl_lwjgl_glfw_natives_macos",
+    url = "http://repo1.maven.org/maven2/org/lwjgl/lwjgl-glfw/3.1.1/lwjgl-glfw-3.1.1-natives-macos.jar",
 )
-maven_jar(
-	name = "org_lwjgl_lwjgl_jemalloc_natives_macos",
-	artifact = "org.lwjgl:lwjgl-jemalloc:3.1.1:jar:natives-macos",
+
+http_jar(
+    name = "org_lwjgl_lwjgl_jemalloc_natives_macos",
+    url = "http://repo1.maven.org/maven2/org/lwjgl/lwjgl-jemalloc/3.1.1/lwjgl-jemalloc-3.1.1-natives-macos.jar",
 )
-maven_jar(
-	name = "org_lwjgl_lwjgl_opengl_natives_macos",
-	artifact = "org.lwjgl:lwjgl-opengl:3.1.1:jar:natives-macos",
+
+http_jar(
+    name = "org_lwjgl_lwjgl_opengl_natives_macos",
+    url = "http://repo1.maven.org/maven2/org/lwjgl/lwjgl-opengl/3.1.1/lwjgl-opengl-3.1.1-natives-macos.jar",
 )
