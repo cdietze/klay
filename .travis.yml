@@ -1,15 +1,16 @@
+dist: trusty
+sudo: required
 language: java
-install: "mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U"
-script: "mvn test -B"
-after_success: etc/travis-deploy.sh
-jdk:
-  - oraclejdk8
-
-cache:
-  directories:
-    - '$HOME/.m2/repository'
-
 env:
-  global:
-    - secure: "LDCyCI5C3H9wNPBT+Rzv9mOmoQJ0iaWAspv4+zP1BDuiLQViHkoT0+m2AzJYxbhPv6xJqMz1qjITC/1Jk68tyvY5HK9+vjDcDKYaODkezx7YMLHU4MA+GXu0dbe6nlBlmN6rDxikDxd4ORNDIxb0vgz/llW/Hy+P9mjnJKWNDXoGBkNQBnt2redqY8gZL5gVHPD/v2kpK45w3+et9QYftPAM7nF5wIJSG6owg/90VVx7q23B7siKiF7iTCfldiIpY07eFUPIGPQ499h1Um9BU6LrBnVicylM3QluhAswiVzq8B7TLjaVeoUZYrgOEVw51qilBobVv+5XA9tbNUJaPwt6AZ+tqw6JPlgrpdVAkWewKQ1wLbAdhhFZwJbcMJesKRMy8evhvC8g9y7TVw6JVsqywhi6Sl9tZYtIBVrn6fz5/TSsGNBbhiSqqAR9P66mfL2hH946xHTYPpsLrYFP7ip0fKfcZmlfhUuYKor5olcAU6cGHCjF9NHjCkzdneYlI3zARag/kWFnCNB4rH/QwqfNwzsA2cDAVPcRnGGGm1Nu5U507Kh8vAMVNyCpez3i/lO/4v7ti0WgF5Ap2yKc2rKocVqB6XbVHMnM4MGZgKeyKZLYxXIsuiiEY1JHW3S45G1PMq2ZcpaDhLX7U9YQKQ4GfdA5JsiqGi4CZsZ/0ts="
-    - secure: "EOuSq/mN7XiuU9f7/l4L7QqnTDqFw7noLSHrVJ69fEa1Ybjf67oEpsheKwlWFk/SPYP3f45DZhi1EGhHOBtrppMKQ621aV3jNTVyBqazFAUSr3rRtXpxnghJD/OZGn3iSTm13b6uEANqDgUQ4M+Ew9nBf0Qat+GUPr8zeFwX/DN5fWXx/fr6pDANew+rUFuyUUJYME3wNQmQrjUNQAKzOTdxUGgU0ontYHMZvW8BWdGT1Y14FaMhDnmM3JvF1BXZCAFTBt6hn5A6dLElMHstRfv6U3HXuBd1IQrEWEXOyNXBfPi99vkZeuacpYCjV5x5LueE/Zoccw1RV81svPspRtlHrrQ4cmRrz+XnhfgPzS6iwIOalcPaHIilAN/iDqge6BcWFNt1I5z4y6CLt9cwZPBOQoSLP3xth1DuhJjdwc/1k13kxP79GVkUU9aLnV/wx26VkrtQ1EQ7GksI+yZtSIdzVVZL4mpBUZottbAxGUC7hBUC4aqIOpedaOyJa/D25cuJEMYIf/2SqZTiDmTQlBwrggVOFENbmIdH+g4ALGRjXQTyS+C0liEzqUC2FXFemPBrOS0sEBsVdREE8zKO2mMFDA8GOx99WqyCkCu9Saw6hAc9cBEwZYIJ9EJsuKeuzCIlIySn5XKUzVxzBDYYehTAOPXHm+tGM/Be1WfAkB8="
+  - V=0.5.2
+before_install:
+  - wget https://github.com/bazelbuild/bazel/archive/$V.zip
+  - unzip $V.zip
+  - cd bazel-$V
+  - ./compile.sh
+  - sudo cp output/bazel /usr/bin/bazel
+  - cd ..
+  - rm -rf bazel-$V
+script:
+  - bazel build //...
+  - bazel test //...
