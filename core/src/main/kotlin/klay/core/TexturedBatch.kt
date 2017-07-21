@@ -11,7 +11,7 @@ open class TexturedBatch protected constructor(val gl: GL20) : GLBatch() {
         /** Returns the source of the texture fragment shader program. Note that this program
          * *must* preserve the use of the existing varying attributes. You can add new varying
          * attributes, but you cannot remove or change the defaults.  */
-        fun fragment(): String {
+        open fun fragment(): String {
             val str = StringBuilder(FRAGMENT_PREAMBLE)
             str.append(textureUniforms())
             str.append(textureVaryings())
@@ -45,7 +45,7 @@ open class TexturedBatch protected constructor(val gl: GL20) : GLBatch() {
 
         companion object {
 
-            protected val FRAGMENT_PREAMBLE =
+            val FRAGMENT_PREAMBLE =
                     "#ifdef GL_ES\n" +
                             "precision lowp float;\n" +
                             "#else\n" +
