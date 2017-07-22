@@ -1,7 +1,7 @@
 git_repository(
     name = "org_pubref_rules_kotlin",
     remote = "https://github.com/pubref/rules_kotlin.git",
-    tag = "v0.3.1", # update as needed
+    commit = "08ca6c7193732463cf45bc41c84776928671edd8",
 )
 
 load("@org_pubref_rules_kotlin//kotlin:rules.bzl", "kotlin_repositories")
