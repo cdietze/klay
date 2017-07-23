@@ -42,6 +42,8 @@ open class Hud(protected val _game: SceneGame) {
         private val _quadShader = Value("")
         private val _trisShader = Value("")
 
+        private var _paints = 0
+
         init {
             add("Shader info:", true)
             add(_quadShader)
@@ -64,6 +66,7 @@ open class Hud(protected val _game: SceneGame) {
             // receive paint updates while our layer is connected
             LayerUtil.bind(layer, game.paint, object : Slot<Clock> {
                 override fun invoke(clock: Clock) {
+                    _paints++
                     val now = clock.tick
                     if (now > _nextUpdate) {
                         willUpdate()
@@ -95,6 +98,8 @@ open class Hud(protected val _game: SceneGame) {
             // stats.reset();
             // _quadShader.update("Quad: " + graphics().ctx().quadShaderInfo());
             // _trisShader.update("Tris: " + graphics().ctx().trisShaderInfo());
+            _frames.update(_paints);
+            _paints = 0
         }
     }
 
