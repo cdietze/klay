@@ -1,5 +1,8 @@
 package klay.core
 
+import pythagoras.f.IRectangle
+import pythagoras.f.XY
+
 /**
  * A 2D drawing canvas. Rendering is performed by the CPU into a bitmap.
  */
@@ -97,11 +100,17 @@ abstract class Canvas(val gfx: Graphics,
     /** Clears the specified region to `rgba (0, 0, 0, 0)`.  */
     abstract fun clearRect(x: Float, y: Float, width: Float, height: Float): Canvas
 
+    /** Clears the specified region to `rgba (0, 0, 0, 0)`.  */
+    fun clearRect(rect: IRectangle): Canvas = clearRect(rect.x, rect.y, rect.width, rect.height)
+
     /** Intersects the current clip with the specified path.  */
     abstract fun clip(clipPath: Path): Canvas
 
     /** Intersects the current clip with the supplied rectangle.  */
     abstract fun clipRect(x: Float, y: Float, width: Float, height: Float): Canvas
+
+    /** Intersects the current clip with the supplied rectangle.  */
+    fun clipRect(rect: IRectangle): Canvas = clipRect(rect.x, rect.y, rect.width, rect.height)
 
     /** Creates a path object.  */
     abstract fun createPath(): Path
@@ -116,6 +125,12 @@ abstract class Canvas(val gfx: Graphics,
     fun drawCentered(image: Drawable, x: Float, y: Float): Canvas {
         return draw(image, x - image.width / 2, y - image.height / 2)
     }
+
+    /**
+     * Draws `image` centered at the specified location. Subtracts `image.width/2` from x
+     * and `image.height/2` from y.
+     */
+    fun drawCentered(image: Drawable, xy: XY): Canvas = drawCentered(image, xy.x, xy.y)
 
     /**
      * Draws a scaled image at the specified location `(x, y)` size `(w x h)`.
@@ -144,9 +159,19 @@ abstract class Canvas(val gfx: Graphics,
     abstract fun drawLine(x0: Float, y0: Float, x1: Float, y1: Float): Canvas
 
     /**
+     * Draws a line between the two specified points.
+     */
+    fun drawLine(a: XY, b: XY): Canvas = drawLine(a.x, a.y, b.x, b.y)
+
+    /**
      * Draws a single point at the specified location.
      */
     abstract fun drawPoint(x: Float, y: Float): Canvas
+
+    /**
+     * Draws a single point at the specified location.
+     */
+    fun drawPoint(location: XY): Canvas = drawPoint(location.x, location.y)
 
     /**
      * Draws text at the specified location. The text will be drawn in the current fill color.
@@ -154,9 +179,19 @@ abstract class Canvas(val gfx: Graphics,
     abstract fun drawText(text: String, x: Float, y: Float): Canvas
 
     /**
+     * Draws text at the specified location. The text will be drawn in the current fill color.
+     */
+    fun drawText(text: String, location: XY): Canvas = drawText(text, location.x, location.y)
+
+    /**
      * Fills a circle at the specified center and radius.
      */
     abstract fun fillCircle(x: Float, y: Float, radius: Float): Canvas
+
+    /**
+     * Fills a circle at the specified center and radius.
+     */
+    fun fillCircle(center: XY, radius: Float): Canvas = fillCircle(center.x, center.y, radius)
 
     /**
      * Fills the specified path.
@@ -169,23 +204,36 @@ abstract class Canvas(val gfx: Graphics,
     abstract fun fillRect(x: Float, y: Float, width: Float, height: Float): Canvas
 
     /**
+     * Fills the specified rectangle.
+     */
+    fun fillRect(rect: IRectangle): Canvas = fillRect(rect.x, rect.y, rect.width, rect.height)
+
+    /**
      * Fills the specified rounded rectangle.
      * @param x the x coordinate of the upper left of the rounded rectangle.
-     * *
      * @param y the y coordinate of the upper left of the rounded rectangle.
-     * *
      * @param width the width of the rounded rectangle.
-     * *
      * @param height the width of the rounded rectangle.
-     * *
      * @param radius the radius of the circle to use for the corner.
      */
     abstract fun fillRoundRect(x: Float, y: Float, width: Float, height: Float, radius: Float): Canvas
 
     /**
+     * Fills the specified rounded rectangle.
+     * @param rect the rounded rectangle.
+     * @param radius the radius of the circle to use for the corner.
+     */
+    fun fillRoundRect(rect: IRectangle, radius: Float): Canvas = fillRoundRect(rect.x, rect.y, rect.width, rect.height, radius)
+
+    /**
      * Fills the text at the specified location. The text will use the current fill color.
      */
     abstract fun fillText(text: TextLayout, x: Float, y: Float): Canvas
+
+    /**
+     * Fills the text at the specified location. The text will use the current fill color.
+     */
+    fun fillText(text: TextLayout, location: XY): Canvas = fillText(text, location.x, location.y)
 
     /**
      * Restores the canvas's previous state.
@@ -222,9 +270,12 @@ abstract class Canvas(val gfx: Graphics,
     abstract fun scale(x: Float, y: Float): Canvas
 
     /**
+     * Scales the current transformation matrix by the specified amount.
+     */
+    fun scale(scale: XY): Canvas = scale(scale.x, scale.y)
+
+    /**
      * Set the global alpha value to be used for all painting.
-     *
-     *
      * Values outside the range [0,1] will be clamped to the range [0,1].
      * @param alpha alpha value in range [0,1] where 0 is transparent and 1 is opaque
      */
@@ -284,6 +335,11 @@ abstract class Canvas(val gfx: Graphics,
     abstract fun strokeCircle(x: Float, y: Float, radius: Float): Canvas
 
     /**
+     * Strokes a circle at the specified center and radius.
+     */
+    fun strokeCircle(center: XY, radius: Float): Canvas = strokeCircle(center.x, center.y, radius)
+
+    /**
      * Strokes the specified path.
      */
     abstract fun strokePath(path: Path): Canvas
@@ -294,25 +350,38 @@ abstract class Canvas(val gfx: Graphics,
     abstract fun strokeRect(x: Float, y: Float, width: Float, height: Float): Canvas
 
     /**
+     * Strokes the specified rectangle.
+     */
+    fun strokeRect(rect: IRectangle): Canvas = strokeRect(rect.x, rect.y, rect.width, rect.height)
+
+    /**
      * Strokes the specified rounded rectangle.
      * @param x the x coordinate of the upper left of the rounded rectangle.
-     * *
      * @param y the y coordinate of the upper left of the rounded rectangle.
-     * *
      * @param width the width of the rounded rectangle.
-     * *
      * @param height the width of the rounded rectangle.
-     * *
      * @param radius the radius of the circle to use for the corner.
      */
-    abstract fun strokeRoundRect(x: Float, y: Float, width: Float, height: Float,
-                                 radius: Float): Canvas
+    abstract fun strokeRoundRect(x: Float, y: Float, width: Float, height: Float, radius: Float): Canvas
+
+    /**
+     * Strokes the specified rounded rectangle.
+     * @param rect the rounded rectangle.
+     * @param radius the radius of the circle to use for the corner.
+     */
+    fun strokeRoundRect(rect: IRectangle, radius: Float): Canvas = strokeRoundRect(rect.x, rect.y, rect.width, rect.height, radius)
 
     /**
      * Strokes the text at the specified location. The text will use the current stroke configuration
      * (color, width, etc.).
      */
     abstract fun strokeText(text: TextLayout, x: Float, y: Float): Canvas
+
+    /**
+     * Strokes the text at the specified location. The text will use the current stroke configuration
+     * (color, width, etc.).
+     */
+    fun strokeText(text: TextLayout, location: XY): Canvas = strokeText(text, location.x, location.y)
 
     /** A helper function for creating a texture from this canvas's image, and then disposing this
      * canvas. This is useful for situations where you create a canvas, draw something in it, turn
@@ -334,6 +403,11 @@ abstract class Canvas(val gfx: Graphics,
      * Translates the current transformation matrix by the given amount.
      */
     abstract fun translate(x: Float, y: Float): Canvas
+
+    /**
+     * Translates the current transformation matrix by the given amount.
+     */
+    fun translate(xy: XY): Canvas = translate(xy.x, xy.y)
 
     /** Used to track modifications to our underlying image.  */
     protected var isDirty: Boolean = false
