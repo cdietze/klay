@@ -15,45 +15,35 @@ abstract class Canvas(val gfx: Graphics,
         /** A (B is ignored). Display the source image instead of the destination image.
          * `[Sa, Sc]`  */
         SRC,
-
         /** B atop A. Same as source-atop but using the destination image instead of the source image
          * and vice versa. `[Sa, Sa * Dc + Sc * (1 - Da)]`.  */
         DST_ATOP,
-
         /** A over B. Display the source image wherever the source image is opaque. Display the
          * destination image elsewhere. `[Sa + (1 - Sa)*Da, Rc = Sc + (1 - Sa)*Dc]`.  */
         SRC_OVER,
-
         /** B over A. Same as source-over but using the destination image instead of the source image
          * and vice versa. `[Sa + (1 - Sa)*Da, Rc = Dc + (1 - Da)*Sc]`.  */
         DST_OVER,
-
         /** A in B. Display the source image wherever both the source image and destination image are
          * opaque. Display transparency elsewhere. `[Sa * Da, Sc * Da]`.  */
         SRC_IN,
-
         /** B in A. Same as source-in but using the destination image instead of the
          * source image and vice versa. `[Sa * Da, Sa * Dc]`.  */
         DST_IN,
-
         /** A out B. Display the source image wherever the source image is opaque and the destination
          * image is transparent. Display transparency elsewhere.
          * `[Sa * (1 - Da), Sc * (1 - Da)]`.  */
         SRC_OUT,
-
         /** B out A. Same as source-out but using the destination image instead of
          * the source image and vice versa. `[Da * (1 - Sa), Dc * (1 - Sa)]`.  */
         DST_OUT,
-
         /** A atop B. Display the source image wherever both images are opaque. Display the destination
          * image wherever the destination image is opaque but the source image is transparent. Display
          * transparency elsewhere. `[Da, Sc * Da + (1 - Sa) * Dc]`.  */
         SRC_ATOP,
-
         /** A xor B. Exclusive OR of the source image and destination image.
          * `[Sa + Da - 2 * Sa * Da, Sc * (1 - Da) + (1 - Sa) * Dc]`.  */
         XOR,
-
         /** A * B. Multiplies the source and destination images. **NOTE:** this is not supported by
          * the HTML5 and Flash backends. `[Sa * Da, Sc * Dc]`.  */
         MULTIPLY
@@ -84,7 +74,6 @@ abstract class Canvas(val gfx: Graphics,
 
     /** The width of this canvas.  */
     val width: Float = image.width
-
     /** The height of this canvas.  */
     val height: Float = image.height
 
@@ -140,7 +129,6 @@ abstract class Canvas(val gfx: Graphics,
     /**
      * Draws a subregion of a image `(sw x sh) @ (sx, sy)` at the specified size
      * `(dw x dh)` and location `(dx, dy)`.
-
      * TODO (jgw): Document whether out-of-bounds source coordinates clamp, repeat, or do nothing.
      */
     fun draw(image: Drawable, dx: Float, dy: Float, dw: Float, dh: Float,
@@ -182,7 +170,6 @@ abstract class Canvas(val gfx: Graphics,
 
     /**
      * Fills the specified rounded rectangle.
-
      * @param x the x coordinate of the upper left of the rounded rectangle.
      * *
      * @param y the y coordinate of the upper left of the rounded rectangle.
@@ -202,7 +189,6 @@ abstract class Canvas(val gfx: Graphics,
 
     /**
      * Restores the canvas's previous state.
-
      * @see .save
      */
     abstract fun restore(): Canvas
@@ -215,7 +201,6 @@ abstract class Canvas(val gfx: Graphics,
     /**
      * The save and restore methods preserve and restore the state of the canvas,
      * but not specific paths or graphics.
-
      * The following values are saved:
      *
      *  * transformation matrix
@@ -241,7 +226,6 @@ abstract class Canvas(val gfx: Graphics,
      *
      *
      * Values outside the range [0,1] will be clamped to the range [0,1].
-
      * @param alpha alpha value in range [0,1] where 0 is transparent and 1 is opaque
      */
     abstract fun setAlpha(alpha: Float): Canvas
@@ -311,7 +295,6 @@ abstract class Canvas(val gfx: Graphics,
 
     /**
      * Strokes the specified rounded rectangle.
-
      * @param x the x coordinate of the upper left of the rounded rectangle.
      * *
      * @param y the y coordinate of the upper left of the rounded rectangle.
