@@ -30,7 +30,7 @@ class Texture(// needed to access GL20 and to queue our destruction on finalize
         val displayHeight: Float) : Tile(), Closeable {
 
     /** Used to configure texture at creation time.  */
-    class Config(
+    data class Config(
             /** Whether or not texture's lifecycle is automatically managed via reference counting. If the
              * texture will be used in an `ImageLayer`, it should be reference counted unless you
              * are doing something special. Otherwise you can decide whether you want to use the reference
@@ -45,7 +45,7 @@ class Texture(// needed to access GL20 and to queue our destruction on finalize
 
         /** Returns a copy of this config with `repeatX`, `repeatY` set as specified.  */
         fun repeat(repeatX: Boolean, repeatY: Boolean): Config {
-            return Config(managed, repeatX, repeatY, minFilter, magFilter, mipmaps)
+            return copy(repeatX = repeatX, repeatY = repeatY)
         }
 
         /** Returns `sourceWidth` rounded up to a POT if necessary.  */
@@ -59,13 +59,13 @@ class Texture(// needed to access GL20 and to queue our destruction on finalize
         }
 
         override fun toString(): String {
-            val repstr = (if (repeatX) "x" else "") + if (repeatY) "y" else ""
-            return "[managed=" + managed + ", repeat=" + repstr +
-                    ", filter=" + minFilter + "/" + magFilter + ", mipmaps=" + mipmaps + "]"
+            return "[managed=$managed, " +
+                    "repeat=${if (repeatX) "x" else ""}${if (repeatY) "y" else ""}, " +
+                    "filter=$minFilter/$magFilter, " +
+                    "mipmaps=$mipmaps]"
         }
 
         companion object {
-
             /** Default managed texture configuration: managed, no mipmaps, no repat, linear filters.  */
             var DEFAULT = Config(true, false, false, GL_LINEAR, GL_LINEAR, false)
             /** Default unmanaged texture configuration: unmanaged, no mipmaps, no repat, linear filters.  */
