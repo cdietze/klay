@@ -12,23 +12,23 @@ import react.Value
 
 /**
  * A layer is a node in the scene graph. It has a transformation matrix and other properties which
- * can be manipulated directly and which "take effect" the next time the layer is [.paint]ed.
+ * can be manipulated directly and which "take effect" the next time the layer is [paint]ed.
 
  *
- * Everything can be accomplished by extending [Layer] and overriding [.paintImpl].
+ * Everything can be accomplished by extending [Layer] and overriding [paintImpl].
  * However, [GroupLayer], [ImageLayer], [ClippedLayer] etc. are provided to
  * make it easy to implement common use cases "out of the box".
  */
 abstract class Layer : Closeable {
 
-    /** Enumerates layer lifecycle states; see [.state].  */
+    /** Enumerates layer lifecycle states; see [state].  */
     enum class State {
         REMOVED, ADDED, DISPOSED
     }
 
     /** Used to configure the origin of a layer based on its width/height.  */
     enum class Origin {
-        /** Origin is manually specified via [.setOrigin].  */
+        /** Origin is manually specified via [setOrigin].  */
         FIXED {
             override fun ox(width: Float): Float {
                 return 0f
@@ -154,18 +154,18 @@ abstract class Layer : Closeable {
     /**
      * A reactive value which tracks this layer's lifecycle. It starts out [State.REMOVED], and
      * transitions to [State.ADDED] when the layer is added to a scene graph root and back to
-     * [State.REMOVED] when removed, until it is finally [.close]d at which point it
+     * [State.REMOVED] when removed, until it is finally [close]d at which point it
      * transitions to [State.DISPOSED].
      */
     val state = Value(State.REMOVED)
 
-    /** Creates an unclipped layer. The [.paint] method must be overridden by the creator.  */
+    /** Creates an unclipped layer. The [paint] method must be overridden by the creator.  */
     init {
         setFlag(Flag.VISIBLE, true)
     }
 
     /** Returns the name of this layer. This defaults to the simple name of the class, but can be set
-     * programmatically to aid in debugging. See [.setName].  */
+     * programmatically to aid in debugging. See [setName].  */
     open fun name(): String {
         // lazily init name if it's not been set
         if (name == null) {
@@ -175,7 +175,7 @@ abstract class Layer : Closeable {
         return name!!
     }
 
-    /** Sets the name of this layer. See [.name].  */
+    /** Sets the name of this layer. See [name].  */
     fun setName(name: String) {
         this.name = name
     }
@@ -193,7 +193,7 @@ abstract class Layer : Closeable {
      * do a type test on the event to determine whether it matches.
 
      *
-     * Also, any layer that has one or more listeners on its events signal is marked as [ ][.interactive]. Further, any [GroupLayer] which has one or more interactive children is
+     * Also, any layer that has one or more listeners on its events signal is marked as [interactive]. Further, any [GroupLayer] which has one or more interactive children is
      * also marked as interactive. This allows `Dispatcher`s to be more efficient in their
      * dispatching of UI events.
      */
@@ -211,14 +211,14 @@ abstract class Layer : Closeable {
         return events!!
     }
 
-    /** Returns true if [.events] has at least one listener. Use this instead of calling [ ][Signal.hasConnections] on `events` because `events` is created lazily this method
+    /** Returns true if [events] has at least one listener. Use this instead of calling [Signal.hasConnections] on `events` because `events` is created lazily this method
      * avoids creating it unnecessarily.  */
     fun hasEventListeners(): Boolean {
         return events != null && events!!.hasConnections()
     }
 
     /** Returns whether this layer reacts to clicks and touches. If a layer is interactive, it will
-     * respond to [.hitTest], which forms the basis for the click and touch processing
+     * respond to [hitTest], which forms the basis for the click and touch processing
      * provided by the `Dispatcher`s. */
     fun interactive(): Boolean {
         return isSet(Flag.INTERACTIVE)
@@ -227,7 +227,7 @@ abstract class Layer : Closeable {
     /**
      * Configures this layer as reactive to clicks and touches, or not. You usually don't have to do
      * this automatically because a layer is automatically marked as interactive (along with all of
-     * its parents) when a listener is added to its [.events] signal.
+     * its parents) when a listener is added to its [events] signal.
 
      *
      * A [GroupLayer] will be made non-interactive automatically if an event is dispatched
@@ -266,19 +266,19 @@ abstract class Layer : Closeable {
         return state.get() == State.DISPOSED
     }
 
-    /** Connects `action` to [.state] such that it is triggered when this layer is added
+    /** Connects `action` to [state] such that it is triggered when this layer is added
      * to a rooted scene graph.  */
     fun onAdded(action: SignalViewListener<in Layer>) {
         onState(State.ADDED, action)
     }
 
-    /** Connects `action` to [.state] such that it is triggered when this layer is
+    /** Connects `action` to [state] such that it is triggered when this layer is
      * removed from a rooted scene graph.  */
     fun onRemoved(action: SignalViewListener<in Layer>) {
         onState(State.REMOVED, action)
     }
 
-    /** Connects `action` to [.state] such that it is triggered when this layer is
+    /** Connects `action` to [state] such that it is triggered when this layer is
      * disposed.  */
     fun onDisposed(action: SignalViewListener<in Layer>) {
         onState(State.DISPOSED, action)
@@ -308,10 +308,10 @@ abstract class Layer : Closeable {
 
      *
      * *Note:* any direct modifications to this matrix *except* modifications to its
-     * translation, will be overwritten if a call is subsequently made to [.setScale],
-     * [.setScale], [.setScaleX], [.setScaleY] or [.setRotation].
+     * translation, will be overwritten if a call is subsequently made to [setScale],
+     * [setScale], [setScaleX], [setScaleY] or [setRotation].
      * If you intend to manipulate a layer's transform matrix directly, *do not* call those
-     * other methods. Also do not expect [.scaleX], [.scaleY], or [.rotation] to
+     * other methods. Also do not expect [scaleX], [scaleY], or [rotation] to
      * reflect the direct changes you've made to the transform matrix. They will not.
      */
     fun transform(): AffineTransform {
@@ -349,7 +349,7 @@ abstract class Layer : Closeable {
 
     /**
      * Sets the alpha component of this layer's current tint. Note that this value will be quantized
-     * to an integer between 0 and 255. Also see [.setTint].
+     * to an integer between 0 and 255. Also see [setTint].
 
      *
      *  Values outside the range [0,1] will be clamped to the range [0,1].
@@ -375,8 +375,8 @@ abstract class Layer : Closeable {
      * Sets the tint for this layer, as `ARGB`.
 
      *
-     *  *NOTE:* this will overwrite any value configured via [.setAlpha]. Either
-     * include your desired alpha in the high bits of `tint` or call [.setAlpha] after
+     *  *NOTE:* this will overwrite any value configured via [setAlpha]. Either
+     * include your desired alpha in the high bits of `tint` or call [setAlpha] after
      * calling this method.
 
      *
@@ -517,7 +517,7 @@ abstract class Layer : Closeable {
      * Sets the x translation of this layer.
 
      *
-     * *Note:* all transform changes are deferred until [.transform] is called
+     * *Note:* all transform changes are deferred until [transform] is called
      * (which happens during rendering, if not before) at which point the current scale, rotation and
      * translation are composed into an affine transform matrix. This means that, for example,
      * setting rotation and then setting scale will not flip the rotation like it would were these
@@ -534,7 +534,7 @@ abstract class Layer : Closeable {
      * Sets the y translation of this layer.
 
      *
-     * *Note:* all transform changes are deferred until [.transform] is called
+     * *Note:* all transform changes are deferred until [transform] is called
      * (which happens during rendering, if not before) at which point the current scale, rotation and
      * translation are composed into an affine transform matrix. This means that, for example,
      * setting rotation and then setting scale will not flip the rotation like it would were these
@@ -551,7 +551,7 @@ abstract class Layer : Closeable {
      * Sets the x and y translation of this layer.
 
      *
-     * *Note:* all transform changes are deferred until [.transform] is called
+     * *Note:* all transform changes are deferred until [transform] is called
      * (which happens during rendering, if not before) at which point the current scale, rotation and
      * translation are composed into an affine transform matrix. This means that, for example,
      * setting rotation and then setting scale will not flip the rotation like it would were these
@@ -565,7 +565,7 @@ abstract class Layer : Closeable {
     }
 
     /**
-     * A variant of [.setTranslation] that takes an `XY`.
+     * A variant of [setTranslation] that takes an `XY`.
      */
     fun setTranslation(trans: XY): Layer {
         return setTranslation(trans.x, trans.y)
@@ -573,11 +573,11 @@ abstract class Layer : Closeable {
 
     /** Returns this layer's current scale in the x direction.
      *
-     * *Note:* this is the most recent value supplied to [.setScale] or
-     * [.setScale], it is *not* extracted from the underlying transform.
+     * *Note:* this is the most recent value supplied to [setScale],
+     * it is *not* extracted from the underlying transform.
      * Thus the sign of the scale returned by this method is preserved. It's also substantially
      * cheaper than extracting the scale from the affine transform matrix. This also means that if
-     * you change the scale directly on the [.transform] that scale *will not* be
+     * you change the scale directly on the [transform] that scale *will not* be
      * returned by this method.  */
     fun scaleX(): Float {
         return scaleX
@@ -585,11 +585,11 @@ abstract class Layer : Closeable {
 
     /** Returns this layer's current scale in the y direction.
      *
-     * *Note:* this is the most recent value supplied to [.setScale] or
-     * [.setScale], it is *not* extracted from the underlying transform.
+     * *Note:* this is the most recent value supplied to [setScale],
+     * it is *not* extracted from the underlying transform.
      * Thus the sign of the scale returned by this method is preserved. It's also substantially
      * cheaper than extracting the scale from the affine transform matrix. This also means that if
-     * you change the scale directly on the [.transform] that scale *will not* be
+     * you change the scale directly on the [transform] that scale *will not* be
      * returned by this method.  */
     fun scaleY(): Float {
         return scaleY
@@ -607,7 +607,7 @@ abstract class Layer : Closeable {
      * is equivalent to no scale.
 
      *
-     * *Note:* all transform changes are deferred until [.transform] is called
+     * *Note:* all transform changes are deferred until [transform] is called
      * (which happens during rendering, if not before) at which point the current scale, rotation and
      * translation are composed into an affine transform matrix. This means that, for example,
      * setting rotation and then setting scale will not flip the rotation like it would were these
@@ -626,7 +626,7 @@ abstract class Layer : Closeable {
      * scale.
 
      *
-     * *Note:* all transform changes are deferred until [.transform] is called
+     * *Note:* all transform changes are deferred until [transform] is called
      * (which happens during rendering, if not before) at which point the current scale, rotation and
      * translation are composed into an affine transform matrix. This means that, for example,
      * setting rotation and then setting scale will not flip the rotation like it would were these
@@ -649,7 +649,7 @@ abstract class Layer : Closeable {
      * scale.
 
      *
-     * *Note:* all transform changes are deferred until [.transform] is called
+     * *Note:* all transform changes are deferred until [transform] is called
      * (which happens during rendering, if not before) at which point the current scale, rotation and
      * translation are composed into an affine transform matrix. This means that, for example,
      * setting rotation and then setting scale will not flip the rotation like it would were these
@@ -672,7 +672,7 @@ abstract class Layer : Closeable {
      * no scale.
 
      *
-     * *Note:* all transform changes are deferred until [.transform] is called
+     * *Note:* all transform changes are deferred until [transform] is called
      * (which happens during rendering, if not before) at which point the current scale, rotation and
      * translation are composed into an affine transform matrix. This means that, for example,
      * setting rotation and then setting scale will not flip the rotation like it would were these
@@ -696,11 +696,11 @@ abstract class Layer : Closeable {
 
     /** Returns this layer's current rotation.
      *
-     * *Note:* this is the most recent value supplied to [.setRotation], it is
+     * *Note:* this is the most recent value supplied to [setRotation], it is
      * *not* extracted from the underlying transform. Thus the value may lie outside the
      * range [-pi, pi] and the most recently set value is preserved. It's also substantially cheaper
      * than extracting the rotation from the affine transform matrix. This also means that if you
-     * change the scale directly on the [.transform] that rotation *will not* be
+     * change the scale directly on the [transform] that rotation *will not* be
      * returned by this method.  */
     fun rotation(): Float {
         return rotation
@@ -711,7 +711,7 @@ abstract class Layer : Closeable {
      * set origin, See [Layer.setOrigin].
 
      *
-     * *Note:* all transform changes are deferred until [.transform] is called
+     * *Note:* all transform changes are deferred until [transform] is called
      * (which happens during rendering, if not before) at which point the current scale, rotation and
      * translation are composed into an affine transform matrix. This means that, for example,
      * setting rotation and then setting scale will not flip the rotation like it would were these
@@ -772,7 +772,7 @@ abstract class Layer : Closeable {
     }
 
     /**
-     * Like [.hitTest] except that it ignores a configured [HitTester]. This allows one
+     * Like [hitTest] except that it ignores a configured [HitTester]. This allows one
      * to configure a hit tester which checks custom properties and then falls back on the default
      * hit testing implementation.
      */
