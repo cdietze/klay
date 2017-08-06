@@ -148,7 +148,7 @@ abstract class Behavior<T : Element<T>>(protected val _owner: T) : Pointer.Liste
             val pressTime: Double = iact.event!!.time
 
             /** The press and drag positions.  */
-            val press: Point = iact.local.clone()
+            val press: Point = iact.local.copy()
             val drag: Point
 
             /** How far the pointer strayed from the starting point, squared.  */
