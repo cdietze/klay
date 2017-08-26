@@ -22,10 +22,7 @@ Invoke `mvn install` to build and install the library to your local Maven reposi
 Demo
 ---
 
-To launch the JVM demo app invoke `mvn -Pjvm test`.
-
-To launch the JS demo, build using `mvn install` then open `./tests/js/src/main/resources/index.html` in a browser.
-
+To launch the JVM demo, invoke `mvn -Pjvm test` this will first start the klay-demo and afterwards the tripleklay-demo.
 
 License
 ---
