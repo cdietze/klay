@@ -4,6 +4,7 @@ import klay.core.Game
 import tripleklay.demo.core.anim.AnimDemo
 import tripleklay.demo.core.anim.FlickerDemo
 import tripleklay.demo.core.anim.FramesDemo
+import tripleklay.demo.core.entity.AsteroidsDemo
 import tripleklay.demo.core.game.ScreenSpaceDemo
 import tripleklay.demo.core.game.ScreensDemo
 import tripleklay.demo.core.ui.*
@@ -31,7 +32,7 @@ class DemoMenuScreen(protected val _stack: ScreenStack) : ScreenStack.UIScreen(T
                 // tripleplay.game
                 ScreensDemo(_stack), ScreenSpaceDemo(), null,
                 // tripleplay.entity
-                /* TODO(cdi) re-add AsteroidsDemo(), */ null, null, null,
+                AsteroidsDemo(), null, null,
                 // tripleplay.particle
                 /* TODO(cdi) new FountainDemo(), new FireworksDemo(), */ null, null, null,
                 // tripleplay.flump
