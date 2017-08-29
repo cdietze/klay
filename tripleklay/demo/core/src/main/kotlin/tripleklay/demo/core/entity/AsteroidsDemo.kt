@@ -59,12 +59,12 @@ class AsteroidsDemo : DemoScreen() {
                 val ll = entities.size()
                 while (ii < ll) {
                     val eid = entities.get(ii)
-                    pos[eid, p] // get our current pos
+                    pos.get(eid, p) // get our current pos
                     p.x = wrapx(p.x) // wrap it around the screen if necessary
                     p.y = wrapy(p.y)
                     opos[eid] = p // copy wrapped pos to opos
-                    vel[eid, v].scaleLocal(delta.toFloat()) // turn velocity into delta pos
-                    pos[eid, p.x + v.x] = p.y + v.y // add velocity (but don't wrap)
+                    vel.get(eid, v).scaleLocal(delta.toFloat()) // turn velocity into delta pos
+                    pos.set(eid, p.x + v.x, p.y + v.y) // add velocity (but don't wrap)
                     ii++
                 }
             }
@@ -96,8 +96,8 @@ class AsteroidsDemo : DemoScreen() {
                 while (ii < ll) {
                     val eid = entities.get(ii)
                     // interpolate between opos and pos and use that to update the sprite position
-                    opos[eid, op]
-                    pos[eid, p]
+                    opos.get(eid, op)
+                    pos.get(eid, p)
                     // wrap our interpolated position as we may interpolate off the screen
                     sprite[eid].setTranslation(wrapx(MathUtil.lerp(op.x, p.x, alpha)),
                             wrapy(MathUtil.lerp(op.y, p.y, alpha)))
@@ -178,13 +178,13 @@ class AsteroidsDemo : DemoScreen() {
                         ii++
                         continue
                     }
-                    pos[eid1, _p1]
+                    pos.get(eid1, _p1)
                     val r1 = radius[eid1]
                     for (jj in ii + 1..ll - 1) {
                         val eid2 = entities.get(jj)
                         val e2 = world.entity(eid2)
                         if (e2.isDisposed) continue
-                        pos[eid2, _p2]
+                        pos.get(eid2, _p2)
                         val r2 = radius[eid2]
                         val dr = r2 + r1
                         val dist2 = _p1.distanceSq(_p2)
@@ -281,7 +281,7 @@ class AsteroidsDemo : DemoScreen() {
                 val bvx = vx + BULLET_VEL * MathUtil.cos(ang)
                 val bvy = vy + BULLET_VEL * MathUtil.sin(ang)
                 createBullet(pos.getX(sid), pos.getY(sid), bvx, bvy, ang, now + BULLET_LIFE)
-                vel[sid, vx - bvx / 100] = vy - bvy / 100 // decrease ship's velocity a smidgen
+                vel.set(sid, vx - bvx / 100, vy - bvy / 100) // decrease ship's velocity a smidgen
             }
 
             override fun update(clock: Clock, entities: Entities) {
@@ -294,7 +294,7 @@ class AsteroidsDemo : DemoScreen() {
                     if (_accel != 0f) {
                         val s = sprite[eid]
                         val ang = s.rotation()
-                        vel[eid, v]
+                        vel.get(eid, v)
                         v.x = MathUtil.clamp(v.x + MathUtil.cos(ang) * _accel, -MAX_VEL, MAX_VEL)
                         v.y = MathUtil.clamp(v.y + MathUtil.sin(ang) * _accel, -MAX_VEL, MAX_VEL)
                         vel[eid] = v
@@ -409,9 +409,9 @@ class AsteroidsDemo : DemoScreen() {
             val id = ship.id
             type[id] = SHIP
             sprite[id] = layer
-            opos[id, x] = y
-            pos[id, x] = y
-            vel[id, 0f] = 0f
+            opos.set(id, x, y)
+            pos.set(id, x, y)
+            vel.set(id, 0f, 0f)
             radius[id] = 10f
             return ship
         }
@@ -438,9 +438,9 @@ class AsteroidsDemo : DemoScreen() {
             size[id] = sz
             sprite[id] = layer
             spin[id] = rando.getInRange(-MAXSPIN, MAXSPIN)
-            opos[id, x] = y
-            pos[id, x] = y
-            vel[id, vx] = vy
+            opos.set(id, x, y)
+            pos.set(id, x, y)
+            vel.set(id, vx, vy)
             radius[id] = side * 0.425f
             return ast
         }
@@ -458,9 +458,9 @@ class AsteroidsDemo : DemoScreen() {
             val id = bullet.id
             type[id] = BULLET
             sprite[id] = layer
-            opos[id, x] = y
-            pos[id, x] = y
-            vel[id, vx] = vy
+            opos.set(id, x, y)
+            pos.set(id, x, y)
+            vel.set(id, vx, vy)
             radius[id] = 2f
             expires[id] = exps
             return bullet
