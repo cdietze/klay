@@ -136,7 +136,7 @@ abstract class Component protected constructor(
         /** Writes the x/y components of the point for `entityId` into `into`.
          * @return into for easy method chaining.
          */
-        operator fun get(entityId: Int, into: Point): Point {
+        fun get(entityId: Int, into: Point): Point {
             val block = _blocks[entityId / BLOCK]!!
             val idx = 2 * (entityId % BLOCK)
             into.x = block[idx]
@@ -147,7 +147,7 @@ abstract class Component protected constructor(
         /** Writes the x/y components of the point for `entityId` into `into`.
          * @return into for easy method chaining.
          */
-        operator fun get(entityId: Int, into: Vector): Vector {
+        fun get(entityId: Int, into: Vector): Vector {
             val block = _blocks[entityId / BLOCK]!!
             val idx = 2 * (entityId % BLOCK)
             into.x = block[idx]
@@ -158,7 +158,7 @@ abstract class Component protected constructor(
         /** Writes the x/y components of the point for `entityId` into `into`.
          * @return into for easy method chaining.
          */
-        operator fun get(entityId: Int, into: Dimension): Dimension {
+        fun get(entityId: Int, into: Dimension): Dimension {
             val block = _blocks[entityId / BLOCK]!!
             val idx = 2 * (entityId % BLOCK)
             into.width = block[idx]
@@ -182,7 +182,7 @@ abstract class Component protected constructor(
         }
 
         /** Updates the x/y components of the point for `entityId`.  */
-        operator fun set(entityId: Int, x: Float, y: Float) {
+        fun set(entityId: Int, x: Float, y: Float) {
             val block = _blocks[entityId / BLOCK]!!
             val idx = 2 * (entityId % BLOCK)
             block[idx] = x
