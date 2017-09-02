@@ -120,8 +120,97 @@ abstract class Component protected constructor(
         private var _blocks = arrayOfNulls<FloatArray>(INDEX_BLOCKS)
     }
 
+    /** A component implementation for a pair of `int`s.  */
+    class IXY(world: World) : Component(world) {
+
+        /** Returns the x component of the point for `entityId`.  */
+        fun getX(entityId: Int): Int {
+            return _blocks[entityId / BLOCK]!![2 * (entityId % BLOCK)]
+        }
+
+        /** Returns the y component of the point for `entityId`.  */
+        fun getY(entityId: Int): Int {
+            return _blocks[entityId / BLOCK]!![2 * (entityId % BLOCK) + 1]
+        }
+
+        /** Writes the x/y components of the point for `entityId` into `into`.
+         * @return into for easy method chaining.
+         */
+        fun get(entityId: Int, into: pythagoras.i.Point): pythagoras.i.Point {
+            val block = _blocks[entityId / BLOCK]!!
+            val idx = 2 * (entityId % BLOCK)
+            into.x = block[idx]
+            into.y = block[idx + 1]
+            return into
+        }
+
+        /** Writes the x/y components of the point for `entityId` into `into`.
+         * @return into for easy method chaining.
+         */
+        fun get(entityId: Int, into: pythagoras.i.Dimension): pythagoras.i.Dimension {
+            val block = _blocks[entityId / BLOCK]!!
+            val idx = 2 * (entityId % BLOCK)
+            into.width = block[idx]
+            into.height = block[idx + 1]
+            return into
+        }
+
+        /** Updates the x component of the point for `entityId`.  */
+        fun setX(entityId: Int, x: Int) {
+            _blocks[entityId / BLOCK]!![2 * (entityId % BLOCK)] = x
+        }
+
+        /** Updates the y component of the point for `entityId`.  */
+        fun setY(entityId: Int, y: Int) {
+            _blocks[entityId / BLOCK]!![2 * (entityId % BLOCK) + 1] = y
+        }
+
+        /** Updates the x/y components of the point for `entityId`.  */
+        operator fun set(entityId: Int, value: pythagoras.i.Point) {
+            set(entityId, value.x, value.y)
+        }
+
+        /** Updates the x/y components of the point for `entityId`.  */
+        fun set(entityId: Int, x: Int, y: Int) {
+            val block = _blocks[entityId / BLOCK]!!
+            val idx = 2 * (entityId % BLOCK)
+            block[idx] = x
+            block[idx + 1] = y
+        }
+
+        /** Copies the value of `other` for `entityId` to this component.  */
+        operator fun set(entityId: Int, other: IXY) {
+            val blockIdx = entityId / BLOCK
+            val idx = 2 * (entityId % BLOCK)
+            val oblock = other._blocks[blockIdx]!!
+            val block = _blocks[blockIdx]!!
+            block[idx] = oblock[idx]
+            block[idx + 1] = oblock[idx + 1]
+        }
+
+        /** Adds `dx` and `dy` to the x and y components for `entityId`.  */
+        fun add(entityId: Int, dx: Int, dy: Int) {
+            val block = _blocks[entityId / BLOCK]!!
+            val idx = 2 * (entityId % BLOCK)
+            block[idx] += dx
+            block[idx + 1] += dy
+        }
+
+        override fun init(entityId: Int) {
+            val blockIdx = entityId / BLOCK
+            if (blockIdx >= _blocks.size) {
+                val blocks = arrayOfNulls<IntArray>(_blocks.size * 2)
+                java.lang.System.arraycopy(_blocks, 0, blocks, 0, _blocks.size)
+                _blocks = blocks
+            }
+            if (_blocks[blockIdx] == null) _blocks[blockIdx] = IntArray(2 * BLOCK)
+        }
+
+        private var _blocks: Array<IntArray?> = arrayOfNulls(INDEX_BLOCKS)
+    }
+
     /** A component implementation for a pair of `float`s.  */
-    class XY(world: World) : Component(world) {
+    class FXY(world: World) : Component(world) {
 
         /** Returns the x component of the point for `entityId`.  */
         fun getX(entityId: Int): Float {
@@ -190,7 +279,7 @@ abstract class Component protected constructor(
         }
 
         /** Copies the value of `other` for `entityId` to this component.  */
-        operator fun set(entityId: Int, other: Component.XY) {
+        operator fun set(entityId: Int, other: Component.FXY) {
             val blockIdx = entityId / BLOCK
             val idx = 2 * (entityId % BLOCK)
             val oblock = other._blocks[blockIdx]!!
