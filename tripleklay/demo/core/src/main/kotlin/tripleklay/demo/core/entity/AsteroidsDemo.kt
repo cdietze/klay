@@ -35,9 +35,9 @@ class AsteroidsDemo : DemoScreen() {
         val rando = Randoms.with(Random())
 
         val type = Component.IMask(this)
-        val opos = Component.XY(this)
-        val pos = Component.XY(this)
-        val vel = Component.XY(this) // pixels/ms
+        val opos = Component.FXY(this)
+        val pos = Component.FXY(this)
+        val vel = Component.FXY(this) // pixels/ms
         val sprite = Component.Generic<Layer>(this)
         val size = Component.Generic<Size>(this)
         val spin = Component.FScalar(this) // rads/ms
