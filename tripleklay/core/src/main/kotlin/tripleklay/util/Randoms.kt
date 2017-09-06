@@ -1,6 +1,6 @@
 package tripleklay.util
 
-import java.util.Random
+import java.util.*
 
 /**
  * Provides utility routines to simplify obtaining randomized values.
@@ -98,7 +98,7 @@ inline fun <reified T> Random.shuffle(list: MutableList<T>) {
 }
 
 /**
- * Pick a random element from the specified Iterator, or return `ifEmpty` if it is empty.
+ * Pick a random element from the specified Iterator, or return `null` if it is empty.
  *
  * **Implementation note:** because the total size of the Iterator is not known,
  * the random number generator is queried after the second element and every element
@@ -106,9 +106,9 @@ inline fun <reified T> Random.shuffle(list: MutableList<T>) {
  *
  * @throws NullPointerException if the iterator is null.
  */
-fun <T> Random.pick(iterator: kotlin.collections.Iterator<T>, ifEmpty: T): T {
+fun <T> Random.pick(iterator: kotlin.collections.Iterator<T>): T? {
     if (!iterator.hasNext()) {
-        return ifEmpty
+        return null
     }
     var pick: T = iterator.next()
     var count = 2
@@ -123,7 +123,7 @@ fun <T> Random.pick(iterator: kotlin.collections.Iterator<T>, ifEmpty: T): T {
 }
 
 /**
- * Pick a random element from the specified Iterable, or return `ifEmpty` if it is empty.
+ * Pick a random element from the specified Iterable, or return `null` if it is empty.
  *
  * **Implementation note:** optimized implementations are used if the Iterable
  * is a List or Collection. Otherwise, it behaves as if calling [pick]
@@ -131,25 +131,23 @@ fun <T> Random.pick(iterator: kotlin.collections.Iterator<T>, ifEmpty: T): T {
  *
  * @throws NullPointerException if the iterable is null.
  */
-fun <T> Random.pick(iterable: Iterable<T>, ifEmpty: T): T {
-    return this.pickPluck(iterable, ifEmpty, false)
+fun <T> Random.pick(iterable: Iterable<T>): T? {
+    return this.pickPluck(iterable, false)
 }
 
 
 /**
- * Pick a random *key* from the specified mapping of weight values, or return `ifEmpty` if no mapping has a weight greater than `0`. Each weight value is evaluated
+ * Pick a random *key* from the specified mapping of weight values, or return `null` if no mapping has a weight greater than `0`. Each weight value is evaluated
  * as a double.
-
  *
  * **Implementation note:** a random number is generated for every entry with a
  * non-zero weight after the first such entry.
-
+ *
  * @throws NullPointerException if the map is null.
- * *
  * @throws IllegalArgumentException if any weight is less than 0.
  */
-fun <T> Random.pick(weightMap: Map<out T, Number>, ifEmpty: T): T {
-    var pick = ifEmpty
+fun <T> Random.pick(weightMap: Map<out T, Number>): T? {
+    var pick: T? = null
     var total = 0.0
     for (entry in weightMap.entries) {
         val weight = entry.value.toDouble()
@@ -166,34 +164,27 @@ fun <T> Random.pick(weightMap: Map<out T, Number>, ifEmpty: T): T {
 }
 
 /**
- * Pluck (remove) a random element from the specified Iterable, or return `ifEmpty` if it
+ * Pluck (remove) a random element from the specified Iterable, or return `null` if it
  * is empty.
-
  *
  * **Implementation note:** optimized implementations are used if the Iterable
  * is a List or Collection. Otherwise, two Iterators are created from the Iterable
  * and a random number is generated after the second element and all beyond.
-
+ *
  * @throws NullPointerException if the iterable is null.
- * *
- * @throws UnsupportedOperationException if the iterable is unmodifiable or its Iterator
- * * does not support [Iterator.remove].
  */
-fun <T> Random.pluck(iterable: MutableIterable<T>, ifEmpty: T): T {
-    return pickPluck(iterable, ifEmpty, true)
+fun <T> Random.pluck(iterable: MutableIterable<T>): T? {
+    return pickPluck(iterable, true)
 }
 
 /**
  * Shared code for pick and pluck.
  */
-private fun <T> Random.pickPluck(iterable: Iterable<T>, ifEmpty: T, remove: Boolean): T {
+private fun <T> Random.pickPluck(iterable: Iterable<T>, remove: Boolean): T? {
     if (iterable is Collection<*>) {
         // optimized path for Collection
         val coll = iterable
         val size = coll.size
-        if (size == 0) {
-            return ifEmpty
-        }
         if (coll is MutableList<*>) {
             // extra-special optimized path for Lists
             val list = coll as MutableList<T>
@@ -215,13 +206,13 @@ private fun <T> Random.pickPluck(iterable: Iterable<T>, ifEmpty: T, remove: Bool
     }
 
     if (!remove) {
-        return pick(iterable.iterator(), ifEmpty)
+        return pick(iterable.iterator())
     }
 
     // from here on out, we're doing a pluck with a complicated two-iterator solution
     val it = iterable.iterator()
     if (!it.hasNext()) {
-        return ifEmpty
+        return null
     }
     val lagIt = iterable.iterator()
     var pick: T = it.next()
