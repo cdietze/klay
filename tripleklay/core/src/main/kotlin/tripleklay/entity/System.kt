@@ -20,7 +20,7 @@ protected constructor(
         /** The world of which this system is a part.  */
         val world: World,
         /** This system's priority with respect to other systems. See [System].  */
-        internal val priority: Int) {
+        internal val priority: Int = 0) {
     /** Provides a way to iterate over this system's active entities.  */
     interface Entities {
         /** Returns the size of the active entities set.  */
