@@ -1,5 +1,6 @@
 package tripleklay.util
 
+import tripleklay.entity.IntBag
 import java.util.*
 
 /**
@@ -95,6 +96,14 @@ inline fun <reified T> Random.shuffle(list: MutableList<T>) {
             it.set(array[ii])
         }
     }
+}
+
+/**
+ * Pick a random element from the specified IntBag, or return `null` if it is empty.
+ */
+fun Random.pick(intBag: IntBag): Int? {
+    if (intBag.size() == 0) return null
+    return intBag[this.getInt(intBag.size())]
 }
 
 /**
