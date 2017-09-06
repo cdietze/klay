@@ -1,7 +1,7 @@
 package tripleklay.entity
 
 /** An unordered bag of ints. Used internally by entity things.  */
-class IntBag : System.Entities {
+class IntBag : System.Entities, Iterable<Int> {
 
     protected var _elems: IntArray
     protected var _size: Int = 0
@@ -80,4 +80,29 @@ class IntBag : System.Entities {
     private fun expand(capacity: Int) {
         _elems = _elems.copyOf(capacity)
     }
+
+    private inner class MyIter : Iterator<Int> {
+        var index = 0
+        override fun hasNext(): Boolean = index < _size
+        override fun next(): Int {
+            val result = get(index)
+            index++
+            return result
+        }
+
+        fun reset(): MyIter {
+            index = 0
+            return this
+        }
+    }
+
+    private val myIter = MyIter()
+
+    /**
+     * Returns an iterator over the elements of this IntBag.
+     *
+     * Do note that there is only exactly one iterator for this instance.
+     * Thus, it may only be iterated once: no thread-safety, no double loops.
+     */
+    override fun iterator(): Iterator<Int> = myIter.reset()
 }
