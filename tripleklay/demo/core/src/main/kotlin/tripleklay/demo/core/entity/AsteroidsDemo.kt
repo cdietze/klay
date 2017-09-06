@@ -19,9 +19,7 @@ import tripleklay.entity.World
 import tripleklay.ui.Group
 import tripleklay.ui.Root
 import tripleklay.ui.layout.AxisLayout
-import tripleklay.util.Randoms
-import tripleklay.util.StyledText
-import tripleklay.util.TextStyle
+import tripleklay.util.*
 import java.util.*
 
 class AsteroidsDemo : DemoScreen() {
@@ -32,7 +30,7 @@ class AsteroidsDemo : DemoScreen() {
     }
 
     inner class AsteroidsWorld(val stage: GroupLayer, val swidth: Float, val sheight: Float) : World() {
-        val rando = Randoms.with(Random())
+        val random = Random()
 
         val type = Component.IMask(this)
         val opos = Component.FXY(this)
@@ -338,7 +336,7 @@ class AsteroidsDemo : DemoScreen() {
             setMessage("Press 's' to start.")
             for (ii in 0..4)
                 createAsteroid(
-                        Size.LARGE, rando.getFloat(swidth), rando.getFloat(sheight))
+                        Size.LARGE, random.getFloat(swidth), random.getFloat(sheight))
             _wave = -1
         }
 
@@ -352,8 +350,8 @@ class AsteroidsDemo : DemoScreen() {
             var ii = 0
             val ll = Math.min(10, wave + 2)
             while (ii < ll) {
-                val x = rando.getFloat(swidth)
-                val y = rando.getFloat(sheight)
+                val x = random.getFloat(swidth)
+                val y = random.getFloat(sheight)
                 // TODO: make sure x/y doesn't overlap ship
                 createAsteroid(Size.LARGE, x, y)
                 ii++
@@ -366,8 +364,8 @@ class AsteroidsDemo : DemoScreen() {
             val y = pos.getY(target.id)
             // create a bunch of bullets going in random directions from the ship
             for (ii in 0..frags - 1) {
-                val ang = rando.getInRange(-MathUtil.PI, MathUtil.PI)
-                val vel = rando.getInRange(maxvel / 3, maxvel)
+                val ang = random.getInRange(-MathUtil.PI, MathUtil.PI)
+                val vel = random.getInRange(maxvel / 3, maxvel)
                 val vx = MathUtil.cos(ang) * vel
                 val vy = MathUtil.sin(ang) * vel
                 createBullet(x, y, vx, vy, ang, now + 300/*ms*/)
@@ -417,8 +415,8 @@ class AsteroidsDemo : DemoScreen() {
         }
 
         protected fun createAsteroid(size: Size, x: Float, y: Float): Entity {
-            return createAsteroid(size, x, y, rando.getInRange(-MAXVEL, MAXVEL),
-                    rando.getInRange(-MAXVEL, MAXVEL))
+            return createAsteroid(size, x, y, random.getInRange(-MAXVEL, MAXVEL),
+                    random.getInRange(-MAXVEL, MAXVEL))
         }
 
         protected fun createAsteroid(sz: Size, x: Float, y: Float, vx: Float, vy: Float): Entity {
@@ -426,18 +424,18 @@ class AsteroidsDemo : DemoScreen() {
             ast.add(type, size, sprite, opos, pos, vel, spin, radius)
 
             val side = sz.size.toFloat()
-            val iidx = rando.getInt(8)
+            val iidx = random.getInt(8)
             val ah = asteroids.height
             val layer = ImageLayer(asteroids.region(iidx * ah, 0f, ah, ah))
             layer.setOrigin(ah / 2, ah / 2)
             layer.setScale(side / ah)
-            layer.setRotation(rando.getFloat(MathUtil.TAU))
+            layer.setRotation(random.getFloat(MathUtil.TAU))
 
             val id = ast.id
             type[id] = ASTEROID
             size[id] = sz
             sprite[id] = layer
-            spin[id] = rando.getInRange(-MAXSPIN, MAXSPIN)
+            spin[id] = random.getInRange(-MAXSPIN, MAXSPIN)
             opos.set(id, x, y)
             pos.set(id, x, y)
             vel.set(id, vx, vy)
