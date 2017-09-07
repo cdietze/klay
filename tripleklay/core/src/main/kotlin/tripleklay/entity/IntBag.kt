@@ -30,10 +30,10 @@ class IntBag : System.Entities {
         return false
     }
 
-    fun add(elem: Int): Int {
+    fun add(elem: Int): IntBag {
         if (_size == _elems.size) expand(_elems.size * 3 / 2 + 1)
         _elems[_size++] = elem
-        return _size
+        return this
     }
 
     fun removeAt(index: Int): Int {
@@ -60,8 +60,9 @@ class IntBag : System.Entities {
         return _elems[--_size]
     }
 
-    fun removeAll() {
+    fun clear(): IntBag {
         _size = 0
+        return this
     }
 
     override fun toString(): String {
