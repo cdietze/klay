@@ -45,7 +45,7 @@ open class World : Iterable<Entity> {
      */
     fun create(enabled: Boolean): Entity {
         val e: Entity
-        if (_ids.isEmpty) {
+        if (_ids.isEmpty()) {
             e = create(genEntityId())
         } else {
             e = _entities[_ids.removeLast()]!!

@@ -14,8 +14,7 @@ class IntBag : System.Entities {
         return _size
     }
 
-    val isEmpty: Boolean
-        get() = _size == 0
+    fun isEmpty(): Boolean = _size == 0
 
     override fun get(index: Int): Int {
         return _elems[index]
