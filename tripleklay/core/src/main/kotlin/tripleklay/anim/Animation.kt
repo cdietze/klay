@@ -263,7 +263,7 @@ abstract class Animation protected constructor() {
 
         override fun then(): AnimBuilder {
             return object : ChainBuilder() {
-                override operator fun next(): Animation {
+                override fun next(): Animation {
                     // set ourselves as the repeat target of this added animation
                     return this@Repeat
                 }
@@ -274,7 +274,7 @@ abstract class Animation protected constructor() {
             return _start - time // immediately move to our next animation
         }
 
-        override operator fun next(): Animation? {
+        override fun next(): Animation? {
             // if our target layer is no longer active, we're done
             return if (_layer.parent() == null) null else _next
         }
@@ -392,7 +392,7 @@ abstract class Animation protected constructor() {
      */
     open fun then(): AnimBuilder {
         return object : ChainBuilder() {
-            override operator fun next(): Animation? {
+            override fun next(): Animation? {
                 // our _next is either null, or it points to the animation to which we should
                 // repeat when we reach the end of this chain; so pass the null or the repeat
                 // target down to our new next animation
@@ -482,7 +482,7 @@ abstract class Animation protected constructor() {
 
     protected abstract fun apply(time: Float): Float
 
-    protected open operator fun next(): Animation? {
+    protected open fun next(): Animation? {
         return _next
     }
 
@@ -505,7 +505,7 @@ abstract class Animation protected constructor() {
             return anim
         }
 
-        protected abstract operator fun next(): Animation?
+        protected abstract fun next(): Animation?
         protected var _added: Boolean = false
     }
 
