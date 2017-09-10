@@ -6,42 +6,42 @@ import java.util.*
  * Allows one to specify a group of one or more animations that will be queued up to be started on
  * an [Animator] at some later time. All animations added to the group will be started in
  * parallel.
-
- * <pre>`AnimGroup group = new AnimGroup();
- * group.tweenXY(...).then().tweenAlpha(...);
- * group.play(sound).then().action(...);
+ * ```
+ * val group = AnimGroup()
+ * group.tweenXY(...).then().tweenAlpha(...)
+ * group.play(sound).then().action(...)
  * // the two animation chains (the tween chain and the play/action chain) will run in parallel
  * // after this group is added to an Animator
- * anim.add(group.toAnim());
-`</pre> *
-
+ * anim.add(group.toAnim())
+ * ```
+ *
  * One can combine multiple animation groups to achieve any desired construction of sequential and
  * parallel animations.
-
- * <pre>`AnimGroup group2 = new AnimGroup();
- * group2.tweenXY(...).then().tweenAlpha(...);
- * group2.play(sound).then().action(...);
- * AnimGroup group1 = new AnimGroup();
- * group1.delay(1000).then().add(group2.toAnim());
- * group1.delay(500).then().play(sound);
+ * ```
+ * val group2 = AnimGroup()
+ * group2.tweenXY(...).then().tweenAlpha(...)
+ * group2.play(sound).then().action(...)
+ * val group1 = AnimGroup()
+ * group1.delay(1000f).then().add(group2.toAnim())
+ * group1.delay(500f).then().play(sound)
  * // group 1's two animation chains will be queued up to run in parallel, and the first of its
  * // chains will delay 1s and then trigger group 2's chains, which themselves run in parallel
- * anim.add(group1.toAnim());
-`</pre> *
-
+ * anim.add(group1.toAnim())
+ * ```
+ *
  * It is of course also possible to add a group with a single animation chain, which will contain
  * no parallelism but can still be useful for situations where one wants to compose sequences of
  * animations internally and then return that package of animations to be sequenced with other
  * packages of animations by some outer mechanism:
-
- * <pre>`class Ship {
- * Animation createExplosionAnim () {
- * AnimGroup group = new AnimGroup();
- * group.play(sound).then().flipbook(...);
- * return group.toAnim();
+ * ```
+ * class Ship {
+ *     fun createExplosionAnim(): Animation {
+ *         val group = AnimGroup()
+ *         group.play(sound).then().flipbook(...)
+ *         return group.toAnim()
+ *     }
  * }
- * }
-`</pre> *
+ * ```
  */
 class AnimGroup : AnimBuilder() {
     /**
