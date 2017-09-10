@@ -124,7 +124,7 @@ abstract class Interaction<E : Event.XY>(
         } finally {
             this.event = null
         }
-        local[0f] = 0f
+        local.set(0f, 0f)
     }
 
     internal fun dispatch(layer: Layer) {

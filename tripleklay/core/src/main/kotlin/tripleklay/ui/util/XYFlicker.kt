@@ -41,7 +41,7 @@ class XYFlicker : Pointer.Listener {
     }
 
     override fun onStart(iact: Pointer.Interaction) {
-        _vel[0f] = 0f
+        _vel.set(0f, 0f)
         _maxDeltaSq = 0f
         _origPos.set(_position)
         getPosition(iact.event!!, _start)
@@ -93,8 +93,8 @@ class XYFlicker : Pointer.Listener {
     }
 
     override fun onCancel(iact: Pointer.Interaction?) {
-        _vel[0f] = 0f
-        _accel[0f] = 0f
+        _vel.set(0f, 0f)
+        _accel.set(0f, 0f)
     }
 
     fun update(delta: Float) {
@@ -109,7 +109,7 @@ class XYFlicker : Pointer.Listener {
         // stop when we hit the edges
         if (x == _position.x) _vel.x = 0f
         if (y == _position.y) _vel.y = 0f
-        _position[x] = y
+        _position.set(x, y)
 
         // apply x and y acceleration
         _vel.x = applyAccelertion(_vel.x, _accel.x, delta)
@@ -120,7 +120,7 @@ class XYFlicker : Pointer.Listener {
      * Resets the flicker to the given maximum values.
      */
     fun reset(maxX: Float, maxY: Float) {
-        _max[maxX] = maxY
+        _max.set(maxX, maxY)
 
         // reclamp the position
         setPosition(_position.x, _position.y)
@@ -135,12 +135,12 @@ class XYFlicker : Pointer.Listener {
 
     /** Translates a pointer event into a position.  */
     private fun getPosition(event: klay.core.Pointer.Event, dest: Point) {
-        dest[-event.x] = -event.y
+        dest.set(-event.x, -event.y)
     }
 
     /** Sets the current position, clamping the values between min and max.  */
     private fun setPosition(x: Float, y: Float) {
-        _position[MathUtil.clamp(x, _min.x, _max.x)] = MathUtil.clamp(y, _min.y, _max.y)
+        _position.set(MathUtil.clamp(x, _min.x, _max.x), MathUtil.clamp(y, _min.y, _max.y))
     }
 
     /** Returns the minimum distance (in pixels) the pointer must have moved to register as a
