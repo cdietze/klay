@@ -17,7 +17,7 @@ http_archive(
     name = "pythagoras_kt",
     strip_prefix = "pythagoras.kt-master",
     urls = ["https://github.com/cdietze/pythagoras.kt/archive/master.zip"],
-    sha256 = "5474ddfa21222506842659afddbd9b39bc6f7cfb9f63d811a7ea3ebb3a6aaff6"
+    sha256 = "7e3a184698794b59519d1dcc7c5f2305107f2654a60b2f21355ec7be8b5eed39"
 )
 # Uncomment for local development
 #local_repository(
@@ -29,7 +29,7 @@ http_archive(
     name = "react_kt",
     strip_prefix = "react.kt-master",
     urls = ["https://github.com/cdietze/react.kt/archive/master.zip"],
-    sha256 = "361af71e6d044da65d7a1112c29b23ee06a86aafa46ad6ce9dad96b8443f753e"
+    sha256 = "c0dac730a39bfb6540fbc0d579f4e29e143340d5053e0e57be0cf8ed665211dd"
 )
 # Uncomment for local development
 #local_repository(
