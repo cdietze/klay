@@ -120,7 +120,7 @@ class GLFWInput(override val plat: LWJGLPlatform, private val window: Long) : Ja
         xpos.rewind()
         ypos.rewind()
         glfwGetCursorPos(window, xpos, ypos)
-        cpos[xpos.get().toFloat()] = ypos.get().toFloat()
+        cpos.set(xpos.get().toFloat(), ypos.get().toFloat())
         return cpos
     }
 
