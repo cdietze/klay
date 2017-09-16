@@ -175,9 +175,12 @@ abstract class Layer : Closeable {
         return name!!
     }
 
-    /** Sets the name of this layer. See [name].  */
-    fun setName(name: String) {
+    /** Sets the name of this layer. See [name].
+     * @return a reference to this layer for call chaining.
+     */
+    fun setName(name: String): Layer {
         this.name = name
+        return this
     }
 
     /** Returns the layer that contains this layer, or `null`.  */
