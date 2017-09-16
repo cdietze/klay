@@ -43,7 +43,11 @@ abstract class RenderTarget(
     override fun close() {
         if (!disposed) {
             disposed = true
-            gfx.gl.glDeleteFramebuffer(id())
+            if (gfx.exec.isMainThread()) {
+                gfx.gl.glDeleteFramebuffer(id())
+            } else {
+                gfx.exec.invokeLater { gfx.gl.glDeleteFramebuffer(id()) }
+            }
         }
     }
 
@@ -57,7 +61,7 @@ abstract class RenderTarget(
      */
     @Suppress("unused")
     protected fun finalize() {
-        if (!disposed) gfx.queueForDispose(this)
+        this.close()
     }
 
     private var disposed: Boolean = false

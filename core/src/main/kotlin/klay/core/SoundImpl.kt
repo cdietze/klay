@@ -6,7 +6,7 @@ import react.RPromise
 /**
  * An implementation detail. Not part of the public API.
  */
-abstract class SoundImpl<I>(exec: Exec) : Sound(exec.deferredPromise<Sound>()) {
+abstract class SoundImpl<I>(private val exec: Exec) : Sound(exec.deferredPromise<Sound>()) {
 
     protected var playing: Boolean = false
     protected var _looping: Boolean = false
@@ -15,7 +15,8 @@ abstract class SoundImpl<I>(exec: Exec) : Sound(exec.deferredPromise<Sound>()) {
 
     /** Configures this sound with its platform implementation.
      * This may be called from any thread.  */
-    @Synchronized fun succeed(impl: I) {
+    @Synchronized
+    fun succeed(impl: I) {
         this.impl = impl
         setVolumeImpl(_volume)
         setLoopingImpl(_looping)
@@ -25,7 +26,8 @@ abstract class SoundImpl<I>(exec: Exec) : Sound(exec.deferredPromise<Sound>()) {
 
     /** Configures this sound with an error in lieu of its platform implementation.
      * This may be called from any thread.  */
-    @Synchronized fun fail(error: Throwable) {
+    @Synchronized
+    fun fail(error: Throwable) {
         (state as RPromise<Sound>).fail(error)
     }
 
@@ -69,7 +71,9 @@ abstract class SoundImpl<I>(exec: Exec) : Sound(exec.deferredPromise<Sound>()) {
 
     @Suppress("unused")
     protected fun finalize() {
-        release()
+        if (impl != null) {
+            exec.invokeLater { release() }
+        }
     }
 
     protected fun prepareImpl(): Boolean {
