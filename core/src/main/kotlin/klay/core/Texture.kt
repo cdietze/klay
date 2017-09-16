@@ -202,7 +202,11 @@ class Texture(// needed to access GL20 and to queue our destruction on finalize
     override fun close() {
         if (!disposed) {
             disposed = true
-            gfx.gl.glDeleteTexture(id)
+            if (gfx.exec.isMainThread()) {
+                gfx.gl.glDeleteTexture(id);
+            } else {
+                gfx.exec.invokeLater { gfx.gl.glDeleteTexture(id) }
+            }
         }
     }
 
@@ -216,8 +220,7 @@ class Texture(// needed to access GL20 and to queue our destruction on finalize
      */
     @Suppress("unused", "ProtectedInFinal")
     protected fun finalize() {
-        // if we're not yet disposed, queue ourselves up to be disposed on the next frame tick
-        if (!disposed) gfx.queueForDispose(this)
+        this.close()
     }
 
     companion object {

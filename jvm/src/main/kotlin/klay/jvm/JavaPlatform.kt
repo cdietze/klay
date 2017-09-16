@@ -56,10 +56,13 @@ abstract class JavaPlatform(val config: JavaPlatform.Config) : Platform() {
 
     private val start = System.nanoTime()
 
+    private lateinit var mainThread: Thread
     private var active = true
 
     private val pool = Executors.newFixedThreadPool(4)
     override val exec = object : Exec.Default(this) {
+        override fun isMainThread() = Thread.currentThread() == mainThread
+
         override val isAsyncSupported: Boolean
             get() = true
 
@@ -127,6 +130,11 @@ abstract class JavaPlatform(val config: JavaPlatform.Config) : Platform() {
                     }
                 }
             }
+        }
+
+        // make a note of the main thread
+        synchronized(this) {
+            mainThread = Thread.currentThread()
         }
 
         // run the game loop

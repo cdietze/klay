@@ -9,19 +9,12 @@ import react.RPromise
 abstract class Exec {
 
     /** A default exec implementation which processes [.invokeLater] via the frame tick.  */
-    open class Default(protected val plat: Platform) : Exec() {
+    abstract class Default(protected val plat: Platform) : Exec() {
         private val pending = ArrayList<() -> Unit>()
         private val running = ArrayList<() -> Unit>()
 
         init {
             plat.frame.connect { dispatch() }.atPrio(Short.MAX_VALUE.toInt())
-        }
-
-        override val isAsyncSupported: Boolean
-            get() = false
-
-        override fun invokeAsync(action: () -> Unit) {
-            throw UnsupportedOperationException()
         }
 
         @Synchronized override fun invokeLater(action: () -> Unit) {
@@ -49,6 +42,11 @@ abstract class Exec {
             running.clear()
         }
     }
+
+    /**
+     * Returns true if the caller is running on the 'main' game thread, false otherwise.
+     */
+    abstract fun isMainThread(): Boolean
 
     /**
      * Invokes `action` on the next [Platform.frame] signal. The default implementation
@@ -86,7 +84,7 @@ abstract class Exec {
      * Returns whether this platform supports async (background) operations.
      * HTML doesn't, most other platforms do.
      */
-    abstract val isAsyncSupported: Boolean
+    open val isAsyncSupported: Boolean = false
 
     /**
      * Invokes the supplied action on a separate thread.

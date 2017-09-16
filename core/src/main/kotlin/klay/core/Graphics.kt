@@ -15,7 +15,6 @@ import klay.core.GL20.Companion.GL_TEXTURE_WRAP_T
 import klay.core.GL20.Companion.GL_UNSIGNED_BYTE
 import pythagoras.f.Dimension
 import pythagoras.f.IDimension
-import react.Closeable
 
 /**
  * Provides access to graphics information and services.
@@ -119,14 +118,10 @@ abstract class Graphics(open val plat: Platform,
      */
     abstract fun layoutText(text: String, format: TextFormat, wrap: TextWrap): Array<out TextLayout>
 
-    /**
-     * Queues the supplied graphics resource for disposal on the next frame tick. This is generally
-     * called from finalizers of graphics resource objects which discover that they are being garbage
-     * collected, but their GPU resources have not yet been freed.
-     */
-    fun queueForDispose(resource: Closeable) {
-        plat.frame.connect { resource.close() }.once()
-    }
+    val exec
+        get(): Exec {
+            return plat.exec
+        }
 
     internal fun colorTex(): Texture {
         if (colorTex == null) {

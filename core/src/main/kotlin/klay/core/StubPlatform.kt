@@ -65,6 +65,8 @@ class StubPlatform : Platform() {
         }
     }
     override val exec = object : Exec.Default(this) {
+        override fun isMainThread() = true
+
         override fun invokeLater(action: () -> Unit) {
             action()
         } // now is later!
