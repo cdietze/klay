@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.cdietze:react-kt:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/cdietze/react-kt/1.0-SNAPSHOT/react-kt-1.0-20170910.134114-17.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/cdietze/react-kt/1.0-SNAPSHOT/react-kt-1.0-20170910.134114-17-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/cdietze/react-kt/1.0-SNAPSHOT/react-kt-1.0-20170910.134114-17-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

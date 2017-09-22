@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jvm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scene" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tests" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tests/assets" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tests/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tests/jvm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tripleklay" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tripleklay/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tripleklay/demo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tripleklay/demo/assets" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tripleklay/demo/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tripleklay/demo/jvm" charset="UTF-8" />
+  </component>
+</project>
