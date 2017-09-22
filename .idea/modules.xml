@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/klay.iml" filepath="$PROJECT_DIR$/klay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/klay-core.iml" filepath="$PROJECT_DIR$/core/klay-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jvm/klay-jvm.iml" filepath="$PROJECT_DIR$/jvm/klay-jvm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scene/klay-scene.iml" filepath="$PROJECT_DIR$/scene/klay-scene.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tests/klay-tests.iml" filepath="$PROJECT_DIR$/tests/klay-tests.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tests/assets/klay-tests-assets.iml" filepath="$PROJECT_DIR$/tests/assets/klay-tests-assets.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tests/core/klay-tests-core.iml" filepath="$PROJECT_DIR$/tests/core/klay-tests-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tests/jvm/klay-tests-jvm.iml" filepath="$PROJECT_DIR$/tests/jvm/klay-tests-jvm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tripleklay/klay-tripleklay.iml" filepath="$PROJECT_DIR$/tripleklay/klay-tripleklay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tripleklay/core/klay-tripleklay-core.iml" filepath="$PROJECT_DIR$/tripleklay/core/klay-tripleklay-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tripleklay/demo/klay-tripleklay-demo.iml" filepath="$PROJECT_DIR$/tripleklay/demo/klay-tripleklay-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tripleklay/demo/assets/klay-tripleklay-demo-assets.iml" filepath="$PROJECT_DIR$/tripleklay/demo/assets/klay-tripleklay-demo-assets.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tripleklay/demo/core/klay-tripleklay-demo-core.iml" filepath="$PROJECT_DIR$/tripleklay/demo/core/klay-tripleklay-demo-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tripleklay/demo/jvm/klay-tripleklay-demo-jvm.iml" filepath="$PROJECT_DIR$/tripleklay/demo/jvm/klay-tripleklay-demo-jvm.iml" />
+    </modules>
+  </component>
+</project>
