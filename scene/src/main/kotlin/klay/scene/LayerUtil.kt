@@ -2,6 +2,7 @@ package klay.scene
 
 import klay.core.Clock
 import klay.core.Log
+import klay.core.PaintClock
 import pythagoras.f.Point
 import pythagoras.f.XY
 import pythagoras.util.NoninvertibleTransformException
@@ -164,7 +165,7 @@ object LayerUtil {
      * Automatically connects `onPaint` to `paint` when `layer` is added to a scene
      * graph, and disconnects it when `layer` is removed.
      */
-    fun bind(layer: Layer, paint: Signal<Clock>, onPaint: Slot<Clock>) {
+    fun bind(layer: Layer, paint: Signal<PaintClock>, onPaint: Slot<PaintClock>) {
         var _pcon = Closeable.Util.NOOP
         layer.state.connectNotify { state: Layer.State ->
             _pcon = Closeable.Util.close(_pcon)

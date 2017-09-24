@@ -1,9 +1,6 @@
 package tripleklay.demo.core.entity
 
-import klay.core.Clock
-import klay.core.Font
-import klay.core.Key
-import klay.core.Keyboard
+import klay.core.*
 import klay.scene.GroupLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
@@ -85,7 +82,7 @@ class AsteroidsDemo : DemoScreen() {
 
         // updates sprites to interpolated position of entities on each paint() call
         val spriter: System = object : System(this, 0) {
-            protected override fun paint(clock: Clock, entities: Entities) {
+            protected override fun paint(clock: PaintClock, entities: Entities) {
                 val alpha = clock.alpha
                 val op = _oldPos
                 val p = _pos
@@ -123,7 +120,7 @@ class AsteroidsDemo : DemoScreen() {
 
         // spins things
         val spinner: System = object : System(this, 0) {
-            override fun paint(clock: Clock, entities: Entities) {
+            override fun paint(clock: PaintClock, entities: Entities) {
                 val dt = clock.dt.toFloat()
                 var ii = 0
                 val ll = entities.size()
