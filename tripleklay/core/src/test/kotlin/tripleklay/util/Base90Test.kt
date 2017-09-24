@@ -12,7 +12,7 @@ class Base90Test {
     @Test fun testInts() {
         assertEquals(Integer.MIN_VALUE.toLong(), Base90.decodeInt(Base90.encodeInt(Integer.MIN_VALUE)).toLong())
         assertEquals(Integer.MAX_VALUE.toLong(), Base90.decodeInt(Base90.encodeInt(Integer.MAX_VALUE)).toLong())
-        for (ii in 0..java.lang.Short.MAX_VALUE - 1) {
+        for (ii in 0 until java.lang.Short.MAX_VALUE) {
             assertEquals(ii.toLong(), Base90.decodeInt(Base90.encodeInt(ii)).toLong())
             assertEquals((-ii).toLong(), Base90.decodeInt(Base90.encodeInt(-ii)).toLong())
         }
@@ -33,13 +33,13 @@ class Base90Test {
     @Test fun testLongs() {
         assertEquals(java.lang.Long.MIN_VALUE, Base90.decodeLong(Base90.encodeLong(java.lang.Long.MIN_VALUE)))
         assertEquals(java.lang.Long.MAX_VALUE, Base90.decodeLong(Base90.encodeLong(java.lang.Long.MAX_VALUE)))
-        for (ii in 0L..java.lang.Short.MAX_VALUE - 1) {
+        for (ii in 0L until java.lang.Short.MAX_VALUE.toLong()) {
             assertEquals(ii, Base90.decodeLong(Base90.encodeLong(ii)))
             assertEquals(-ii, Base90.decodeLong(Base90.encodeLong(-ii)))
         }
         val incr = java.lang.Long.MAX_VALUE / java.lang.Short.MAX_VALUE
         run {
-            var ii: Long = 0
+            var ii = 0L
             while (ii > 0 && ii <= java.lang.Long.MAX_VALUE) {
                 assertEquals(ii, Base90.decodeLong(Base90.encodeLong(ii)))
                 ii += incr
