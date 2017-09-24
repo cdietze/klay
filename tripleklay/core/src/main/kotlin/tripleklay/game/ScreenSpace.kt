@@ -2,6 +2,7 @@ package tripleklay.game
 
 import klay.core.Clock
 import klay.core.Game
+import klay.core.PaintClock
 import klay.scene.GroupLayer
 import klay.scene.Pointer
 import pythagoras.f.IDimension
@@ -95,7 +96,7 @@ class ScreenSpace
         val update = Signal<Clock>()
 
         /** A signal emitted on every frame, while this screen is showing.  */
-        val paint = Signal<Clock>()
+        val paint = Signal<PaintClock>()
 
         init {
             layer.setName(this@Screen.toString() + " layer")

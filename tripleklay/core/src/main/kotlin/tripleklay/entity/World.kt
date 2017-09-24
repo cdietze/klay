@@ -1,6 +1,7 @@
 package tripleklay.entity
 
 import klay.core.Clock
+import klay.core.PaintClock
 import react.Closeable
 import react.Signal
 import tripleklay.util.Bag
@@ -31,7 +32,7 @@ open class World : Iterable<Entity> {
     /** Connects this world to the supplied `update` and `paint` signals.
      * @return an object that can be used to disconnect both connections.
      */
-    fun connect(update: Signal<Clock>, paint: Signal<Clock>): Closeable {
+    fun connect(update: Signal<Clock>, paint: Signal<PaintClock>): Closeable {
         return Closeable.Util.join(
                 update.connect({ clk -> update(clk) }),
                 paint.connect({ clk -> paint(clk) }))
@@ -193,7 +194,7 @@ open class World : Iterable<Entity> {
     }
 
     /** Paints all of the [System]s in this world.  */
-    open fun paint(clock: Clock) {
+    open fun paint(clock: PaintClock) {
         var ii = 0
         val ll = _systems.size
         while (ii < ll) {

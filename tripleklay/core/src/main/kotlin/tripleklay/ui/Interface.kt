@@ -1,6 +1,7 @@
 package tripleklay.ui
 
 import klay.core.Clock
+import klay.core.PaintClock
 import klay.core.Platform
 import klay.scene.GroupLayer
 import react.Closeable
@@ -24,7 +25,7 @@ class Interface
         /** The platform in which this interface is operating.  */
         val plat: Platform,
         /** A signal emitted just before we render a frame.  */
-        val frame: Signal<Clock>) : Closeable {
+        val frame: Signal<PaintClock>) : Closeable {
 
     /** An animator that can be used to animate things in this interface.  */
     val anim = Animator()

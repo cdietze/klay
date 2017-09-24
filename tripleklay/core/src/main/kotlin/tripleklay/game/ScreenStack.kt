@@ -2,6 +2,7 @@ package tripleklay.game
 
 import klay.core.Clock
 import klay.core.Game
+import klay.core.PaintClock
 import klay.core.Platform
 import klay.scene.GroupLayer
 import pythagoras.f.IDimension
@@ -39,7 +40,7 @@ open class ScreenStack
         /** A signal emitted on every simulation update, while this screen is showing.  */
         val update = Signal<Clock>()
         /** A signal emitted on every frame, while this screen is showing.  */
-        val paint = Signal<Clock>()
+        val paint = Signal<PaintClock>()
 
         // the following methods provide hooks into the visibility lifecycle of a screen, which
         // takes the form: added -> shown -> { hidden -> shown -> ... } -> hidden -> removed

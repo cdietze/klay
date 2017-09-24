@@ -1,6 +1,7 @@
 package tripleklay.entity
 
 import klay.core.Clock
+import klay.core.PaintClock
 
 /**
  * Handles a single concern in an entity-based game. That might be processing collisions, or
@@ -84,7 +85,7 @@ protected constructor(
      * values computed during [update]. Entities *must not* be added,
      * changed or removed during this call. This is not called if the system is disabled.
      */
-    protected open fun paint(clock: Clock, entities: Entities) {}
+    protected open fun paint(clock: PaintClock, entities: Entities) {}
 
     /**
      * Indicates whether this system is "interested" in this entity. A system will process all
@@ -119,7 +120,7 @@ protected constructor(
         update(clock, _active)
     }
 
-    internal fun paint(clock: Clock) {
+    internal fun paint(clock: PaintClock) {
         if (!_enabled) return
         paint(clock, _active)
     }
