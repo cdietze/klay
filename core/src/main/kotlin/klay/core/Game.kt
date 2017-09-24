@@ -33,10 +33,11 @@ abstract class Game
 
     private val updateClock = Clock()
     private val paintClock = Clock()
-    private var nextUpdate: Int = 0
 
     init {
         assert(updateRate > 0) { "updateRate must be greater than zero." }
+        updateClock.tick = plat.tick()
+        paintClock.tick = updateClock.tick
         plat.frame.connect { _ ->
             onFrame()
         }
@@ -58,26 +59,18 @@ abstract class Game
     }
 
     private fun onFrame() {
-        var nextUpdate = this.nextUpdate
+        var nextUpdate = updateClock.tick + updateRate
         val updateTick = plat.tick()
-        if (updateTick >= nextUpdate) {
-            val updateRate = this.updateRate
-            var updates = 0
-            while (updateTick >= nextUpdate) {
-                nextUpdate += updateRate
-                updates++
-            }
-            this.nextUpdate = nextUpdate
-            val updateDt = updates * updateRate
-            updateClock.tick += updateDt
-            updateClock.dt = updateDt
+        while (updateTick >= nextUpdate) {
+            updateClock.tick = nextUpdate
+            updateClock.dt = updateRate
+            nextUpdate += updateRate
             update(updateClock)
         }
-
         val paintTick = plat.tick()
         paintClock.dt = paintTick - paintClock.tick
         paintClock.tick = paintTick
-        paintClock.alpha = 1 - (nextUpdate - paintTick) / updateRate.toFloat()
+        paintClock.alpha = (paintTick - nextUpdate) / updateRate.toFloat()
         paint(paintClock)
     }
 }
