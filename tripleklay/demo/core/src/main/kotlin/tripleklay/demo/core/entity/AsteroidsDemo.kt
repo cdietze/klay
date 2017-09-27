@@ -100,7 +100,7 @@ class AsteroidsDemo : DemoScreen() {
                     var ii = 0
                     val ll = entities.size()
                     while (ii < ll) {
-                        val eid = entities.get(ii)
+                        val eid = entities[ii]
                         spin[eid] = _angvel
                         if (_accel != 0f) {
                             val s = sprite[eid]
@@ -138,7 +138,7 @@ class AsteroidsDemo : DemoScreen() {
                     var ii = 0
                     val ll = entities.size()
                     while (ii < ll) {
-                        val eid1 = entities.get(ii)
+                        val eid1 = entities[ii]
                         val e1 = this@AsteroidsWorld.entity(eid1)
                         if (e1.isDisposed) {
                             ii++
@@ -146,8 +146,8 @@ class AsteroidsDemo : DemoScreen() {
                         }
                         pos.get(eid1, _p1)
                         val r1 = radius[eid1]
-                        for (jj in ii + 1..ll - 1) {
-                            val eid2 = entities.get(jj)
+                        for (jj in ii + 1 until ll) {
+                            val eid2 = entities[jj]
                             val e2 = this@AsteroidsWorld.entity(eid2)
                             if (e2.isDisposed) continue
                             pos.get(eid2, _p2)
@@ -205,7 +205,7 @@ class AsteroidsDemo : DemoScreen() {
                     var ii = 0
                     val ll = entities.size()
                     while (ii < ll) {
-                        val eid = entities.get(ii)
+                        val eid = entities[ii]
                         pos.get(eid, p) // get our current pos
                         p.x = wrapx(p.x) // wrap it around the screen if necessary
                         p.y = wrapy(p.y)
@@ -235,7 +235,7 @@ class AsteroidsDemo : DemoScreen() {
                     var ii = 0
                     val ll = entities.size()
                     while (ii < ll) {
-                        val eid = entities.get(ii)
+                        val eid = entities[ii]
                         // interpolate between opos and pos and use that to update the sprite position
                         opos.get(eid, op)
                         pos.get(eid, p)
@@ -273,7 +273,7 @@ class AsteroidsDemo : DemoScreen() {
                     var ii = 0
                     val ll = entities.size()
                     while (ii < ll) {
-                        val eid = entities.get(ii)
+                        val eid = entities[ii]
                         val angvel = spin[eid]
                         if (angvel == 0f) {
                             ii++
@@ -299,7 +299,7 @@ class AsteroidsDemo : DemoScreen() {
                     var ii = 0
                     val ll = entities.size()
                     while (ii < ll) {
-                        val eid = entities.get(ii)
+                        val eid = entities[ii]
                         if (expires[eid] <= now) this@AsteroidsWorld.entity(eid).close()
                         ii++
                     }
@@ -316,7 +316,7 @@ class AsteroidsDemo : DemoScreen() {
             this.register(object : System(0) {
                 override fun update(clock: Clock, entities: Entities) {
                     // if the only entity left is the player's ship; move to the next wave
-                    if (entities.size() === 1 && type[entities.get(0)] == SHIP) {
+                    if (entities.size() == 1 && type[entities[0]] == SHIP) {
                         startWave(++_wave)
                     }
                 }
@@ -381,7 +381,7 @@ class AsteroidsDemo : DemoScreen() {
             val x = pos.getX(target.id)
             val y = pos.getY(target.id)
             // create a bunch of bullets going in random directions from the ship
-            for (ii in 0..frags - 1) {
+            for (ii in 0 until frags) {
                 val ang = random.getInRange(-MathUtil.PI, MathUtil.PI)
                 val vel = random.getInRange(maxvel / 3, maxvel)
                 val vx = MathUtil.cos(ang) * vel
@@ -528,17 +528,15 @@ class AsteroidsDemo : DemoScreen() {
         return Group(AxisLayout.vertical())
     }
 
-    protected var _group: Group? = null
-
     companion object {
 
-        protected val MSG_STYLE = TextStyle.DEFAULT.withTextColor(0xFFFFFFFF.toInt()).withFont(Font("Helvetica", 24f))
+        val MSG_STYLE = TextStyle.DEFAULT.withTextColor(0xFFFFFFFF.toInt()).withFont(Font("Helvetica", 24f))
 
         val SHIP = 1 shl 0
         val ASTEROID = 1 shl 1
         val BULLET = 1 shl 2
 
-        protected val MAXVEL = 0.02f
-        protected val MAXSPIN = 0.001f
+        val MAXVEL = 0.02f
+        val MAXSPIN = 0.001f
     }
 }
