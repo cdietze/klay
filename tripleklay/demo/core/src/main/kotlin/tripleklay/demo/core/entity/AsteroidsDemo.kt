@@ -22,7 +22,7 @@ import java.util.*
 class AsteroidsDemo : DemoScreen() {
     val asteroids = assets().getImage("images/asteroids.png")
 
-    enum class Size private constructor(val size: Int) {
+    enum class Size(val size: Int) {
         TINY(20), SMALL(40), MEDIUM(60), LARGE(80)
     }
 
@@ -45,31 +45,33 @@ class AsteroidsDemo : DemoScreen() {
         var now: Int = 0 // ms elapsed since world start, used by expirer/expires
 
         // handles updating entity position based on entity velocity
-        val mover: System = object : System(this, 0) {
-            protected override fun update(clock: Clock, entities: tripleklay.entity.System.Entities) {
-                val p = _pos
-                val v = _vel
-                val delta = clock.dt
-                var ii = 0
-                val ll = entities.size()
-                while (ii < ll) {
-                    val eid = entities.get(ii)
-                    pos.get(eid, p) // get our current pos
-                    p.x = wrapx(p.x) // wrap it around the screen if necessary
-                    p.y = wrapy(p.y)
-                    opos[eid] = p // copy wrapped pos to opos
-                    vel.get(eid, v).scaleLocal(delta.toFloat()) // turn velocity into delta pos
-                    pos.set(eid, p.x + v.x, p.y + v.y) // add velocity (but don't wrap)
-                    ii++
+        fun registerMover() {
+            this.register(object : System(0) {
+                override fun update(clock: Clock, entities: tripleklay.entity.System.Entities) {
+                    val p = _pos
+                    val v = _vel
+                    val delta = clock.dt
+                    var ii = 0
+                    val ll = entities.size()
+                    while (ii < ll) {
+                        val eid = entities.get(ii)
+                        pos.get(eid, p) // get our current pos
+                        p.x = wrapx(p.x) // wrap it around the screen if necessary
+                        p.y = wrapy(p.y)
+                        opos[eid] = p // copy wrapped pos to opos
+                        vel.get(eid, v).scaleLocal(delta.toFloat()) // turn velocity into delta pos
+                        pos.set(eid, p.x + v.x, p.y + v.y) // add velocity (but don't wrap)
+                        ii++
+                    }
                 }
-            }
 
-            override fun isInterested(entity: Entity): Boolean {
-                return entity.has(opos) && entity.has(pos) && entity.has(vel)
-            }
+                override fun isInterested(entity: Entity): Boolean {
+                    return entity.has(opos) && entity.has(pos) && entity.has(vel)
+                }
 
-            protected val _pos = Point()
-            protected val _vel = Vector()
+                protected val _pos = Point()
+                protected val _vel = Vector()
+            })
         }
 
         private fun wrapx(x: Float): Float {
@@ -81,239 +83,258 @@ class AsteroidsDemo : DemoScreen() {
         }
 
         // updates sprites to interpolated position of entities on each paint() call
-        val spriter: System = object : System(this, 0) {
-            protected override fun paint(clock: PaintClock, entities: Entities) {
-                val alpha = clock.alpha
-                val op = _oldPos
-                val p = _pos
-                var ii = 0
-                val ll = entities.size()
-                while (ii < ll) {
-                    val eid = entities.get(ii)
-                    // interpolate between opos and pos and use that to update the sprite position
-                    opos.get(eid, op)
-                    pos.get(eid, p)
-                    // wrap our interpolated position as we may interpolate off the screen
-                    sprite[eid].setTranslation(wrapx(MathUtil.lerp(op.x, p.x, alpha)),
-                            wrapy(MathUtil.lerp(op.y, p.y, alpha)))
-                    ii++
+        fun registerSpriter() {
+            this.register(object : System(0) {
+                override fun paint(clock: PaintClock, entities: Entities) {
+                    val alpha = clock.alpha
+                    val op = _oldPos
+                    val p = _pos
+                    var ii = 0
+                    val ll = entities.size()
+                    while (ii < ll) {
+                        val eid = entities.get(ii)
+                        // interpolate between opos and pos and use that to update the sprite position
+                        opos.get(eid, op)
+                        pos.get(eid, p)
+                        // wrap our interpolated position as we may interpolate off the screen
+                        sprite[eid].setTranslation(wrapx(MathUtil.lerp(op.x, p.x, alpha)),
+                                wrapy(MathUtil.lerp(op.y, p.y, alpha)))
+                        ii++
+                    }
                 }
-            }
 
-            override fun wasAdded(entity: Entity) {
-                super.wasAdded(entity)
-                stage.addAt(sprite[entity.id], pos.getX(entity.id), pos.getX(entity.id))
-            }
+                override fun wasAdded(entity: Entity) {
+                    super.wasAdded(entity)
+                    stage.addAt(sprite[entity.id], pos.getX(entity.id), pos.getX(entity.id))
+                }
 
-            override fun wasRemoved(entity: Entity, index: Int) {
-                super.wasRemoved(entity, index)
-                stage.remove(sprite[entity.id])
-            }
+                override fun wasRemoved(entity: Entity, index: Int) {
+                    super.wasRemoved(entity, index)
+                    stage.remove(sprite[entity.id])
+                }
 
-            override fun isInterested(entity: Entity): Boolean {
-                return entity.has(opos) && entity.has(pos) && entity.has(sprite)
-            }
+                override fun isInterested(entity: Entity): Boolean {
+                    return entity.has(opos) && entity.has(pos) && entity.has(sprite)
+                }
 
-            protected val _oldPos = Point()
-            protected val _pos = Point()
+                protected val _oldPos = Point()
+                protected val _pos = Point()
+            })
         }
 
         // spins things
-        val spinner: System = object : System(this, 0) {
-            override fun paint(clock: PaintClock, entities: Entities) {
-                val dt = clock.dt.toFloat()
-                var ii = 0
-                val ll = entities.size()
-                while (ii < ll) {
-                    val eid = entities.get(ii)
-                    val angvel = spin[eid]
-                    if (angvel == 0f) {
+        fun registerSpinner() {
+            this.register(object : System(0) {
+                override fun paint(clock: PaintClock, entities: Entities) {
+                    val dt = clock.dt.toFloat()
+                    var ii = 0
+                    val ll = entities.size()
+                    while (ii < ll) {
+                        val eid = entities.get(ii)
+                        val angvel = spin[eid]
+                        if (angvel == 0f) {
+                            ii++
+                            continue
+                        }
+                        val s = sprite[eid]
+                        s.setRotation(s.rotation() + angvel * dt)
                         ii++
-                        continue
                     }
-                    val s = sprite[eid]
-                    s.setRotation(s.rotation() + angvel * dt)
-                    ii++
                 }
-            }
 
-            override fun isInterested(entity: Entity): Boolean {
-                return entity.has(spin) && entity.has(sprite)
-            }
+                override fun isInterested(entity: Entity): Boolean {
+                    return entity.has(spin) && entity.has(sprite)
+                }
+            })
         }
 
         // expires things with limited lifespan (like bullets)
-        val expirer: System = object : System(this, 0) {
-            override fun update(clock: Clock, entities: Entities) {
-                val now = this@AsteroidsWorld.now
-                var ii = 0
-                val ll = entities.size()
-                while (ii < ll) {
-                    val eid = entities.get(ii)
-                    if (expires[eid] <= now) world.entity(eid).close()
-                    ii++
+        fun registerExpirer() {
+            this.register(object : System(0) {
+                override fun update(clock: Clock, entities: Entities) {
+                    val now = this@AsteroidsWorld.now
+                    var ii = 0
+                    val ll = entities.size()
+                    while (ii < ll) {
+                        val eid = entities.get(ii)
+                        if (expires[eid] <= now) this@AsteroidsWorld.entity(eid).close()
+                        ii++
+                    }
                 }
-            }
 
-            override fun isInterested(entity: Entity): Boolean {
-                return entity.has(expires)
-            }
+                override fun isInterested(entity: Entity): Boolean {
+                    return entity.has(expires)
+                }
+            })
         }
 
         // checks for collisions (modeling everything as a sphere)
-        val collider: System = object : System(this, 1) {
-            override fun update(clock: Clock, entities: Entities) {
-                // simple O(n^2) collision check; no need for anything fancy here
-                var ii = 0
-                val ll = entities.size()
-                while (ii < ll) {
-                    val eid1 = entities.get(ii)
-                    val e1 = world.entity(eid1)
-                    if (e1.isDisposed) {
-                        ii++
-                        continue
-                    }
-                    pos.get(eid1, _p1)
-                    val r1 = radius[eid1]
-                    for (jj in ii + 1..ll - 1) {
-                        val eid2 = entities.get(jj)
-                        val e2 = world.entity(eid2)
-                        if (e2.isDisposed) continue
-                        pos.get(eid2, _p2)
-                        val r2 = radius[eid2]
-                        val dr = r2 + r1
-                        val dist2 = _p1.distanceSq(_p2)
-                        if (dist2 <= dr * dr) {
-                            collide(e1, e2)
-                            break // don't collide e1 with any other entities
+        fun registerCollider() {
+            this.register(object : System(1) {
+                override fun update(clock: Clock, entities: Entities) {
+                    // simple O(n^2) collision check; no need for anything fancy here
+                    var ii = 0
+                    val ll = entities.size()
+                    while (ii < ll) {
+                        val eid1 = entities.get(ii)
+                        val e1 = this@AsteroidsWorld.entity(eid1)
+                        if (e1.isDisposed) {
+                            ii++
+                            continue
                         }
+                        pos.get(eid1, _p1)
+                        val r1 = radius[eid1]
+                        for (jj in ii + 1..ll - 1) {
+                            val eid2 = entities.get(jj)
+                            val e2 = this@AsteroidsWorld.entity(eid2)
+                            if (e2.isDisposed) continue
+                            pos.get(eid2, _p2)
+                            val r2 = radius[eid2]
+                            val dr = r2 + r1
+                            val dist2 = _p1.distanceSq(_p2)
+                            if (dist2 <= dr * dr) {
+                                collide(e1, e2)
+                                break // don't collide e1 with any other entities
+                            }
+                        }
+                        ii++
                     }
-                    ii++
                 }
-            }
 
-            override fun isInterested(entity: Entity): Boolean {
-                return entity.has(pos) && entity.has(radius)
-            }
+                override fun isInterested(entity: Entity): Boolean {
+                    return entity.has(pos) && entity.has(radius)
+                }
 
-            private fun collide(e1: Entity, e2: Entity) {
-                when (type[e1.id] or type[e2.id]) {
-                    SHIP_ASTEROID -> {
-                        explode(if (type[e1.id] == SHIP) e1 else e2, 10, 0.75f)
-                        setMessage("Game Over. Press 's' to restart")
-                        _wave = -1
-                    }
-                    BULLET_ASTEROID -> if (type[e1.id] == ASTEROID) {
-                        sunder(e1)
-                        e2.close()
-                    } else {
-                        sunder(e2)
-                        e1.close()
-                    }
-                // TODO: asteroid asteroid?
-                    else -> {
-                    }
-                }// nada
-            }
+                private fun collide(e1: Entity, e2: Entity) {
+                    when (type[e1.id] or type[e2.id]) {
+                        SHIP_ASTEROID -> {
+                            explode(if (type[e1.id] == SHIP) e1 else e2, 10, 0.75f)
+                            setMessage("Game Over. Press 's' to restart")
+                            _wave = -1
+                        }
+                        BULLET_ASTEROID -> if (type[e1.id] == ASTEROID) {
+                            sunder(e1)
+                            e2.close()
+                        } else {
+                            sunder(e2)
+                            e1.close()
+                        }
+                    // TODO: asteroid asteroid?
+                        else -> {
+                        }
+                    }// nada
+                }
 
-            protected val SHIP_ASTEROID = SHIP or ASTEROID
-            protected val BULLET_ASTEROID = BULLET or ASTEROID
+                protected val SHIP_ASTEROID = SHIP or ASTEROID
+                protected val BULLET_ASTEROID = BULLET or ASTEROID
 
-            protected val _p1 = Point()
-            protected val _p2 = Point()
+                protected val _p1 = Point()
+                protected val _p2 = Point()
+            })
         }
 
         // handles progression to next wave
-        val waver: System = object : System(this, 0) {
-            override fun update(clock: Clock, entities: Entities) {
-                // if the only entity left is the player's ship; move to the next wave
-                if (entities.size() === 1 && type[entities.get(0)] == SHIP) {
-                    startWave(++_wave)
+        fun registerWaver() {
+            this.register(object : System(0) {
+                override fun update(clock: Clock, entities: Entities) {
+                    // if the only entity left is the player's ship; move to the next wave
+                    if (entities.size() === 1 && type[entities.get(0)] == SHIP) {
+                        startWave(++_wave)
+                    }
                 }
-            }
 
-            override fun isInterested(entity: Entity): Boolean {
-                return true
-            }
+                override fun isInterested(entity: Entity): Boolean {
+                    return true
+                }
+            })
         }
 
         // handles player input
-        val controls: System = object : System(this, 1) {
-            val ACCEL = 0.01f
-            val ROT = 0.005f
-            val MAX_VEL = 1f
-            val BULLET_LIFE = 1000 // ms
-            val BULLET_VEL = 0.25f
+        fun registerControls() {
+            this.register(object : System(1) {
+                val ACCEL = 0.01f
+                val ROT = 0.005f
+                val MAX_VEL = 1f
+                val BULLET_LIFE = 1000 // ms
+                val BULLET_VEL = 0.25f
 
-            /* ctor */ init {
-                keyDown.connect({ key: Key ->
-                    when (key) {
-                        Key.LEFT -> _angvel = -ROT
-                        Key.RIGHT -> _angvel = ROT
-                        Key.UP -> _accel = ACCEL
-                        Key.SPACE -> if (_wave >= 0) fireBullet()
-                        Key.S -> if (_wave == -1) startWave(0)
-                        else -> {
+                /* ctor */ init {
+                    keyDown.connect({ key: Key ->
+                        when (key) {
+                            Key.LEFT -> _angvel = -ROT
+                            Key.RIGHT -> _angvel = ROT
+                            Key.UP -> _accel = ACCEL
+                            Key.SPACE -> if (_wave >= 0) fireBullet()
+                            Key.S -> if (_wave == -1) startWave(0)
+                            else -> {
+                            }
                         }
-                    }
-                })
-                keyUp.connect({ key: Key ->
-                    when (key) {
-                        Key.LEFT -> _angvel = 0f
-                        Key.RIGHT -> _angvel = 0f
-                        Key.UP -> _accel = 0f
-                        else -> {
+                    })
+                    keyUp.connect({ key: Key ->
+                        when (key) {
+                            Key.LEFT -> _angvel = 0f
+                            Key.RIGHT -> _angvel = 0f
+                            Key.UP -> _accel = 0f
+                            else -> {
+                            }
                         }
-                    }
-                })
-            }
-
-            fun fireBullet() {
-                val sid = _ship.id
-                val ang = sprite[sid].rotation()
-                val vx = vel.getX(sid)
-                val vy = vel.getY(sid)
-                val bvx = vx + BULLET_VEL * MathUtil.cos(ang)
-                val bvy = vy + BULLET_VEL * MathUtil.sin(ang)
-                createBullet(pos.getX(sid), pos.getY(sid), bvx, bvy, ang, now + BULLET_LIFE)
-                vel.set(sid, vx - bvx / 100, vy - bvy / 100) // decrease ship's velocity a smidgen
-            }
-
-            override fun update(clock: Clock, entities: Entities) {
-                val v = _vel
-                var ii = 0
-                val ll = entities.size()
-                while (ii < ll) {
-                    val eid = entities.get(ii)
-                    spin[eid] = _angvel
-                    if (_accel != 0f) {
-                        val s = sprite[eid]
-                        val ang = s.rotation()
-                        vel.get(eid, v)
-                        v.x = MathUtil.clamp(v.x + MathUtil.cos(ang) * _accel, -MAX_VEL, MAX_VEL)
-                        v.y = MathUtil.clamp(v.y + MathUtil.sin(ang) * _accel, -MAX_VEL, MAX_VEL)
-                        vel[eid] = v
-                    }
-                    ii++
+                    })
                 }
-            }
 
-            override fun wasAdded(entity: Entity) {
-                super.wasAdded(entity)
-                _ship = entity
-            }
+                fun fireBullet() {
+                    val sid = _ship.id
+                    val ang = sprite[sid].rotation()
+                    val vx = vel.getX(sid)
+                    val vy = vel.getY(sid)
+                    val bvx = vx + BULLET_VEL * MathUtil.cos(ang)
+                    val bvy = vy + BULLET_VEL * MathUtil.sin(ang)
+                    createBullet(pos.getX(sid), pos.getY(sid), bvx, bvy, ang, now + BULLET_LIFE)
+                    vel.set(sid, vx - bvx / 100, vy - bvy / 100) // decrease ship's velocity a smidgen
+                }
 
-            override fun isInterested(entity: Entity): Boolean {
-                return type[entity.id] == SHIP
-            }
+                override fun update(clock: Clock, entities: Entities) {
+                    val v = _vel
+                    var ii = 0
+                    val ll = entities.size()
+                    while (ii < ll) {
+                        val eid = entities.get(ii)
+                        spin[eid] = _angvel
+                        if (_accel != 0f) {
+                            val s = sprite[eid]
+                            val ang = s.rotation()
+                            vel.get(eid, v)
+                            v.x = MathUtil.clamp(v.x + MathUtil.cos(ang) * _accel, -MAX_VEL, MAX_VEL)
+                            v.y = MathUtil.clamp(v.y + MathUtil.sin(ang) * _accel, -MAX_VEL, MAX_VEL)
+                            vel[eid] = v
+                        }
+                        ii++
+                    }
+                }
 
-            protected var _vel = Vector()
-            protected var _angvel: Float = 0.toFloat()
-            protected var _accel: Float = 0.toFloat()
-            protected lateinit var _ship: Entity
+                override fun wasAdded(entity: Entity) {
+                    super.wasAdded(entity)
+                    _ship = entity
+                }
+
+                override fun isInterested(entity: Entity): Boolean {
+                    return type[entity.id] == SHIP
+                }
+
+                protected var _vel = Vector()
+                protected var _angvel: Float = 0.toFloat()
+                protected var _accel: Float = 0.toFloat()
+                protected lateinit var _ship: Entity
+            })
         }
 
         init {
+            registerMover()
+            registerSpriter()
+            registerSpinner()
+            registerExpirer()
+            registerCollider()
+            registerWaver()
+            registerControls()
 
             closeOnHide(input().keyboardEvents.connect(Keyboard.keySlot { event: Keyboard.KeyEvent ->
                 (if (event.down) keyDown else keyUp).emit(event.key)
