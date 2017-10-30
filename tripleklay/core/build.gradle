@@ -1,0 +1,7 @@
+
+description = ''
+dependencies {
+  compile project(':klay-core')
+  compile project(':klay-scene')
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+}
