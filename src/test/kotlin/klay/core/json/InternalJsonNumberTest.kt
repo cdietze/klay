@@ -61,7 +61,7 @@ class InternalJsonNumberTest {
                 Int.MIN_VALUE, Int.MIN_VALUE.toLong() - 1,
                 Long.MAX_VALUE, Long.MIN_VALUE)
         val json = JsonStringWriter().array(array).write()
-        assertEquals("[2147483647,2147483648,-2147483648,-2147483649,9223372036854775807,9223372036854775808,-9223372036854775808,-9223372036854775809]", json)
+        assertEquals("[2147483647,2147483648,-2147483648,-2147483649,9223372036854775807,-9223372036854775808]", json)
         val array2 = JsonParser.array().from(json)
         val json2 = JsonStringWriter().array(array2).write()
         assertEquals(json, json2)
