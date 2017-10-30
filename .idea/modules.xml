@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/klay.iml" filepath="$PROJECT_DIR$/klay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm.iml" group="klay-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm_main.iml" group="klay-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm_test.iml" group="klay-jvm" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay_main.iml" group="klay" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay_test.iml" group="klay" />
     </modules>

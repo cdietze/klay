@@ -241,10 +241,8 @@ constructor(private val string: String) {
             if (length < 10)
             // 2 147 483 647
                 return number.toInt()
-            if (length < 19)
-            // 9 223 372 036 854 775 807
-                return number.toLong()
-            throw createParseException("Numbers bigger than long not supported, but found: $number", true)
+            // Numbers that cannot fit in a long will crash
+            return number.toLong()
         } catch (
                 e: Exception
                 // TODO(cdi) use NumberFormatException again, seems to be still missing in kotlin-stdlib-common
