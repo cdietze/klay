@@ -1,0 +1,7 @@
+
+description = ''
+dependencies {
+  compile project(':klay-tripleklay:klay-tripleklay-demo:klay-tripleklay-demo-core')
+  compile project(':klay-tripleklay:klay-tripleklay-demo:klay-tripleklay-demo-assets')
+  compile project(':klay-jvm')
+}

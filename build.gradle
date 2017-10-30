@@ -1,0 +1,32 @@
+buildscript {
+    ext.kotlin_version = '1.2.0-beta-88'
+
+    repositories {
+        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    version = '1.0-SNAPSHOT'
+    repositories {
+        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
+        mavenCentral()
+        mavenLocal()
+        maven { url 'https://jitpack.io' }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    }
+}
+
+apply plugin: 'kotlin-platform-common'
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
+    compile 'com.github.cdietze:pythagoras-kt:1a140fd1fc'
+    compile 'com.github.cdietze:react-kt:b8280db23b'
+    testCompile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
+    testCompile 'junit:junit:4.12'
+}
