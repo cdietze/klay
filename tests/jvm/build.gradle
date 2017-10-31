@@ -1,8 +1,0 @@
-
-description = ''
-dependencies {
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jre8', version:'1.1.4-3'
-  compile project(':klay-jvm')
-  compile project(':klay-tests:klay-tests-core')
-  compile project(':klay-tests:klay-tests-assets')
-}

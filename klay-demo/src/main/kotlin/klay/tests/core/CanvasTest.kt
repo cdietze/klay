@@ -5,7 +5,9 @@ import klay.scene.CanvasLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
 import pythagoras.f.MathUtil
-import react.Connection
+import kotlin.math.absoluteValue
+import kotlin.math.round
+import kotlin.math.sin
 
 class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas rendering features.") {
     private var nextX: Float = 0.toFloat()
@@ -213,8 +215,8 @@ class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas r
 
             // round the width so that it goes to zero sometimes (which should be fine)
             if (tileLayer != null)
-                tileLayer.forceWidth = Math.round(
-                        Math.abs(MathUtil.sin(clock.tick / 2000f)) * 100f).toFloat()
+                tileLayer.forceWidth = round(
+                        sin(clock.tick / 2000f).absoluteValue * 100f)
         }))
 
         val cancan = createCanvas(50, 50, object : Drawer {
@@ -257,12 +259,12 @@ class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas r
         // add the layer and its description below
         game.rootLayer.addAt(layer, nextX, nextY)
         val dlayer = createDescripLayer(descrip, width.toFloat())
-        game.rootLayer.addAt(dlayer, nextX + Math.round((width - dlayer.width()) / 2),
+        game.rootLayer.addAt(dlayer, nextX + round((width - dlayer.width()) / 2),
                 nextY + height.toFloat() + 2f)
 
         // update our positioning info
         nextX += width + GAP
-        maxY = Math.max(maxY, height + dlayer.height() + 2)
+        maxY = maxOf(maxY, height + dlayer.height() + 2)
     }
 
     private interface ImageDrawer {

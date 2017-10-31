@@ -1,0 +1,28 @@
+buildscript {
+    ext.kotlin_version = '1.2.0-beta-88'
+
+    repositories {
+        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin-platform-jvm'
+apply plugin: 'application'
+
+mainClassName = "klay.tests.jvm.JvmTestsMain"
+applicationDefaultJvmArgs = ["-XstartOnFirstThread"]
+
+repositories {
+    maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
+    mavenCentral()
+}
+
+dependencies {
+    expectedBy project(":klay-demo")
+    compile project(":klay-jvm")
+    compile project(":klay-scene:klay-scene-jvm")
+}

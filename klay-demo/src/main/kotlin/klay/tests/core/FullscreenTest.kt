@@ -34,7 +34,7 @@ class FullscreenTest(game: TestsGame) : Test(game, "Full Screen", "Tests support
             }
             button.setTranslation(x, y)
             y += button.height() + spacing
-            nextX = Math.max(nextX, x + button.width())
+            nextX = maxOf(nextX, x + button.width())
         }
     }
 

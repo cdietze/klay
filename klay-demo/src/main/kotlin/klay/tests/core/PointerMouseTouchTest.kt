@@ -7,8 +7,6 @@ import klay.scene.Pointer
 import klay.scene.Touch
 import pythagoras.f.Point
 import pythagoras.f.Vector
-import react.Connection
-import java.util.*
 
 internal class PointerMouseTouchTest
 // private TestsGame.NToggle<String> propagate;
@@ -365,7 +363,7 @@ internal class PointerMouseTouchTest
     }
 
     private inner class TextMapper(wid: Float, lines: Int, format: TextFormat) : Label(wid, game.graphics.layoutText(".", format).size.height * lines, format) {
-        var values: MutableMap<String, String> = TreeMap()
+        var values: MutableMap<String, String> = mutableMapOf()
 
         operator fun set(name: String, value: String) {
             values.put(name, value)

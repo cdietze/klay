@@ -4,7 +4,7 @@ import klay.core.Platform
 import klay.core.TextFormat
 import klay.scene.ImageLayer
 import react.Slot
-import java.util.*
+import kotlin.math.round
 
 /**
  * Tests pause/resume notifications.
@@ -18,7 +18,7 @@ class PauseResumeTest(game: TestsGame) : Test(game, "PauseResume", "Tests pause/
         conns.add(game.plat.lifecycle.connect(object : Slot<Platform.Lifecycle> {
             private val start = game.plat.time()
             private fun elapsed(): Int {
-                return Math.round((game.plat.time() - start) / 1000).toInt()
+                return round((game.plat.time() - start) / 1000).toInt()
             }
 
             override fun invoke(event: Platform.Lifecycle) {
@@ -44,7 +44,7 @@ class PauseResumeTest(game: TestsGame) : Test(game, "PauseResume", "Tests pause/
     }
 
     private fun updateDisplay() {
-        val buf = StringBuffer()
+        val buf = StringBuilder()
         if (notifications.isEmpty()) {
             buf.append("No notifications. Pause and resume the game to generate some.")
         } else {
