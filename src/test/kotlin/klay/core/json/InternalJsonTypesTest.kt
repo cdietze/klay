@@ -114,7 +114,7 @@ class InternalJsonTypesTest {
         //@formatter:on
 
         assertEquals(
-                "[true,1.0,1.0,1,1234567890,\"hi\",{\"abc\":123},[1,null],[1,2,3],{\"a\":null,\"b\":null,\"c\":null}]",
+                "[true,1.0,1.0,1,\"hi\",{\"abc\":123},[1,null],[1,2,3],{\"a\":null,\"b\":null,\"c\":null}]",
                 JsonStringWriter.toString(a))
     }
 
@@ -141,7 +141,7 @@ class InternalJsonTypesTest {
         //@formatter:on
 
         assertEquals(
-                "{\"array\":[1,null],\"bigint\":1234567890,\"bool\":true,\"double\":1.0," +
+                "{\"array\":[1,null],\"bool\":true,\"double\":1.0," +
                         "\"existingArray\":[1,2,3],\"existingObject\":{\"a\":null,\"b\":null,\"c\":null}," +
                         "\"float\":1.0,\"int\":1,\"null\":null,\"object\":{\"abc\":123},\"string\":\"hi\"}",
                 JsonStringWriter.toString(a))

@@ -5,21 +5,17 @@ import klay.core.Json.TypedArray
 import kotlin.reflect.KClass
 
 /**
+ * Creates a map that guarantees iteration order.
+ * Used for object properties.
+ */
+expect fun <K, V> sortedMutableMap(): MutableMap<K, V>
+
+/**
  * Extends a [Map] with helper methods to determine the underlying JSON type of the map
  * element.
  */
 internal class JsonObject : Json.Object {
-    private val map: MutableMap<String, Any?>
-
-    /**
-     * Creates an empty [JsonObject] with the default capacity.
-     */
-    init {
-        // we use a tree map here to ensure predictable iteration order; for better or worse we have a
-        // bunch of tests that rely on a specific iteration order and those broke when we moved from
-        // JDK7 to 8; now we use an API that guarantees iteration order
-        map = LinkedHashMap<String, Any?>()
-    }
+    private val map: MutableMap<String, Any?> = sortedMutableMap()
 
     override fun getArray(key: String): Json.Array? {
         return get(key) as? Json.Array
