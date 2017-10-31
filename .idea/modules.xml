@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/klay.iml" filepath="$PROJECT_DIR$/klay.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo.iml" group="klay-demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets.iml" group="klay-demo/klay-demo-assets" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets_main.iml" group="klay-demo/klay-demo-assets" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets_test.iml" group="klay-demo/klay-demo-assets" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-jvm/klay-demo-jvm.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-jvm/klay-demo-jvm.iml" group="klay-demo/klay-demo-jvm" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-jvm/klay-demo-jvm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-jvm/klay-demo-jvm_main.iml" group="klay-demo/klay-demo-jvm" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-jvm/klay-demo-jvm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-jvm/klay-demo-jvm_test.iml" group="klay-demo/klay-demo-jvm" />
