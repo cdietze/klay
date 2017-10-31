@@ -47,7 +47,7 @@ constructor(private val string: String) {
         /**
          * Parses the current JSON type from a [String].
          */
-        fun from(s: String): T {
+        fun from(s: String): T? {
             return JsonParser(s).parse(clazz)
         }
     }
@@ -60,7 +60,7 @@ constructor(private val string: String) {
     /**
      * Parse a single JSON value from the string, expecting an EOF at the end.
      */
-    fun <T : Any> parse(clazz: KClass<T>): T {
+    fun <T : Any> parse(clazz: KClass<T>): T? {
         advanceToken()
         val parsed = currentValue()
         if (advanceToken() != Token.EOF)
@@ -68,7 +68,7 @@ constructor(private val string: String) {
         if (clazz != Any::class && (parsed == null || clazz != parsed::class))
             throw createParseException("JSON did not contain the correct type, expected " + clazz.simpleName
                     + ".", true)
-        return parsed as T
+        return parsed as T?
     }
 
     /**

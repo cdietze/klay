@@ -10,43 +10,43 @@ class InternalJsonParserTest {
     fun testWhitespace() {
         assertEquals(JsonObject::class,
                 JsonParser.`object`().from(
-                        " \t\r\n  { \t\r\n \"abc\"   \t\r\n : \t\r\n  1 \t\r\n  }  \t\r\n   ")::class)
+                        " \t\r\n  { \t\r\n \"abc\"   \t\r\n : \t\r\n  1 \t\r\n  }  \t\r\n   ")!!::class)
         assertEquals("{}", JsonParser.`object`().from("{}").toString())
     }
 
     @Test
     fun testEmptyObject() {
-        assertEquals(JsonObject::class, JsonParser.`object`().from("{}")::class)
+        assertEquals(JsonObject::class, JsonParser.`object`().from("{}")!!::class)
         assertEquals("{}", JsonParser.`object`().from("{}").toString())
     }
 
     @Test
     fun testObjectOneElement() {
-        assertEquals(JsonObject::class, JsonParser.`object`().from("{\"a\":1}")::class)
+        assertEquals(JsonObject::class, JsonParser.`object`().from("{\"a\":1}")!!::class)
         assertEquals("{a=1}", JsonParser.`object`().from("{\"a\":1}").toString())
     }
 
     @Test
     fun testObjectTwoElements() {
-        assertEquals(JsonObject::class, JsonParser.`object`().from("{\"a\":1,\"B\":1}")::class)
+        assertEquals(JsonObject::class, JsonParser.`object`().from("{\"a\":1,\"B\":1}")!!::class)
         assertEquals("{B=1, a=1}", JsonParser.`object`().from("{\"a\":1,\"B\":1}").toString())
     }
 
     @Test
     fun testEmptyArray() {
-        assertEquals(JsonArray::class, JsonParser.array().from("[]")::class)
+        assertEquals(JsonArray::class, JsonParser.array().from("[]")!!::class)
         assertEquals("[]", JsonParser.array().from("[]").toString())
     }
 
     @Test
     fun testArrayOneElement() {
-        assertEquals(JsonArray::class, JsonParser.array().from("[1]")::class)
+        assertEquals(JsonArray::class, JsonParser.array().from("[1]")!!::class)
         assertEquals("[1]", JsonParser.array().from("[1]").toString())
     }
 
     @Test
     fun testArrayTwoElements() {
-        assertEquals(JsonArray::class, JsonParser.array().from("[1,1]")::class)
+        assertEquals(JsonArray::class, JsonParser.array().from("[1,1]")!!::class)
         assertEquals("[1, 1]", JsonParser.array().from("[1,1]").toString())
     }
 
@@ -66,7 +66,7 @@ class InternalJsonParserTest {
         val a = JsonParser.array().from(
                 "[1, -1.0e6, \"abc\", [1,2,3], {\"abc\":123}, true, false]")
         assertEquals("[1, -1000000.0, abc, [1, 2, 3], {abc=123}, true, false]", a.toString())
-        assertEquals(1.0, a.getDouble(0)!!, 0.001)
+        assertEquals(1.0, a!!.getDouble(0)!!, 0.001)
         assertEquals(1, a.getInt(0))
         assertEquals(-1000000, a.getInt(1))
         assertEquals(-1000000.0, a.getDouble(1)!!, 0.001)
@@ -83,7 +83,7 @@ class InternalJsonParserTest {
         val o = JsonParser.`object`().from(
                 "{\"abc\":123, \"def\":456.0, \"ghi\":[true, false], \"jkl\":null, \"mno\":true}")
         assertEquals("{abc=123, def=456.0, ghi=[true, false], jkl=null, mno=true}", o.toString())
-        assertEquals(123, o.getInt("abc"))
+        assertEquals(123, o!!.getInt("abc"))
         assertEquals(456, o.getInt("def"))
         assertEquals(true, o.getArray("ghi")!!.getBoolean(0))
         assertEquals(null, o["jkl"])

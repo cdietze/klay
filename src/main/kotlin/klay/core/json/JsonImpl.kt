@@ -30,11 +30,11 @@ class JsonImpl : Json {
     }
 
     override fun parse(json: String): Json.Object {
-        return JsonParser.`object`().from(json)
+        return JsonParser.`object`().from(json)!!
     }
 
     override fun parseArray(json: String): Json.Array {
-        return JsonParser.array().from(json)
+        return JsonParser.array().from(json)!!
     }
 
     companion object {

@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
 class InternalJsonNumberTest {
     @Test
     fun testBasicNumberRead() {
-        val array = JsonParser.array().from("[1, 1.0, 1.00]")
+        val array = JsonParser.array().from("[1, 1.0, 1.00]")!!
         assertEquals(Int::class, array[0]!!::class)
         assertEquals(Double::class, array[1]!!::class)
         assertEquals(Double::class, array[2]!!::class)
@@ -23,7 +23,7 @@ class InternalJsonNumberTest {
 
     @Test
     fun testLargeIntRead() {
-        val array = JsonParser.array().from("[-300000000,300000000]")
+        val array = JsonParser.array().from("[-300000000,300000000]")!!
         assertEquals(Int::class, array[0]!!::class)
         assertEquals(-300000000, array[0])
         assertEquals(Int::class, array[1]!!::class)
@@ -38,7 +38,7 @@ class InternalJsonNumberTest {
 
     @Test
     fun testLongRead() {
-        val array = JsonParser.array().from("[-3000000000,3000000000]")
+        val array = JsonParser.array().from("[-3000000000,3000000000]")!!
         assertEquals(Long::class, array[0]!!::class)
         assertEquals(-3000000000L, array[0])
         assertEquals(Long::class, array[1]!!::class)
@@ -62,7 +62,7 @@ class InternalJsonNumberTest {
                 Long.MAX_VALUE, Long.MIN_VALUE)
         val json = JsonStringWriter().array(array).write()
         assertEquals("[2147483647,2147483648,-2147483648,-2147483649,9223372036854775807,-9223372036854775808]", json)
-        val array2 = JsonParser.array().from(json)
+        val array2 = JsonParser.array().from(json)!!
         val json2 = JsonStringWriter().array(array2).write()
         assertEquals(json, json2)
     }
