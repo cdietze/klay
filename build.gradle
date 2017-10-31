@@ -14,12 +14,26 @@ allprojects {
     ext.pythagoras_version = '1a140fd1fc'
     ext.react_version = 'b8280db23b'
     version = '1.0-SNAPSHOT'
+
     repositories {
         maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
         mavenCentral()
         mavenLocal()
         maven { url 'https://jitpack.io' }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    }
+
+    apply plugin: 'maven-publish'
+
+    publishing {
+        publications {
+            MyPublication(MavenPublication) {
+                from components.java
+                groupId 'com.github.cdietze'
+                artifactId project.name
+                version project.version
+            }
+        }
     }
 }
 
