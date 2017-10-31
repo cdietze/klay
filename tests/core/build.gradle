@@ -1,6 +1,6 @@
 
 description = ''
 dependencies {
-  compile project(':klay-core')
+  compile project(':')
   compile project(':klay-scene')
 }
