@@ -43,7 +43,7 @@ class NetTest(game: TestsGame) : Test(game, "Net", "Tests network support.") {
                         val lines = rsp.payloadString().split("[\r\n]+")
                         val urlPre = "View it at "
                         for (line in lines) {
-                            System.err.println(line + " " + line.startsWith(urlPre) + " " + urlPre)
+                            println(line + " " + line.startsWith(urlPre) + " " + urlPre)
                             if (line.startsWith(urlPre)) {
                                 lastPostURL = line.substring(urlPre.length)
                                 break

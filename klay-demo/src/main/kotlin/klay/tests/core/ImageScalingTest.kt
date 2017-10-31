@@ -7,7 +7,7 @@ import klay.core.Texture
 import klay.scene.ImageLayer
 import pythagoras.f.MathUtil
 import react.RFuture
-import java.util.*
+import kotlin.math.abs
 
 class ImageScalingTest(game: TestsGame) : Test(game, "ImageScaling", "Tests use of min/mag filters and mipmapping when scaling images.") {
 
@@ -17,7 +17,7 @@ class ImageScalingTest(game: TestsGame) : Test(game, "ImageScaling", "Tests use 
         val princess = game.assets.getImage("images/princess.png")
         val star = game.assets.getImage("images/star.png")
 
-        RFuture.collect(Arrays.asList(princess.state, star.state)).onSuccess { _ ->
+        RFuture.collect(listOf(princess.state, star.state)).onSuccess { _ ->
             // the second princess and (64x64) star images are mipmapped
             val phwidth = princess.width / 2f
             val phheight = princess.height / 2f
@@ -48,7 +48,7 @@ class ImageScalingTest(game: TestsGame) : Test(game, "ImageScaling", "Tests use 
             conns.add(game.paint.connect { clock: Clock ->
                 if (!paused) {
                     elapsed += clock.dt / 1000f
-                    val scale = Math.abs(MathUtil.sin(elapsed))
+                    val scale = abs(MathUtil.sin(elapsed))
                     player1.setScale(scale)
                     player2.setScale(scale)
                     slayer1.setScale(scale)

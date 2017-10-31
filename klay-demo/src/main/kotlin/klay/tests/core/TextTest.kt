@@ -51,7 +51,7 @@ class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text renderi
             }
         })
         addToRow(layer)
-        lineBounds = NToggle("Lines", java.lang.Boolean.FALSE, java.lang.Boolean.TRUE)
+        lineBounds = NToggle("Lines", false, true)
         addToRow(lineBounds!!.layer)
 
         // test laying out the empty string
@@ -70,7 +70,7 @@ class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text renderi
     private fun addToRow(layer: ImageLayer) {
         game.rootLayer.add(layer.setTranslation(row!!.x + row!!.width, row!!.y))
         row!!.width += layer.width() + 45
-        row!!.height = Math.max(row!!.height, layer.height())
+        row!!.height = maxOf(row!!.height, layer.height())
         if (row!!.width > game.graphics.viewSize.width * .6f) newRow()
     }
 
@@ -96,7 +96,7 @@ class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text renderi
     private fun makeTextImage(): Texture {
         val format = TextFormat(Font(font!!.value(), style!!.value(), 24f))
         val wrapWidth = if (wrap!!.value() == 0)
-            java.lang.Float.MAX_VALUE
+            Float.MAX_VALUE
         else
             game.graphics.viewSize.width * wrap!!.value() / 100
         val block = TextBlock(

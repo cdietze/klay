@@ -3,7 +3,6 @@ package klay.tests.core
 import klay.core.Sound
 import klay.core.TextWrap
 import klay.scene.CanvasLayer
-import java.util.*
 
 /**
  * Tests sound playback support.

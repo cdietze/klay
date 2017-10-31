@@ -1,6 +1,0 @@
-
-description = ''
-dependencies {
-  compile project(':')
-  compile project(':klay-scene')
-}

@@ -8,7 +8,8 @@ import klay.scene.GroupLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
 import pythagoras.f.MathUtil
-import react.Connection
+import kotlin.math.abs
+import kotlin.math.round
 
 class ClippedLayerTest(game: TestsGame) : Test(game, "ClippedLayer", "Tests rendering of layers with and without clipping. Clipped layers " + "should not overdraw one pixel black lines that circumscribes them.") {
 
@@ -164,7 +165,7 @@ class ClippedLayerTest(game: TestsGame) : Test(game, "ClippedLayer", "Tests rend
             val elapsed = clock.tick / 1000f
             i1.setRotation(elapsed * MathUtil.PI / 2)
             s1.setRotation(elapsed * MathUtil.PI / 2)
-            g2.setWidth(Math.round(Math.abs(100f * MathUtil.sin(elapsed))).toFloat())
+            g2.setWidth(round(abs(100f * MathUtil.sin(elapsed))))
             inner.setOrigin(MathUtil.sin(elapsed * 2f) * 50, MathUtil.cos(elapsed * 2f) * 50)
             val cycle = elapsed / (MathUtil.PI * 2)
             if (MathUtil.ifloor(cycle) % 2 == 0) {

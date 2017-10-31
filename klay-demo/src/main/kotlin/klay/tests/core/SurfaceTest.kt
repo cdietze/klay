@@ -6,15 +6,18 @@ import klay.scene.GroupLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
 import pythagoras.f.AffineTransform
-import pythagoras.f.MathUtil
 import pythagoras.f.Rectangle
 import react.RFuture
 import react.Slot
-import java.util.*
+import kotlin.math.PI
+import kotlin.math.absoluteValue
+import kotlin.math.cos
+import kotlin.math.sin
 
 class SurfaceTest(game: TestsGame) : Test(game, "Surface", "Tests various Surface rendering features.") {
 
     private var paintUpped: TextureSurface? = null
+    val random = Random()
 
     override fun init() {
         val tile = game.assets.getImage("images/tile.png")
@@ -26,7 +29,7 @@ class SurfaceTest(game: TestsGame) : Test(game, "Surface", "Tests various Surfac
         }
         tile.state.onFailure(onError)
         orange.state.onFailure(onError)
-        RFuture.collect(Arrays.asList(tile.state, orange.state)).onSuccess { _ -> addTests(orange, tile) }
+        RFuture.collect(listOf(tile.state, orange.state)).onSuccess { _ -> addTests(orange, tile) }
     }
 
     override fun dispose() {
@@ -46,9 +49,9 @@ class SurfaceTest(game: TestsGame) : Test(game, "Surface", "Tests various Surfac
         val hsamples = samples / 2
         val verts = FloatArray((samples + 1) * 4)
         val indices = IntArray(samples * 6)
-        tessellateCurve(0f, 40 * Math.PI.toFloat(), verts, indices, object : F {
+        tessellateCurve(0f, 40 * PI.toFloat(), verts, indices, object : F {
             override fun apply(x: Float): Float {
-                return Math.sin((x / 20).toDouble()).toFloat() * 50
+                return sin((x / 20).toDouble()).toFloat() * 50
             }
         })
 
@@ -149,8 +152,8 @@ class SurfaceTest(game: TestsGame) : Test(game, "Surface", "Tests various Surfac
             val dot = game.createSurface(10f, 10f)
             dot.begin().setFillColor(0xFFFF0000.toInt()).fillRect(0f, 0f, 5f, 5f).fillRect(5f, 5f, 5f, 5f).setFillColor(0xFF0000FF.toInt()).fillRect(5f, 0f, 5f, 5f).fillRect(0f, 5f, 5f, 5f).end().close()
             val dotl = ImageLayer(dot.texture)
-            dotl.setTranslation(dotBox.x + Math.random().toFloat() * (dotBox.width - 10),
-                    dotBox.y + Math.random().toFloat() * (dotBox.height - 10))
+            dotl.setTranslation(dotBox.x + random.nextFloat() * (dotBox.width - 10),
+                    dotBox.y + random.nextFloat() * (dotBox.height - 10))
             dots.add(dotl)
 
             game.rootLayer.add(dotl)
@@ -158,15 +161,15 @@ class SurfaceTest(game: TestsGame) : Test(game, "Surface", "Tests various Surfac
 
         conns.add(game.paint.connect { clock: Clock ->
             for (dot in dots) {
-                if (Math.random() > 0.95) {
-                    dot.setTranslation(dotBox.x + Math.random().toFloat() * (dotBox.width - 10),
-                            dotBox.y + Math.random().toFloat() * (dotBox.height - 10))
+                if (random.nextFloat() > 0.95f) {
+                    dot.setTranslation(dotBox.x + random.nextFloat() * (dotBox.width - 10),
+                            dotBox.y + random.nextFloat() * (dotBox.height - 10))
                 }
             }
 
             val now = clock.tick / 1000f
-            val sin = Math.abs(MathUtil.sin(now))
-            val cos = Math.abs(MathUtil.cos(now))
+            val sin = sin(now).absoluteValue
+            val cos = cos(now).absoluteValue
             val sinColor = (sin * 255).toInt()
             val cosColor = (cos * 255).toInt()
             val c1 = 0xFF shl 24 or (sinColor shl 16) or (cosColor shl 8)
@@ -176,10 +179,10 @@ class SurfaceTest(game: TestsGame) : Test(game, "Surface", "Tests various Surfac
     }
 
     internal fun drawLine(surf: Surface, x1: Float, y1: Float, x2: Float, y2: Float, width: Float) {
-        val xmin = Math.min(x1, x2)
-        val xmax = Math.max(x1, x2)
-        val ymin = Math.min(y1, y2)
-        val ymax = Math.max(y1, y2)
+        val xmin = minOf(x1, x2)
+        val xmax = maxOf(x1, x2)
+        val ymin = minOf(y1, y2)
+        val ymax = maxOf(y1, y2)
         surf.setFillColor(0xFF0000AA.toInt()).fillRect(xmin, ymin, xmax - xmin, ymax - ymin)
         surf.setFillColor(0xFF99FFCC.toInt()).drawLine(x1, y1, x2, y2, width)
         surf.setFillColor(0xFFFF0000.toInt()).fillRect(x1, y1, 1f, 1f).fillRect(x2, y2, 1f, 1f)

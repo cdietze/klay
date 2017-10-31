@@ -2,8 +2,16 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="klay-demo-jvm_main" target="1.8" />
+      <module name="klay-demo-jvm_test" target="1.8" />
+      <module name="klay-demo_main" target="1.8" />
+      <module name="klay-demo_test" target="1.8" />
       <module name="klay-jvm_main" target="1.8" />
       <module name="klay-jvm_test" target="1.8" />
+      <module name="klay-scene-jvm_main" target="1.8" />
+      <module name="klay-scene-jvm_test" target="1.8" />
+      <module name="klay-scene__main" target="1.8" />
+      <module name="klay-scene__test" target="1.8" />
       <module name="klay-scene_main" target="1.8" />
       <module name="klay-scene_test" target="1.8" />
       <module name="klay_main" target="1.8" />

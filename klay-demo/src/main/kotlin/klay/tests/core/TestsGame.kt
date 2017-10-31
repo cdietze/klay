@@ -5,12 +5,11 @@ import klay.scene.ImageLayer
 import klay.scene.Layer
 import klay.scene.Pointer
 import klay.scene.SceneGame
-import java.util.*
 
 class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDATE_RATE) {
 
     /** Helpful class for allowing selection of an one of a set of values for a test.  */
-    open class NToggle<T> @SafeVarargs
+    open class NToggle<T>
     constructor(name: String, vararg values: T) {
         val layer = ImageLayer()
         val prefix: String
@@ -49,7 +48,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
         }
     }
 
-    class Toggle(name: String) : NToggle<Boolean>(name, java.lang.Boolean.FALSE, java.lang.Boolean.TRUE)
+    class Toggle(name: String) : NToggle<Boolean>(name, false, true)
 
     private val tests: Array<Test>
     private var currentTest: Test? = null
@@ -125,7 +124,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
 
         for (arg in args) {
             if (arg.startsWith("test")) {
-                startTest(tests[Integer.parseInt(arg.substring(4))])
+                startTest(tests[arg.substring(4).toInt()])
                 break
             }
         }
@@ -172,7 +171,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
                 y += maxHeight + gap
                 maxHeight = 0f
             }
-            maxHeight = Math.max(maxHeight, button.height())
+            maxHeight = maxOf(maxHeight, button.height())
             rootLayer.addAt(button, x, y)
             x += button.width() + gap
         }
@@ -211,7 +210,7 @@ class TestsGame(plat: Platform, args: Array<String>) : SceneGame(plat, Test.UPDA
                         0f, 0f, graphics.viewSize.width, graphics.viewSize.height)
             }
         }
-        bg.setDepth(java.lang.Float.NEGATIVE_INFINITY) // render behind everything
+        bg.setDepth(Float.NEGATIVE_INFINITY) // render behind everything
         return bg
     }
 
