@@ -10,6 +10,8 @@ buildscript {
     }
 }
 
+apply plugin: 'kotlin-platform-common'
+
 dependencies {
-    compileKotlinCommon project(':')
+    compile project(':')
 }

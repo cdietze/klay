@@ -1,6 +1,7 @@
 package klay.scene
 
 import klay.core.Event
+import klay.core.assert
 import pythagoras.f.Point
 import pythagoras.f.XY
 

@@ -5,7 +5,6 @@ import pythagoras.f.AffineTransform
 import pythagoras.f.MathUtil
 import pythagoras.f.Point
 import pythagoras.util.NoninvertibleTransformException
-import java.util.*
 
 /**
  * GroupLayer creates a Layer hierarchy by maintaining an ordered group of child Layers.
