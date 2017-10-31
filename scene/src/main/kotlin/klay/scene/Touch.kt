@@ -2,7 +2,6 @@ package klay.scene
 
 import pythagoras.f.Point
 import react.Slot
-import java.util.*
 
 /**
  * Integrates the layer system with touch interactions. To receive touch events on layers, connect

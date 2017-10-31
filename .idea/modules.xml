@@ -8,6 +8,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm_test.iml" group="klay-jvm" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay_main.iml" group="klay" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay_test.iml" group="klay" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/scene/scene.iml" filepath="$PROJECT_DIR$/.idea/modules/scene/scene.iml" group="scene" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/scene/scene_main.iml" filepath="$PROJECT_DIR$/.idea/modules/scene/scene_main.iml" group="scene" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/scene/scene_test.iml" filepath="$PROJECT_DIR$/.idea/modules/scene/scene_test.iml" group="scene" />
     </modules>
   </component>
 </project>

@@ -4,6 +4,8 @@ import klay.core.Surface
 import pythagoras.f.IDimension
 import pythagoras.f.Point
 import pythagoras.f.Vector
+import kotlin.math.absoluteValue
+import kotlin.math.roundToInt
 
 /**
  * A layer whose rendering is (usually) clipped to a rectangle. The clipping rectangle is defined
@@ -70,7 +72,7 @@ abstract class ClippedLayer(private var width: Float, private var height: Float)
             tx.transform(size.set(width, height), size)
             tx.translate(-originX, -originY)
             val nonEmpty = surf.startClipped(
-                    pos.x.toInt(), pos.y.toInt(), Math.round(Math.abs(size.x)), Math.round(Math.abs(size.y)))
+                    pos.x.toInt(), pos.y.toInt(), size.x.absoluteValue.roundToInt(), size.y.absoluteValue.roundToInt())
             try {
                 if (nonEmpty) paintClipped(surf)
             } finally {

@@ -169,8 +169,8 @@ abstract class Layer : Closeable {
     open fun name(): String {
         // lazily init name if it's not been set
         if (name == null) {
-            name = javaClass.name
-            name = name!!.substring(name!!.lastIndexOf(".") + 1).intern()
+            name = this::class.simpleName
+            name = name!!.substring(name!!.lastIndexOf(".") + 1)
         }
         return name!!
     }

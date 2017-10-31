@@ -6,6 +6,8 @@
       <module name="klay-jvm_test" target="1.8" />
       <module name="klay_main" target="1.8" />
       <module name="klay_test" target="1.8" />
+      <module name="scene_main" target="1.8" />
+      <module name="scene_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
