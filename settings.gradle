@@ -1,5 +1,4 @@
 rootProject.name = 'klay'
-include ':core'
 //include ':scene'
 include ':klay-jvm'
 //include ':klay-tests:klay-tests-assets'

@@ -11,5 +11,5 @@ buildscript {
 }
 
 dependencies {
-    compileKotlinCommon project(':core')
+    compileKotlinCommon project(':')
 }
