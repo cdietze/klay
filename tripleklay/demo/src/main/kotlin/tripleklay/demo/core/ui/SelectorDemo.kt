@@ -31,7 +31,7 @@ class SelectorDemo : DemoScreen() {
         val font = Style.FONT.getDefault(main).name
         val hdr = Style.FONT.`is`(Font(font, Font.Style.BOLD, 14f))
         main.setStylesheet(Stylesheet.builder().add(
-                Label::class.java, Style.FONT.`is`(Font(font, 12f))).create())
+                Label::class, Style.FONT.`is`(Font(font, 12f))).create())
 
         main.add(Label("Simple").addStyles(hdr))
         main.add(Label("A single parent with buttons - at most one is selected."))

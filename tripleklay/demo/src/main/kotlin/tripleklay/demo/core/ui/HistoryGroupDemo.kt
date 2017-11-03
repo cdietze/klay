@@ -31,7 +31,7 @@ class HistoryGroupDemo : DemoScreen() {
         })
         add10.clicked().connect(addSome(history, prefix, 10))
         add100.clicked().connect(addSome(history, prefix, 100))
-        history.setStylesheet(Stylesheet.builder().add(Label::class.java,
+        history.setStylesheet(Stylesheet.builder().add(Label::class,
                 Style.BACKGROUND.`is`(Background.composite(
                         Background.blank().inset(0f, 2f),
                         Background.bordered(Colors.WHITE, Colors.BLACK, 1f).inset(10f))),

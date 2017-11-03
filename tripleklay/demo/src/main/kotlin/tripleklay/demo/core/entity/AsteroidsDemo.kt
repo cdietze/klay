@@ -1,9 +1,6 @@
 package tripleklay.demo.core.entity
 
-import klay.core.Clock
-import klay.core.Font
-import klay.core.Key
-import klay.core.Keyboard
+import klay.core.*
 import klay.scene.GroupLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
@@ -19,8 +16,10 @@ import tripleklay.entity.World
 import tripleklay.ui.Group
 import tripleklay.ui.Root
 import tripleklay.ui.layout.AxisLayout
-import tripleklay.util.*
-import java.util.*
+import tripleklay.util.StyledText
+import tripleklay.util.TextStyle
+import tripleklay.util.getFloat
+import tripleklay.util.getInRange
 
 class AsteroidsDemo : DemoScreen() {
     val asteroids = assets().getImage("images/asteroids.png")
@@ -424,7 +423,7 @@ class AsteroidsDemo : DemoScreen() {
             ast.add(type, size, sprite, opos, pos, vel, spin, radius)
 
             val side = sz.size.toFloat()
-            val iidx = random.getInt(8)
+            val iidx = random.nextInt(8)
             val ah = asteroids.height
             val layer = ImageLayer(asteroids.region(iidx * ah, 0f, ah, ah))
             layer.setOrigin(ah / 2, ah / 2)

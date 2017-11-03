@@ -2,6 +2,12 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="assets_main" target="1.8" />
+      <module name="assets_test" target="1.8" />
+      <module name="demo_main" target="1.8" />
+      <module name="demo_test" target="1.8" />
+      <module name="jvm_main" target="1.8" />
+      <module name="jvm_test" target="1.8" />
       <module name="klay-demo-assets_main" target="1.8" />
       <module name="klay-demo-assets_test" target="1.8" />
       <module name="klay-demo-jvm_main" target="1.8" />

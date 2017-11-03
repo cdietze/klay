@@ -7,7 +7,7 @@ import tripleklay.demo.core.DemoScreen
 import tripleklay.ui.*
 import tripleklay.ui.layout.AxisLayout
 import tripleklay.util.Colors
-import java.util.*
+import klay.core.Random
 
 class TabsDemo : DemoScreen() {
     override fun name(): String {
@@ -62,7 +62,7 @@ class TabsDemo : DemoScreen() {
     }
 
     protected fun number(tab: Tabs.Tab): Int {
-        return Integer.parseInt(tab.button.text.get()!!.substring(_prefix.length))
+        return tab.button.text.get()!!.substring(_prefix.length).toInt()
     }
 
     protected fun movable(tab: Tabs.Tab?): Boolean {
