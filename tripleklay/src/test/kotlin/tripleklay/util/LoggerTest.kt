@@ -70,7 +70,11 @@ class LoggerTest {
             Logger.setImpl(object : Logger.Impl {
                 override fun log(level: Logger.Level, ident: String, message: String, t: Throwable?) {
                     buf.append(message)
-                    t?.printStackTrace(buf)
+                    buf.append(NEWLINE)
+                    t?.let {
+                        it.printStackTrace(buf)
+                        buf.append(NEWLINE)
+                    }
                 }
             })
             return buf
