@@ -1,7 +1,0 @@
-
-description = ''
-dependencies {
-  compile project(':')
-  compile project(':klay-scene')
-    testCompile group: 'junit', name: 'junit', version:'4.12'
-}

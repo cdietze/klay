@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.2.0-beta-88'
+    ext.kotlin_version = '1.2.0-rc-39'
 
     repositories {
         maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
@@ -11,8 +11,8 @@ buildscript {
 }
 
 allprojects {
-    ext.pythagoras_version = '1a140fd1fc'
-    ext.react_version = 'b8280db23b'
+    ext.pythagoras_version = 'bf909b2103'
+    ext.react_version = 'a4cdef4d2f'
     version = '1.0-SNAPSHOT'
 
     repositories {
@@ -44,5 +44,4 @@ dependencies {
     compile "com.github.cdietze.pythagoras-kt:pythagoras-kt:$pythagoras_version"
     compile "com.github.cdietze.react-kt:react-kt:$react_version"
     testCompile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
-    testCompile 'junit:junit:4.12'
 }

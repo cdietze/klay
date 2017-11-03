@@ -23,6 +23,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene_test.iml" group="klay-scene" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay_main.iml" group="klay" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay_test.iml" group="klay" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay.iml" group="tripleklay" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay_main.iml" group="tripleklay" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay_test.iml" group="tripleklay" />
     </modules>
   </component>
 </project>
