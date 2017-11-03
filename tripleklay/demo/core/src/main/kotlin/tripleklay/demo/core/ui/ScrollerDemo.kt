@@ -10,7 +10,7 @@ import tripleklay.ui.*
 import tripleklay.ui.Scroller.Behavior
 import tripleklay.ui.layout.AxisLayout
 import tripleklay.util.Colors
-
+import kotlin.reflect.KClass
 class ScrollerDemo : DemoScreen() {
     override fun name(): String {
         return "Scroller"
@@ -124,7 +124,7 @@ class ScrollerDemo : DemoScreen() {
             })
         }
 
-        override val styleClass: Class<*>
-            get() = Content::class.java
+        override val styleClass: KClass<*>
+            get() = Content::class
     }
 }

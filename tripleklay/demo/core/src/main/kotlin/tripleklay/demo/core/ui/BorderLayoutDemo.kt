@@ -107,8 +107,8 @@ class BorderLayoutDemo : DemoScreen() {
         }
 
         protected fun getSizer(base: DimensionValue, dw: Float, dh: Float): UnitSlot = {
-            base.update(Math.max(0f, base.get().width + dw),
-                    Math.max(0f, base.get().height + dh))
+            base.update(maxOf(0f, base.get().width + dw),
+                    maxOf(0f, base.get().height + dh))
         }
     }
 }

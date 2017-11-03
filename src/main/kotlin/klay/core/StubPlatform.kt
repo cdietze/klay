@@ -59,7 +59,7 @@ class StubPlatform : Platform() {
             }
             println()
             println(prefix + msg)
-            e?.let { printStacktrace(it) }
+            e?.printStackTrace()
         }
     }
     override val exec = object : Exec.Default(this) {
@@ -101,5 +101,8 @@ class StubPlatform : Platform() {
 }
 
 expect fun StubPlatform.currentTimeMillis(): Long
-/** Print the stacktrace of the throwable if platform can. */
-expect fun StubPlatform.printStacktrace(t: Throwable)
+/** Print the stacktrace of the throwable if platform can, noop if not available. */
+expect fun Throwable.printStackTrace()
+
+/** Append the stacktrace of the throwable to the given `appendable` if platform can, noop if not available. */
+expect fun Throwable.printStackTrace(appendable: Appendable)

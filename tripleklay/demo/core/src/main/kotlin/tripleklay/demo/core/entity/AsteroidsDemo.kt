@@ -348,7 +348,7 @@ class AsteroidsDemo : DemoScreen() {
                 setMessage(null)
             }
             var ii = 0
-            val ll = Math.min(10, wave + 2)
+            val ll = minOf(10, wave + 2)
             while (ii < ll) {
                 val x = random.getFloat(swidth)
                 val y = random.getFloat(sheight)

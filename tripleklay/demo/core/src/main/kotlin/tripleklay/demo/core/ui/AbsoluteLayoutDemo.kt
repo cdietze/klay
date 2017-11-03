@@ -12,7 +12,7 @@ import tripleklay.ui.layout.AbsoluteLayout
 import tripleklay.ui.layout.AxisLayout
 import tripleklay.ui.util.BoxPoint
 import tripleklay.util.Colors
-
+import kotlin.reflect.KClass
 class AbsoluteLayoutDemo : DemoScreen() {
     override fun name(): String {
         return "AbsoluteLayout"
@@ -83,7 +83,7 @@ class AbsoluteLayoutDemo : DemoScreen() {
             addStyles(Style.BACKGROUND.`is`(Background.solid(Colors.LIGHT_GRAY)))
         }
 
-        override val styleClass: Class<*>
-            get() = BoxPointWidget::class.java
+        override val styleClass: KClass<*>
+            get() = BoxPointWidget::class
     }
 }
