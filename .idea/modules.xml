@@ -2,6 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/demo/assets/assets.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/demo/assets/assets.iml" group="tripleklay/demo/assets" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/demo/assets/assets_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/demo/assets/assets_main.iml" group="tripleklay/demo/assets" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/demo/assets/assets_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/demo/assets/assets_test.iml" group="tripleklay/demo/assets" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/demo/demo.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/demo/demo.iml" group="tripleklay/demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/demo/demo_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/demo/demo_main.iml" group="tripleklay/demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/demo/demo_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/demo/demo_test.iml" group="tripleklay/demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/demo/jvm/jvm.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/demo/jvm/jvm.iml" group="tripleklay/demo/jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/demo/jvm/jvm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/demo/jvm/jvm_main.iml" group="tripleklay/demo/jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/demo/jvm/jvm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/demo/jvm/jvm_test.iml" group="tripleklay/demo/jvm" />
       <module fileurl="file://$PROJECT_DIR$/klay.iml" filepath="$PROJECT_DIR$/klay.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo.iml" group="klay-demo" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets.iml" group="klay-demo/klay-demo-assets" />

@@ -97,7 +97,7 @@ class MenuDemo : DemoScreen() {
                 val letters = "ABCDEFGHIJ"
                 menu = Menu(AxisLayout.horizontal().offStretch(), Style.VALIGN.top)
                 val g = Group(TableLayout(10))
-                g.setStylesheet(Stylesheet.builder().add(MenuItem::class.java, Styles.none().add(Style.BACKGROUND.`is`(Background.blank().inset(5f, 1f))).addSelected(Style.BACKGROUND.`is`(Background.solid(Colors.BLACK).inset(5f, 1f)))).create())
+                g.setStylesheet(Stylesheet.builder().add(MenuItem::class, Styles.none().add(Style.BACKGROUND.`is`(Background.blank().inset(5f, 1f))).addSelected(Style.BACKGROUND.`is`(Background.solid(Colors.BLACK).inset(5f, 1f)))).create())
                 for (col in 0..9) {
                     for (row in 0..9) {
                         g.add(MenuItem(letters.substring(col, col + 1) + (row + 1)))
@@ -126,9 +126,8 @@ class MenuDemo : DemoScreen() {
                 menu.add(SizableGroup(AxisLayout.vertical().offStretch(), 0f, 200f).add(
                         scroller.setBehavior(Scroller.Behavior.VERTICAL).setConstraint(AxisLayout.stretched())))
 
-                val bits = StringBuilder()
                 for (ii in 0..255) {
-                    bits.setLength(0)
+                    val bits = StringBuilder()
                     var mask = 128
                     while (mask > 0) {
                         bits.append(if (ii and mask != 0) 1 else 0)

@@ -34,7 +34,7 @@ class FlickerDemo : DemoScreen() {
         var y = 0f
         for (ii in 0..IMG_COUNT - 1) {
             val image = graphics().createCanvas(width, IMG_HEIGHT)
-            val text = StringBuffer()
+            val text = StringBuilder()
             if (ii == 0)
                 text.append("Tap & fling")
             else if (ii == IMG_COUNT - 1)

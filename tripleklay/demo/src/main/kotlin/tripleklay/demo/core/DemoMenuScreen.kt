@@ -66,7 +66,7 @@ class DemoMenuScreen(protected val _stack: ScreenStack) : ScreenStack.UIScreen(T
         val toShow = if (TripleDemo.mainArgs.size == 0)
             -1
         else
-            Integer.parseInt(TripleDemo.mainArgs[0])
+            TripleDemo.mainArgs[0].toInt()
 
         for (ii in _screens.indices) {
             if (ii % 3 == 0) grid.add(Label(_rlabels[ii / 3]))

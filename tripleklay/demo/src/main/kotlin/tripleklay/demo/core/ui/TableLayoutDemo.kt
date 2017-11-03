@@ -6,7 +6,6 @@ import tripleklay.ui.layout.AxisLayout
 import tripleklay.ui.layout.FlowLayout
 import tripleklay.ui.layout.TableLayout
 import tripleklay.util.Colors
-import java.util.*
 
 class TableLayoutDemo : DemoScreen() {
     internal class ExposedColumn(halign: Style.HAlign, stretch: Boolean, weight: Float, minWidth: Float) : TableLayout.Column(halign, stretch, weight, minWidth) {
