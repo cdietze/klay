@@ -20,6 +20,8 @@
       <module name="klay_test" target="1.8" />
       <module name="scene_main" target="1.8" />
       <module name="scene_test" target="1.8" />
+      <module name="tripleklay-jvm_main" target="1.8" />
+      <module name="tripleklay-jvm_test" target="1.8" />
       <module name="tripleklay_main" target="1.8" />
       <module name="tripleklay_test" target="1.8" />
     </bytecodeTargetLevel>
