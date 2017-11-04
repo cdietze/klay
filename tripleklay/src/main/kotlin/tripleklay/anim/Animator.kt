@@ -1,6 +1,7 @@
 package tripleklay.anim
 
 import klay.core.Clock
+import klay.core.PaintClock
 import react.Signal
 import react.Slot
 
@@ -25,7 +26,7 @@ class Animator : AnimBuilder {
     /** Creates an animator which is permanently connected to `paint`. This is useful when
      * you are connecting to a paint signal whose lifetime is the same as this animator because
      * there's no way to ever disconnect the animator from the signal.  */
-    constructor(paint: Signal<Clock>) {
+    constructor(paint: Signal<PaintClock>) {
         paint.connect(onPaint)
     }
 

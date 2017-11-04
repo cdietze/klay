@@ -1,6 +1,7 @@
 package tripleklay.entity
 
 import klay.core.Clock
+import klay.core.PaintClock
 
 /**
  * Handles a single concern in an entity-based game. That might be processing collisions, or
@@ -9,7 +10,8 @@ import klay.core.Clock
  * of how to choose which entities on which to operate.
  */
 abstract class System
-/** Creates a new system and registers it with `world`.
+/** Creates a new system.
+ * It shall be registered with a world using [World.register].
  * @param priorty this system's priority with respect to other systems. Systems with higher
  * * priority will be notified of entity addition/removal and will be processed before systems
  * * with lower priority. Systems with the same priority will be processed in unspecified order.
@@ -17,8 +19,6 @@ abstract class System
  * * world.
  */
 protected constructor(
-        /** The world of which this system is a part.  */
-        val world: World,
         /** This system's priority with respect to other systems. See [System].  */
         internal val priority: Int = 0) {
     /** Provides a way to iterate over this system's active entities.  */
@@ -32,9 +32,6 @@ protected constructor(
 
     /** Our active entities.  */
     protected val _active = IntBag()
-
-    /** This system's unique id (used in bit masks).  */
-    private val _id: Int = world.register(this)
 
     /** Whether or not this system is enabled.  */
     private var _enabled = true
@@ -84,7 +81,7 @@ protected constructor(
      * values computed during [update]. Entities *must not* be added,
      * changed or removed during this call. This is not called if the system is disabled.
      */
-    protected open fun paint(clock: Clock, entities: Entities) {}
+    protected open fun paint(clock: PaintClock, entities: Entities) {}
 
     /**
      * Indicates whether this system is "interested" in this entity. A system will process all
@@ -98,20 +95,19 @@ protected constructor(
      */
     protected abstract fun isInterested(entity: Entity): Boolean
 
-    internal fun entityAdded(entity: Entity) {
-        if (isInterested(entity)) addEntity(entity)
+    internal fun entityAdded(systemId: Int, entity: Entity) {
+        if (isInterested(entity)) addEntity(systemId, entity)
     }
 
-    internal fun entityChanged(entity: Entity) {
-        val wasAdded = entity.systems.isSet(_id)
+    internal fun entityChanged(systemId: Int, entity: Entity) {
+        val wasAdded = entity.systems.isSet(systemId)
         val haveInterest = isInterested(entity)
-        if (haveInterest && !wasAdded)
-            addEntity(entity)
-        else if (!haveInterest && wasAdded) removeEntity(entity)
+        if (haveInterest && !wasAdded) addEntity(systemId, entity)
+        else if (!haveInterest && wasAdded) removeEntity(systemId, entity)
     }
 
-    internal fun entityRemoved(entity: Entity) {
-        if (entity.systems.isSet(_id)) removeEntity(entity)
+    internal fun entityRemoved(systemId: Int, entity: Entity) {
+        if (entity.systems.isSet(systemId)) removeEntity(systemId, entity)
     }
 
     internal fun update(clock: Clock) {
@@ -119,21 +115,21 @@ protected constructor(
         update(clock, _active)
     }
 
-    internal fun paint(clock: Clock) {
+    internal fun paint(clock: PaintClock) {
         if (!_enabled) return
         paint(clock, _active)
     }
 
-    private fun addEntity(entity: Entity) {
+    private fun addEntity(systemId: Int, entity: Entity) {
         _active.add(entity.id)
-        entity.systems.set(_id)
+        entity.systems.set(systemId)
         wasAdded(entity)
     }
 
-    private fun removeEntity(entity: Entity) {
+    private fun removeEntity(systemId: Int, entity: Entity) {
         // TODO: this is O(N), would be nice if it was O(log N) or O(1)
         val idx = _active.remove(entity.id)
-        entity.systems.clear(_id)
+        entity.systems.clear(systemId)
         wasRemoved(entity, idx)
     }
 }

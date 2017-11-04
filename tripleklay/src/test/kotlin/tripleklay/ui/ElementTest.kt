@@ -1,6 +1,7 @@
 package tripleklay.ui
 
 import klay.core.Clock
+import klay.core.PaintClock
 import klay.core.Platform
 import klay.core.StubPlatform
 import org.junit.Test
@@ -11,7 +12,7 @@ import kotlin.test.assertTrue
 // import klay.java.JavaPlatform;
 
 class ElementTest {
-    val frame = Signal<Clock>()
+    val frame = Signal<PaintClock>()
 
     internal open class TestGroup : Group(AxisLayout.vertical()) {
         var added: Int = 0
