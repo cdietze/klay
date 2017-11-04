@@ -29,11 +29,10 @@ abstract class Game
     val update: Signal<Clock> = Signal()
 
     /** A signal emitted on every frame.  */
-    val paint: Signal<Clock> = Signal()
+    val paint: Signal<PaintClock> = Signal()
 
-    private val updateClock = Clock()
-    private val paintClock = Clock()
-    private var nextUpdate: Int = 0
+    private val updateClock = UpdateClockImpl(tick = plat.tick(), dt = this.updateRate)
+    private val paintClock = PaintClockImpl(tick = updateClock.tick)
 
     init {
         assert(updateRate > 0) { "updateRate must be greater than zero." }
@@ -53,31 +52,22 @@ abstract class Game
      * signal, but you can override this method to change or augment this behavior.
      * @param clock a clock configured with the frame timing information.
      */
-    fun paint(clock: Clock) {
+    fun paint(clock: PaintClock) {
         paint.emit(paintClock)
     }
 
     private fun onFrame() {
-        var nextUpdate = this.nextUpdate
+        var nextUpdate = updateClock.tick + updateRate
         val updateTick = plat.tick()
-        if (updateTick >= nextUpdate) {
-            val updateRate = this.updateRate
-            var updates = 0
-            while (updateTick >= nextUpdate) {
-                nextUpdate += updateRate
-                updates++
-            }
-            this.nextUpdate = nextUpdate
-            val updateDt = updates * updateRate
-            updateClock.tick += updateDt
-            updateClock.dt = updateDt
+        while (updateTick >= nextUpdate) {
+            updateClock.tick = nextUpdate
+            nextUpdate += updateRate
             update(updateClock)
         }
-
         val paintTick = plat.tick()
         paintClock.dt = paintTick - paintClock.tick
         paintClock.tick = paintTick
-        paintClock.alpha = 1 - (nextUpdate - paintTick) / updateRate.toFloat()
+        paintClock.alpha = (paintTick - nextUpdate) / updateRate.toFloat()
         paint(paintClock)
     }
 }

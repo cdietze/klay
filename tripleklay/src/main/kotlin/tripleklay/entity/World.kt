@@ -1,6 +1,7 @@
 package tripleklay.entity
 
 import klay.core.Clock
+import klay.core.PaintClock
 import klay.core.assert
 import react.Closeable
 import react.Signal
@@ -32,7 +33,7 @@ open class World : Iterable<Entity> {
     /** Connects this world to the supplied `update` and `paint` signals.
      * @return an object that can be used to disconnect both connections.
      */
-    fun connect(update: Signal<Clock>, paint: Signal<Clock>): Closeable {
+    fun connect(update: Signal<Clock>, paint: Signal<PaintClock>): Closeable {
         return Closeable.Util.join(
                 update.connect({ clk -> update(clk) }),
                 paint.connect({ clk -> paint(clk) }))
@@ -114,13 +115,14 @@ open class World : Iterable<Entity> {
     open fun update(clock: Clock) {
         // init any to-be-initted systems (before we add to-be-added entities)
         for (ii in _toInit.size() - 1 downTo 0) {
-            val sys = _toInit.removeLast()
+            val sysId = _toInit.removeLast()
+            val sys = _systems[sysId]
             for (ent in _entities) {
                 // skip non-existent or disabled entities
                 if (ent == null || !ent.isEnabled) continue
                 // if the entity is already added tell the new system about it, otherwise it is in
                 // the toAdd list and we'll tell all systems about it in the next block
-                if (ent.isAdded) sys.entityAdded(ent)
+                if (ent.isAdded) sys.entityAdded(sysId, ent)
             }
         }
 
@@ -136,7 +138,7 @@ open class World : Iterable<Entity> {
             var ss = 0
             val ll = _systems.size
             while (ss < ll) {
-                _systems[ss].entityAdded(entity)
+                _systems[ss].entityAdded(ss, entity)
                 ss++
             }
             entityAdded.emit(entity)
@@ -154,7 +156,7 @@ open class World : Iterable<Entity> {
             var ss = 0
             val ll = _systems.size
             while (ss < ll) {
-                _systems[ss].entityChanged(entity)
+                _systems[ss].entityChanged(ss, entity)
                 ss++
             }
             entityChanged.emit(entity)
@@ -167,7 +169,7 @@ open class World : Iterable<Entity> {
                 var ss = 0
                 val ll = _systems.size
                 while (ss < ll) {
-                    _systems[ss].entityRemoved(entity)
+                    _systems[ss].entityRemoved(ss, entity)
                     ss++
                 }
             }
@@ -194,7 +196,7 @@ open class World : Iterable<Entity> {
     }
 
     /** Paints all of the [System]s in this world.  */
-    open fun paint(clock: Clock) {
+    open fun paint(clock: PaintClock) {
         var ii = 0
         val ll = _systems.size
         while (ii < ll) {
@@ -211,7 +213,7 @@ open class World : Iterable<Entity> {
     /** Registers `system` with this world.
      * @return a unique index assigned to the system for use in bitmasks.
      */
-    internal fun register(system: System): Int {
+    fun register(system: System): Int {
         var idx = 0 // insert the system based on its priority
         for (ii in _systems.indices.reversed()) {
             if (_systems[ii].priority >= system.priority) {
@@ -220,8 +222,9 @@ open class World : Iterable<Entity> {
             }
         }
         _systems.add(idx, system)
-        _toInit.add(system) // tell it about existing entities on the next update
-        return _systems.size - 1
+        val sysId = _systems.size - 1
+        _toInit.add(sysId) // tell it about existing entities on the next update
+        return sysId
     }
 
     /** Registers `component` with this world.
@@ -254,8 +257,8 @@ open class World : Iterable<Entity> {
         return ent.comps
     }
 
-    // Systems that need to be initted on the next update
-    protected val _toInit = Bag<System>()
+    // System ids that need to be initted on the next update
+    protected val _toInit = IntBag()
 
     protected val _systems = ArrayList<System>()
     protected val _comps = ArrayList<Component>()
