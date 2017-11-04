@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    expectedBy project(":tripleklay:demo")
+    expectedBy project(":tripleklay:tripleklay-demo")
     compile project(":tripleklay:tripleklay-jvm")
-    compile project(":tripleklay:demo:assets")
+    compile project(":tripleklay:tripleklay-demo:tripleklay-demo-assets")
 }
