@@ -21,7 +21,7 @@ dependencies {
     expectedBy project(":tripleklay")
     compile project(":klay-jvm")
     compile project(":klay-scene:klay-scene-jvm")
-    compile "org.jetbrains.kotlin:kotlin-reflect"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testCompile "junit:junit:4.12"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
