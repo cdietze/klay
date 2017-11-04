@@ -1,0 +1,28 @@
+buildscript {
+    ext.kotlin_version = '1.2.0-rc-39'
+
+    repositories {
+        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin-platform-jvm'
+apply plugin: 'application'
+
+mainClassName = "tripleklay.demo.core.TripleDemoJvm"
+applicationDefaultJvmArgs = ["-XstartOnFirstThread"]
+
+repositories {
+    maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
+    mavenCentral()
+}
+
+dependencies {
+    expectedBy project(":tripleklay:tripleklay-demo")
+    compile project(":tripleklay:tripleklay-jvm")
+    compile project(":tripleklay:tripleklay-demo:tripleklay-demo-assets")
+}

@@ -3,19 +3,41 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/klay.iml" filepath="$PROJECT_DIR$/klay.iml" />
-      <module fileurl="file://$PROJECT_DIR$/core/klay-core.iml" filepath="$PROJECT_DIR$/core/klay-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jvm/klay-jvm.iml" filepath="$PROJECT_DIR$/jvm/klay-jvm.iml" />
-      <module fileurl="file://$PROJECT_DIR$/scene/klay-scene.iml" filepath="$PROJECT_DIR$/scene/klay-scene.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tests/klay-tests.iml" filepath="$PROJECT_DIR$/tests/klay-tests.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tests/assets/klay-tests-assets.iml" filepath="$PROJECT_DIR$/tests/assets/klay-tests-assets.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tests/core/klay-tests-core.iml" filepath="$PROJECT_DIR$/tests/core/klay-tests-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tests/jvm/klay-tests-jvm.iml" filepath="$PROJECT_DIR$/tests/jvm/klay-tests-jvm.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tripleklay/klay-tripleklay.iml" filepath="$PROJECT_DIR$/tripleklay/klay-tripleklay.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tripleklay/core/klay-tripleklay-core.iml" filepath="$PROJECT_DIR$/tripleklay/core/klay-tripleklay-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tripleklay/demo/klay-tripleklay-demo.iml" filepath="$PROJECT_DIR$/tripleklay/demo/klay-tripleklay-demo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tripleklay/demo/assets/klay-tripleklay-demo-assets.iml" filepath="$PROJECT_DIR$/tripleklay/demo/assets/klay-tripleklay-demo-assets.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tripleklay/demo/core/klay-tripleklay-demo-core.iml" filepath="$PROJECT_DIR$/tripleklay/demo/core/klay-tripleklay-demo-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tripleklay/demo/jvm/klay-tripleklay-demo-jvm.iml" filepath="$PROJECT_DIR$/tripleklay/demo/jvm/klay-tripleklay-demo-jvm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo.iml" group="klay-demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets.iml" group="klay-demo/klay-demo-assets" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets_main.iml" group="klay-demo/klay-demo-assets" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-assets/klay-demo-assets_test.iml" group="klay-demo/klay-demo-assets" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-jvm/klay-demo-jvm.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-jvm/klay-demo-jvm.iml" group="klay-demo/klay-demo-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-jvm/klay-demo-jvm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-jvm/klay-demo-jvm_main.iml" group="klay-demo/klay-demo-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-jvm/klay-demo-jvm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo-jvm/klay-demo-jvm_test.iml" group="klay-demo/klay-demo-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo_main.iml" group="klay-demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-demo/klay-demo_test.iml" group="klay-demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm.iml" group="klay-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm_main.iml" group="klay-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-jvm/klay-jvm_test.iml" group="klay-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene.iml" group="klay-scene" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene-jvm/klay-scene-jvm.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene-jvm/klay-scene-jvm.iml" group="klay-scene/klay-scene-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene-jvm/klay-scene-jvm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene-jvm/klay-scene-jvm_main.iml" group="klay-scene/klay-scene-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene-jvm/klay-scene-jvm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene-jvm/klay-scene-jvm_test.iml" group="klay-scene/klay-scene-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene_main.iml" group="klay-scene" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay-scene/klay-scene_test.iml" group="klay-scene" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay_main.iml" filepath="$PROJECT_DIR$/.idea/modules/klay_main.iml" group="klay" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klay_test.iml" filepath="$PROJECT_DIR$/.idea/modules/klay_test.iml" group="klay" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay.iml" group="tripleklay" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo.iml" group="tripleklay/tripleklay-demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo-assets/tripleklay-demo-assets.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo-assets/tripleklay-demo-assets.iml" group="tripleklay/tripleklay-demo/tripleklay-demo-assets" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo-assets/tripleklay-demo-assets_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo-assets/tripleklay-demo-assets_main.iml" group="tripleklay/tripleklay-demo/tripleklay-demo-assets" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo-assets/tripleklay-demo-assets_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo-assets/tripleklay-demo-assets_test.iml" group="tripleklay/tripleklay-demo/tripleklay-demo-assets" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo-jvm/tripleklay-demo-jvm.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo-jvm/tripleklay-demo-jvm.iml" group="tripleklay/tripleklay-demo/tripleklay-demo-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo-jvm/tripleklay-demo-jvm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo-jvm/tripleklay-demo-jvm_main.iml" group="tripleklay/tripleklay-demo/tripleklay-demo-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo-jvm/tripleklay-demo-jvm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo-jvm/tripleklay-demo-jvm_test.iml" group="tripleklay/tripleklay-demo/tripleklay-demo-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo_main.iml" group="tripleklay/tripleklay-demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-demo/tripleklay-demo_test.iml" group="tripleklay/tripleklay-demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-jvm/tripleklay-jvm.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-jvm/tripleklay-jvm.iml" group="tripleklay/tripleklay-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-jvm/tripleklay-jvm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-jvm/tripleklay-jvm_main.iml" group="tripleklay/tripleklay-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-jvm/tripleklay-jvm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay-jvm/tripleklay-jvm_test.iml" group="tripleklay/tripleklay-jvm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay_main.iml" group="tripleklay" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tripleklay/tripleklay_test.iml" group="tripleklay" />
     </modules>
   </component>
 </project>
