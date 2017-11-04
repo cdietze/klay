@@ -1,5 +1,0 @@
-
-description = ''
-dependencies {
-  compile project(':klay-tripleklay:klay-tripleklay-core')
-}

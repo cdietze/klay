@@ -23,7 +23,7 @@ Demo
 
 `./gradlew :klay-demo:klay-demo-jvm:run` will launch the JVM klay demo.
 
-`./gradlew :tripleklay:demo:jvm:run` will launch the JVM tripleklay demo.
+`./gradlew :tripleklay:tripleklay-demo:tripleklay-demo-jvm:run` will launch the JVM tripleklay demo.
 `tripleklay` is a port in Kotlin of the utility library [Triple Play](https://github.com/threerings/tripleplay).
 
 License
