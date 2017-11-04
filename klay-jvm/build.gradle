@@ -19,8 +19,8 @@ repositories {
 
 dependencies {
     expectedBy project(":")
-    compile "org.jetbrains.kotlin:kotlin-stdlib"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile "com.github.cdietze.pythagoras-kt:pythagoras-kt-jvm:$pythagoras_version"
     compile "com.github.cdietze.react-kt:react-kt-jvm:$react_version"
     compile group: 'org.lwjgl', name: 'lwjgl', version: '3.1.1'
