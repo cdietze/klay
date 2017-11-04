@@ -1,0 +1,47 @@
+buildscript {
+    ext.kotlin_version = '1.2.0-rc-39'
+
+    repositories {
+        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    ext.pythagoras_version = 'bf909b2103'
+    ext.react_version = 'a4cdef4d2f'
+    version = '1.0-SNAPSHOT'
+
+    repositories {
+        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
+        mavenCentral()
+        mavenLocal()
+        maven { url 'https://jitpack.io' }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    }
+
+    apply plugin: 'maven-publish'
+
+    publishing {
+        publications {
+            MyPublication(MavenPublication) {
+                from components.java
+                groupId 'com.github.cdietze'
+                artifactId project.name
+                version project.version
+            }
+        }
+    }
+}
+
+apply plugin: 'kotlin-platform-common'
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
+    compile "com.github.cdietze.pythagoras-kt:pythagoras-kt:$pythagoras_version"
+    compile "com.github.cdietze.react-kt:react-kt:$react_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
+}

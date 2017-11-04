@@ -1,38 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="klay-core" />
-        <module name="klay-jvm" />
-        <module name="klay-scene" />
-        <module name="klay-tests-assets" />
-        <module name="klay-tests-core" />
-        <module name="klay-tests-jvm" />
-        <module name="klay-tripleklay-core" />
-        <module name="klay-tripleklay-demo-assets" />
-        <module name="klay-tripleklay-demo-core" />
-        <module name="klay-tripleklay-demo-jvm" />
-      </profile>
-    </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="klay" target="1.5" />
-      <module name="klay-core" target="1.5" />
-      <module name="klay-jvm" target="1.5" />
-      <module name="klay-scene" target="1.5" />
-      <module name="klay-tests" target="1.5" />
-      <module name="klay-tests-assets" target="1.5" />
-      <module name="klay-tests-core" target="1.5" />
-      <module name="klay-tests-jvm" target="1.5" />
-      <module name="klay-tripleklay" target="1.5" />
-      <module name="klay-tripleklay-core" target="1.5" />
-      <module name="klay-tripleklay-demo" target="1.5" />
-      <module name="klay-tripleklay-demo-assets" target="1.5" />
-      <module name="klay-tripleklay-demo-core" target="1.5" />
-      <module name="klay-tripleklay-demo-jvm" target="1.5" />
+      <module name="assets_main" target="1.8" />
+      <module name="assets_test" target="1.8" />
+      <module name="demo_main" target="1.8" />
+      <module name="demo_test" target="1.8" />
+      <module name="jvm_main" target="1.8" />
+      <module name="jvm_test" target="1.8" />
+      <module name="klay-demo-assets_main" target="1.8" />
+      <module name="klay-demo-assets_test" target="1.8" />
+      <module name="klay-demo-jvm_main" target="1.8" />
+      <module name="klay-demo-jvm_test" target="1.8" />
+      <module name="klay-demo_main" target="1.8" />
+      <module name="klay-demo_test" target="1.8" />
+      <module name="klay-jvm_main" target="1.8" />
+      <module name="klay-jvm_test" target="1.8" />
+      <module name="klay-scene-jvm_main" target="1.8" />
+      <module name="klay-scene-jvm_test" target="1.8" />
+      <module name="klay-scene__main" target="1.8" />
+      <module name="klay-scene__test" target="1.8" />
+      <module name="klay-scene_main" target="1.8" />
+      <module name="klay-scene_test" target="1.8" />
+      <module name="klay_main" target="1.8" />
+      <module name="klay_test" target="1.8" />
+      <module name="scene_main" target="1.8" />
+      <module name="scene_test" target="1.8" />
+      <module name="tripleklay-demo-assets_main" target="1.8" />
+      <module name="tripleklay-demo-assets_test" target="1.8" />
+      <module name="tripleklay-demo-jvm_main" target="1.8" />
+      <module name="tripleklay-demo-jvm_test" target="1.8" />
+      <module name="tripleklay-demo_main" target="1.8" />
+      <module name="tripleklay-demo_test" target="1.8" />
+      <module name="tripleklay-jvm_main" target="1.8" />
+      <module name="tripleklay-jvm_test" target="1.8" />
+      <module name="tripleklay_main" target="1.8" />
+      <module name="tripleklay_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
