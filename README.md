@@ -3,32 +3,31 @@ Klay
 
 [![Build Status](https://travis-ci.org/cdietze/klay.svg?branch=master)](https://travis-ci.org/cdietze/klay)
 
-A Kotlin game development framework for multiple platforms
+A Kotlin game development framework for multiple platforms.
 
 Klay is a port in Kotlin of the [PlayN Project](https://github.com/playn/playn).
-The project is still in early development, the next milestone is to have most subsystems
-working for the JVM and JS backends.
 
+Currently there is only a JVM backend.
 
 Building
 ---
 
-The library is built using [Maven].
+The library is built using [Gradle](https://gradle.org/).
 
-Invoke `mvn install` to build and install the library to your local Maven repository (i.e.
-`~/.m2/repository`).
+Invoke `./gradlew build` to build.
 
+Invoke `./gradlew publishToMavenLocal` to install the JARs to your local maven repository.
 
 Demo
 ---
 
-To launch the JVM demo, invoke `mvn -Pjvm test` this will first start the klay-demo and afterwards the tripleklay-demo.
+`./gradlew :klay-demo:klay-demo-jvm:run` will launch the JVM klay demo.
+
+`./gradlew :tripleklay:demo:jvm:run` will launch the JVM tripleklay demo.
+`tripleklay` is a port in Kotlin of the utility library [Triple Play](https://github.com/threerings/tripleplay).
 
 License
 ---
 Klay is released under the Apache License, Version 2.0 which can be found
 in the `LICENSE` file and at http://www.apache.org/licenses/LICENSE-2.0 on the
 web.
-
-
-[Maven]: http://maven.apache.org/
