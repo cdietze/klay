@@ -9,7 +9,8 @@ object TripleDemoJvm {
         NONE, AWT, SWT
     }
 
-    @JvmStatic fun main(args: Array<String>) {
+    @JvmStatic
+    fun main(args: Array<String>) {
         val config = JavaPlatform.Config()
         config.appName = "Tripleklay Demo"
 

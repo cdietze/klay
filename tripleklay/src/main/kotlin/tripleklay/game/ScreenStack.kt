@@ -1,11 +1,11 @@
 package tripleklay.game
 
+import euklid.f.IDimension
 import klay.core.Clock
 import klay.core.Game
 import klay.core.PaintClock
 import klay.core.Platform
 import klay.scene.GroupLayer
-import pythagoras.f.IDimension
 import react.Closeable
 import react.Signal
 import tripleklay.game.Log.log

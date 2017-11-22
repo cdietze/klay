@@ -1,12 +1,12 @@
 package tripleklay.ui
 
+import euklid.f.Dimension
+import euklid.f.IDimension
+import euklid.f.MathUtil
 import klay.core.*
 import klay.scene.GroupLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import pythagoras.f.Dimension
-import pythagoras.f.IDimension
-import pythagoras.f.MathUtil
 import react.Closeable
 import tripleklay.ui.bgs.BlankBackground
 import tripleklay.ui.bgs.CompositeBackground

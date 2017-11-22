@@ -1,7 +1,7 @@
 package klay.core
 
-import pythagoras.f.IRectangle
-import pythagoras.f.XY
+import euklid.f.IRectangle
+import euklid.f.XY
 
 /**
  * A 2D drawing canvas. Rendering is performed by the CPU into a bitmap.

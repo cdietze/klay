@@ -1,5 +1,7 @@
 package klay.core
 
+import euklid.f.Dimension
+import euklid.f.IDimension
 import klay.core.GL20.Companion.GL_CLAMP_TO_EDGE
 import klay.core.GL20.Companion.GL_LINEAR
 import klay.core.GL20.Companion.GL_LINEAR_MIPMAP_NEAREST
@@ -13,8 +15,6 @@ import klay.core.GL20.Companion.GL_TEXTURE_MIN_FILTER
 import klay.core.GL20.Companion.GL_TEXTURE_WRAP_S
 import klay.core.GL20.Companion.GL_TEXTURE_WRAP_T
 import klay.core.GL20.Companion.GL_UNSIGNED_BYTE
-import pythagoras.f.Dimension
-import pythagoras.f.IDimension
 
 /**
  * Provides access to graphics information and services.

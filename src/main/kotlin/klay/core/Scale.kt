@@ -1,6 +1,6 @@
 package klay.core
 
-import pythagoras.f.MathUtil
+import euklid.f.MathUtil
 
 /**
  * Encapsulates a scale factor, provides useful utility methods.

@@ -1,6 +1,6 @@
 package klay.scene
 
-import pythagoras.f.Point
+import euklid.f.Point
 import react.Slot
 
 /**

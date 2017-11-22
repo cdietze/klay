@@ -1,11 +1,11 @@
 package klay.scene
 
+import euklid.f.IDimension
+import euklid.f.Rectangle
 import klay.core.Surface
 import klay.core.Texture
 import klay.core.Tile
 import klay.core.TileSource
-import pythagoras.f.IDimension
-import pythagoras.f.Rectangle
 import react.RFuture
 
 /**

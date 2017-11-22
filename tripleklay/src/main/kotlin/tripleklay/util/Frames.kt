@@ -1,7 +1,7 @@
 package tripleklay.util
 
-import pythagoras.f.IPoint
-import pythagoras.f.IRectangle
+import euklid.f.IPoint
+import euklid.f.IRectangle
 
 /**
  * Models the frames of a flipbook animation. The image frames may be trimmed, in which case the

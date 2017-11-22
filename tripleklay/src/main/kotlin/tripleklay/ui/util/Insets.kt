@@ -1,6 +1,6 @@
 package tripleklay.ui.util
 
-import pythagoras.f.Dimension
+import euklid.f.Dimension
 
 /** Corresponds to the distances that some rectangular object's edges will be offset when,
  * for example, it is contained in another rectangle.  */

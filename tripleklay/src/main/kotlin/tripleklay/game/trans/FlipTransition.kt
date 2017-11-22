@@ -1,7 +1,7 @@
 package tripleklay.game.trans
 
 import klay.core.Platform
-import pythagoras.f.MathUtil
+import euklid.f.MathUtil
 import tripleklay.game.ScreenStack.Screen
 import tripleklay.shaders.RotateYBatch
 import tripleklay.util.Interpolator

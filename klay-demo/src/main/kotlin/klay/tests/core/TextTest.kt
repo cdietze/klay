@@ -1,8 +1,8 @@
 package klay.tests.core
 
+import euklid.f.Rectangle
 import klay.core.*
 import klay.scene.ImageLayer
-import pythagoras.f.Rectangle
 
 class TextTest(game: TestsGame) : Test(game, "Text", "Tests various text rendering features.") {
 

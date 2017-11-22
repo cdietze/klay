@@ -1,9 +1,9 @@
 package tripleklay.sound
 
+import euklid.f.MathUtil
 import klay.core.Clock
 import klay.core.Platform
 import klay.core.Sound
-import pythagoras.f.MathUtil
 import react.Signal
 import react.Value
 import tripleklay.util.Interpolator

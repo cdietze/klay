@@ -1,9 +1,9 @@
 package tripleklay.util
 
+import euklid.f.MathUtil
 import kotlin.math.PI
 import kotlin.math.pow
 import kotlin.math.sin
-import pythagoras.f.MathUtil
 
 /**
  * Abstracts the process of interpolation between two values.

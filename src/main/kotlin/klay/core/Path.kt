@@ -1,6 +1,6 @@
 package klay.core
 
-import pythagoras.f.XY
+import euklid.f.XY
 
 /**
  * A path object created by [Canvas.createPath].

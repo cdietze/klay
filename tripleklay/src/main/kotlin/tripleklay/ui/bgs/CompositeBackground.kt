@@ -2,8 +2,8 @@ package tripleklay.ui.bgs
 
 import klay.scene.GroupLayer
 import klay.scene.Layer
-import pythagoras.f.Dimension
-import pythagoras.f.IDimension
+import euklid.f.Dimension
+import euklid.f.IDimension
 import tripleklay.ui.Background
 import tripleklay.ui.util.Insets
 

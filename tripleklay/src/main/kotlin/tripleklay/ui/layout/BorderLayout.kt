@@ -1,8 +1,8 @@
 package tripleklay.ui.layout
 
-import pythagoras.f.Dimension
-import pythagoras.f.IDimension
-import pythagoras.f.Rectangle
+import euklid.f.Dimension
+import euklid.f.IDimension
+import euklid.f.Rectangle
 import tripleklay.ui.Container
 import tripleklay.ui.Element
 import tripleklay.ui.Layout

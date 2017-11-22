@@ -1,6 +1,6 @@
 package tripleklay.util
 
-import pythagoras.system.arrayCopy
+import euklid.platform.arrayCopy
 
 /**
  * An unordered collection of elements which may contain duplicates. Elements must not be null. The

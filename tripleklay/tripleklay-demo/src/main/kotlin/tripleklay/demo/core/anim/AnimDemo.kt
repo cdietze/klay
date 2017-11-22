@@ -3,7 +3,7 @@ package tripleklay.demo.core.anim
 import klay.core.Font
 import klay.scene.ImageLayer
 import klay.scene.Pointer
-import pythagoras.f.MathUtil
+import euklid.f.MathUtil
 import tripleklay.anim.AnimGroup
 import tripleklay.anim.Animation
 import tripleklay.anim.Animator

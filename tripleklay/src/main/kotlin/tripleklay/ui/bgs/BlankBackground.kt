@@ -1,7 +1,7 @@
 package tripleklay.ui.bgs
 
 import klay.scene.GroupLayer
-import pythagoras.f.IDimension
+import euklid.f.IDimension
 import tripleklay.ui.Background
 
 /**

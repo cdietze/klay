@@ -3,6 +3,7 @@ package tripleklay.ui
 import react.SignalView
 import react.Value
 import kotlin.reflect.KClass
+
 /**
  * Displays a checkbox which can be toggled. The checkbox must be configured with either a
  * font-based checkmark, or a checkmark icon, which will be shown when it is checked.

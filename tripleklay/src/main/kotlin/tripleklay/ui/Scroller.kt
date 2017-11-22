@@ -1,13 +1,13 @@
 package tripleklay.ui
 
+import euklid.f.Dimension
+import euklid.f.IDimension
+import euklid.f.Point
 import klay.core.*
 import klay.scene.GroupLayer
 import klay.scene.Interaction
 import klay.scene.Layer
 import klay.scene.Mouse
-import pythagoras.f.Dimension
-import pythagoras.f.IDimension
-import pythagoras.f.Point
 import react.Closeable
 import react.Connection
 import react.Signal
@@ -17,6 +17,7 @@ import tripleklay.ui.util.XYFlicker
 import tripleklay.util.Colors
 import tripleklay.util.Layers
 import kotlin.reflect.KClass
+
 /**
  * A composite element that manages horizontal and vertical scrolling of a single content element.
  * As shown below, the content can be thought of as moving around behind the scroll group, which is

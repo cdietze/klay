@@ -1,6 +1,5 @@
 package klay.core
 
-import klay.core.Keyboard.Event
 import react.Slot
 
 /**

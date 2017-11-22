@@ -2,8 +2,8 @@ package tripleklay.demo.core.ui
 
 import klay.core.Surface
 import klay.scene.Layer
-import pythagoras.f.Dimension
-import pythagoras.f.Point
+import euklid.f.Dimension
+import euklid.f.Point
 import react.UnitSlot
 import react.Value
 import tripleklay.demo.core.DemoScreen
@@ -13,6 +13,7 @@ import tripleklay.ui.layout.AxisLayout
 import tripleklay.ui.util.BoxPoint
 import tripleklay.util.Colors
 import kotlin.reflect.KClass
+
 class AbsoluteLayoutDemo : DemoScreen() {
     override fun name(): String {
         return "AbsoluteLayout"

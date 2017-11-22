@@ -1,13 +1,13 @@
 package klay.tests.core
 
+import euklid.f.Rectangle
 import klay.core.*
 import klay.scene.GroupLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import pythagoras.f.MathUtil
-import pythagoras.f.Rectangle
 import kotlin.math.abs
 import kotlin.math.round
+import kotlin.math.sin
 
 class SubImageTest(game: TestsGame) : Test(game, "SubImage", "Tests sub-image rendering in various circumstances.") {
 
@@ -65,7 +65,7 @@ class SubImageTest(game: TestsGame) : Test(game, "SubImage", "Tests sub-image re
             conns.add(game.paint.connect { clock: Clock ->
                 val t = clock.tick / 1000f
                 // round the width so that it sometimes goes to zero; just to be sure zero doesn't choke
-                osci.region!!.width = round(abs(MathUtil.sin(t)) * osci.tile()!!.width)
+                osci.region!!.width = round(abs(sin(t)) * osci.tile()!!.width)
             })
         }.onFailure(logFailure("Failed to load orange image"))
     }

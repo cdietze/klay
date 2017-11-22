@@ -1,11 +1,11 @@
 package tripleklay.anim
 
+import euklid.f.XY
 import klay.core.Sound
 import klay.core.assert
 import klay.scene.GroupLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import pythagoras.f.XY
 import react.Closeable
 import react.Signal
 import react.Value

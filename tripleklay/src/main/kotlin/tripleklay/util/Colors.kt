@@ -1,4 +1,3 @@
-
 package tripleklay.util
 
 import klay.core.Color

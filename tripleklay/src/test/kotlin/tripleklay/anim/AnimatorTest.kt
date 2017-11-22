@@ -4,7 +4,8 @@ import org.junit.Test
 import kotlin.test.fail
 
 class AnimatorTest {
-    @Test fun testAnimDoubleRegisterFreakout() {
+    @Test
+    fun testAnimDoubleRegisterFreakout() {
         val anim = Animator()
         val NOOP = { }
         val chain = anim.action(NOOP).then()

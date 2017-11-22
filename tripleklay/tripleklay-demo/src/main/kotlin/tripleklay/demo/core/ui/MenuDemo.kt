@@ -1,7 +1,7 @@
 package tripleklay.demo.core.ui
 
 import klay.core.Pointer
-import pythagoras.f.MathUtil
+import euklid.f.MathUtil
 import react.Slot
 import react.UnitSlot
 import react.Value

@@ -5,8 +5,8 @@ import klay.scene.ClippedLayer
 import klay.scene.GroupLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import pythagoras.f.AffineTransform
-import pythagoras.f.Rectangle
+import euklid.f.AffineTransform
+import euklid.f.Rectangle
 import react.RFuture
 import react.Slot
 import kotlin.math.PI

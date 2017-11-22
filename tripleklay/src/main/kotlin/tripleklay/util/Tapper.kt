@@ -1,8 +1,8 @@
 package tripleklay.util
 
+import euklid.f.Point
 import klay.core.Event
 import klay.scene.Pointer
-import pythagoras.f.Point
 
 /**
  * Detects taps on a layer. This is a simple implementation using a threshold distance. If the

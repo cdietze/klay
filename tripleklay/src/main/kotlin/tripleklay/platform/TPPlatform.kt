@@ -1,8 +1,8 @@
 package tripleklay.platform
 
+import euklid.f.IRectangle
+import euklid.f.Rectangle
 import klay.core.Image
-import pythagoras.f.IRectangle
-import pythagoras.f.Rectangle
 import react.SignalView
 import react.UnitSignal
 import react.Value

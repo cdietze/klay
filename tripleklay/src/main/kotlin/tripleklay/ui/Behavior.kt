@@ -1,9 +1,9 @@
 package tripleklay.ui
 
+import euklid.f.Point
 import klay.core.Clock
 import klay.core.Sound
 import klay.scene.Pointer
-import pythagoras.f.Point
 import react.Closeable
 import react.Signal
 import react.Slot

@@ -1,12 +1,12 @@
 package klay.jvm
 
+import euklid.f.Point
 import klay.core.Key
 import klay.core.Keyboard.TextType
 import klay.core.Mouse.ButtonEvent
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.*
 import org.lwjgl.glfw.GLFW.*
-import pythagoras.f.Point
 import react.RFuture
 import javax.swing.JOptionPane
 

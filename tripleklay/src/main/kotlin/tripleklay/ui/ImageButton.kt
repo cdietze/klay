@@ -1,11 +1,12 @@
 package tripleklay.ui
 
+import euklid.f.Dimension
 import klay.core.TileSource
 import klay.scene.ImageLayer
-import pythagoras.f.Dimension
 import react.SignalView
 import react.SignalViewListener
 import kotlin.reflect.KClass
+
 /**
  * A button that uses images for its different states.
  */

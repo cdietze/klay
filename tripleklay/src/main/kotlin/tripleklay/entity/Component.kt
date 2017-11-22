@@ -1,9 +1,9 @@
 package tripleklay.entity
 
-import pythagoras.f.Dimension
-import pythagoras.f.Point
-import pythagoras.f.Vector
-import pythagoras.system.arrayCopy
+import euklid.f.Dimension
+import euklid.f.Point
+import euklid.f.Vector
+import euklid.platform.arrayCopy
 
 /**
  * A component contains the data for a single aspect of an entity. This might be its position in a
@@ -137,7 +137,7 @@ abstract class Component protected constructor(
         /** Writes the x/y components of the point for `entityId` into `into`.
          * @return into for easy method chaining.
          */
-        fun get(entityId: Int, into: pythagoras.i.Point): pythagoras.i.Point {
+        fun get(entityId: Int, into: euklid.i.Point): euklid.i.Point {
             val block = _blocks[entityId / BLOCK]!!
             val idx = 2 * (entityId % BLOCK)
             into.x = block[idx]
@@ -148,7 +148,7 @@ abstract class Component protected constructor(
         /** Writes the x/y components of the point for `entityId` into `into`.
          * @return into for easy method chaining.
          */
-        fun get(entityId: Int, into: pythagoras.i.Dimension): pythagoras.i.Dimension {
+        fun get(entityId: Int, into: euklid.i.Dimension): euklid.i.Dimension {
             val block = _blocks[entityId / BLOCK]!!
             val idx = 2 * (entityId % BLOCK)
             into.width = block[idx]
@@ -167,7 +167,7 @@ abstract class Component protected constructor(
         }
 
         /** Updates the x/y components of the point for `entityId`.  */
-        operator fun set(entityId: Int, value: pythagoras.i.Point) {
+        operator fun set(entityId: Int, value: euklid.i.Point) {
             set(entityId, value.x, value.y)
         }
 
@@ -267,7 +267,7 @@ abstract class Component protected constructor(
         }
 
         /** Updates the x/y components of the point for `entityId`.  */
-        operator fun set(entityId: Int, value: pythagoras.f.XY) {
+        operator fun set(entityId: Int, value: euklid.f.XY) {
             set(entityId, value.x, value.y)
         }
 

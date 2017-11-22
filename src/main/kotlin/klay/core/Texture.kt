@@ -1,9 +1,9 @@
 package klay.core
 
+import euklid.f.AffineTransform
+import euklid.f.IRectangle
 import klay.core.GL20.Companion.GL_LINEAR
 import klay.core.GL20.Companion.GL_TEXTURE_2D
-import pythagoras.f.AffineTransform
-import pythagoras.f.IRectangle
 import react.Closeable
 import react.Slot
 import react.UnitSlot

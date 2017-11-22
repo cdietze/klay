@@ -1,7 +1,7 @@
 package tripleklay.ui.layout
 
 import klay.core.assert
-import pythagoras.f.*
+import euklid.f.*
 import tripleklay.ui.Container
 import tripleklay.ui.Element
 import tripleklay.ui.Layout

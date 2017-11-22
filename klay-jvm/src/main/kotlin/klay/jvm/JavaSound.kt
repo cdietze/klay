@@ -1,11 +1,11 @@
 package klay.jvm
 
+import euklid.f.MathUtil
 import klay.core.Exec
 import klay.core.SoundImpl
-import pythagoras.f.MathUtil
-
 import javax.sound.sampled.Clip
 import javax.sound.sampled.FloatControl
+import kotlin.math.log10
 
 class JavaSound(exec: Exec) : SoundImpl<Clip>(exec) {
 
@@ -56,7 +56,7 @@ class JavaSound(exec: Exec) : SoundImpl<Clip>(exec) {
         // }
 
         private fun toGain(volume: Float, min: Float, max: Float): Float {
-            return MathUtil.clamp(20 * MathUtil.log10(volume), min, max)
+            return MathUtil.clamp(20 * log10(volume), min, max)
         }
     }
 }

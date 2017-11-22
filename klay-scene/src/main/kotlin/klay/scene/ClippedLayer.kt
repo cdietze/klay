@@ -1,9 +1,9 @@
 package klay.scene
 
+import euklid.f.IDimension
+import euklid.f.Point
+import euklid.f.Vector
 import klay.core.Surface
-import pythagoras.f.IDimension
-import pythagoras.f.Point
-import pythagoras.f.Vector
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 

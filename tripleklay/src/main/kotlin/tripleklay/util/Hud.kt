@@ -1,11 +1,11 @@
 package tripleklay.util
 
+import euklid.f.Dimension
+import euklid.f.IDimension
 import klay.core.*
 import klay.scene.CanvasLayer
 import klay.scene.LayerUtil
 import klay.scene.SceneGame
-import pythagoras.f.Dimension
-import pythagoras.f.IDimension
 import react.Slot
 import react.Value
 

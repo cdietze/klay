@@ -5,8 +5,8 @@ import klay.scene.*
 import klay.scene.Mouse
 import klay.scene.Pointer
 import klay.scene.Touch
-import pythagoras.f.Point
-import pythagoras.f.Vector
+import euklid.f.Point
+import euklid.f.Vector
 
 internal class PointerMouseTouchTest
 // private TestsGame.NToggle<String> propagate;

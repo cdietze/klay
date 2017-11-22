@@ -4,7 +4,7 @@ import klay.core.Surface
 import klay.core.Tile
 import klay.core.Tint
 import klay.scene.Layer
-import pythagoras.f.IDimension
+import euklid.f.IDimension
 import tripleklay.ui.Background
 import tripleklay.ui.util.Scale9
 

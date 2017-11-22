@@ -1,6 +1,6 @@
 package tripleklay.ui
 
-import pythagoras.f.Dimension
+import euklid.f.Dimension
 
 /**
  * A shared base class for elements which contain other elements.

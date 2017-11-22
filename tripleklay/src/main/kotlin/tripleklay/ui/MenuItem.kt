@@ -1,11 +1,12 @@
 package tripleklay.ui
 
+import euklid.f.Dimension
 import klay.scene.Pointer
-import pythagoras.f.Dimension
 import react.Closeable
 import react.SignalView
 import react.Value
 import kotlin.reflect.KClass
+
 /**
  * An item in a menu. This overrides clicking with a two phase click behavior: clicking an
  * unselected menu item selects it; clicking a selected menu item triggers it.

@@ -1,7 +1,7 @@
 package klay.core
 
-import pythagoras.f.IRectangle
-import pythagoras.f.Rectangle
+import euklid.f.IRectangle
+import euklid.f.Rectangle
 
 /**
  * Encapsulates a block of multi-line text. This code handles all the fiddly "fonts sometimes

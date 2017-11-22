@@ -1,6 +1,6 @@
 package tripleklay.platform
 
-import pythagoras.f.Point
+import euklid.f.Point
 
 /** Defines application hooks into controlling focus on native text fields.  */
 interface KeyboardFocusController {

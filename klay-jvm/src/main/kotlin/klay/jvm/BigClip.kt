@@ -299,7 +299,7 @@ internal class BigClip : Clip, LineListener {
 
             active = true
 
-            var bytesRead : Int
+            var bytesRead: Int
             val frameSize = dataLine!!.format.frameSize
             val bufSize = dataLine!!.bufferSize
             var startOrMove = true

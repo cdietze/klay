@@ -1,8 +1,8 @@
 package klay.jvm
 
+import euklid.f.Rectangle
 import klay.core.TextFormat
 import klay.core.TextWrap
-import pythagoras.f.Rectangle
 import java.awt.Graphics2D
 import java.awt.RenderingHints
 import java.awt.font.LineBreakMeasurer

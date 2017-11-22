@@ -74,7 +74,7 @@ abstract class EffectRenderer {
     }
 
     class VectorOutline constructor(val outlineColor: Int, val outlineWidth: Float,
-                                                  val outlineCap: Canvas.LineCap = Canvas.LineCap.ROUND, val outlineJoin: Canvas.LineJoin = Canvas.LineJoin.ROUND) : EffectRenderer() {
+                                    val outlineCap: Canvas.LineCap = Canvas.LineCap.ROUND, val outlineJoin: Canvas.LineJoin = Canvas.LineJoin.ROUND) : EffectRenderer() {
 
         override fun adjustWidth(width: Float): Float {
             return width + 2 * outlineWidth

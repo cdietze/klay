@@ -1,12 +1,12 @@
 package tripleklay.demo.core.entity
 
+import euklid.f.MathUtil
+import euklid.f.Point
+import euklid.f.Vector
 import klay.core.*
 import klay.scene.GroupLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import pythagoras.f.MathUtil
-import pythagoras.f.Point
-import pythagoras.f.Vector
 import react.Signal
 import tripleklay.demo.core.DemoScreen
 import tripleklay.entity.Component
@@ -20,6 +20,8 @@ import tripleklay.util.StyledText
 import tripleklay.util.TextStyle
 import tripleklay.util.getFloat
 import tripleklay.util.getInRange
+import kotlin.math.cos
+import kotlin.math.sin
 
 class AsteroidsDemo : DemoScreen() {
     val asteroids = assets().getImage("images/asteroids.png")
@@ -91,8 +93,8 @@ class AsteroidsDemo : DemoScreen() {
                     val ang = sprite[sid].rotation()
                     val vx = vel.getX(sid)
                     val vy = vel.getY(sid)
-                    val bvx = vx + BULLET_VEL * MathUtil.cos(ang)
-                    val bvy = vy + BULLET_VEL * MathUtil.sin(ang)
+                    val bvx = vx + BULLET_VEL * cos(ang)
+                    val bvy = vy + BULLET_VEL * sin(ang)
                     createBullet(pos.getX(sid), pos.getY(sid), bvx, bvy, ang, now + BULLET_LIFE)
                     vel.set(sid, vx - bvx / 100, vy - bvy / 100) // decrease ship's velocity a smidgen
                 }
@@ -108,8 +110,8 @@ class AsteroidsDemo : DemoScreen() {
                             val s = sprite[eid]
                             val ang = s.rotation()
                             vel.get(eid, v)
-                            v.x = MathUtil.clamp(v.x + MathUtil.cos(ang) * _accel, -MAX_VEL, MAX_VEL)
-                            v.y = MathUtil.clamp(v.y + MathUtil.sin(ang) * _accel, -MAX_VEL, MAX_VEL)
+                            v.x = MathUtil.clamp(v.x + cos(ang) * _accel, -MAX_VEL, MAX_VEL)
+                            v.y = MathUtil.clamp(v.y + sin(ang) * _accel, -MAX_VEL, MAX_VEL)
                             vel[eid] = v
                         }
                         ii++
@@ -386,8 +388,8 @@ class AsteroidsDemo : DemoScreen() {
             for (ii in 0 until frags) {
                 val ang = random.getInRange(-MathUtil.PI, MathUtil.PI)
                 val vel = random.getInRange(maxvel / 3, maxvel)
-                val vx = MathUtil.cos(ang) * vel
-                val vy = MathUtil.sin(ang) * vel
+                val vx = cos(ang) * vel
+                val vy = sin(ang) * vel
                 createBullet(x, y, vx, vy, ang, now + 300/*ms*/)
             }
             // and destroy the target
