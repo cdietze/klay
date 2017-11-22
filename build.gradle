@@ -11,7 +11,7 @@ buildscript {
 }
 
 allprojects {
-    ext.euklid_version = '7b1b9504f'
+    ext.euklid_version = 'v0.1'
     ext.react_version = 'a4cdef4d2f'
     version = '1.0-SNAPSHOT'
 
