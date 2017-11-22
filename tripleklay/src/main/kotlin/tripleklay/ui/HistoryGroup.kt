@@ -1,7 +1,7 @@
 package tripleklay.ui
 
-import pythagoras.f.Dimension
-import pythagoras.f.Rectangle
+import euklid.f.Dimension
+import euklid.f.Rectangle
 import react.Closeable
 import tripleklay.ui.Log.log
 import tripleklay.ui.layout.AxisLayout

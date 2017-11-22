@@ -1,8 +1,8 @@
 package tripleklay.anim
 
+import euklid.f.MathUtil
 import klay.core.Clock
 import klay.scene.Pointer
-import pythagoras.f.MathUtil
 import react.Signal
 import react.Slot
 import react.Value

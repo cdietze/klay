@@ -1,6 +1,6 @@
 package tripleklay.ui.layout
 
-import pythagoras.f.Dimension
+import euklid.f.Dimension
 import tripleklay.ui.Container
 import tripleklay.ui.Element
 import tripleklay.ui.Layout

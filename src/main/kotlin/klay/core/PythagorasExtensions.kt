@@ -1,10 +1,10 @@
 package klay.core
 
+import euklid.f.*
 import klay.core.buffers.FloatBuffer
-import pythagoras.f.*
 
 /**
- * This file contains extension functions for Pythagoras.kt classes.
+ * This file contains extension functions for euklid.kt classes.
  */
 
 /**

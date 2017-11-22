@@ -1,7 +1,7 @@
 package tripleklay.ui
 
-import pythagoras.f.Dimension
-import pythagoras.f.IDimension
+import euklid.f.Dimension
+import euklid.f.IDimension
 
 /**
  * Defines the interface to layouts, which implement a particular layout policy.

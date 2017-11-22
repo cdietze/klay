@@ -1,8 +1,8 @@
 package klay.core
 
-import pythagoras.f.Dimension
-import pythagoras.f.IDimension
-import pythagoras.f.IRectangle
+import euklid.f.Dimension
+import euklid.f.IDimension
+import euklid.f.IRectangle
 
 /**
  * Contains metrics and metadata for a laid out body of text. The text may subsequently be rendered

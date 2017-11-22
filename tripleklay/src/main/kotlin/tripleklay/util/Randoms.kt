@@ -133,7 +133,6 @@ fun <T> Random.pick(iterable: Iterable<T>): T? {
     return this.pickPluck(iterable, false)
 }
 
-
 /**
  * Pick a random *key* from the specified mapping of weight values, or return `null` if no mapping has a weight greater than `0`. Each weight value is evaluated
  * as a double.

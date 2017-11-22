@@ -1,12 +1,12 @@
 package tripleklay.ui
 
+import euklid.f.Point
 import klay.core.Event
 import klay.core.assert
 import klay.scene.Layer
 import klay.scene.LayerUtil
 import klay.scene.Mouse
 import klay.scene.Pointer
-import pythagoras.f.Point
 import react.Closeable
 import react.Signal
 import react.SignalView
@@ -15,6 +15,7 @@ import tripleklay.anim.Animation
 import tripleklay.anim.Animator
 import tripleklay.ui.MenuItem.ShowText
 import kotlin.reflect.KClass
+
 /**
  * Holds a collection of [MenuItem]s, dispatching a [Menu.itemTriggered] signal
  * when one is selected and triggered. Normally used in conjunction with [MenuHost] to popup

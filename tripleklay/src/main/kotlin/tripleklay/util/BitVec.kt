@@ -1,6 +1,6 @@
 package tripleklay.util
 
-import pythagoras.system.arrayCopy
+import euklid.platform.arrayCopy
 
 /**
  * A bit vector. We'd use Java's `BitSet`, but GWT doesn't support it. Note that we also use

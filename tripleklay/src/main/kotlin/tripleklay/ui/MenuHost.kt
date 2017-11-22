@@ -1,11 +1,11 @@
 package tripleklay.ui
 
+import euklid.f.*
 import klay.core.Event
 import klay.scene.GroupLayer
 import klay.scene.Layer
 import klay.scene.LayerUtil
 import klay.scene.Pointer
-import pythagoras.f.*
 import react.Closeable
 import react.UnitSlot
 import tripleklay.platform.TPPlatform
@@ -153,7 +153,9 @@ class MenuHost
      */
     var screenArea: IRectangle
         get() = _screenArea
-        set(screenArea) = _screenArea.setBounds(screenArea)
+        set(screenArea) {
+            _screenArea.setBounds(screenArea)
+        }
 
     /**
      * Displays the menu specified by the given pop, incorporating all the configured attributes

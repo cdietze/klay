@@ -1,8 +1,8 @@
 package tripleklay.util
 
+import euklid.f.Rectangle
 import klay.core.*
 import klay.scene.ImageLayer
-import pythagoras.f.Rectangle
 
 /**
  * Manages styled text. This comes in many flavors: a single line of plain (uniformly styled) text,

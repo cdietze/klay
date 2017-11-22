@@ -3,7 +3,7 @@ package tripleklay.demo.core.ui
 import klay.core.Surface
 import klay.scene.Layer
 import klay.scene.LayerUtil
-import pythagoras.f.IDimension
+import euklid.f.IDimension
 import react.UnitSlot
 import tripleklay.demo.core.DemoScreen
 import tripleklay.ui.*
@@ -11,6 +11,7 @@ import tripleklay.ui.Scroller.Behavior
 import tripleklay.ui.layout.AxisLayout
 import tripleklay.util.Colors
 import kotlin.reflect.KClass
+
 class ScrollerDemo : DemoScreen() {
     override fun name(): String {
         return "Scroller"

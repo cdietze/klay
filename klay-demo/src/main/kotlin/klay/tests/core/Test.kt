@@ -1,11 +1,11 @@
 package klay.tests.core
 
+import euklid.f.MathUtil
 import klay.core.QuadBatch
 import klay.core.TextBlock
 import klay.core.TriangleBatch
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import pythagoras.f.MathUtil
 
 abstract class Test(protected val game: TestsGame, val name: String, val descrip: String) {
     protected val conns = react.Closeable.Set()

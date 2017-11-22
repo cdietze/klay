@@ -4,6 +4,7 @@ import react.Closeable
 import react.Value
 import react.ValueView
 import kotlin.reflect.KClass
+
 /**
  * A widget that displays one or more lines of text and/or an icon image.
  */

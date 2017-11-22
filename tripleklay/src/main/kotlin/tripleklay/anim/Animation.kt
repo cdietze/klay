@@ -1,9 +1,9 @@
 package tripleklay.anim
 
+import euklid.f.XY
 import klay.core.Random
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import pythagoras.f.XY
 import tripleklay.util.Interpolator
 
 /**

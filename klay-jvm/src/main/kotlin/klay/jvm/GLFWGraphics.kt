@@ -1,12 +1,12 @@
 package klay.jvm
 
+import euklid.f.Dimension
+import euklid.f.IDimension
 import klay.core.Scale
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback
 import org.lwjgl.system.MemoryUtil
-import pythagoras.f.Dimension
-import pythagoras.f.IDimension
 
 class GLFWGraphics(override val plat: JavaPlatform, private val window: Long) : LWJGLGraphics(plat) {
 

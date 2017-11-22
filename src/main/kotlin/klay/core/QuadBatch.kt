@@ -1,6 +1,6 @@
 package klay.core
 
-import pythagoras.f.AffineTransform
+import euklid.f.AffineTransform
 
 /**
  * A batch which can render textured quads. Since that's a pretty common thing to do, we factor out

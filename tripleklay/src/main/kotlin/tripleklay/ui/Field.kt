@@ -1,16 +1,17 @@
 package tripleklay.ui
 
+import euklid.f.Rectangle
 import klay.core.Input
 import klay.core.Keyboard
 import klay.scene.LayerUtil
 import klay.scene.Pointer
-import pythagoras.f.Rectangle
 import react.Signal
 import react.SignalView
 import react.Value
 import tripleklay.platform.NativeTextField
 import tripleklay.platform.TPPlatform
 import kotlin.reflect.KClass
+
 /**
  * Displays text which can be edited via the [Input.getText] popup.
  */

@@ -1,14 +1,16 @@
 package klay.scene
 
+import euklid.f.*
 import klay.core.Game
 import klay.core.QuadBatch
 import klay.core.Surface
 import klay.core.Tint
-import pythagoras.f.*
 import react.Closeable
 import react.Signal
 import react.SignalViewListener
 import react.Value
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * A layer is a node in the scene graph. It has a transformation matrix and other properties which
@@ -319,8 +321,8 @@ abstract class Layer : Closeable {
      */
     fun transform(): AffineTransform {
         if (isSet(Flag.XFDIRTY)) {
-            val sina = MathUtil.sin(rotation)
-            val cosa = MathUtil.cos(rotation)
+            val sina = sin(rotation)
+            val cosa = cos(rotation)
             val m00 = cosa * scaleX
             val m01 = sina * scaleY
             val m10 = -sina * scaleX

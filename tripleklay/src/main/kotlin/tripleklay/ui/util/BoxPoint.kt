@@ -1,8 +1,8 @@
 package tripleklay.ui.util
 
 import klay.scene.LayerUtil
-import pythagoras.f.IDimension
-import pythagoras.f.Point
+import euklid.f.IDimension
+import euklid.f.Point
 import tripleklay.ui.Element
 import tripleklay.ui.Style.HAlign
 import tripleklay.ui.Style.VAlign

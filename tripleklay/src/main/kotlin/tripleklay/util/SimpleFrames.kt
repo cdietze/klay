@@ -1,12 +1,12 @@
 package tripleklay.util
 
+import euklid.f.IPoint
+import euklid.f.IRectangle
+import euklid.f.Points
+import euklid.f.Rectangle
 import klay.core.Tile
 import klay.core.TileSource
 import klay.scene.ImageLayer
-import pythagoras.f.IPoint
-import pythagoras.f.IRectangle
-import pythagoras.f.Points
-import pythagoras.f.Rectangle
 import react.Slot
 
 /**

@@ -1,13 +1,14 @@
 package tripleklay.ui
 
+import euklid.f.Dimension
+import euklid.f.MathUtil
 import klay.core.TextWrap
 import klay.scene.Layer
-import pythagoras.f.Dimension
-import pythagoras.f.MathUtil
 import react.Slot
 import react.UnitSlot
 import tripleklay.util.Glyph
 import tripleklay.util.StyledText
+import kotlin.math.ceil
 
 /**
  * An abstract base class for widgets that contain text.
@@ -34,8 +35,7 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
      * Returns a slot that subclasses should wire up to their icon `Value`.
      */
     protected fun iconDidChange(): Slot<Icon?> {
-        return {
-            icon: Icon? ->
+        return { icon: Icon? ->
             if (icon == null) {
                 clearLayoutData()
                 invalidate()
@@ -118,7 +118,7 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
                 if (twidth > availWidth) {
                     while (twidth > availWidth && text!!.style.font!!.size > MIN_FONT_SIZE) {
                         text = text!!.resize(text!!.style.font!!.size - 1)
-                        twidth = MathUtil.ceil(textWidth())
+                        twidth = ceil(textWidth())
                     }
                 }
             }
@@ -244,10 +244,10 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
 
         // this is broken out so that subclasses can extend this action
         protected fun updateTextGlyph(tx: Float, ty: Float, availWidth: Float, availHeight: Float) {
-            var twidth = MathUtil.ceil(textWidth())
-            var theight = MathUtil.ceil(textHeight())
-            val awidth = MathUtil.ceil(availWidth)
-            val aheight = MathUtil.ceil(availHeight)
+            var twidth = ceil(textWidth())
+            var theight = ceil(textHeight())
+            val awidth = ceil(availWidth)
+            val aheight = ceil(availHeight)
             if (twidth <= 0 || theight <= 0 || awidth <= 0 || aheight <= 0) return
 
             // if autoShrink is enabled, and our text is too wide, re-lay it out with successively
@@ -255,9 +255,9 @@ abstract class TextWidget<T : TextWidget<T>> : Widget<T>() {
             if (autoShrink && twidth > availWidth) {
                 while (twidth > availWidth && text!!.style.font!!.size > MIN_FONT_SIZE) {
                     text = text!!.resize(text!!.style.font!!.size - 1)
-                    twidth = MathUtil.ceil(textWidth())
+                    twidth = ceil(textWidth())
                 }
-                theight = MathUtil.ceil(textHeight())
+                theight = ceil(textHeight())
             }
 
             // create a canvas no larger than the text, constrained to the available size

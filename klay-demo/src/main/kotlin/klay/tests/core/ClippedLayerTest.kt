@@ -1,5 +1,6 @@
 package klay.tests.core
 
+import euklid.f.MathUtil
 import klay.core.Clock
 import klay.core.Gradient
 import klay.core.Surface
@@ -7,9 +8,10 @@ import klay.scene.ClippedLayer
 import klay.scene.GroupLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import pythagoras.f.MathUtil
 import kotlin.math.abs
+import kotlin.math.cos
 import kotlin.math.round
+import kotlin.math.sin
 
 class ClippedLayerTest(game: TestsGame) : Test(game, "ClippedLayer", "Tests rendering of layers with and without clipping. Clipped layers " + "should not overdraw one pixel black lines that circumscribes them.") {
 
@@ -72,7 +74,7 @@ class ClippedLayerTest(game: TestsGame) : Test(game, "ClippedLayer", "Tests rend
         game.rootLayer.addAt(object : ClippedLayer(100f, 100f) {
             override fun paintClipped(surf: Surface) {
                 surf.setFillColor(0xFF99CCFF.toInt()).fillRect(0f, 0f, 100f, 100f)
-                surf.translate(MathUtil.sin(elapsed) * 50, MathUtil.cos(elapsed) * 50 + 25)
+                surf.translate(sin(elapsed) * 50, cos(elapsed) * 50 + 25)
                 surf.draw(saustex, 0f, 0f)
             }
         }, 390f, 30f)
@@ -165,16 +167,16 @@ class ClippedLayerTest(game: TestsGame) : Test(game, "ClippedLayer", "Tests rend
             val elapsed = clock.tick / 1000f
             i1.setRotation(elapsed * MathUtil.PI / 2)
             s1.setRotation(elapsed * MathUtil.PI / 2)
-            g2.setWidth(round(abs(100f * MathUtil.sin(elapsed))))
-            inner.setOrigin(MathUtil.sin(elapsed * 2f) * 50, MathUtil.cos(elapsed * 2f) * 50)
+            g2.setWidth(round(abs(100f * sin(elapsed))))
+            inner.setOrigin(sin(elapsed * 2f) * 50, cos(elapsed * 2f) * 50)
             val cycle = elapsed / (MathUtil.PI * 2)
             if (MathUtil.ifloor(cycle) % 2 == 0) {
                 // go in a circle without going out of bounds
-                g5Inner.setTranslation(-25 + 50 * MathUtil.cos(elapsed),
-                        -25 + 50 * MathUtil.sin(elapsed))
+                g5Inner.setTranslation(-25 + 50 * cos(elapsed),
+                        -25 + 50 * sin(elapsed))
             } else {
                 // go out of bounds on right and left
-                g5Inner.setTranslation(25 + 250 * MathUtil.cos(elapsed + MathUtil.PI / 2), -25f)
+                g5Inner.setTranslation(25 + 250 * cos(elapsed + MathUtil.PI / 2), -25f)
             }
         })
     }

@@ -2,14 +2,14 @@ package tripleklay.ui.bgs
 
 import klay.core.Graphics
 import klay.scene.ImageLayer
-import pythagoras.f.IDimension
+import euklid.f.IDimension
 import tripleklay.ui.Background
 
 /**
  * Draws a rounded rectangle with optional border as a background.
  */
 class RoundRectBackground constructor(private val _gfx: Graphics, private val _bgColor: Int, private val _radius: Float,
-                                                    private val _borderColor: Int = 0, private val _borderWidth: Float = 0f, private val _borderRadius: Float = _radius) : Background() {
+                                      private val _borderColor: Int = 0, private val _borderWidth: Float = 0f, private val _borderRadius: Float = _radius) : Background() {
 
     override fun instantiate(size: IDimension): Background.Instance {
         val canvas = _gfx.createCanvas(size)

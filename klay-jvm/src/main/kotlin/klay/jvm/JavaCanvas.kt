@@ -1,7 +1,7 @@
 package klay.jvm
 
+import euklid.f.MathUtil
 import klay.core.*
-import pythagoras.f.MathUtil
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.RenderingHints

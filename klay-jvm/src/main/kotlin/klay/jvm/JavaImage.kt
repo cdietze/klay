@@ -1,9 +1,9 @@
 package klay.jvm
 
+import euklid.f.MathUtil
 import klay.core.*
 import klay.core.Graphics
 import klay.core.Image
-import pythagoras.f.MathUtil
 import java.awt.*
 import java.awt.geom.AffineTransform
 import java.awt.geom.Rectangle2D

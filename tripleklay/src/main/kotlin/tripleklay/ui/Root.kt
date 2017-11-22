@@ -1,9 +1,10 @@
 package tripleklay.ui
 
-import pythagoras.f.IDimension
+import euklid.f.IDimension
 import react.Closeable
 import react.Signal
 import kotlin.reflect.KClass
+
 /**
  * The root of a display hierarchy. An application can have one or more roots, but they should not
  * overlap and will behave as if oblivious to one another's existence.

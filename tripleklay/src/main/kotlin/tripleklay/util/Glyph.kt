@@ -1,11 +1,11 @@
 package tripleklay.util
 
+import euklid.f.IDimension
 import klay.core.Canvas
 import klay.core.Graphics
 import klay.scene.CanvasLayer
 import klay.scene.GroupLayer
 import klay.scene.ImageLayer
-import pythagoras.f.IDimension
 import react.Closeable
 
 /**

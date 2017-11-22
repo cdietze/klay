@@ -1,5 +1,6 @@
 package klay.core
 
+import euklid.f.AffineTransform
 import klay.core.GL20.Companion.GL_ARRAY_BUFFER
 import klay.core.GL20.Companion.GL_ELEMENT_ARRAY_BUFFER
 import klay.core.GL20.Companion.GL_FLOAT
@@ -7,7 +8,6 @@ import klay.core.GL20.Companion.GL_STREAM_DRAW
 import klay.core.GL20.Companion.GL_TEXTURE0
 import klay.core.GL20.Companion.GL_TRIANGLES
 import klay.core.GL20.Companion.GL_UNSIGNED_SHORT
-import pythagoras.f.AffineTransform
 
 /**
  * A batch which renders indexed triangles. It serves as a [QuadBatch], but can also render

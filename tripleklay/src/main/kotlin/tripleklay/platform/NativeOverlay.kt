@@ -1,6 +1,6 @@
 package tripleklay.platform
 
-import pythagoras.f.IRectangle
+import euklid.f.IRectangle
 
 /**
  * A platform element that draws on top of the main klay root layer.

@@ -3,8 +3,8 @@ package klay.tests.core
 import klay.core.Clock
 import klay.core.Color
 import klay.scene.ImageLayer
-import pythagoras.f.MathUtil
-import react.Connection
+import kotlin.math.cos
+import kotlin.math.sin
 
 class ClearBackgroundTest(game: TestsGame) : Test(game, "ClearBackground", "Test that the platform correctly clears the background to black between frames, " + "even if nothing is painted.") {
 
@@ -21,8 +21,8 @@ class ClearBackgroundTest(game: TestsGame) : Test(game, "ClearBackground", "Test
         conns.add(game.paint.connect { clock: Clock ->
             val t = clock.tick / 1000f
             val vsize = game.plat.graphics.viewSize
-            square.setTranslation((MathUtil.cos(t) + 1) * (vsize.width - width) / 2,
-                    (MathUtil.sin(t) + 1) * (vsize.height - height) / 2)
+            square.setTranslation((cos(t) + 1) * (vsize.width - width) / 2,
+                    (sin(t) + 1) * (vsize.height - height) / 2)
         })
     }
 

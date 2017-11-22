@@ -1,13 +1,13 @@
 package tripleklay.util
 
+import euklid.f.IPoint
+import euklid.f.Point
+import euklid.f.Rectangle
 import klay.core.Surface
 import klay.scene.GroupLayer
 import klay.scene.Layer
 import klay.scene.LayerUtil
 import klay.scene.Pointer
-import pythagoras.f.IPoint
-import pythagoras.f.Point
-import pythagoras.f.Rectangle
 
 /**
  * Provides utility functions for dealing with Layers

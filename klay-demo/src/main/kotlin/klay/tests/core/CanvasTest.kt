@@ -1,11 +1,12 @@
 package klay.tests.core
 
+import euklid.f.MathUtil
 import klay.core.*
 import klay.scene.CanvasLayer
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import pythagoras.f.MathUtil
 import kotlin.math.absoluteValue
+import kotlin.math.cos
 import kotlin.math.round
 import kotlin.math.sin
 
@@ -155,8 +156,8 @@ class CanvasTest(game: TestsGame) : Test(game, "Canvas", "Tests various Canvas r
                 canvas.setFillColor(0xFFCCCCCC.toInt()).fillRect(50f, 50f, 50f, 50f)
                 val capF = game.graphics.layoutText("F", TextFormat(F_FONT))
                 val theta = -MathUtil.PI / 4
-                val tsin = MathUtil.sin(theta)
-                val tcos = MathUtil.cos(theta)
+                val tsin = sin(theta)
+                val tcos = cos(theta)
                 canvas.setFillColor(0xFF000000.toInt()).fillText(capF, 0f, 0f)
                 canvas.transform(tcos, -tsin, tsin, tcos, 50f, 50f)
                 canvas.setFillColor(0xFF000000.toInt()).fillText(capF, 0f, 0f)

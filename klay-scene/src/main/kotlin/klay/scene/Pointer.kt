@@ -1,8 +1,8 @@
 package klay.scene
 
+import euklid.f.Point
 import klay.core.Platform
 import klay.scene.Pointer.Dispatcher
-import pythagoras.f.Point
 import react.Slot
 
 /**

@@ -1,7 +1,7 @@
 package tripleklay.demo.core.ui
 
 import klay.core.Image
-import pythagoras.f.MathUtil
+import euklid.f.MathUtil
 import react.IntValue
 import tripleklay.demo.core.DemoScreen
 import tripleklay.demo.core.TripleDemo

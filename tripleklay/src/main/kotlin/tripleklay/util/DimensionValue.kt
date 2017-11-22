@@ -1,7 +1,7 @@
 package tripleklay.util
 
-import pythagoras.f.Dimension
-import pythagoras.f.IDimension
+import euklid.f.Dimension
+import euklid.f.IDimension
 import react.Value
 
 /**

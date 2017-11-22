@@ -109,7 +109,8 @@ class HelloLwjglWorld {
 
     companion object {
 
-        @JvmStatic fun main(args: Array<String>) {
+        @JvmStatic
+        fun main(args: Array<String>) {
             HelloLwjglWorld().run()
         }
     }

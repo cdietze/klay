@@ -11,7 +11,7 @@ buildscript {
 }
 
 allprojects {
-    ext.pythagoras_version = 'bf909b2103'
+    ext.euklid_version = '7b1b9504f'
     ext.react_version = 'a4cdef4d2f'
     version = '1.0-SNAPSHOT'
 
@@ -41,7 +41,7 @@ apply plugin: 'kotlin-platform-common'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
-    compile "com.github.cdietze.pythagoras-kt:pythagoras-kt:$pythagoras_version"
+    compile "com.github.cdietze.euklid:euklid:$euklid_version"
     compile "com.github.cdietze.react-kt:react-kt:$react_version"
     testCompile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
 }

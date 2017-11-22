@@ -1,11 +1,11 @@
 package klay.scene
 
+import euklid.f.Point
+import euklid.f.XY
+import euklid.util.NoninvertibleTransformException
 import klay.core.Clock
 import klay.core.Log
 import klay.core.PaintClock
-import pythagoras.f.Point
-import pythagoras.f.XY
-import pythagoras.util.NoninvertibleTransformException
 import react.Closeable
 import react.Signal
 import react.Slot

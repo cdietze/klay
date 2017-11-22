@@ -1,16 +1,17 @@
 package tripleklay.ui
 
+import euklid.f.Dimension
+import euklid.f.MathUtil
 import klay.core.Clock
 import klay.scene.GroupLayer
 import klay.scene.LayerUtil
-import pythagoras.f.Dimension
-import pythagoras.f.MathUtil
 import react.Closeable
 import react.Slot
 import react.Value
 import tripleklay.shaders.RotateYBatch
 import tripleklay.util.Interpolator
 import kotlin.reflect.KClass
+
 /**
  * A container that holds zero or one widget. The box delegates everything to its current contents
  * (its preferred size is its content's preferred size, it sizes its contents to its size).

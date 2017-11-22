@@ -1,9 +1,9 @@
 package tripleklay.ui.util
 
 import klay.scene.Pointer
-import pythagoras.f.IPoint
-import pythagoras.f.MathUtil
-import pythagoras.f.Point
+import euklid.f.IPoint
+import euklid.f.MathUtil
+import euklid.f.Point
 import react.Signal
 import kotlin.math.sign
 

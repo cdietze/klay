@@ -1,10 +1,10 @@
 package klay.scene
 
+import euklid.f.AffineTransform
+import euklid.f.MathUtil
+import euklid.f.Point
+import euklid.util.NoninvertibleTransformException
 import klay.core.Surface
-import pythagoras.f.AffineTransform
-import pythagoras.f.MathUtil
-import pythagoras.f.Point
-import pythagoras.util.NoninvertibleTransformException
 
 /**
  * GroupLayer creates a Layer hierarchy by maintaining an ordered group of child Layers.
@@ -146,7 +146,7 @@ open class GroupLayer : ClippedLayer, Iterable<Layer> {
      * Removes and disposes all child layers from this group.
      */
     fun disposeAll() {
-        val toDispose : Array<Layer> = children.toTypedArray()
+        val toDispose: Array<Layer> = children.toTypedArray()
         // remove all of the children efficiently
         removeAll()
         // now that the children have been detached, dispose them

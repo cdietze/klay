@@ -1,7 +1,7 @@
 package klay.core
 
-import pythagoras.f.AffineTransform
-import pythagoras.f.Points
+import euklid.f.AffineTransform
+import euklid.f.Points
 import react.RFuture
 
 /**

@@ -1,8 +1,12 @@
 package klay.core
 
-import pythagoras.f.*
-import pythagoras.i.Rectangle
+import euklid.f.*
+import euklid.i.Rectangle
 import react.Closeable
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 /**
  * A surface provides a simple drawing API to a GPU accelerated render target. This can be either
@@ -145,8 +149,8 @@ open class Surface
 
     /** Rotates the current transformation matrix by the specified angle in radians.  */
     fun rotate(angle: Float): Surface {
-        val sr = MathUtil.sin(angle)
-        val cr = MathUtil.cos(angle)
+        val sr = sin(angle)
+        val cr = cos(angle)
         transform(cr, sr, -sr, cr, 0f, 0f)
         return this
     }
@@ -342,12 +346,12 @@ open class Surface
 
         val dx = _x1 - _x0
         val dy = _y1 - _y0
-        val length = MathUtil.sqrt(dx * dx + dy * dy)
+        val length = sqrt(dx * dx + dy * dy)
         val wx = dx * (width / 2) / length
         val wy = dy * (width / 2) / length
 
         val xf = AffineTransform()
-        xf.setRotation(MathUtil.atan2(dy, dx))
+        xf.setRotation(atan2(dy, dx))
         xf.setTranslation(_x0 + wy, _y0 - wx)
         Transforms.multiply(tx(), xf, xf)
 

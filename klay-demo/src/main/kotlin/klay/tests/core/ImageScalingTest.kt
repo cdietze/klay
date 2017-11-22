@@ -5,9 +5,9 @@ import klay.core.GL20
 import klay.core.Pointer
 import klay.core.Texture
 import klay.scene.ImageLayer
-import pythagoras.f.MathUtil
 import react.RFuture
 import kotlin.math.abs
+import kotlin.math.sin
 
 class ImageScalingTest(game: TestsGame) : Test(game, "ImageScaling", "Tests use of min/mag filters and mipmapping when scaling images.") {
 
@@ -48,7 +48,7 @@ class ImageScalingTest(game: TestsGame) : Test(game, "ImageScaling", "Tests use 
             conns.add(game.paint.connect { clock: Clock ->
                 if (!paused) {
                     elapsed += clock.dt / 1000f
-                    val scale = abs(MathUtil.sin(elapsed))
+                    val scale = abs(sin(elapsed))
                     player1.setScale(scale)
                     player2.setScale(scale)
                     slayer1.setScale(scale)

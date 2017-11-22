@@ -6,6 +6,7 @@ import tripleklay.ui.layout.AxisLayout
 import tripleklay.ui.layout.FlowLayout
 import tripleklay.ui.util.Supplier
 import kotlin.reflect.KClass
+
 /**
  * A `Composite` that implements tabbing. Has a horizontal row of buttons along
  * the top and a stretching content group underneath. The buttons are instances of [ ]. Each button is associated with a content element. When the button is clicked,

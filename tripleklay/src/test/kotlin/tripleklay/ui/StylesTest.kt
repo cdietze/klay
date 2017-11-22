@@ -14,12 +14,14 @@ class StylesTest {
     //     JavaPlatform.register(config);
     // }
 
-    @Test fun testEmpty() {
+    @Test
+    fun testEmpty() {
         val s = Styles.none()
         checkIsNull(s, Style.COLOR)
     }
 
-    @Test fun testNonReceiverMod() {
+    @Test
+    fun testNonReceiverMod() {
         val s = Styles.none()
         checkIsNull(s, Style.COLOR)
         val s1 = s.add(Style.COLOR.`is`(0xFFAABBCC.toInt()))
@@ -27,7 +29,8 @@ class StylesTest {
         checkEquals(0xFFAABBCC.toInt(), s1, Style.COLOR)
     }
 
-    @Test fun testAddsGets() {
+    @Test
+    fun testAddsGets() {
         val s = Styles.make(Style.COLOR.`is`(0xFFAABBCC.toInt()),
                 Style.SHADOW.`is`(0xFF333333.toInt()),
                 Style.HIGHLIGHT.`is`(0xFFAAAAAA.toInt()))
@@ -36,7 +39,8 @@ class StylesTest {
         checkEquals(0xFFAAAAAA.toInt(), s, Style.HIGHLIGHT)
     }
 
-    @Test fun testOverwrite() {
+    @Test
+    fun testOverwrite() {
         val s = Styles.make(Style.COLOR.`is`(0xFFAABBCC.toInt()),
                 Style.SHADOW.`is`(0xFF333333.toInt()))
         checkEquals(0xFFAABBCC.toInt(), s, Style.COLOR)
@@ -54,7 +58,8 @@ class StylesTest {
         checkEquals(0xFFAAAAAA.toInt(), ns, Style.HIGHLIGHT)
     }
 
-    @Test fun testClear() {
+    @Test
+    fun testClear() {
         var s = Styles.make(Style.COLOR.`is`(0xFFAABBCC.toInt()),
                 Style.SHADOW.`is`(0xFF333333.toInt()))
         checkEquals(0xFFAABBCC.toInt(), s, Style.COLOR)

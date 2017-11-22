@@ -1,9 +1,9 @@
 package tripleklay.ui
 
+import euklid.f.Dimension
+import euklid.f.IDimension
 import klay.core.Graphics
 import klay.core.TextLayout
-import pythagoras.f.Dimension
-import pythagoras.f.IDimension
 
 /**
  * Provides various user interface constraints.

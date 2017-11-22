@@ -87,7 +87,7 @@ abstract class Event {
                                         /** The screen x-coordinate associated with this event.  */
                                         override val x: Float,
                                         /** The screen y-coordinate associated with this event.  */
-                                        override val y: Float) : Input(flags, time), pythagoras.f.XY {
+                                        override val y: Float) : Input(flags, time), euklid.f.XY {
 
         override fun name(): String {
             return "XY"

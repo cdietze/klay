@@ -1,16 +1,17 @@
 package tripleklay.ui
 
+import euklid.f.Dimension
+import euklid.f.IPoint
+import euklid.f.Point
 import klay.scene.Layer
 import klay.scene.Pointer
-import pythagoras.f.Dimension
-import pythagoras.f.IPoint
-import pythagoras.f.Point
 import react.Signal
 import react.SignalView
 import react.UnitSlot
 import react.Value
 import kotlin.math.round
 import kotlin.reflect.KClass
+
 /**
  * Displays a bar and a thumb that can be slid along the bar, representing a floating point value
  * between some minimum and maximum.

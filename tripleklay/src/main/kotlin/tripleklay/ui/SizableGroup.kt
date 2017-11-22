@@ -1,6 +1,6 @@
 package tripleklay.ui
 
-import pythagoras.f.IDimension
+import euklid.f.IDimension
 import tripleklay.util.DimensionValue
 
 /**

@@ -3,7 +3,7 @@ package klay.tests.core
 import klay.core.*
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import pythagoras.f.MathUtil
+import euklid.f.MathUtil
 import react.Connection
 import react.Slot
 

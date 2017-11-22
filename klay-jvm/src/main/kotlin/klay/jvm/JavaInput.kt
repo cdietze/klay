@@ -1,7 +1,7 @@
 package klay.jvm
 
+import euklid.f.Point
 import klay.core.*
-import pythagoras.f.Point
 import java.util.concurrent.ConcurrentLinkedDeque
 
 open class JavaInput(plat: JavaPlatform) : Input(plat) {
@@ -105,7 +105,7 @@ open class JavaInput(plat: JavaPlatform) : Input(plat) {
         val ex = event.x
         val ey = event.y
         val main = toTouch(event.time, ex, ey, kind, 0)
-        val evs : Array<Touch.Event> = if (pivot == null)
+        val evs: Array<Touch.Event> = if (pivot == null)
             arrayOf(main)
         else
             arrayOf(main, toTouch(event.time, 2 * pivot!!.x - ex, 2 * pivot!!.y - ey, kind, 1))

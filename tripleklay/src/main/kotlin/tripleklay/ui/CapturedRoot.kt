@@ -1,12 +1,12 @@
 package tripleklay.ui
 
+import euklid.f.Dimension
+import euklid.f.Point
 import klay.core.QuadBatch
 import klay.core.Texture
 import klay.core.TextureSurface
 import klay.scene.ImageLayer
 import klay.scene.Layer
-import pythagoras.f.Dimension
-import pythagoras.f.Point
 import react.Closeable
 import react.Value
 import react.ValueView

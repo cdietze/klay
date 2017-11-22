@@ -1,8 +1,8 @@
 package klay.jvm
 
+import euklid.f.MathUtil
 import klay.core.*
 import klay.core.buffers.ByteBuffer
-import pythagoras.f.MathUtil
 import java.awt.Font
 import java.awt.image.BufferedImage
 import java.io.File

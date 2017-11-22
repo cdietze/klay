@@ -1,10 +1,10 @@
 package klay.scene
 
+import euklid.f.IDimension
 import klay.core.Canvas
 import klay.core.Graphics
 import klay.core.Texture
 import klay.core.Tile
-import pythagoras.f.IDimension
 import react.RFuture
 
 /**

@@ -1,9 +1,9 @@
 package klay.scene
 
+import euklid.f.Point
+import euklid.f.XY
 import klay.core.Event
 import klay.core.assert
-import pythagoras.f.Point
-import pythagoras.f.XY
 
 /**
  * Contains information about the interaction of which an event is a part.

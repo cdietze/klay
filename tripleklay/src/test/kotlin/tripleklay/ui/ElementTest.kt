@@ -1,6 +1,5 @@
 package tripleklay.ui
 
-import klay.core.Clock
 import klay.core.PaintClock
 import klay.core.Platform
 import klay.core.StubPlatform
@@ -45,7 +44,8 @@ class ElementTest {
 
     /** Tests the basic functionality of adding and removing elements and that the wasAdded
      * and wasRemoved members are called as expected.  */
-    @Test fun testAddRemove() {
+    @Test
+    fun testAddRemove() {
         val root = newRoot()
 
         val g1 = TestGroup()
@@ -79,7 +79,8 @@ class ElementTest {
     /** Tests that a group may add a child into another group whilst being removed and that the
      * child receives the appropriate calls to wasAdded and wasRemoved. Similarly tests for
      * adding the child during its own add.  */
-    @Test fun testChildTransfer() {
+    @Test
+    fun testChildTransfer() {
 
         class Pa : TestGroup() {
             var child1 = TestGroup()
@@ -133,7 +134,8 @@ class ElementTest {
     /** Tests that a group may add a grandchild into another group whilst being removed and that
      * the grandchild receives the appropriate calls to wasAdded and wasRemoved. Similarly tests
      * for adding the grandchild during its own add.  */
-    @Test fun testGrandchildTransfer() {
+    @Test
+    fun testGrandchildTransfer() {
 
         class GrandPa : TestGroup() {
             var child = TestGroup()

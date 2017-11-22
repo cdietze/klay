@@ -5,8 +5,8 @@ import klay.scene.ImageLayer
 import klay.scene.Layer
 import klay.scene.Pointer
 import klay.scene.Touch
-import pythagoras.f.MathUtil
-import pythagoras.f.Vector
+import euklid.f.MathUtil
+import euklid.f.Vector
 import react.Slot
 
 internal class LayerClickTest(game: TestsGame) : Test(game, "LayerClick", "Tests the hit testing and click/touch processing provided for layers.") {
