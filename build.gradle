@@ -1,8 +1,7 @@
 buildscript {
-    ext.kotlin_version = '1.2.0-rc-39'
+    ext.kotlin_version = '1.2.10'
 
     repositories {
-        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
         mavenCentral()
     }
     dependencies {
@@ -11,12 +10,11 @@ buildscript {
 }
 
 allprojects {
-    ext.euklid_version = 'v0.1'
-    ext.react_version = 'a4cdef4d2f'
+    ext.euklid_version = 'e6c41729a4'
+    ext.react_version = '0ecdbfa899'
     version = '1.0-SNAPSHOT'
 
     repositories {
-        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
         mavenCentral()
         mavenLocal()
         maven { url 'https://jitpack.io' }
