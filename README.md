@@ -1,6 +1,7 @@
 Klay
 ===
 
+[![JitPack Release](https://jitpack.io/v/cdietze/klay.svg)](https://jitpack.io/#cdietze/klay)
 [![Build Status](https://travis-ci.org/cdietze/klay.svg?branch=master)](https://travis-ci.org/cdietze/klay)
 
 A Kotlin game development framework for multiple platforms.
