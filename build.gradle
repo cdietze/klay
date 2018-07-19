@@ -30,6 +30,7 @@ allprojects {
                 groupId 'com.github.cdietze'
                 artifactId project.name
                 version project.version
+                artifact sourcesJar
             }
         }
     }
@@ -42,4 +43,9 @@ dependencies {
     compile "com.github.cdietze.euklid:euklid:$euklid_version"
     compile "com.github.cdietze.react-kt:react-kt:$react_version"
     testCompile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
 }
