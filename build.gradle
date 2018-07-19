@@ -10,8 +10,9 @@ buildscript {
 }
 
 allprojects {
-    ext.euklid_version = 'e6c41729a4'
-    ext.react_version = '0ecdbfa899'
+    ext.euklid_version = 'd5b4c53ccd'
+    ext.react_version = 'afb412c977'
+
     version = '1.0-SNAPSHOT'
 
     repositories {
