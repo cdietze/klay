@@ -53,3 +53,10 @@ dependencies {
     compile "com.github.cdietze.react-kt:react-kt:$react_version"
     testCompile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
 }
+
+task sourcesJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allSource
+}
+
+configurePublishing(sourcesJar)
