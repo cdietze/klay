@@ -14,3 +14,10 @@ apply plugin: 'kotlin-platform-common'
 dependencies {
     compile project(':')
 }
+
+task sourcesJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allSource
+}
+
+configurePublishing(sourcesJar)

@@ -22,16 +22,24 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
 
-    apply plugin: 'maven-publish'
+    /**
+     * Define a function here that should be called by all sub-projects that want to be
+     * published.
+     * The problem with configuring all here was that the sourcesJar was always resolved
+     * in the context of this root project.
+     */
+    ext.configurePublishing = { sourcesJar ->
+        apply plugin: 'maven-publish'
 
-    publishing {
-        publications {
-            MyPublication(MavenPublication) {
-                from components.java
-                groupId 'com.github.cdietze'
-                artifactId project.name
-                version project.version
-                artifact sourcesJar
+        publishing {
+            publications {
+                myPublication(MavenPublication) {
+                    from components.java
+                    groupId 'com.github.cdietze'
+                    artifactId project.name
+                    version project.version
+                    artifact sourcesJar
+                }
             }
         }
     }
@@ -44,9 +52,4 @@ dependencies {
     compile "com.github.cdietze.euklid:euklid:$euklid_version"
     compile "com.github.cdietze.react-kt:react-kt:$react_version"
     testCompile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
 }

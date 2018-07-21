@@ -19,3 +19,10 @@ dependencies {
     expectedBy project(":klay-scene")
     compile project(":klay-jvm")
 }
+
+task sourcesJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allSource
+}
+
+configurePublishing(sourcesJar)
