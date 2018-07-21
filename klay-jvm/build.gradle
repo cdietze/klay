@@ -41,3 +41,10 @@ test {
         events "started", "passed", "skipped", "failed", "standardOut", "standardError"
     }
 }
+
+task sourcesJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allSource
+}
+
+configurePublishing(sourcesJar)
