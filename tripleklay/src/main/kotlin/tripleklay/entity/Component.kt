@@ -16,11 +16,12 @@ import euklid.platform.arrayCopy
  * cache-friendly memory access pattern.
  */
 abstract class Component protected constructor(
-        /** The world in which this component exists.  */
-        val world: World) {
+    /** The world in which this component exists.  */
+    val world: World
+) {
 
     /** A component implementation for arbitrary objects.  */
-    class Generic<T>(world: World) : Component(world) {
+    open class Generic<T>(world: World) : Component(world) {
 
         /** Returns the value of this component for `entityId`.  */
         operator fun get(entityId: Int): T {
@@ -54,9 +55,9 @@ abstract class Component protected constructor(
          * default does nothing (assuming the object will be garbage collected), but if the
          * component was set to an object fetched from a pool, this is a convenient place to return
          * it to the pool.  */
-        protected fun release(value: T) {}
+        protected open fun release(value: T) {}
 
-        protected var _blocks = arrayOfNulls<Array<Any?>>(INDEX_BLOCKS)
+        private var _blocks = arrayOfNulls<Array<Any?>>(INDEX_BLOCKS)
     }
 
     /** A component implementation for a single scalar `int`.  */
