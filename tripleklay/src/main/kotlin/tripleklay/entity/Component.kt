@@ -374,11 +374,11 @@ abstract class Component protected constructor(
         return this::class.simpleName + "#" + id
     }
 
-    /** Ensures that space is allocated for the component at `index`.  */
-    protected abstract fun init(index: Int)
+    /** Ensures that space is allocated for the component for given [entityId], which is just index.  */
+    protected abstract fun init(entityId: Int)
 
-    /** Clears the value of the component at `index`.  */
-    protected open fun clear(index: Int) {} // noop by default
+    /** Clears the value of the component for given [entityId].  */
+    protected open fun clear(entityId: Int) {} // noop by default
 
     internal fun add(entity: Entity) {
         entity.comps.set(id)
